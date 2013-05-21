@@ -143,6 +143,7 @@ INSTALLED_APPS = (
     # External apps
     'south',
     'compressor',
+    'scribbler',
 )
 
 # A sample logging configuration. The only tangible logging

@@ -15,11 +15,16 @@ urlpatterns = patterns('',
 
 
 urlpatterns += patterns('',
-    url('^$', Home.as_view(), name='home'),
-    url('^about/$', About.as_view(), name='about'),
-    url('^help/$', Help.as_view(), name='help'),
+    url(r'^scribbler/', include('scribbler.urls')),
+)
 
-    url('^projects/', include('website.projects.urls')),
-    url('^packages/', include('website.packages.urls')),
-    url('^users/', include('website.users.urls')),
+
+urlpatterns += patterns('',
+    url(r'^$', Home.as_view(), name='home'),
+    url(r'^about/$', About.as_view(), name='about'),
+    url(r'^help/$', Help.as_view(), name='help'),
+
+    url(r'^projects/', include('website.projects.urls')),
+    url(r'^packages/', include('website.packages.urls')),
+    url(r'^users/', include('website.users.urls')),
 )

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+{% load scribbler_tags %}
 
 {% block content %}
     <h1>Home page!</h1>
+    {% scribble "home" %}<p>Welcome to RapidSMS.org!</p>{% endscribble %}
 {% endblock content %}
