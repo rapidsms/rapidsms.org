@@ -7,3 +7,5 @@ django-appconf==0.6
 six==1.3.0
 BeautifulSoup==3.2.1
 django-scribbler==0.5.2
+requests==1.2.1
+django-countries==1.5

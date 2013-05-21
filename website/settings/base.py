@@ -144,6 +144,7 @@ INSTALLED_APPS = (
     'south',
     'compressor',
     'scribbler',
+    'django_countries',
 )
 
 # A sample logging configuration. The only tangible logging
