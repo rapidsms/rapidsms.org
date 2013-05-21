@@ -135,6 +135,11 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.humanize',
     'django.contrib.sitemaps',
+
+    'website.projects',
+    'website.packages',
+    'website.users',
+
     # External apps
     'south',
     'compressor',
