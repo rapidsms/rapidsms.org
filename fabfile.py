@@ -12,7 +12,7 @@ PROJECT_ROOT = os.path.dirname(__file__)
 CONF_ROOT = os.path.join(PROJECT_ROOT, 'conf')
 env.project = 'website'
 env.project_user = 'website'
-env.repo = u'' # FIXME: Add repo URL
+env.repo = u'git@github.com:rapidsms/rapidsms.org.git'
 env.shell = '/bin/bash -c'
 env.disable_known_hosts = True
 env.forward_agent = True
@@ -29,7 +29,7 @@ def vagrant():
 @task
 def staging():
     env.environment = 'staging'
-    env.hosts = ["rapidsms-staging.caktusgroup.com"] 
+    env.hosts = ["rapidsms-staging.caktusgroup.com"]
     env.branch = 'master'
     setup_path()
 
