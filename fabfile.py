@@ -10,8 +10,8 @@ from fabric.utils import abort, error
 # Directory structure
 PROJECT_ROOT = os.path.dirname(__file__)
 CONF_ROOT = os.path.join(PROJECT_ROOT, 'conf')
-env.project = 'website'
-env.project_user = 'website'
+env.project = 'rapidsms'
+env.project_user = 'rapidsms'
 env.repo = u'git@github.com:rapidsms/rapidsms.org.git'
 env.shell = '/bin/bash -c'
 env.disable_known_hosts = True
