@@ -2,18 +2,6 @@ from django.db import models
 from django.template.defaultfilters import slugify
 
 
-class Country(models.Model):
-    code = models.CharField(max_length=2, primary_key=True)
-    name = models.CharField(max_length=255, unique=True)
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name', ]
-        verbose_name_plural = "Countries"
-
-
 class Package(models.Model):
     APPLICATION = 0
     BACKEND = 1
@@ -28,7 +16,6 @@ class Package(models.Model):
     pkg_type = models.SmallIntegerField(choices=PACKAGE_TYPE_CHOICES.items(),
                                         default=APPLICATION)
     pypi_url = models.URLField()
-    countries = models.ManyToManyField(Country, blank=True, null=True)
     has_tests = models.BooleanField(help_text="Does the package have tests?")
     has_docs = models.BooleanField(help_text="Does the package have documentation?")
 
