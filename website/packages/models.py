@@ -26,7 +26,7 @@ class Package(models.Model):
 
     def get_pypi_json(self):
         try:
-            r = requests.get('{0}/json').format(self.pypi_url)
+            r = requests.get('{0}/json'.format(self.pypi_url.rstrip('/')))
             return r.json()
         except:
             return None
