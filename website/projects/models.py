@@ -29,5 +29,5 @@ class Project(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             # Newly created object, so set slug
-            self.s = slugify(self.q)
-        super(Package, self).save(*args, **kwargs)
+            self.slug = slugify(self.name)
+        super(Project, self).save(*args, **kwargs)

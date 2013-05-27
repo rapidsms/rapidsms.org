@@ -1,3 +1,5 @@
+import requests
+
 from django.db import models
 from django.template.defaultfilters import slugify
 
@@ -22,6 +24,13 @@ class Package(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_pypi_json(self):
+        try:
+            r = requests.get('{0}/json').format(self.pypi_url)
+            return r.json()
+        except:
+            return None
+
     @models.permalink
     def get_absolute_url(self):
         return ('project-detail', (), {'project_id': self.pk})
@@ -29,5 +38,5 @@ class Package(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             # Newly created object, so set slug
-            self.s = slugify(self.q)
+            self.slug = slugify(self.name)
         super(Package, self).save(*args, **kwargs)
