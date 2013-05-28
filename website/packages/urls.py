@@ -1,9 +1,10 @@
 from django.conf.urls import patterns, url
 
-from website.packages.views import PackageDetail, PackageEdit, PackageList
+from .views import PackageAdd, PackageDetail, PackageEdit, PackageList
 
 urlpatterns = patterns('',
     url('^$', PackageList.as_view(), name='package_list'),
-    url('^(?P<package_id>\d+)/$', PackageDetail.as_view(), name='package_detail'),
-    url('^(?P<package_id>\d+)/edit/$', PackageEdit.as_view(), name='package_edit'),
+    url('^add/$', PackageAdd.as_view(), name='package_add'),
+    url('^(?P<slug>\w+)/$', PackageDetail.as_view(), name='package_detail'),
+    url('^(?P<slug>\w+)/edit/$', PackageEdit.as_view(), name='package_edit'),
 )

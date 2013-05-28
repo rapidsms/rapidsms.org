@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if not package %}
+        <h1>Add Package</h1>
+    {% else %}
+        <h1>Edit {{ package.name }}</h1>
+    {% endif %}
+    {{ form.as_p }}
+{% endblock content %}

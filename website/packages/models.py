@@ -14,6 +14,7 @@ class Package(models.Model):
         ROUTER: 'Router',
     }
     name = models.CharField(max_length=50, unique=True)
+    description = models.TextField()
     slug = models.SlugField()
     pkg_type = models.SmallIntegerField(choices=PACKAGE_TYPE_CHOICES.items(),
                                         default=APPLICATION)
@@ -33,7 +34,7 @@ class Package(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('project-detail', (), {'project_id': self.pk})
+        return ('project-detail', (), {'slug': self.slug})
 
     def save(self, *args, **kwargs):
         if not self.id:

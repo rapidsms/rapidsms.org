@@ -1,13 +1,25 @@
-from django.views.generic import TemplateView
+from django.views.generic import DetailView, ListView
+from django.views.generic.edit import CreateView, UpdateView
+
+from .models import Package
 
 
-class PackageDetail(TemplateView):
-    template_name = 'packages/detail.html'
+class PackageDetail(DetailView):
+    model = Package
+    slug_field = 'slug'
+    context_object_name = 'package'
 
 
-class PackageEdit(TemplateView):
-    template_name = 'packages/edit.html'
+class PackageAdd(CreateView):
+    model = Package
 
 
-class PackageList(TemplateView):
-    template_name = 'packages/list.html'
+class PackageEdit(UpdateView):
+    model = Package
+    context_object_name = 'package'
+
+
+class PackageList(ListView):
+    model = Package
+    context_object_name = 'package_list'
+    paginate_by = 10
