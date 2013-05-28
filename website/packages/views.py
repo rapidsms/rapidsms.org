@@ -1,6 +1,7 @@
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
 
+from .forms import PackageForm
 from .models import Package
 
 
@@ -12,10 +13,12 @@ class PackageDetail(DetailView):
 
 class PackageAdd(CreateView):
     model = Package
+    form_class = PackageForm
 
 
 class PackageEdit(UpdateView):
     model = Package
+    form_class = PackageForm
     context_object_name = 'package'
 
 
