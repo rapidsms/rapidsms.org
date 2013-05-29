@@ -4,4 +4,9 @@
 {% block content %}
     <h1>Home page!</h1>
     {% scribble "home" %}<p>Welcome to RapidSMS.org!</p>{% endscribble %}
+    {% if user.is_authenticated %}
+        <p>You are authenticated as {{ user.email }}.</p>
+    {% else %}
+        <p>Maybe you should <a href="{% url "github-login" %}">log in via Github</a>.</p>
+    {% endif %}
 {% endblock content %}

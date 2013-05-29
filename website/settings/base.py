@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     'compressor',
     'scribbler',
     'django_countries',
+    'allaccess',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -182,3 +183,10 @@ SKIP_SOUTH_TESTS = True
 COMPRESS_PRECOMPILERS = (
    ('text/less', 'lessc {infile} {outfile}'),
 )
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allaccess.backends.AuthorizedServiceBackend',
+]
+
+AUTH_USER_MODEL = 'users.User'
