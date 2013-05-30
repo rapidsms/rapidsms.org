@@ -16,30 +16,34 @@ class RapidSMSOAuthRedirect(OAuthRedirect):
         return reverse('github-callback')
 
     def get_additional_parameters(self, provider):
+        """Request read access to the user's email addresses."""
         return {
             'scope': 'user:email',
         }
 
 
 class RapidSMSOAuthCallback(OAuthCallback):
-    # API endpoint for retrieving account emails from Github.
-    email_url = 'https://api.github.com/user/emails'
 
-    def get_user_emails(self, provider, access):
-        """
-        Retrieve a list of emails associated with the user's Github account.
-        """
-        response = access.api_client.request('GET', self.email_url)
+    def get_verified_user_emails(self, provider, access):
+        """Retrieve a list of emails that the user has verified with Github."""
+        # API endpoint for retrieving account emails from Github.
+        email_url = 'https://api.github.com/user/emails'
+        # Request v3 format that shows whether the email is verified.
+        headers = {'Accept': 'application/vnd.github.v3'}
+        response = access.api_client.request('GET', email_url, headers=headers)
         if response.status_code != 200:
             raise Exception('Error retrieving account emails.')
-        return response.json()
+        emails = response.json()
+        return [email['email'] for email in emails if email['verified']]
 
     def get_or_create_user(self, provider, access, info):
-        emails = self.get_user_emails(provider, access)
+        emails = self.get_verified_user_emails(provider, access)
         if not emails:
-            raise Exception('No emails associated with account?')
+            # FIXME - Show error page.
+            raise Exception('Account has no verified emails?')
         if len(emails) > 1:
-            pass  # TODO - send user to disambiguation page?
+            # FIXME - Show a disambiguation page.
+            pass
         email = emails[0]
         try:
             user = User.objects.get(email=email)
