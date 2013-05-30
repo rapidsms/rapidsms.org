@@ -1,0 +1,12 @@
+[
+    {
+        "model": "allaccess.Provider",
+        "pk": 1,
+        "fields": {
+            "name": "github",
+            "authorization_url": "https://github.com/login/oauth/authorize",
+            "access_token_url": "https://github.com/login/oauth/access_token",
+            "profile_url": "https://api.github.com/user"
+        }
+    }
+]
