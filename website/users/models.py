@@ -13,8 +13,8 @@ class User(AbstractUser):
     }
     user_type = models.CharField(max_length=1, choices=USER_TYPES.items())
 
-    location = models.CharField(max_length=255)
-    country = models.ForeignKey(Country)
+    location = models.CharField(max_length=255, null=True, blank=True)
+    country = models.ForeignKey(Country, null=True, blank=True)
 
     website_url = models.URLField(null=True, blank=True)
     github_url = models.URLField(null=True, blank=True)

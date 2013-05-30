@@ -33,6 +33,27 @@
 </head>
 <body>
     <div class="container">
+        {% block user-info %}
+        <div id="user-info">
+            {% if user.is_authenticated %}
+                <p>logged in as {{ user.email }} (<a href="{% url "logout" %}">logout</a>)</p>
+            {% else %}
+                <p>not logged in <a href="{% url "github-login" %}">Github login</a></p>
+            {% endif %}
+        </div>
+        {% endblock user-info %}
+
+        {% block navigation %}
+            <ul>
+                <li><a href="https://pypi.python.org/pypi/RapidSMS/">Download</a></li>
+                <li><a href="http://rapidsms.readthedocs.org/en/develop/">Docs</a></li>
+                <li><a href="{% url "package_list" %}">Packages</a></li>
+                <li><a href="{% url "project_list" %}">Projects</a></li>
+            </ul>
+        {% endblock navigation %}
+
+        <h1>{% block page-header %}{% endblock page-header %}</h1>
+
         {% block content %}{% endblock %}
     </div>
     <script type="text/javascript" charset="utf-8"
