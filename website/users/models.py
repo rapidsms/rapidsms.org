@@ -38,12 +38,12 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
     }
     user_type = models.CharField(max_length=1, choices=USER_TYPES.items(),
             default=INDIVIDUAL)
+
     email = models.EmailField('Email address', unique=True)
 
     name = models.CharField(max_length=255, null=True, blank=True)
     location = models.CharField(max_length=255, null=True, blank=True)
     country = models.ForeignKey(Country, null=True, blank=True)
-
     website_url = models.URLField(null=True, blank=True)
     github_url = models.URLField(null=True, blank=True)
     for_hire = models.BooleanField(default=False)
