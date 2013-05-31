@@ -51,10 +51,10 @@ class UserRegistrationForm(UserCreationForm):
                 'an account associated with this email address. If this is '
                 'your email, you can try to <a href="{login}">log in</a>, '
                 '<a href="{reset}">reset your password</a>, or '
-                '<a href="{github}">log in via Github.</a>.'.format(**{
+                '<a href="{github}">log in via GitHub.</a>.'.format(**{
                     'login': reverse('login'),
                     'reset': '#',
-                    'github': reverse('github-login'),
+                    'github': reverse('github_login'),
                 }))
 
     class Meta:

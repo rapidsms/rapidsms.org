@@ -1,3 +1,4 @@
+from django.contrib.auth.views import password_reset_confirm
 from django.contrib.auth import authenticate, login
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import redirect
@@ -12,7 +13,7 @@ from .models import User
 class RapidSMSOAuthRedirect(OAuthRedirect):
 
     def get_callback_url(self, provider):
-        return reverse('github-callback')
+        return reverse('github_callback')
 
     def get_additional_parameters(self, provider):
         """Request read access to the user's email addresses."""
@@ -24,8 +25,8 @@ class RapidSMSOAuthRedirect(OAuthRedirect):
 class RapidSMSOAuthCallback(OAuthCallback):
 
     def get_verified_user_emails(self, provider, access):
-        """Retrieve a list of emails that the user has verified with Github."""
-        # API endpoint for retrieving account emails from Github.
+        """Retrieve a list of emails that the user has verified with GitHub."""
+        # API endpoint for retrieving account emails from GitHub.
         email_url = 'https://api.github.com/user/emails'
         # Request v3 format that shows whether the email is verified.
         headers = {'Accept': 'application/vnd.github.v3'}

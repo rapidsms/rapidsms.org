@@ -18,8 +18,8 @@
         <br />
         <input type="submit" value="Log In" />
 
-        <p><a href="#">Forgot password?</a></p>
+        <p><a href="{% url "reset_password" %}">Forgot password?</a></p>
         <p><a href="{% url "register" %}">Register for account</a></p>
-        <p><a href="{% url "github-login" %}">Log In via Github</a></p>
+        <p><a href="{% url "github_login" %}">Log In via GitHub</a></p>
     </form>
 {% endblock content %}
