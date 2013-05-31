@@ -8,20 +8,20 @@ from website.projects.models import Country
 
 class UserManager(auth.BaseUserManager):
 
-    def create_user(self, email=None, password=None, **extra_fields):
+    def create_user(self, email, password, name, **extra_fields):
         now = timezone.now()
-        if not email:
-            raise ValueError('The email must be set')
+        if not all(email, password, name):
+            raise ValueError('Email, password, and name must be given')
         email = self.normalize_email(email)
-        user = self.model(email=email, is_staff=False, is_active=True,
-                is_superuser=False, last_login=now, date_joined=now,
-                **extra_fields)
+        user = self.model(email=email, name=name, is_staff=False,
+                is_active=True, is_superuser=False, last_login=now,
+                date_joined=now, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
-        u = self.create_user(email=email, password=password, **extra_fields)
+    def create_superuser(self, email, password, name, **extra_fields):
+        u = self.create_user(email, password, name, **extra_fields)
         u.is_staff = True
         u.is_active = True
         u.is_superuser = True
@@ -41,7 +41,7 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
 
     email = models.EmailField('Email address', unique=True)
 
-    name = models.CharField(max_length=255, null=True, blank=True)
+    name = models.CharField(max_length=255)
     location = models.CharField(max_length=255, null=True, blank=True)
     country = models.ForeignKey(Country, null=True, blank=True)
     website_url = models.URLField(null=True, blank=True)
@@ -58,6 +58,7 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ('name',)
 
     def __unicode__(self):
         return self.get_full_name()
@@ -69,4 +70,10 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
         return self.name or self.email
 
     def get_short_name(self):
-        return self.email
+        return self.get_full_name()
+
+    def is_individual(self):
+        return self.user_type == self.INDIVIDUAL
+
+    def is_organization(self):
+        return self.user_type == self.ORGANIZATION

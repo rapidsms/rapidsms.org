@@ -7,8 +7,8 @@ from .views import RapidSMSOAuthRedirect, RapidSMSOAuthCallback, Registration,\
 
 urlpatterns = patterns('',
     url(r'^$', UserList.as_view(), name='user_list'),
-    url(r'^(?P<user_id>\d+)/$', UserDetail.as_view(), name='user_detail'),
-    url(r'^(?P<user_id>\d+)/edit/$', UserEdit.as_view(), name='user_edit'),
+    url(r'^(?P<pk>\d+)/$', UserDetail.as_view(), name='user_detail'),
+    url(r'^(?P<pk>\d+)/edit/$', UserEdit.as_view(), name='user_edit'),
 
     # Log in via GitHub.
     url(r'^login/github/$',

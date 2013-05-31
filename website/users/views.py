@@ -50,9 +50,10 @@ class RapidSMSOAuthCallback(OAuthCallback):
         except User.DoesNotExist:
             kwargs = {
                 'email': email,
-                'location': info['location'],
-                'website_url': info['blog'],
-                'github_url': info['html_url'],
+                'name': info.get('name', info.get('login')),
+                'location': info.get('location', None),
+                'website_url': info.get('blog', None),
+                'github_url': info.get('html_url', None),
             }
             user = User(**kwargs)
             user.set_unusable_password()

@@ -1,5 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>User detail</h1>
+<h1>Profile for {{ user.get_full_name }}</h1>
+
+{% if user.for_hire %}<p>{{ user.get_full_name }} is for hire!</p>{% endif %}
+
+<table>
+    <tr>
+        <th>{% if user.is_individual %}Name{% else %}Company Name{% endif %}</th>
+        <td>{{ user.name }}</td>
+    </tr>
+    {% if user.location %}
+    <tr>
+        <th>Location</th>
+        <td>{{ user.location }}</td>
+    </tr>
+    {% endif %}
+    {% if user.country %}
+    <tr>
+        <th>Country</th>
+        <td>{{ user.country }}</td>
+    </tr>
+    {% endif %}
+    {% if user.website_url %}
+    <tr>
+        <th>Website</th>
+        <td><a href="{{ user.website_url }}">{{ user.website_url }}</a></td>
+    </tr>
+    {% endif %}
+    {% if user.github_url %}
+    <tr>
+        <th>GitHub</th>
+        <td><a href="{{ user.github_url }}">{{ user.github_url }}</a></td>
+    </tr>
+    {% endif %}
+</table>
 {% endblock content %}
