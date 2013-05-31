@@ -1,8 +1,11 @@
-from django.core.urlresolvers import reverse
-from django.views.generic import DetailView, ListView, UpdateView
+from django.contrib.auth import authenticate, login
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.shortcuts import redirect
+from django.views.generic import DetailView, ListView, UpdateView, FormView
 
 from allaccess.views import OAuthRedirect, OAuthCallback
 
+from .forms import UserRegistrationForm
 from .models import User
 
 
@@ -55,8 +58,18 @@ class RapidSMSOAuthCallback(OAuthCallback):
             user.save()
         return user
 
-    def get_login_redirect(self, provider, user, access, new=False):
-        return reverse('home')
+
+class Registration(FormView):
+    template_name = 'users/registration.html'
+    form_class = UserRegistrationForm
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        user = form.save()
+        password = form.cleaned_data['password1']
+        user = authenticate(username=user.email, password=password)
+        login(self.request, user)
+        return redirect(self.get_success_url())
 
 
 class UserDetail(DetailView):

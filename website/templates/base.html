@@ -33,12 +33,25 @@
 </head>
 <body>
     <div class="container">
+        {% block messages %}
+            <div id="messages">
+                {% for msg in messages %}
+                    <div style="color: red;">{{ msg }}</div>
+                {% endfor %}
+            </div>
+        {% endblock messages %}
+
         {% block user-info %}
         <div id="user-info">
             {% if user.is_authenticated %}
                 <p>logged in as {{ user.email }} (<a href="{% url "logout" %}">logout</a>)</p>
             {% else %}
-                <p>not logged in <a href="{% url "github-login" %}">Github login</a></p>
+                <p>
+                    not logged in<br />
+                    <a href="{% url "login" %}">Log in</a><br />
+                    <a href="{% url "github-login" %}">Log in via Github</a><br />
+                    <a href="{% url "register" %}">Register</a>
+                </p>
             {% endif %}
         </div>
         {% endblock user-info %}

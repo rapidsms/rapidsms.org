@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block page-header %}Sign In{% endblock %}
+
+{% block content %}
+    <form method="post" action="{% url "login" %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
+        {% if form.errors %}
+            <p class="errorMessage">Your username and password didn't match our
+            records. Please try again.</p>
+        {% endif %}
+        <label for="username">{{ form.username.label_tag }}</label>
+        {{ form.username }}
+        <br />
+        <label for="password">{{ form.password.label_tag }}</label>
+        {{ form.password }}
+        <br />
+        <input type="submit" value="Log In" />
+
+        <p><a href="#">Forgot password?</a></p>
+        <p><a href="{% url "register" %}">Register for account</a></p>
+        <p><a href="{% url "github-login" %}">Log In via Github</a></p>
+    </form>
+{% endblock content %}

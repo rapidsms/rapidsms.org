@@ -1,5 +1,8 @@
-# Django settings for website project.
+"""Django settings for website project."""
 import os
+
+from django.core.urlresolvers import reverse_lazy
+
 
 PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 PROJECT_ROOT = os.path.abspath(os.path.join(PROJECT_PATH, os.pardir))
@@ -190,3 +193,5 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 AUTH_USER_MODEL = 'users.User'
+LOGIN_URL = reverse_lazy('login')
+LOGIN_REDIRECT_URL = reverse_lazy('home')

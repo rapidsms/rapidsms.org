@@ -1,20 +1,22 @@
 from django import forms
 from django.contrib.auth import forms as auth
+from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
 
 from .models import User
 
 
 class UserCreationForm(auth.UserCreationForm):
     """Modified form that uses our custom User model."""
-    error_messages = {
-        'duplicate_email': 'A user with that email already exists.',
-        'password_mismatch': 'The two password fields didn\'t match.',
-    }
 
     def __init__(self, *args, **kwargs):
         super(UserCreationForm, self).__init__(*args, **kwargs)
         if 'username' in self.fields:
             self.fields.pop('username')
+        if 'duplicate_username' in self.error_messages:
+            self.error_messages.pop('duplicate_username')
+        self.error_messages['duplicate_email'] = 'A user with that email '\
+                'address already exists.'
 
     class Meta:
         model = User
@@ -39,3 +41,23 @@ class UserChangeForm(auth.UserChangeForm):
 
     class Meta:
         model = User
+
+
+class UserRegistrationForm(UserCreationForm):
+
+    def __init__(self, *args, **kwargs):
+        super(UserRegistrationForm, self).__init__(*args, **kwargs)
+        self.error_messages['duplicate_email'] = mark_safe('There is already '
+                'an account associated with this email address. If this is '
+                'your email, you can try to <a href="{login}">log in</a>, '
+                '<a href="{reset}">reset your password</a>, or '
+                '<a href="{github}">log in via Github.</a>.'.format(**{
+                    'login': reverse('login'),
+                    'reset': '#',
+                    'github': reverse('github-login'),
+                }))
+
+    class Meta:
+        model = User
+        fields = ('email', 'name', 'location', 'country', 'website_url',
+                'github_url', 'for_hire')

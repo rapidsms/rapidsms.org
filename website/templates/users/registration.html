@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method="post" action=".">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Register" />
+    </form>
+
+    <p>Have an existing account? <a href="{% url "login" %}">Log In</a></p>
+    <p><a href="{% url "github-login" %}">Log In via Github</a></p>
+{% endblock content %}
