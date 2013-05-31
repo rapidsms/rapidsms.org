@@ -1,18 +1,46 @@
-from django.contrib.auth.models import AbstractUser, UserManager
+from django.contrib.auth import models as auth
+from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils import timezone
 
 from website.projects.models import Country
 
 
-class User(AbstractUser):
+class UserManager(auth.BaseUserManager):
+
+    def create_user(self, email=None, password=None, **extra_fields):
+        now = timezone.now()
+        if not email:
+            raise ValueError('The email must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, is_staff=False, is_active=True,
+                is_superuser=False, last_login=now, date_joined=now,
+                **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password, **extra_fields):
+        u = self.create_user(email=email, password=password, **extra_fields)
+        u.is_staff = True
+        u.is_active = True
+        u.is_superuser = True
+        u.save(using=self._db)
+        return u
+
+
+class User(auth.AbstractBaseUser, auth.PermissionsMixin):
     INDIVIDUAL = 'I'
     ORGANIZATION = 'O'
     USER_TYPES = {
         INDIVIDUAL: 'Individual',
         ORGANIZATION: 'Organization',
     }
-    user_type = models.CharField(max_length=1, choices=USER_TYPES.items())
+    user_type = models.CharField(max_length=1, choices=USER_TYPES.items(),
+            default=INDIVIDUAL)
+    email = models.EmailField('Email address', unique=True)
 
+    name = models.CharField(max_length=255, null=True, blank=True)
     location = models.CharField(max_length=255, null=True, blank=True)
     country = models.ForeignKey(Country, null=True, blank=True)
 
@@ -20,8 +48,25 @@ class User(AbstractUser):
     github_url = models.URLField(null=True, blank=True)
     for_hire = models.BooleanField(default=False)
 
+    is_staff = models.BooleanField('Staff status', default=False,
+            help_text='Designates whether this user can log into the admin site.')
+    is_active = models.BooleanField('Active', default=True,
+            help_text='Designates whether this user should be treated as '
+                'active. Unselect this instead of deleting accounts.')
+    date_joined = models.DateTimeField('Date joined', default=timezone.now)
+
+    objects = UserManager()
+
+    USERNAME_FIELD = 'email'
+
     def __unicode__(self):
         return self.get_full_name()
 
+    def get_absolute_url(self):
+        return reverse('user_detail', args=(self.pk,))
+
     def get_full_name(self):
-        return super(User, self).get_full_name() or self.username
+        return self.name or self.email
+
+    def get_short_name(self):
+        return self.email

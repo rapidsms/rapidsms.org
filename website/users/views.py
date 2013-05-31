@@ -1,10 +1,6 @@
-import base64
-import hashlib
-
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView, ListView, UpdateView
 
-from allaccess.compat import smart_bytes, force_text
 from allaccess.views import OAuthRedirect, OAuthCallback
 
 from .models import User
@@ -48,11 +44,7 @@ class RapidSMSOAuthCallback(OAuthCallback):
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            digest = hashlib.sha1(smart_bytes(access)).digest()
-            username = force_text(base64.urlsafe_b64encode(digest)).replace('=','')
             kwargs = {
-                'user_type': User.INDIVIDUAL,
-                'username': username,
                 'email': email,
                 'location': info['location'],
                 'website_url': info['blog'],
