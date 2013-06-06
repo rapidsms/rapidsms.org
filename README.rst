@@ -50,7 +50,7 @@ Exit the virtualenv and reactivate it to activate the settings just changed::
 
 Create the Postgres database and run the initial syncdb/migrate::
 
-    createdb -E UTF-8 website
+    createdb -E UTF-8 rapidsms_website
     python manage.py syncdb
     python manage.py migrate
 
