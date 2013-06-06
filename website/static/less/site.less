@@ -1,10 +1,59 @@
-html {
-    width: 100%;
-}
+// Table of Contents
 
-body {
-    padding-top: 60px;
-    @media (max-width: 980px) {
-        padding-top: 0px;
-    }
+// -- Variables
+// -- Mixins
+// -- Sitewide
+// -- Homepage
+
+/* Variables
+==================== */
+@import "../flat-ui/less/config.less";
+@white: 	#FFFFFF;
+@black:		#000000;
+
+/* Mixins
+==================== */
+@import "../flat-ui/less/mixins.less";
+
+/* Sitewide
+==================== */
+.navbar {
+	.nav {
+		> li > a { 
+			border: none; 
+			padding: 18px 15px 15px;
+			&:hover {
+				color: @peter-river;
+			}
+		}
+		ul {
+			a {
+				&:hover {
+					background-color: @peter-river;
+				}
+			}
+		}
+	}
+	.brand {
+		border: none;
+		padding: 14px 15px 11px 32px;
+	}
+	form {
+		margin: 0;
+		position: relative;
+		input {
+			margin: 10px 0 10px 15px;
+			background-color: lighten(#2c3e50, 20%);
+			border: none;
+			padding-left: 25px;
+			&:focus {
+				background-color: @white;
+			}
+		}
+		i {
+			position: absolute;
+			top: 18px;
+			left: 25px;
+		}
+	}
 }
