@@ -23,7 +23,8 @@ Getting Started
 If you are cloning the repo, you will also need to initialize submodules from
 the root project directory::
 
-    git clone git://github.com/rapidsms/rapidsms.org.git
+    git clone git://github.com/rapidsms/rapidsms.org.git website/
+    cd website/
     git submodule init
     git submodule update
 
