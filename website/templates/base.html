@@ -9,6 +9,8 @@
     <meta name="author" content="{% block meta-author %}{% endblock %}">
     <meta name="keywords" content="{% block meta-keywords %}{% endblock %}">
     {% block extra-meta %}{% endblock %}
+
+    {% block css %}
     {% if debug %}
     <link rel="stylesheet/less" type="text/css" media="all"
             href="{{ STATIC_URL }}less/site.less">
@@ -20,9 +22,21 @@
             href="{{ STATIC_URL }}less/site.less">
     {% endcompress %}
     {% endif %}
-    {% block extra-css %}{% endblock %}
-    <script type="text/javascript" charset="utf-8"
-            src="{{ STATIC_URL }}js/libs/modernizr-2.5.3.js"></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui/bootstrap/css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui/css/flat-ui.css">
+    {% endblock css %}
+    {% block extra-css %}{% endblock extra-css %}
+
+    {% block header-js %}
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. -->
+    <!--[if lt IE 9]>
+        <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/html5shiv.js"></script>
+    <![endif]-->
+    <script charset="utf-8" src="{{ STATIC_URL }}js/libs/modernizr-2.5.3.js"></script>
+    {% endblock header-js %}
+    {% block extra-header-js %}{% endblock extra-header-js %}
+
     {% block scribbler-files %}
     <link rel="stylesheet"
             href="{{ STATIC_URL }}scribbler/css/scribbler.css" />
@@ -32,50 +46,82 @@
     {% endblock scribbler-files %}
 </head>
 <body>
-    <div class="container">
-        {% block messages %}
-            <div id="messages">
-                {% for msg in messages %}
-                    <div style="color: red;">{{ msg }}</div>
-                {% endfor %}
+    {% block navigation %}
+    <div class="navbar navbar-fixed-top navbar-inverse">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <button type="Button" class="btn btn-navbar"
+                        data-toggle="collapse" data-target=".nav-collapse"></button>
+
+                <span class="brand">RapidSMS</span>
+
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li><a href="#">About</a></li>
+                        <li><a href="https://pypi.python.org/pypi/RapidSMS/">Download</a></li>
+                        <li><a href="http://rapidsms.readthedocs.org/en/develop/">Documentation</a></li>
+                        <li><a href="{% url "project_list" %}">Projects</a></li>
+                        <li><a href="{% url "package_list" %}">Packages</a></li>
+                        <li>
+                            <a href="#">Community</a>
+                            <ul>
+                                <li><a href="#">Blogs</a></li>
+                                <li><a href="{% url "user_list" %}">Users</a></li>
+                            </ul>
+                        </li>
+                        {% if not user.authenticated %}
+                            <li><a href="#">Register/Log In</a></li>
+                        {% else %}
+                            <li><a href="#">Log Out</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <form class="navbar-search pull-right">
+                    <input type="text" class="search-query" placeholder="Search" />
+                </form>
             </div>
-        {% endblock messages %}
-
-        {% block user-info %}
-        <div id="user-info">
-            {% if user.is_authenticated %}
-                <p>logged in as {{ user.email }} (<a href="{% url "logout" %}">logout</a>)</p>
-            {% else %}
-                <p>
-                    not logged in<br />
-                    <a href="{% url "login" %}">Log in</a><br />
-                    <a href="{% url "github_login" %}">Log in via GitHub</a><br />
-                    <a href="{% url "register" %}">Register</a>
-                </p>
-            {% endif %}
         </div>
-        {% endblock user-info %}
-
-        {% block navigation %}
-            <ul>
-                <li><a href="https://pypi.python.org/pypi/RapidSMS/">Download</a></li>
-                <li><a href="http://rapidsms.readthedocs.org/en/develop/">Docs</a></li>
-                <li><a href="{% url "package_list" %}">Packages</a></li>
-                <li><a href="{% url "project_list" %}">Projects</a></li>
-                <li><a href="{% url "user_list" %}">Users</a></li>
-            </ul>
-        {% endblock navigation %}
-
-        <h1>{% block page-header %}{% endblock page-header %}</h1>
-
-        {% block content %}{% endblock %}
     </div>
-    <script type="text/javascript" charset="utf-8"
-            src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    {% endblock navigation %}
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                {% block messages %}
+                    <div id="messages">
+                        {% for msg in messages %}
+                            <div style="color: red;">{{ msg }}</div>
+                        {% endfor %}
+                    </div>
+                {% endblock messages %}
+
+                <h1 class="page-header">
+                    {% block page-header %}{% endblock page-header %}
+                </h1>
+
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    {% block js %}
+    <script charset="utf-8" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/jquery.ui.touch-punch.min.js"></script>
+    <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/bootstrap.min.js"></script>
+    <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/bootstrap-select.js"></script>
+    <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/bootstrap-switch.js"></script>
+    <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/flatui-checkbox.js"></script>
+    <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/flatui-radio.js"></script>
+    <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/jquery.tagsinput.js"></script>
+    <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/jquery.placeholder.js"></script>
+    <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/jquery.stacktable.js"></script>
+    <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/application.js"></script>
     {% compress js %}
-    <script type="text/javascript" charset="utf-8"
+    <script charset="utf-8"
             src="{{ STATIC_URL }}js/site.js"></script>
     {% endcompress %}
+    {% endblock js %}
     {% block extra-js %}{% endblock %}
 </body>
 </html>
