@@ -10,7 +10,7 @@ class UserManager(auth.BaseUserManager):
 
     def create_user(self, email, password, name, **extra_fields):
         now = timezone.now()
-        if not all(email, password, name):
+        if not all([email, password, name]):
             raise ValueError('Email, password, and name must be given')
         email = self.normalize_email(email)
         user = self.model(email=email, name=name, is_staff=False,
