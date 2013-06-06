@@ -182,11 +182,15 @@ def deploy(branch=None):
             if requirements or migrations:
                 supervisor_command('stop %(project)s:*' % env)
             run("git reset --hard origin/%(branch)s" % env)
+            run("git submodule update")
     else:
         # Initial clone
         run('git clone %(repo)s %(code_root)s' % env)
+        run('git submodule init')
+        run('git submodule update')
         with cd(env.code_root):
             run('git checkout %(branch)s' % env)
+            run('git submodule update')
         requirements = True
         migrations = True
         # Add code root to the Python path

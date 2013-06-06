@@ -20,6 +20,16 @@ config.
 Getting Started
 ---------------
 
+If you are cloning the repo, you will also need to initialize submodules from
+the root project directory::
+
+    git clone git://github.com/rapidsms/rapidsms.org.git
+    git submodule init
+    git submodule update
+
+Whenever you pull down from the repository, make sure to run ``git submodule
+update``.
+
 To setup your local environment you should create a virtualenv and install the
 necessary requirements::
 
