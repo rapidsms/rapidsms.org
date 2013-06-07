@@ -1,0 +1,121 @@
+// Table of Contents
+
+// -- Variables
+// -- Mixins
+// -- Sitewide
+// -- Homepage
+
+/* Variables
+==================== */
+@import "../flat-ui/less/config.less";
+@white: 	#FFFFFF;
+@black:		#000000;
+
+/* Mixins
+==================== */
+@import "../flat-ui/less/mixins.less";
+
+/* Sitewide
+==================== */
+#messages {
+	text-align: center;
+}
+
+.navbar {
+	.nav {
+		> li > a { 
+			border: none; 
+			padding: 18px 15px 15px;
+			&:hover, &:focus {
+				color: @peter-river;
+				border: none;
+			}
+			@media (max-width: 979px) {
+				color: @white !important;
+				&:hover, &:focus {
+					background-color: @peter-river !important;
+				}
+			}
+		}
+		ul {
+			a {
+				&:hover {
+					background-color: @peter-river;
+				}
+			}
+		}
+	}
+	.navbar-inner {
+		.border-radius(0);
+	}
+	.brand {
+		border: none;
+		padding: 14px 15px 11px 0;
+		@media (max-width: 767px) {
+			padding-left: 15px;
+		}
+	}
+	form {
+		margin: 0;
+		position: relative;
+		input {
+			margin: 10px 0 10px 15px;
+			background-color: lighten(#2c3e50, 20%);
+			border: none;
+			padding-left: 25px;
+			&:focus {
+				background-color: @white;
+			}
+		}
+		i {
+			position: absolute;
+			top: 18px;
+			left: 25px;
+		}
+	}
+	@media (max-width: 767px) {
+		margin-left: -20px;
+		margin-right: -20px;
+	}
+	.btn-navbar {
+		&:hover, &:focus {
+			color: @peter-river;
+		}
+	}
+}
+
+/* Homepage
+==================== */
+body#home {
+	#masthead {
+		text-align: center;
+		color: @white;
+		background: url('../images/home-masthead-bkg.jpg') top center no-repeat;
+		background-size: cover;
+		// width: 100%;
+		padding-top: 50px;
+		padding-bottom: 50px;
+		@media (max-width: 767px) {
+			margin-left: -20px;
+			margin-right: -20px;
+		}
+		header {
+			.clearfix;
+			padding-left: 20px;
+    		padding-right: 20px;
+			small { 
+				display: block; 
+				font-size: 18px;
+				padding: 10px 0;
+			}
+			p { 
+				font-size: 22px;
+				margin: 0;
+				@media (max-width: 767px) {
+					font-size: 18px;
+				}
+			}
+		}
+	}	
+}
+
