@@ -47,12 +47,12 @@
             src="{{ STATIC_URL }}scribbler/libs/require.js"></script>
     {% endblock scribbler-files %}
 </head>
-<body>
+<body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
 
     {% block masthead %}{% endblock %}
 
     {% block navigation %}
-    <div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar navbar-inverse">
         <div class="navbar-inner">
             <div class="container-fluid">
                 <button type="Button" class="btn btn-navbar"
@@ -109,7 +109,7 @@
         {% endif %}
         {% endblock messages %}
         
-        <div id="content">
+        <div id="content" class="container-fluid">
         {% block content %}{% endblock %}
         </div>
     </div>
