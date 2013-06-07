@@ -3,11 +3,11 @@
 <html lang="en" class="no-js">
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}{% endblock %}</title>
+    <title>RapidSMS: {% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{% block meta-description %}{% endblock %}">
-    <meta name="author" content="{% block meta-author %}{% endblock %}">
-    <meta name="keywords" content="{% block meta-keywords %}{% endblock %}">
+    <meta name="description" content="{% block meta-description %}RapidSMS is a free and open-source Django based framework for dynamic data collection, logistics coordination and communication, leveraging basic short message service (SMS) mobile phone technology. {% endblock %}">
+    <meta name="author" content="{% block meta-author %}RapidSMS{% endblock %}">
+    <meta name="keywords" content="{% block meta-keywords %}SMS, mhealth, mobile health, python, django, open source, framework, sms applications{% endblock %}">
     {% block extra-meta %}{% endblock %}
 
     {% block css %}
@@ -48,7 +48,9 @@
     {% endblock scribbler-files %}
 </head>
 <body>
+
     {% block masthead %}{% endblock %}
+
     {% block navigation %}
     <div class="navbar navbar-fixed-top navbar-inverse">
         <div class="navbar-inner">
@@ -90,24 +92,25 @@
         </div>
     </div>
     {% endblock navigation %}
-
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="span12">
-                {% block messages %}
-                    <div id="messages">
+    
+    <div id="page">
+        {% block messages %}
+        {% if messages %}
+            <div class="container-fluid">
+                <div id="messages" class="row-fluid">
+                    <div class="alert span12">
+                        This is a message.
                         {% for msg in messages %}
-                            <div style="color: red;">{{ msg }}</div>
+                            {{ msg }}
                         {% endfor %}
                     </div>
-                {% endblock messages %}
-
-                <h1 class="page-header">
-                    {% block page-header %}{% endblock page-header %}
-                </h1>
-
-                {% block content %}{% endblock %}
+                </div>
             </div>
+        {% endif %}
+        {% endblock messages %}
+        
+        <div id="content">
+        {% block content %}{% endblock %}
         </div>
     </div>
 

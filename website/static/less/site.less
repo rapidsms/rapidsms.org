@@ -17,6 +17,18 @@
 
 /* Sitewide
 ==================== */
+#page {
+	padding-top: 80px;	
+	padding-bottom: 25px;
+	@media (max-width: 979px) {
+		padding-top: 0;
+	}
+}
+
+#messages {
+	text-align: center;
+}
+
 .navbar {
 	.nav {
 		> li > a { 
@@ -36,7 +48,10 @@
 	}
 	.brand {
 		border: none;
-		padding: 14px 15px 11px 32px;
+		padding: 14px 15px 11px 0;
+		@media (max-width: 767px) {
+			padding-left: 15px;
+		}
 	}
 	form {
 		margin: 0;
@@ -46,6 +61,7 @@
 			background-color: lighten(#2c3e50, 20%);
 			border: none;
 			padding-left: 25px;
+			width: 95%;
 			&:focus {
 				background-color: @white;
 			}
