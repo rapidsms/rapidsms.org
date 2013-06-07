@@ -195,3 +195,11 @@ AUTHENTICATION_BACKENDS = [
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
+
+
+# Don't migrate allaccess. Its migrations depend on the Django user model,
+# which we don't use. If future versions of south introduce migrations we
+# might have to do some manual work.
+SOUTH_MIGRATION_MODULES = {
+    'allaccess': 'ignore',
+}
