@@ -149,6 +149,7 @@ INSTALLED_APPS = (
     'scribbler',
     'django_countries',
     'allaccess',
+    'widget_tweaks',
 )
 
 # A sample logging configuration. The only tangible logging
