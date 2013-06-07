@@ -13,8 +13,8 @@
     {% block css %}
     <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui/bootstrap/css/bootstrap-responsive.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui/css/flat-ui.css">  
-
+    <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui/css/flat-ui.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css">
     {% if debug %}
     <link rel="stylesheet/less" type="text/css" media="all"
             href="{{ STATIC_URL }}less/site.less">
@@ -47,7 +47,7 @@
             src="{{ STATIC_URL }}scribbler/libs/require.js"></script>
     {% endblock scribbler-files %}
 </head>
-<body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
+<body id="{% block body_id %}{% endblock body_id %}" class="{% block body_class %}{% endblock body_class %}">
 
     {% block masthead %}{% endblock %}
 
@@ -76,8 +76,8 @@
                                 <li><a href="{% url "user_list" %}">Users</a></li>
                             </ul>
                         </li>
-                        {% if not user.authenticated %}
-                            <li><a href="#">Register/Log In</a></li>
+                        {% if not user.is_authenticated %}
+                            <li><a href="{% url "login" %}">Register/Log In</a></li>
                         {% else %}
                             <li><a href="#">Log Out</a></li>
                         {% endif %}
@@ -87,28 +87,27 @@
                         <i class="fui-search"></i>
                     </form>
                 </div>
-                
+
             </div>
         </div>
     </div>
     {% endblock navigation %}
-    
+
     <div id="page">
-        {% block messages %}
-        {% if messages %}
-            <div class="container-fluid">
-                <div id="messages" class="row-fluid">
-                    <div class="alert span12">
-                        This is a message.
-                        {% for msg in messages %}
-                            {{ msg }}
-                        {% endfor %}
-                    </div>
+        {% block messages-outer %}
+        <div class="container-fluid">
+            <div id="messages" class="row-fluid">
+                <div class="span12">
+                    {% block messages %}
+                    {% for msg in messages %}
+                        {% include "website/includes/message.html" with msg=msg %}
+                    {% endfor %}
+                    {% endblock messages %}
                 </div>
             </div>
-        {% endif %}
-        {% endblock messages %}
-        
+        </div>
+        {% endblock messages-outer %}
+
         <div id="content" class="container-fluid">
         {% block content %}{% endblock %}
         </div>
