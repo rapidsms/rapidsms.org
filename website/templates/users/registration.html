@@ -4,12 +4,23 @@
 {% block title %}Register{% endblock title %}
 {% block body_id %}register{% endblock body_id %}
 
+{% block messages %}
+    {{ block.super }}
+    {% if form.non_field_errors %}
+        {% include "website/includes/message.html" with msg=form.non_field_errors alert_type="error" %}
+    {% endif %}
+{% endblock messages %}
+
 {% block content %}
+<div class="page-header">
+    <h1>Register for an Account</h1>
+</div>
+
 <div id="register">
     <form method="post" action="{% url "register" %}">
         {% csrf_token %}
         {% for field in form %}
-        <div class="control-group">
+        <div class="control-group{% if field.errors %} error{% endif %}">
             <div class="controls">
                 {% ifnotequal field.name "for_hire" %}
                 {% with "placeholder:"|add:field.label|title as placeholder %}
@@ -18,6 +29,7 @@
                 {% else %}
                 <label class="checkbox" for="{{ field.id }}">{{ field.label }}{{ field|attr:"data-toggle:checkbox" }}</span></label>
                 {% endifnotequal %}
+                {% if field.errors %}<span class="help-inline">{{ field.errors.as_text|safe }}</span>{% endif %}
             </div>
         </div>
         {% endfor %}

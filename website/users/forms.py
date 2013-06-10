@@ -48,12 +48,12 @@ class UserRegistrationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(UserRegistrationForm, self).__init__(*args, **kwargs)
         self.error_messages['duplicate_email'] = mark_safe('There is already '
-                'an account associated with this email address. If this is '
-                'your email, you can try to <a href="{login}">log in</a>, '
-                '<a href="{reset}">reset your password</a>, or '
-                '<a href="{github}">log in via GitHub.</a>.'.format(**{
+                'an account associated with this email address.<br /> If this is '
+                'your email, you can try to <a href="{login}">log in with your '
+                'email address</a>, <a href="{github}">log in via GitHub.</a>, '
+                'or <a href="{reset}">reset your password</a>.'.format(**{
                     'login': reverse('login'),
-                    'reset': '#',
+                    'reset': reverse('reset_password'),
                     'github': reverse('github_login'),
                 }))
         self.fields['country'].empty_label = 'Country'

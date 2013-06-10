@@ -158,12 +158,17 @@ body#login {
 }
 
 body#register {
-    text-align: center;
+    div#register, div#links {
+        text-align: center;
+    }
     div#register {
         padding: 30px 0;
     }
     label.checkbox {
         display: inline;
         padding-top: 0px;
+    }
+    .control-group.error .help-inline {
+        display: block;
     }
 }
