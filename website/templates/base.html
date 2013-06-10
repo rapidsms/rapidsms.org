@@ -45,7 +45,6 @@
     {% endblock scribbler-files %}
 </head>
 <body id="{% block body_id %}{% endblock body_id %}" class="{% block body_class %}{% endblock body_class %}">
-
     {% block masthead %}{% endblock %}
 
     {% block navigation %}
@@ -61,7 +60,7 @@
 
                 <div class="nav-collapse collapse">
                     <ul class="nav">
-                        <li><a href="#">About</a></li>
+                        <li><a href="{% url "about" %}">About</a></li>
                         <li><a href="https://pypi.python.org/pypi/RapidSMS/">Download</a></li>
                         <li><a href="http://rapidsms.readthedocs.org/en/develop/">Documentation</a></li>
                         <li><a href="{% url "project_list" %}">Projects</a></li>
@@ -91,23 +90,45 @@
     {% endblock navigation %}
 
     <div id="page">
-        {% block messages-outer %}
-        <div class="container-fluid">
-            <div id="messages" class="row-fluid">
-                <div class="span12">
-                    {% block messages %}
-                    {% for msg in messages %}
-                        {% include "website/includes/message.html" with msg=msg %}
-                    {% endfor %}
-                    {% endblock messages %}
-                </div>
+        {% block content-outer %}
+        <div id="content" class="container-fluid">
+            <div class="span12">
+                {% block messages-outer %}
+                    <div id="messages" class="row-fluid">
+                        {% block messages %}
+                        {% for msg in messages %}
+                            {% include "website/includes/message.html" with msg=msg %}
+                        {% endfor %}
+                        {% endblock messages %}
+                    </div>
+                {% endblock messages-outer %}
+
+                {% block content %}{% endblock %}
+
             </div>
         </div>
-        {% endblock messages-outer %}
+        {% endblock content-outer %}
 
-        <div id="content" class="container-fluid">
-        {% block content %}{% endblock %}
-        </div>
+        {% block footer-outer %}
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="span3">
+                    <p>RapidSMS</p>
+                    <p>&copy; Copyright 2013</p>
+                </div>
+                <div class="span9">
+                    {% block footer %}
+                    <ul class="pull-right">
+                        <li><a href="{% url "about" %}">About</a></li>
+                        <li><a href="{% url "help" %}">Help</a></li>
+                        <li><a href="https://pypi.python.org/pypi/RapidSMS/">Download</a></li>
+                        <li><a href="http://rapidsms.readthedocs.org/en/develop/">Documentation</a></li>
+                    </ul>
+                    {% endblock footer %}
+                </div>
+            </div>
+        </footer>
+        {% endblock footer-outer %}
     </div>
 
     {% block js %}
