@@ -56,6 +56,9 @@ class UserRegistrationForm(UserCreationForm):
                     'reset': '#',
                     'github': reverse('github_login'),
                 }))
+        self.fields['country'].empty_label = 'Country'
+        self.fields['password1'].label = 'Password'
+        self.fields['password2'].label = 'Confirm Password'
 
     class Meta:
         model = User

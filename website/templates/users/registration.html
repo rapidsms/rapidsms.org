@@ -1,12 +1,35 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Register{% endblock title %}
+{% block body_id %}register{% endblock body_id %}
 
 {% block content %}
-    <form method="post" action=".">
+<div id="register">
+    <form method="post" action="{% url "register" %}">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Register" />
+        {% for field in form %}
+        <div class="control-group">
+            <div class="controls">
+                {% ifnotequal field.name "for_hire" %}
+                {% with "placeholder:"|add:field.label|title as placeholder %}
+                {{ field|attr:placeholder }}
+                {% endwith %}
+                {% else %}
+                <label class="checkbox" for="{{ field.id }}">{{ field.label }}{{ field|attr:"data-toggle:checkbox" }}</span></label>
+                {% endifnotequal %}
+            </div>
+        </div>
+        {% endfor %}
+        <div class="control-group">
+            <div class="controls">
+                <input class="btn btn-inverse" type="submit" value="Register" />
+            </div>
+        </div>
     </form>
+</div>
 
+<div id="links">
     <p>Have an existing account? <a href="{% url "login" %}">Log In</a></p>
-    <p><a href="{% url "github_login" %}">Log In via GitHub</a></p>
+</div>
 {% endblock content %}

@@ -44,9 +44,9 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255, null=True, blank=True)
     country = models.ForeignKey(Country, null=True, blank=True)
-    website_url = models.URLField(null=True, blank=True)
-    github_url = models.URLField(null=True, blank=True)
-    for_hire = models.BooleanField(default=False)
+    website_url = models.URLField('Website URL', null=True, blank=True)
+    github_url = models.URLField('Github URL', null=True, blank=True)
+    for_hire = models.BooleanField('Available for hire?', default=False)
 
     is_staff = models.BooleanField('Staff status', default=False,
             help_text='Designates whether this user can log into the admin site.')
