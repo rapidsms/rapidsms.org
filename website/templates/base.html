@@ -48,45 +48,7 @@
     {% block masthead %}{% endblock %}
 
     {% block navigation %}
-    <div class="navbar navbar-inverse">
-        <div class="navbar-inner">
-            <div class="container-fluid">
-                <button type="Button" class="btn btn-navbar"
-                        data-toggle="collapse" data-target=".nav-collapse"></button>
-
-                <a href="{% url "home" %}" class="brand">
-                    <img src="{{ STATIC_URL }}images/rapidsms-logo-sm.png" alt="RapidSMS">
-                </a>
-
-                <div class="nav-collapse collapse">
-                    <ul class="nav">
-                        <li><a href="{% url "about" %}">About</a></li>
-                        <li><a href="https://pypi.python.org/pypi/RapidSMS/">Download</a></li>
-                        <li><a href="http://rapidsms.readthedocs.org/en/develop/">Documentation</a></li>
-                        <li><a href="{% url "project_list" %}">Projects</a></li>
-                        <li><a href="{% url "package_list" %}">Packages</a></li>
-                        <li>
-                            <a href="#">Community</a>
-                            <ul>
-                                <li><a href="#">Blogs</a></li>
-                                <li><a href="{% url "user_list" %}">Users</a></li>
-                            </ul>
-                        </li>
-                        {% if not user.is_authenticated %}
-                            <li><a href="{% url "login" %}">Register/Log In</a></li>
-                        {% else %}
-                            <li><a href="{% url "logout" %}">Log Out</a></li>
-                        {% endif %}
-                    </ul>
-                    <form id="search-form" class="span2">
-                        <input type="search"  placeholder="SEARCH" />
-                        <i class="fui-search"></i>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
+        {% include "includes/navigation.html" %}
     {% endblock navigation %}
 
     <div id="page">
@@ -97,7 +59,7 @@
                     <div id="messages" class="row-fluid">
                         {% block messages %}
                         {% for msg in messages %}
-                            {% include "website/includes/message.html" with msg=msg %}
+                            {% include "includes/message.html" with msg=msg %}
                         {% endfor %}
                         {% endblock messages %}
                     </div>
@@ -109,26 +71,9 @@
         </div>
         {% endblock content-outer %}
 
-        {% block footer-outer %}
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="span3">
-                    <p>RapidSMS</p>
-                    <p>&copy; Copyright 2013</p>
-                </div>
-                <div class="span9">
-                    {% block footer %}
-                    <ul class="pull-right">
-                        <li><a href="{% url "about" %}">About</a></li>
-                        <li><a href="{% url "help" %}">Help</a></li>
-                        <li><a href="https://pypi.python.org/pypi/RapidSMS/">Download</a></li>
-                        <li><a href="http://rapidsms.readthedocs.org/en/develop/">Documentation</a></li>
-                    </ul>
-                    {% endblock footer %}
-                </div>
-            </div>
-        </footer>
-        {% endblock footer-outer %}
+        {% block footer %}
+            {% include "includes/footer.html" %}
+        {% endblock footer %}
     </div>
 
     {% block js %}

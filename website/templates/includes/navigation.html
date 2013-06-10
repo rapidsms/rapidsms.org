@@ -1,0 +1,39 @@
+<div class="navbar navbar-inverse">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <button type="Button" class="btn btn-navbar"
+                    data-toggle="collapse" data-target=".nav-collapse"></button>
+
+            <a href="{% url "home" %}" class="brand">
+                <img src="{{ STATIC_URL }}images/rapidsms-logo-sm.png" alt="RapidSMS">
+            </a>
+
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li><a href="{% url "about" %}">About</a></li>
+                    <li><a href="https://pypi.python.org/pypi/RapidSMS/">Download</a></li>
+                    <li><a href="http://rapidsms.readthedocs.org/en/develop/">Documentation</a></li>
+                    <li><a href="{% url "project_list" %}">Projects</a></li>
+                    <li><a href="{% url "package_list" %}">Packages</a></li>
+                    <li>
+                        <a href="#">Community</a>
+                        <ul>
+                            <li><a href="#">Blogs</a></li>
+                            <li><a href="{% url "user_list" %}">Users</a></li>
+                        </ul>
+                    </li>
+                    {% if not user.is_authenticated %}
+                        <li><a href="{% url "login" %}">Register/Log In</a></li>
+                    {% else %}
+                        <li><a href="{% url "logout" %}">Log Out</a></li>
+                    {% endif %}
+                </ul>
+                <form id="search-form" class="span2">
+                    <input type="search"  placeholder="SEARCH" />
+                    <i class="fui-search"></i>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -7,7 +7,7 @@
 {% block messages %}
     {{ block.super }}
     {% if form.errors %}
-        {% include "website/includes/message.html" with msg="Your username and password didn't match our records. Please try again." alert_type="error" %}
+        {% include "includes/message.html" with msg="Your username and password didn't match our records. Please try again." alert_type="error" %}
     {% endif %}
 {% endblock messages %}
 

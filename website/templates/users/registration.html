@@ -7,7 +7,7 @@
 {% block messages %}
     {{ block.super }}
     {% if form.non_field_errors %}
-        {% include "website/includes/message.html" with msg=form.non_field_errors alert_type="error" %}
+        {% include "includes/message.html" with msg=form.non_field_errors alert_type="error" %}
     {% endif %}
 {% endblock messages %}
 
