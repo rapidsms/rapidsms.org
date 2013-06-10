@@ -21,14 +21,24 @@
         {% csrf_token %}
         {% for field in form %}
         <div class="control-group{% if field.errors %} error{% endif %}">
-            <div class="controls">
-                {% ifnotequal field.name "for_hire" %}
-                {% with "placeholder:"|add:field.label|title as placeholder %}
-                {{ field|attr:placeholder }}
-                {% endwith %}
+            <div class="controls" id="controls_{{ field.html_name }}">
+                {% ifequal field.name "for_hire" %}
+                    <label class="checkbox" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <div class="switch" data-on-label="Yes" data-off-label="No">
+                        {{ field }}
+                    </div>
+                {% else %}{% ifequal field.name "user_type" %}
+                    <label for="{{ field.html_name }}">{{ field.label }}</label>
+                    {% for value, label in field.field.choices %}
+                    <label class="radio">
+                        <input name="{{ field.html_name }}" type="radio" value="{{ value }}" data-toggle="radio" />{{ label }}
+                    </label>
+                    {% endfor %}
                 {% else %}
-                <label class="checkbox" for="{{ field.id }}">{{ field.label }}{{ field|attr:"data-toggle:checkbox" }}</span></label>
-                {% endifnotequal %}
+                    {% with "placeholder:"|add:field.label|title as placeholder %}
+                    {{ field|attr:placeholder }}
+                    {% endwith %}
+                {% endifequal %}{% endifequal %}
                 {% if field.errors %}<span class="help-inline">{{ field.errors.as_text|safe }}</span>{% endif %}
             </div>
         </div>

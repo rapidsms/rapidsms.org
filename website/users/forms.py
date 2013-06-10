@@ -44,14 +44,16 @@ class UserChangeForm(auth.UserChangeForm):
 
 
 class UserRegistrationForm(UserCreationForm):
+    user_type = forms.ChoiceField(label='Register as an...',
+            widget=forms.RadioSelect, choices=User.USER_TYPES.items())
 
     def __init__(self, *args, **kwargs):
         super(UserRegistrationForm, self).__init__(*args, **kwargs)
         self.error_messages['duplicate_email'] = mark_safe('There is already '
-                'an account associated with this email address.<br /> If this is '
-                'your email, you can try to <a href="{login}">log in with your '
-                'email address</a>, <a href="{github}">log in via GitHub.</a>, '
-                'or <a href="{reset}">reset your password</a>.'.format(**{
+                'an account associated with this email address.<br /> If this '
+                'is your email, you can try to <a href="{login}">log in with '
+                'your email address or GitHub account</a> or '
+                '<a href="{reset}">reset your password</a>.'.format(**{
                     'login': reverse('login'),
                     'reset': reverse('reset_password'),
                     'github': reverse('github_login'),
@@ -59,8 +61,10 @@ class UserRegistrationForm(UserCreationForm):
         self.fields['country'].empty_label = 'Country'
         self.fields['password1'].label = 'Password'
         self.fields['password2'].label = 'Confirm Password'
+        self.fields['for_hire'].label = 'Are you available for '\
+                'RapidSMS-related hire or consulting?'
 
     class Meta:
         model = User
-        fields = ('email', 'name', 'location', 'country', 'website_url',
-                'github_url', 'for_hire')
+        fields = ('user_type', 'name', 'location', 'country', 'email',
+                'website_url', 'github_url', 'for_hire')

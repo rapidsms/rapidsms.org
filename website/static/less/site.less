@@ -16,26 +16,12 @@
 /* Variables
 ==================== */
 
+@flatUIPath: '/static/flat-ui/';
 @navbarCollapseWidth: 1024px;
 
 
 /* Sitewide
 ==================== */
-
-// Override font styles to update font path relative to this file.
-// The browser still requests the other files, and gets 404 responses.
-// TODO: Update Flat UI repo to use a variable.
-@fontPath: '../flat-ui/fonts/';
-@font-face {
-    font-family: 'Flat-UI-Icons';
-	src:url('@{fontPath}Flat-UI-Icons.eot');
-	src:url('@{fontPath}Flat-UI-Icons.eot?#iefix') format('embedded-opentype'),
-		url('@{fontPath}Flat-UI-Icons.woff') format('woff'),
-		url('@{fontPath}Flat-UI-Icons.ttf') format('truetype'),
-		url('@{fontPath}Flat-UI-Icons.svg#Flat-UI-Icons') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
 
 .page-header {
     margin-top: 0px;
@@ -182,10 +168,36 @@ body#register {
         padding: 30px 0;
     }
     label.checkbox {
-        display: inline;
+        display: inline-block;
+        vertical-align: top;
+        margin: 0;
+        padding: 8px 0 0 0;
+    }
+    .controls#controls_user_type {
+        width: 192px;
+        margin: 0 auto;
+        text-align: left;
+    }
+    .control-group.error {
+        .icons, label {
+            .input-states(#b94a48);
+        }
+    }
+    .controls#controls_for_hire {
+        width: 192px;
+        margin: 0 auto;
+        label {
+            text-align: left;
+        }
+    }
+    label.radio {
+        margin-left: 30px;
         padding-top: 0px;
     }
     .control-group.error .help-inline {
         display: block;
+    }
+    .switch {
+        margin-top: 2px;
     }
 }
