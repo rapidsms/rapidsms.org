@@ -12,6 +12,8 @@
 {% endblock messages %}
 
 {% block content %}
+<div class="span12">
+
 <div class="page-header">
     <h1>Register for an Account</h1>
 </div>
@@ -34,11 +36,13 @@
                         <input name="{{ field.html_name }}" type="radio" value="{{ value }}" data-toggle="radio" />{{ label }}
                     </label>
                     {% endfor %}
+                {% else %}{% ifequal field.name "country" %}
+                    {{ field|add_class:"select-block" }}
                 {% else %}
                     {% with "placeholder:"|add:field.label|title as placeholder %}
                     {{ field|attr:placeholder }}
                     {% endwith %}
-                {% endifequal %}{% endifequal %}
+                {% endifequal %}{% endifequal %}{% endifequal %}
                 {% if field.errors %}<span class="help-inline">{{ field.errors.as_text|safe }}</span>{% endif %}
             </div>
         </div>
@@ -53,5 +57,6 @@
 
 <div id="links">
     <p>Have an existing account? <a href="{% url "login" %}">Log In</a></p>
+</div>
 </div>
 {% endblock content %}

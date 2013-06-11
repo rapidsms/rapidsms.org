@@ -22,6 +22,21 @@
 /* Sitewide
 ==================== */
 
+@inputWidth: 192px;
+
+
+.row-fluid {
+    textarea, input[type="text"], input[type="password"],
+    input[type="datetime"], input[type="datetime-local"],
+    input[type="date"], input[type="month"], input[type="time"],
+    input[type="week"], input[type="number"], input[type="email"],
+    input[type="url"], input[type="search"], input[type="tel"],
+    input[type="color"], .uneditable-input {
+        height: 21px;
+        width: @inputWidth;
+    }
+}
+
 .page-header {
     margin-top: 0px;
 }
@@ -181,20 +196,17 @@ body#register #content {
         margin: 0;
         padding: 8px 0 0 0;
     }
-    .controls#controls_user_type {
-        width: 192px;
-        margin: 0 auto;
-        text-align: left;
-    }
     .control-group.error {
         .icons, label {
             .input-states(#b94a48);
         }
     }
-    .controls#controls_for_hire {
-        width: 192px;
-        margin: 0 auto;
-        label {
+    .controls {
+        &#controls_user_type, &#controls_for_hire {
+            width: @inputWidth;
+            margin: 0 auto;
+        }
+        &#controls_user_type, &#controls_for_hire label {
             text-align: left;
         }
     }

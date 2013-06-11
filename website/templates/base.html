@@ -3,12 +3,12 @@
 <html lang="en" class="no-js">
 <head>
     <meta charset="utf-8">
-    <title>RapidSMS: {% block title %}{% endblock %}</title>
+    <title>RapidSMS: {% block title %}{% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{% block meta-description %}RapidSMS is a free and open-source Django based framework for dynamic data collection, logistics coordination and communication, leveraging basic short message service (SMS) mobile phone technology. {% endblock %}">
-    <meta name="author" content="{% block meta-author %}RapidSMS{% endblock %}">
-    <meta name="keywords" content="{% block meta-keywords %}SMS, mhealth, mobile health, python, django, open source, framework, sms applications{% endblock %}">
-    {% block extra-meta %}{% endblock %}
+    <meta name="description" content="{% block meta-description %}RapidSMS is a free and open-source Django based framework for dynamic data collection, logistics coordination and communication, leveraging basic short message service (SMS) mobile phone technology. {% endblock meta-description %}">
+    <meta name="author" content="{% block meta-author %}RapidSMS{% endblock meta-author %}">
+    <meta name="keywords" content="{% block meta-keywords %}SMS, mhealth, mobile health, python, django, open source, framework, sms applications{% endblock meta-keywords %}">
+    {% block extra-meta %}{% endblock extra-meta %}
 
     {% block css %}
     <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui/bootstrap/css/bootstrap.css">
@@ -48,7 +48,7 @@
     {% endblock scribbler-files %}
 </head>
 <body id="{% block body_id %}{% endblock body_id %}" class="{% block body_class %}{% endblock body_class %}">
-    {% block masthead %}{% endblock %}
+    {% block masthead %}{% endblock masthead %}
 
     {% block navigation %}
         {% include "includes/navigation.html" %}
@@ -56,19 +56,18 @@
 
     {% block content-outer %}
     <div id="content" class="container-fluid">
-        <div class="span12">
-            {% block messages-outer %}
-                <div id="messages" class="row-fluid">
+        <div class="row-fluid">
+                {% block messages-outer %}
+                <div id="messages" class="span12">
                     {% block messages %}
                     {% for msg in messages %}
                         {% include "includes/message.html" with msg=msg %}
                     {% endfor %}
                     {% endblock messages %}
                 </div>
-            {% endblock messages-outer %}
+                {% endblock messages-outer %}
 
-            {% block content %}{% endblock %}
-
+                {% block content %}{% endblock content %}
         </div>
     </div>
     {% endblock content-outer %}
@@ -95,6 +94,6 @@
             src="{{ STATIC_URL }}js/site.js"></script>
     {% endcompress %}
     {% endblock js %}
-    {% block extra-js %}{% endblock %}
+    {% block extra-js %}{% endblock extra-js %}
 </body>
 </html>
