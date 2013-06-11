@@ -16,6 +16,8 @@ env.repo = u'git@github.com:rapidsms/rapidsms.org.git'
 env.shell = '/bin/bash -c'
 env.disable_known_hosts = True
 env.forward_agent = True
+env.solr_base_dir = '/usr/local/'
+env.solr_dir = os.path.join(env.solr_base_dir, 'solr-4.3.0')
 
 
 @task
@@ -37,7 +39,7 @@ def staging():
 @task
 def production():
     env.environment = 'production'
-    env.hosts = [] # FIXME: Add production hosts
+    env.hosts = []  # FIXME: Add production hosts
     env.branch = 'master'
     setup_path()
 
@@ -49,6 +51,7 @@ def setup_path():
     env.virtualenv_root = os.path.join(env.root, 'env')
     env.db = '%s_%s' % (env.project, env.environment)
     env.settings = '%(project)s.settings.%(environment)s' % env
+    env.solr_project_dir = os.path.join(env.solr_dir, u'%(project)s' % env)
 
 
 @task
@@ -186,9 +189,9 @@ def deploy(branch=None):
     else:
         # Initial clone
         run('git clone %(repo)s %(code_root)s' % env)
-        run('git submodule init')
-        run('git submodule update')
         with cd(env.code_root):
+            run('git submodule init')
+            run('git submodule update')
             run('git checkout %(branch)s' % env)
             run('git submodule update')
         requirements = True
@@ -206,6 +209,7 @@ def deploy(branch=None):
         syncdb()
     collectstatic()
     supervisor_command('restart %(project)s:*' % env)
+    configure_solr()
 
 
 @task
@@ -228,3 +232,22 @@ def load_db_dump(dump_file):
     temp_file = os.path.join(env.home, '%(environment)s.sql' % env)
     put(dump_file, temp_file, use_sudo=True)
     sudo('psql -d %s -f %s' % (env.db, temp_file), user=env.project_user)
+
+
+@task
+def configure_solr():
+    """
+    Update solr configuration.
+
+    The schema.xml is stored in the repo but it should be generated from the
+    django-haystack management command: build_solr_schema
+    """
+
+    local_conf = os.path.join(CONF_ROOT, 'search', 'solrconfig.xml')
+    remote_conf = os.path.join(env.solr_project_dir, 'solr', 'conf', 'solrconfig.xml')
+    put(local_conf, remote_conf, use_sudo=True)
+    local_conf = os.path.join(CONF_ROOT, 'search', 'schema.xml')
+    remote_conf = os.path.join(env.solr_project_dir, 'solr', 'conf', 'schema.xml')
+    put(local_conf, remote_conf, use_sudo=True)
+    supervisor_command('update')
+    supervisor_command('restart %(project)s-solr' % env)

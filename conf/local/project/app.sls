@@ -107,6 +107,7 @@ extend:
       - watch:
         - file: group_conf
         - file: gunicorn_conf
+        - file: solr_conf
 
 npm:
   pkg:
@@ -122,3 +123,26 @@ less:
   file.symlink:
     - name: /usr/bin/lessc
     - target: /usr/local/bin/lessc
+
+openjdk-7-jre-headless:
+  pkg:
+    - installed
+
+solr_conf:
+  file.managed:
+    - name: /etc/supervisor/conf.d/{{ pillar['project_name'] }}-solr.conf
+    - source: salt://project/supervisor/solr.conf
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
+    - context:
+        log_dir: "/var/www/{{ pillar['project_name']}}/log"
+    - require:
+      - pkg: openjdk-7-jre-headless
+      - file: log_dir
+
+solr:
+  cmd.script:
+    - name: salt://project/solr-install.sh
+    - runas: root
