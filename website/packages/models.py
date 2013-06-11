@@ -1,5 +1,6 @@
 import requests
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
 
@@ -32,9 +33,8 @@ class Package(models.Model):
         except:
             return None
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('project-detail', (), {'slug': self.slug})
+        return reverse('package_detail', args=(self.slug,))
 
     def save(self, *args, **kwargs):
         if not self.id:

@@ -1,10 +1,11 @@
 from django.conf.urls import patterns, url
 
-from website.projects.views import ProjectDetail, ProjectEdit, ProjectList
+from .views import ProjectCreate, ProjectDetail, ProjectEdit, ProjectList
 
 
 urlpatterns = patterns('',
     url(r'^$', ProjectList.as_view(), name='project_list'),
-    url(r'^(?P<project_id>\d+)/$', ProjectDetail.as_view(), name='project_detail'),
-    url(r'^(?P<project_id>\d+)/edit/$', ProjectEdit.as_view(), name='project_edit'),
+    url(r'^add/$', ProjectCreate.as_view(), name='project_create'),
+    url(r'^(?P<slug>[-\w]+)/$', ProjectDetail.as_view(), name='project_detail'),
+    url(r'^(?P<slug>[-\w]+)/edit/$', ProjectEdit.as_view(), name='project_edit'),
 )

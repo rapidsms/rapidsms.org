@@ -4,14 +4,13 @@ from .forms import PackageForm
 from .models import Package
 
 
-class PackageDetail(DetailView):
-    model = Package
-    slug_field = 'slug'
-
-
-class PackageAdd(CreateView):
+class PackageCreate(CreateView):
     model = Package
     form_class = PackageForm
+
+
+class PackageDetail(DetailView):
+    model = Package
 
 
 class PackageEdit(UpdateView):
