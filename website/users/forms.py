@@ -58,7 +58,6 @@ class UserRegistrationForm(UserCreationForm):
                     'reset': reverse('reset_password'),
                     'github': reverse('github_login'),
                 }))
-        self.fields['country'].empty_label = 'Country'
         self.fields['password1'].label = 'Password'
         self.fields['password2'].label = 'Confirm Password'
         self.fields['for_hire'].label = 'Are you available for '\

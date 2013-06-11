@@ -210,41 +210,15 @@ body#login #content {
 }
 
 body#register #content {
-    div#register, div#links {
-        text-align: center;
-    }
-    div#register {
-        padding: 30px 0;
-    }
-    label.checkbox {
-        display: inline-block;
-        vertical-align: top;
-        margin: 0;
-        padding: 8px 0 0 0;
-    }
-    .control-group.error {
-        .icons, label {
-            .input-states(#b94a48);
+    .radio {
+        margin-bottom: 0px;
+        margin-top: 5px;
+        &:first-child {
+            padding-top: 0px;
         }
     }
-    .controls {
-        &#controls_user_type, &#controls_for_hire {
-            width: @inputWidth;
-            margin: 0 auto;
-        }
-        &#controls_user_type, &#controls_for_hire label {
-            text-align: left;
-        }
-    }
-    label.radio {
-        margin-left: 30px;
-        padding-top: 0px;
-    }
-    .control-group.error .help-inline {
-        display: block;
-    }
-    .switch {
-        margin-top: 2px;
+    #links {
+        margin-top: 20px;
     }
 }
 

@@ -30,7 +30,9 @@
             {% else %}
             {{ field|add_class:"span6" }}
             {% endif %}
-            {% if field.errors %}<span class="help-block">{{ field.errors.as_text|safe }}</span>{% endif %}
+            {% if field.errors %}
+            <span class="help-block">{{ field.errors.as_text|safe }}</span>
+            {% endif %}
         </div>
     </div>
     {% endfor %}
