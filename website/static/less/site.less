@@ -24,7 +24,6 @@
 
 @inputWidth: 50%;
 
-
 .row-fluid {
     textarea, input[type="text"], input[type="password"],
     input[type="datetime"], input[type="datetime-local"],
@@ -45,6 +44,14 @@
     input[type="url"], input[type="search"], input[type="tel"],
     input[type="color"], .uneditable-input {
         height: 21px;
+    }
+}
+
+.radio {
+    margin-bottom: 0px;
+    margin-top: 5px;
+    &:first-child {
+        padding-top: 0px !important;
     }
 }
 
@@ -210,13 +217,6 @@ body#login #content {
 }
 
 body#register #content {
-    .radio {
-        margin-bottom: 0px;
-        margin-top: 5px;
-        &:first-child {
-            padding-top: 0px;
-        }
-    }
     #links {
         margin-top: 20px;
     }

@@ -27,6 +27,15 @@
             <div class="switch" data-on-label='Yes' data-off-label="No">
                 {{ field }}
             </div>
+            {% elif field.name == "pkg_type" %}
+            {% for value, label in field.field.choices %}
+            <label class="radio{% if field.value == value %} checked{% endif %}">
+                <input name="{{ field.html_name }}" type="radio"
+                        value="{{ value }}" data-toggle="radio"
+                        {% if field.value == value %} checked="checked" {% endif %} />
+                        {{ label }}
+            </label>
+            {% endfor %}
             {% else %}
             {{ field|add_class:"span6" }}
             {% endif %}

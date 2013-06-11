@@ -6,10 +6,10 @@ from django.template.defaultfilters import slugify
 
 
 class Package(models.Model):
-    APPLICATION = 0
-    BACKEND = 1
-    ROUTER = 2
-    PACKAGE_TYPE_CHOICES = {
+    APPLICATION = 'A'
+    BACKEND = 'B'
+    ROUTER = 'R'
+    PACKAGE_TYPES = {
         APPLICATION: 'Application',
         BACKEND: 'Backend',
         ROUTER: 'Router',
@@ -18,8 +18,8 @@ class Package(models.Model):
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField()
     slug = models.SlugField()
-    pkg_type = models.SmallIntegerField('Package Type',
-            choices=PACKAGE_TYPE_CHOICES.items(), default=APPLICATION)
+    pkg_type = models.CharField('Package Type', max_length=1,
+            choices=PACKAGE_TYPES.items(), default=APPLICATION)
     pypi_url = models.URLField('PyPI URL')
     has_tests = models.BooleanField(help_text="Are there tests?")
     has_docs = models.BooleanField(help_text="Are there docs?")

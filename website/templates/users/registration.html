@@ -31,9 +31,11 @@
                 </div>
                 {% elif field.name == 'user_type' %}
                     {% for value, label in field.field.choices %}
-                    <label class="radio">
+                    <label class="radio{% if field.value == value %} checked{% endif %}">
                         <input name="{{ field.html_name }}" type="radio"
-                                value="{{ value }}" data-toggle="radio" />{{ label }}
+                                value="{{ value }}" data-toggle="radio"
+                                {% if field.value == value %} checked{% endif%}/>
+                                {{ label }}
                     </label>
                     {% endfor %}
                 {% elif field.name == 'country' %}
