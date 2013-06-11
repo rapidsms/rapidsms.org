@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load scribbler_tags %}
+
+{% block title %}Community Blogs{% endblock title %}
+
+{% block content %}
+{% scribble "community-blogs" %}
+<p>Community-maintained blogs</p>
+{% endscribble %}
+{% endblock content %}

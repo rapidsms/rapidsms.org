@@ -1,29 +1,34 @@
 {% extends "base.html" %}
 
+{% block title %}Packages{% endblock title %}
+
 {% block content %}
-    <h1>Packages</h1>
-    {% if package_list %}
-        <ul>
-            {% for package in package_list %}
-                <li><a href="{% url 'package_detail' package.slug %}">{{ package.name }}</a></li>
-            {% endfor %}
-        </ul>
-        {% if is_paginated %}
-            <div class="pagination">
-                <span class="page-links">
-                    {% if page_obj.has_previous %}
-                        <a href="/cars?page={{ page_obj.previous_page_number }}">previous</a>
-                    {% endif %}
-                    <span class="page-current">
-                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                    </span>
-                    {% if page_obj.has_next %}
-                        <a href="/cars?page={{ page_obj.next_page_number }}">next</a>
-                    {% endif %}
+<div class="page-header">
+    <h1>RapidSMS Packages</h1>
+</div>
+
+{% if object_list %}
+    <ul>
+        {% for object in object_list %}
+        <li><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></li>
+        {% endfor %}
+    </ul>
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                <a href="{% url 'package_list' %}?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
                 </span>
-            </div>
-        {% endif %}
-    {% else %}
-        <p>No packages to list</p>
+                {% if page_obj.has_next %}
+                <a href="{% url 'package_list' %}?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
     {% endif %}
-{% endblock %}
+{% else %}
+    <p>There are no packages to list.</p>
+{% endif %}
+{% endblock content %}

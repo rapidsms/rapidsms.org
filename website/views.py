@@ -11,3 +11,7 @@ class About(TemplateView):
 
 class Help(TemplateView):
     template_name = 'website/help.html'
+
+
+class Blogs(TemplateView):
+    template_name = 'website/blogs.html'

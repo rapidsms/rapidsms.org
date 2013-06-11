@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if not package %}
+    {% if not object %}
         <h1>Add Package</h1>
     {% else %}
-        <h1>Edit {{ package.name }}</h1>
+        <h1>Edit {{ object.name }}</h1>
     {% endif %}
     <form action="." method="post">
     {% csrf_token %}

@@ -1,13 +1,15 @@
-from django.views.generic import TemplateView
+from django.views.generic import DetailView, ListView, CreateView, UpdateView
+
+from .models import Project
 
 
-class ProjectDetail(TemplateView):
-    template_name = 'projects/detail.html'
+class ProjectDetail(DetailView):
+    model = Project
 
 
-class ProjectEdit(TemplateView):
-    template_name = 'projects/edit.html'
+class ProjectEdit(UpdateView):
+    model = Project
 
 
-class ProjectList(TemplateView):
-    template_name = 'projects/list.html'
+class ProjectList(ListView):
+    model = Project

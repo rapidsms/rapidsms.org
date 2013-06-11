@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{ package.name }}</h1>
-    <p>{{ package.description }}</p>
-    <p>{{ package.get_pkg_type_display}}</p>
+    <h1>{{ object.name }}</h1>
+    <p>{{ object.description }}</p>
+    <p>{{ object.get_pkg_type_display}}</p>
 {% endblock %}
