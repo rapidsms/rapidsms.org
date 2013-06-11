@@ -17,7 +17,7 @@
 ==================== */
 
 @flatUIPath: '/static/flat-ui/';
-@navbarCollapseWidth: 1024px;
+@navbarCollapseWidth: 1125px;
 
 
 /* Sitewide
@@ -36,6 +36,14 @@ footer {
     padding: 22px 0;
     ul {
         list-style: none;
+    }
+    @media(max-width: 767px) {
+        #footer-left {
+            margin-left: 25px;
+        }
+        #footer-right {
+            margin-top: 25px;
+        }
     }
 }
 
