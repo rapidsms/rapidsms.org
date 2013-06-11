@@ -14,14 +14,15 @@ class Package(models.Model):
         BACKEND: 'Backend',
         ROUTER: 'Router',
     }
+
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField()
     slug = models.SlugField()
-    pkg_type = models.SmallIntegerField(choices=PACKAGE_TYPE_CHOICES.items(),
-                                        default=APPLICATION)
-    pypi_url = models.URLField()
-    has_tests = models.BooleanField(help_text="Does the package have tests?")
-    has_docs = models.BooleanField(help_text="Does the package have documentation?")
+    pkg_type = models.SmallIntegerField('Package Type',
+            choices=PACKAGE_TYPE_CHOICES.items(), default=APPLICATION)
+    pypi_url = models.URLField('PyPI URL')
+    has_tests = models.BooleanField(help_text="Are there tests?")
+    has_docs = models.BooleanField(help_text="Are there docs?")
 
     def __unicode__(self):
         return self.name

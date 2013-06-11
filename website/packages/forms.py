@@ -5,16 +5,26 @@ from django import forms
 from .models import Package
 
 
-class PackageForm(forms.ModelForm):
+class PackageCreateEditForm(forms.ModelForm):
+
     class Meta:
         model = Package
         exclude = ('slug',)
 
+    def __init__(self, *args, **kwargs):
+        super(PackageCreateEditForm, self).__init__(*args, **kwargs)
+
+        for field_name in ('has_docs', 'has_tests'):
+            field = self.fields[field_name]
+            field.label = field.help_text
+
     def clean_pypi_url(self):
         data = self.cleaned_data['pypi_url']
         if 'pypi.python.org/pypi' not in data:
-            raise forms.ValidationError("The pypi url must include pypi.python.org/pypi")
+            raise forms.ValidationError("The PyPI url must include "
+                    "'pypi.python.org/pypi'.")
         r = requests.get(data)
         if r.status_code != '200':
-            raise forms.ValidationError("Could not validate that existence of the URL")
+            raise forms.ValidationError('Could not validate that existence of '
+                    'this URL.')
         return data

@@ -22,7 +22,7 @@
 /* Sitewide
 ==================== */
 
-@inputWidth: 192px;
+@inputWidth: 50%;
 
 
 .row-fluid {
@@ -31,9 +31,20 @@
     input[type="date"], input[type="month"], input[type="time"],
     input[type="week"], input[type="number"], input[type="email"],
     input[type="url"], input[type="search"], input[type="tel"],
+    input[type="color"], .uneditable-input, select {
+        width: @inputWidth !important;
+        @media(max-width: 767px) {
+            width: 100% !important;
+        }
+    }
+
+    input[type="text"], input[type="password"],
+    input[type="datetime"], input[type="datetime-local"],
+    input[type="date"], input[type="month"], input[type="time"],
+    input[type="week"], input[type="number"], input[type="email"],
+    input[type="url"], input[type="search"], input[type="tel"],
     input[type="color"], .uneditable-input {
         height: 21px;
-        width: @inputWidth;
     }
 }
 
@@ -234,5 +245,11 @@ body#register #content {
     }
     .switch {
         margin-top: 2px;
+    }
+}
+
+body#package-form #content {
+    textarea {
+        height: 96px; // 4x line height
     }
 }
