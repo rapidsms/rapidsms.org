@@ -8,16 +8,15 @@
 
 /* Includes
 ==================== */
-@import "../bootstrap/less/bootstrap.less";
-@import "../bootstrap/less/responsive.less";
-@import "../flat-ui/less/flat-ui.less";
+@import "../flat-ui/less/config.less";
+@import "../flat-ui/less/mixins.less";
 
 
 /* Variables
 ==================== */
 
-@flatUIPath: '/static/flat-ui/';
 @navbarCollapseWidth: 1125px;
+@white: #FFFFFF;
 
 
 /* Sitewide
@@ -36,13 +35,14 @@ footer {
     padding: 22px 0;
     ul {
         list-style: none;
+        margin-bottom: 0;
     }
     @media(max-width: 767px) {
         #footer-left {
-            margin-left: 25px;
+            padding-left: 25px;
         }
         #footer-right {
-            margin-top: 25px;
+            padding-top: 25px;
         }
     }
 }
@@ -155,7 +155,7 @@ body#home {
 	}
 }
 
-body#login {
+body#login #content {
     text-align: center;
     .icon-github {
         padding-right: 3px;
@@ -168,7 +168,7 @@ body#login {
     }
 }
 
-body#register {
+body#register #content {
     div#register, div#links {
         text-align: center;
     }
