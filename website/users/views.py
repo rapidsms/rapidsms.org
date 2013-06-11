@@ -1,5 +1,6 @@
 from django.contrib.auth.views import password_reset_confirm
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView, UpdateView, FormView
@@ -71,17 +72,16 @@ class Registration(FormView):
         password = form.cleaned_data['password1']
         user = authenticate(username=user.email, password=password)
         login(self.request, user)
+        messages.success(request, 'Thanks for registering for RapidSMS.org!')
         return redirect(self.get_success_url())
 
 
 class UserDetail(DetailView):
     model = User
-    context_object_name = 'user'
 
 
 class UserEdit(UpdateView):
     model = User
-    context_object_name = 'user'
 
 
 class UserList(ListView):

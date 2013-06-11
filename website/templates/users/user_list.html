@@ -4,8 +4,8 @@
 <h1>User List</h1>
 
 <ul>
-    {% for user in object_list %}
-        <li><a href="{% url "user_detail" user.pk %}">{{ user.get_full_name }}</a></li>
+    {% for object in object_list %}
+        <li><a href="{% url "user_detail" object.pk %}">{{ object.get_full_name }}</a></li>
     {% endfor %}
 </ul>
 {% endblock content %}
