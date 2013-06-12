@@ -1,5 +1,5 @@
-from django.views.generic import DetailView, ListView, CreateView, UpdateView
 from django.http import Http404
+from django.views.generic import DetailView, ListView, CreateView, UpdateView
 
 from .forms import PackageCreateEditForm
 from .models import Package

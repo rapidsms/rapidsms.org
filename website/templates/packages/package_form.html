@@ -48,6 +48,11 @@
     <div class="control-group">
         <div class="controls">
             <input class="btn btn-inverse" type="submit" value="Submit" />
+            {% if object %}
+            <a href="{{ object.get_absolute_url }}" class="btn">Cancel</a>
+            {% else %}
+            <a href="{% url "package_list" %}" class="btn">Cancel</a>
+            {% endif %}
         </div>
     </div>
 </form>

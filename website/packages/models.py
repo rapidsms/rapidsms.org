@@ -18,8 +18,9 @@ class Package(models.Model):
     }
 
     # Internal metadata.
-    creator = models.ForeignKey(User, help_text='The creator of this content, '
-            'who may or may not be the author of the package.')
+    creator = models.ForeignKey(User, related_name='created_packages',
+            help_text='The creator of this content, who may or may not be its '
+            'author.')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     slug = models.SlugField()
