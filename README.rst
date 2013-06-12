@@ -55,11 +55,13 @@ Create the Postgres database and run the initial syncdb/migrate::
     python manage.py syncdb
     python manage.py migrate
 
-Configure your application on Github:
+Configure your application on Github. Visit the "Applications" section of your
+Github account settings, and create a new application.
 
-1. Visit the "Applications" section of your Github account settings.
-2. Create a new application.
-3. Add the absolute path to "/users/login/github/callback/" as the callback URL.
+* **Name**: You can use any name for the application.
+* **URL**: The URL of your site. For local testing, use ``http://localhost:8000``.
+* **Callback URL**: Add the *absolute path* to "/users/login/github/callback/"
+  as the callback URL.
 
 Load a django-allaccess Provider record for Github::
 
