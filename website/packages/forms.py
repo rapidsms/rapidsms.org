@@ -11,7 +11,8 @@ class PackageCreateEditForm(forms.ModelForm):
 
     class Meta:
         model = Package
-        exclude = ('slug',)
+        fields = ('name', 'pkg_type', 'description', 'pypi_url',
+                'repository_url', 'has_tests', 'has_docs')
 
     def __init__(self, *args, **kwargs):
         super(PackageCreateEditForm, self).__init__(*args, **kwargs)
@@ -26,7 +27,7 @@ class PackageCreateEditForm(forms.ModelForm):
             raise forms.ValidationError("The PyPI url must include "
                     "'pypi.python.org/pypi'.")
         r = requests.get(data)
-        if r.status_code != '200':
+        if r.status_code != 200:
             raise forms.ValidationError('Could not validate that existence of '
                     'this URL.')
         return data
