@@ -1,5 +1,49 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Edit Profile{% endblock title %}
+{% block body_id %}user-form{% endblock body_id %}
 
 {% block content %}
-    <h1>Edit User</h1>
+<div class="page-header">
+    <h1>Edit Profile</h1>
+</div>
+
+<form class="form-horizontal" method="post" action=".">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="control-group{% if field.errors %} error{% endif %}">
+        <label class="control-label" for="{{ field.id_for_label }}">
+            {{ field.label }}
+        </label>
+        <div class="controls" id="controls_{{ field.name }}">
+            {% if field.name == 'for_hire' %}
+            <div class="switch" data-on-label="Yes" data-off-label="No">
+                {{ field }}
+            </div>
+            {% elif field.name == "user_type" %}
+            {% for value, label in field.field.choices %}
+            <label class="radio{% if field.value == value %} checked{% endif %}">
+                 <input name="{{ field.html_name }}" type="radio" value="{{ value }}" data-toggle="radio"{% if field.value == value %} checked="checked"{% endif %} />
+                 {{ label }}
+            </label>
+            {% endfor %}
+            {% else %}
+                {{ field|add_class:"span6" }}
+            {% endif %}
+            {% if field.errors %}
+            <span class="help-block">{{ field.errors.as_text|safe }}</span>
+            {% endif %}
+            {% if field.help_text %}
+            <span class="help-block">{{ field.help_text|safe }}</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    <div class="control-group">
+        <div class="controls">
+            <input class="btn btn-inverse" type="submit" value="Submit" />
+            <a href="{{ object.get_absolute_url }}" class="btn">Cancel</a>
+        </div>
+    </div>
 {% endblock content %}

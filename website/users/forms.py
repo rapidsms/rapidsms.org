@@ -43,6 +43,36 @@ class UserChangeForm(auth.UserChangeForm):
         model = User
 
 
+class UserEditForm(UserChangeForm):
+    password1 = forms.CharField(widget=forms.PasswordInput)
+    password2 = forms.CharField(widget=forms.PasswordInput)
+
+    password1 = forms.CharField(label='New Password', required=False,
+            widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Password Confirm', required=False,
+            widget=forms.PasswordInput, help_text='Enter the same password '
+            'as above, for verification.')
+
+    class Meta:
+        model = User
+        fields = ('user_type', 'name', 'location', 'country', 'email',
+                'website_url', 'github_url', 'for_hire', 'password1',
+                'password2')
+
+    def __init__(self, *args, **kwargs):
+        super(UserEditForm, self).__init__(*args, **kwargs)
+        self.fields.pop('password', None)
+
+    def clean_password2(self):
+        """Require that passwords match."""
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(
+                    self.error_messages['password_mismatch'])
+        return password2
+
+
 class UserRegistrationForm(UserCreationForm):
     user_type = forms.ChoiceField(label='Register as an...',
             widget=forms.RadioSelect, choices=User.USER_TYPES.items())
@@ -54,14 +84,12 @@ class UserRegistrationForm(UserCreationForm):
                 'is your email, you can try to <a href="{login}">log in with '
                 'your email address or GitHub account</a> or '
                 '<a href="{reset}">reset your password</a>.'.format(**{
-                    'login': reverse('login'),
+                            'login': reverse('login'),
                     'reset': reverse('reset_password'),
                     'github': reverse('github_login'),
                 }))
         self.fields['password1'].label = 'Password'
         self.fields['password2'].label = 'Confirm Password'
-        self.fields['for_hire'].label = 'Are you available for '\
-                'RapidSMS-related hire or consulting?'
 
     class Meta:
         model = User

@@ -25,7 +25,14 @@
                     {% if not user.is_authenticated %}
                         <li><a href="{% url "login" %}">Register/Log In</a></li>
                     {% else %}
-                        <li><a href="{% url "logout" %}">Log Out</a></li>
+                        <li>
+                            <a><i class="icon-white icon-user"></i> Account</a>
+                            <ul>
+                                <li><a href="{{ user.get_absolute_url }}">View Profile</a></li>
+                                <li><a href="{{ user.get_edit_url }}">Edit Profile</a></li>
+                                <li><a href="{% url "logout" %}">Log Out</a></li>
+                            </ul>
+                        </li>
                     {% endif %}
                 </ul>
                 <form id="search-form" class="span2">
