@@ -35,9 +35,9 @@ class Project(models.Model):
     technologies = models.TextField(blank=True, null=True)
     metrics = models.TextField(blank=True, null=True)
     num_users = models.IntegerField(blank=True, null=True,
-            help_text='Estimated number of users')
+            help_text='Estimated number of users.')
     repository_url = models.URLField(blank=True, null=True, help_text='Link '
-            'to the public code repository for this project')
+            'to the public code repository for this project.')
 
     class Meta:
         ordering = ['-updated']

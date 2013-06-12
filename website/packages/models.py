@@ -30,8 +30,8 @@ class Package(models.Model):
     pkg_type = models.CharField('Package Type', max_length=1,
             choices=PACKAGE_TYPES.items(), default=APPLICATION)
     pypi_url = models.URLField('PyPI URL')
-    has_tests = models.BooleanField(help_text="Are there tests?")
-    has_docs = models.BooleanField(help_text="Are there docs?")
+    has_tests = models.BooleanField('Are there tests?')
+    has_docs = models.BooleanField('Are there docs?')
 
     # Optional descriptors.
     description = models.TextField(null=True, blank=True)

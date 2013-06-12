@@ -20,12 +20,17 @@
     {% for field in form %}
     <div class="control-group{% if field.errors %} error{% endif %}">
         <label class="control-label" for="{{ field.id_for_label }}">
-        {{ field.label }}
+            {{ field.label }}
         </label>
         <div class="controls" id="controls_{{ field.name }}">
             {{ field|add_class:"span6" }}
+            {% if field.errors %}
+            <span class="help-block">{{ field.errors.as_text|safe }}</span>
+            {% endif %}
+            {% if field.help_text %}
+            <span class="help-block">{{ field.help_text|safe }}</span>
+            {% endif %}
         </div>
-        {% if field.errors %}<span class="help-block">{{ field.errors.as_text|safe }}</span>{% endif %}
     </div>
     {% endfor %}
     <div class="control-group">

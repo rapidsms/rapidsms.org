@@ -14,13 +14,6 @@ class PackageCreateEditForm(forms.ModelForm):
         fields = ('name', 'pkg_type', 'description', 'pypi_url',
                 'repository_url', 'has_tests', 'has_docs')
 
-    def __init__(self, *args, **kwargs):
-        super(PackageCreateEditForm, self).__init__(*args, **kwargs)
-
-        for field_name in ('has_docs', 'has_tests'):
-            field = self.fields[field_name]
-            field.label = field.help_text
-
     def clean_pypi_url(self):
         data = self.cleaned_data['pypi_url']
         if 'pypi.python.org/pypi' not in data:
