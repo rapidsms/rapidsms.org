@@ -48,6 +48,9 @@ class Project(models.Model):
     def get_absolute_url(self):
         return reverse('project_detail', args=(self.slug,))
 
+    def get_delete_url(self):
+        return reverse('project_delete', args=(self.slug,))
+
     def get_edit_url(self):
         return reverse('project_edit', args=(self.slug,))
 

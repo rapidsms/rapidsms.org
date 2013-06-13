@@ -1,8 +1,20 @@
+from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
-from django.views.generic import DetailView, ListView, CreateView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView,\
+        UpdateView
 
 from .forms import PackageCreateEditForm
 from .models import Package
+
+
+class PackageEditMixin(object):
+    """Users may only edit and delete packages they created."""
+
+    def get_object(self, queryset=None):
+        obj = super(PackageEditMixin, self).get_object(queryset)
+        if obj.creator != self.request.user:
+            raise Http404()
+        return obj
 
 
 class PackageCreate(CreateView):
@@ -14,19 +26,19 @@ class PackageCreate(CreateView):
         return super(PackageCreate, self).form_valid(form)
 
 
+class PackageDelete(PackageEditMixin, DeleteView):
+    model = Package
+    http_method_names = ('delete', 'post')
+    success_url = reverse_lazy('package_list')
+
+
 class PackageDetail(DetailView):
     model = Package
 
 
-class PackageEdit(UpdateView):
+class PackageEdit(PackageEditMixin, UpdateView):
     model = Package
     form_class = PackageCreateEditForm
-
-    def get_object(self, queryset=None):
-        obj = super(PackageEdit, self).get_object(queryset)
-        if obj.creator != self.request.user:
-            raise Http404()
-        return obj
 
 
 class PackageList(ListView):

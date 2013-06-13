@@ -47,6 +47,9 @@ class Package(models.Model):
     def get_absolute_url(self):
         return reverse('package_detail', args=(self.slug,))
 
+    def get_delete_url(self):
+        return reverse('package_delete', args=(self.slug,))
+
     def get_edit_url(self):
         return reverse('package_edit', args=(self.slug,))
 
