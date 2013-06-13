@@ -34,7 +34,7 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
         INDIVIDUAL: 'Individual',
         ORGANIZATION: 'Organization',
     }
-    user_type = models.CharField('I am an...', max_length=1,
+    user_type = models.CharField('Account Type', max_length=1,
             choices=USER_TYPES.items(), default=INDIVIDUAL)
 
     email = models.EmailField('Email Address', unique=True)

@@ -74,7 +74,7 @@ class UserEditForm(UserChangeForm):
 
 
 class UserRegistrationForm(UserCreationForm):
-    user_type = forms.ChoiceField(label='Register as an...',
+    user_type = forms.ChoiceField(label='Account Type',
             widget=forms.RadioSelect, choices=User.USER_TYPES.items())
 
     def __init__(self, *args, **kwargs):
