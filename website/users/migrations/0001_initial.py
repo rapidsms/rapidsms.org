@@ -7,6 +7,10 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
+    depends_on = (
+        ("website.projects", "0002_populate_countries"),
+    )
+
     def forwards(self, orm):
         # Adding model 'User'
         db.create_table(u'users_user', (

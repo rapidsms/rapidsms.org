@@ -188,6 +188,10 @@ COMPRESS_PRECOMPILERS = (
    ('text/less', 'lessc {infile} {outfile}'),
 )
 
+SOUTH_MIGRATION_MODULES = {
+    'allaccess': 'ignore',
+}
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allaccess.backends.AuthorizedServiceBackend',
