@@ -1,17 +1,19 @@
 <footer class="footer">
     <div class="container-fluid">
         <div class="row-fluid">
-            <div class="span3" id="footer-left">
-                <p>RapidSMS</p>
-                <p>&copy; Copyright 2013</p>
+            <div class="span4">
+                <img src="{{ STATIC_URL }}images/rapidsms-logo-footer.png" alt="Rapid SMS">
             </div>
-            <div class="span3 offset6" id="footer-right">
+            <div class="span4" id="footer-middle">
                 <ul>
                     <li><a href="{% url "about" %}">About</a></li>
                     <li><a href="{% url "help" %}">Help</a></li>
                     <li><a href="https://pypi.python.org/pypi/RapidSMS/">Download</a></li>
                     <li><a href="http://rapidsms.readthedocs.org/en/develop/">Documentation</a></li>
                 </ul>
+            </div>
+            <div class="span4">
+                <p>&copy; Copyright 2013</p>
             </div>
         </div>
     </div>
