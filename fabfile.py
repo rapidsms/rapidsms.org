@@ -10,8 +10,8 @@ from fabric.utils import abort, error
 # Directory structure
 PROJECT_ROOT = os.path.dirname(__file__)
 CONF_ROOT = os.path.join(PROJECT_ROOT, 'conf')
-env.project = 'rapidsms'
-env.project_user = 'rapidsms'
+env.project = 'website'
+env.project_user = 'website'
 env.repo = u'git@github.com:rapidsms/rapidsms.org.git'
 env.shell = '/bin/bash -c'
 env.disable_known_hosts = True
@@ -197,6 +197,7 @@ def deploy(branch=None):
         path_file = os.path.join(env.virtualenv_root, 'lib', 'python2.7', 'site-packages', 'project.pth')
         files.append(path_file, env.code_root, use_sudo=True)
         sudo('chown %s:%s %s' % (env.project_user, env.project_user, path_file))
+        sudo('chown 775 %(code_root)s' % env)
     sudo('chown %(project_user)s:admin -R %(code_root)s' % env)
     if requirements:
         update_requirements()
