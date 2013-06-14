@@ -82,19 +82,28 @@
 }
 
 footer {
-    margin-top: 20px;
-    padding: 22px 0;
+    background-color: transparent;
     ul {
         list-style: none;
-        margin-bottom: 0;
     }
-    @media(max-width: 767px) {
-        #footer-left {
-            padding-left: 25px;
-        }
-        #footer-right {
-            padding-top: 25px;
-        }
+    img {
+    	width: 200px;
+    	@media (max-width: 767px) {
+    		width: 150px;
+    	}
+    }
+    #footer-middle {
+    	@media (max-width: 767px) {
+    		ul { 
+    			margin: 20px 0;
+    		}
+    	}
+    }
+    a {
+    	color: @peter-river;
+    	&:hover {
+    		color: @belize-hole;
+    	}
     }
 }
 
@@ -169,7 +178,15 @@ footer {
     }
 }
 
-
+#content {
+	margin-bottom: 30px;
+	a {
+    	color: @peter-river;
+    	&:hover {
+    		color: @belize-hole;
+    	}
+    }
+}
 /* Individual pages
 ==================== */
 
