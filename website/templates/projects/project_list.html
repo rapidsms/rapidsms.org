@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load scribbler_tags %}
 
 {% block title %}Projects{% endblock title %}
 
@@ -16,13 +17,18 @@
     {% endif %}
 </div>
 
+{% scribble "about-projects" %}
+<p class="lead">This is some lead text explaining what RapidSMS projects are.</p>
+{% endscribble %}
+
 {% if object_list %}
-    <ul>
-        {% for object in object_list %}
-        <li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
-        {% endfor %}
-    </ul>
+<ul>
+    {% for object in object_list %}
+    <li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
+    {% endfor %}
+</ul>
 {% else %}
-    <p>There are no projects to list.</p>
+<p>There are no projects to list.</p>
 {% endif %}
+
 {% endblock content %}
