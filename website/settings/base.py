@@ -185,7 +185,7 @@ LOGGING = {
 SKIP_SOUTH_TESTS = True
 
 COMPRESS_PRECOMPILERS = (
-   ('text/less', 'lessc {infile} {outfile}'),
+    ('text/less', 'lessc {infile} {outfile}'),
 )
 
 SOUTH_MIGRATION_MODULES = {
