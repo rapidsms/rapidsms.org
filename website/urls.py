@@ -33,9 +33,11 @@ urlpatterns += patterns('',
     url(r'^users/', include('website.users.urls')),
 )
 
-
-# Haystack URLs
-sqs = SearchQuerySet().facet('creator')
+# Haystack configure SQS for faceting
+sqs = SearchQuerySet()
+facet_list = ('countries', 'creator', 'pkg_type')
+for facet in facet_list:
+    sqs = sqs.facet(facet)
 
 urlpatterns += patterns('haystack.views',
     url(r'^search/$', FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs), name='haystack_search'),

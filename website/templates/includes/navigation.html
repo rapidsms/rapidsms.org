@@ -36,8 +36,9 @@
                     {% endif %}
                 </ul>
                 <form id="search-form" class="span2" method="get" action="{% url "haystack_search" %}">>
-                    <input type="search"  placeholder="SEARCH" />
+                    <input name="q" type="text" placeholder="SEARCH" />
                     <i class="fui-search"></i>
+                    <input type="submit" style="display:none" />
                 </form>
             </div>
 

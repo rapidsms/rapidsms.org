@@ -148,9 +148,17 @@
 
     <field name="text" type="text_en" indexed="true" stored="true" multiValued="false" />
 
+    <field name="creator" type="text_en" indexed="true" stored="true" multiValued="false" />
+
+    <field name="countries_exact" type="string" indexed="true" stored="true" multiValued="true" />
+
     <field name="creator_exact" type="string" indexed="true" stored="true" multiValued="false" />
 
-    <field name="creator" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="countries" type="text_en" indexed="true" stored="true" multiValued="true" />
+
+    <field name="pkg_type_exact" type="string" indexed="true" stored="true" multiValued="false" />
+
+    <field name="pkg_type" type="text_en" indexed="true" stored="true" multiValued="false" />
 
   </fields>
 
