@@ -3,7 +3,7 @@ from .models import Project
 
 
 class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
-    text = indexes.CharField(document=True, use_template=True)
+    text = indexes.NgramField(document=True, use_template=True)
     creator = indexes.CharField(model_attr='creator', faceted=True)
     countries = indexes.MultiValueField(faceted=True)
     model = indexes.CharField(model_attr='get_model_name', faceted=True)

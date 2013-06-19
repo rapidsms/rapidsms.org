@@ -152,7 +152,7 @@
 
     <field name="creator" type="text_en" indexed="true" stored="true" multiValued="false" />
 
-    <field name="text" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="text" type="ngram" indexed="true" stored="true" multiValued="false" />
 
     <field name="countries" type="text_en" indexed="true" stored="true" multiValued="true" />
 
