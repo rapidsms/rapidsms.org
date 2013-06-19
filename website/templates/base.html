@@ -22,8 +22,7 @@
             src="{{ STATIC_URL }}js/libs/less-1.3.3.min.js"></script>
     {% else %}
     {% compress css %}
-    <link rel="stylesheet" type="text/less" media="all"
-            href="{{ STATIC_URL }}less/site.less">
+    <link rel="stylesheet" type="text/less" media="all" href="{{ STATIC_URL }}less/site.less">
     {% endcompress %}
     {% endif %}
 
@@ -93,8 +92,7 @@
     <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/jquery.stacktable.js"></script>
     <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/application.js"></script>
     {% compress js %}
-    <script charset="utf-8"
-            src="{{ STATIC_URL }}js/site.js"></script>
+    <script charset="utf-8" src="{{ STATIC_URL }}js/site.js"></script>
     {% endcompress %}
     {% endblock js %}
     {% block extra-js %}{% endblock extra-js %}

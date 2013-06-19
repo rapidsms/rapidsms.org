@@ -1,7 +1,23 @@
 {% extends "base.html" %}
 
+{% block title %}{{ object }}{% endblock title %}
+{% block body_id %}package-detail{% endblock body_id %}
+
 {% block content %}
-    <h1>{{ object.name }}</h1>
-    <p>{{ object.description }}</p>
-    <p>{{ object.get_pkg_type_display}}</p>
+{% include "includes/delete_confirm.html" with action=object.get_delete_url %}
+
+<div class="page-header">
+    {% if user.is_authenticated and user == object.creator %}
+    <h1 class="header-split">
+        <span class="header-title">{{ object }}</span>
+        <span class="header-buttons">
+            <a href="{{ object.get_edit_url }}" class="btn btn-inverse"><i class="icon-white icon-pencil"></i> Edit</a>
+            <a href="#delete-modal" role="button" class="btn btn-inverse" data-toggle="modal"><i class="icon-white icon-remove"></i> Delete</a>
+        </span>
+    </h1>
+    {% else %}
+    <h1>{{ object }}</h1>
+    {% endif %}
+</div>
+
 {% endblock %}

@@ -7,7 +7,7 @@ from django.views.generic import DetailView, ListView, UpdateView, FormView
 
 from allaccess.views import OAuthRedirect, OAuthCallback
 
-from .forms import UserRegistrationForm
+from .forms import UserEditForm, UserRegistrationForm
 from .models import User
 
 
@@ -82,6 +82,13 @@ class UserDetail(DetailView):
 
 class UserEdit(UpdateView):
     model = User
+    form_class = UserEditForm
+
+    def get_object(self, queryset=None):
+        obj = super(UserEdit, self).get_object(queryset)
+        if obj != self.request.user:
+            raise Http404()
+        return obj
 
 
 class UserList(ListView):

@@ -24,7 +24,15 @@ class Migration(DataMigration):
             'Meta': {'object_name': 'Country'},
             'code': ('django.db.models.fields.CharField', [], {'max_length': '2', 'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
+        },
+        u'projects.project': {
+            'Meta': {'object_name': 'Project'},
+            'countries': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['projects.Country']", 'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'})
         }
+
     }
 
     complete_apps = ['projects']

@@ -1,5 +1,7 @@
 from website.settings.base import *
 
+import os
+
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
@@ -27,3 +29,6 @@ SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
 
 ALLOWED_HOSTS = ('*',)
+
+GITHUB_KEY = os.environ['GITHUB_KEY']
+GITHUB_SECRET = os.environ['GITHUB_SECRET']

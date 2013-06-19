@@ -1,14 +1,62 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}
+{% if object %}Edit {{ object.name }}{% else %}Add A New Package{% endif %}
+{% endblock title %}
+{% block body_id %}package-form{% endblock body_id %}
 
 {% block content %}
-    {% if not object %}
-        <h1>Add Package</h1>
+<div class="page-header">
+    {% if object %}
+    <h1>Edit {{ object.name }}</h1>
     {% else %}
-        <h1>Edit {{ object.name }}</h1>
+    <h1>Add a New Package</h1>
     {% endif %}
-    <form action="." method="post">
+</div>
+
+<form class="form-horizontal" method="post" action=".">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
-    </form>
+    {% for field in form %}
+    <div class="control-group{% if field.errors %} error{% endif %}">
+        <label class="control-label" for="{{ field.id_for_label }}">
+            {{ field.label }}
+        </label>
+        <div class="controls" id="controls_{{ field.name }}">
+            {% if field.name == 'has_docs' or field.name == 'has_tests' %}
+            <div class="switch" data-on-label='Yes' data-off-label="No">
+                {{ field|add_class:"span6" }}
+            </div>
+            {% elif field.name == "pkg_type" %}
+            {% for value, label in field.field.choices %}
+            <label class="radio{% if field.value == value %} checked{% endif %}">
+                <input type="radio" data-toggle="radio"
+                        name="{{ field.html_name }}" value="{{ value }}"
+                        {% if field.value == value %} checked="checked"{% endif %} />
+                {{ label }}
+            </label>
+            {% endfor %}
+            {% else %}
+            {{ field|add_class:"span6" }}
+            {% endif %}
+            {% if field.errors %}
+            <span class="help-block">{{ field.errors.as_text|safe }}</span>
+            {% endif %}
+            {% if field.help_text %}
+            <span class="help-block">{{ field.help_text|safe }}</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    <div class="control-group">
+        <div class="controls">
+            <input class="btn btn-inverse" type="submit" value="Submit" />
+            {% if object %}
+            <a href="{{ object.get_absolute_url }}" class="btn">Cancel</a>
+            {% else %}
+            <a href="{% url "package_list" %}" class="btn">Cancel</a>
+            {% endif %}
+        </div>
+    </div>
+</form>
 {% endblock content %}

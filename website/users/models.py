@@ -3,8 +3,6 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
 
-from website.projects.models import Country
-
 
 class UserManager(auth.BaseUserManager):
 
@@ -36,17 +34,18 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
         INDIVIDUAL: 'Individual',
         ORGANIZATION: 'Organization',
     }
-    user_type = models.CharField(max_length=1, choices=USER_TYPES.items(),
-            default=INDIVIDUAL)
+    user_type = models.CharField('Account Type', max_length=1,
+            choices=USER_TYPES.items(), default=INDIVIDUAL)
 
-    email = models.EmailField('Email address', unique=True)
+    email = models.EmailField('Email Address', unique=True)
 
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255, null=True, blank=True)
-    country = models.ForeignKey(Country, null=True, blank=True)
+    country = models.ForeignKey('projects.Country', null=True, blank=True)
     website_url = models.URLField('Website URL', null=True, blank=True)
     github_url = models.URLField('Github URL', null=True, blank=True)
-    for_hire = models.BooleanField('Available for hire?', default=False)
+    for_hire = models.BooleanField('Are you available for RapidSMS-related '
+            'hire or consulting?', default=False)
 
     is_staff = models.BooleanField('Staff status', default=False,
             help_text='Designates whether this user can log into the admin site.')
@@ -61,10 +60,15 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
     REQUIRED_FIELDS = ('name',)
 
     def __unicode__(self):
+        if self.is_organization():
+            return 'Organization: {0}'.format(self.get_full_name())
         return self.get_full_name()
 
     def get_absolute_url(self):
         return reverse('user_detail', args=(self.pk,))
+
+    def get_edit_url(self):
+        return reverse('user_edit', args=(self.pk,))
 
     def get_full_name(self):
         return self.name or self.email
