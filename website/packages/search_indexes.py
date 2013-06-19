@@ -6,6 +6,7 @@ class PackageIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     creator = indexes.CharField(model_attr='creator', faceted=True)
     pkg_type = indexes.CharField(model_attr='pkg_type', faceted=True)
+    model = indexes.CharField(model_attr='get_model_name', faceted=True)
 
     def get_model(self):
         return Package

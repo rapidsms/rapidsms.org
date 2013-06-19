@@ -23,8 +23,9 @@
                 <dt>Countries</dt>
             {% elif field == 'pkg_type' %}
                 <dt>Package Type</dt>
+            {% elif field == 'model' %}
+                <dt>Type</dt>
             {% endif %}
-            {# Provide only the top 5 authors #}
             {% for facet in facets %}
                 <dd><a href="{{ request.get_full_path }}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0 }}</a> ({{ facet.1 }})</dd>
             {% endfor %}
