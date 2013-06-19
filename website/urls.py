@@ -3,6 +3,10 @@ from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 
+from haystack.forms import FacetedSearchForm
+from haystack.query import SearchQuerySet
+from haystack.views import FacetedSearchView
+
 from .views import About, Blogs, Help, Home
 
 
@@ -19,10 +23,6 @@ urlpatterns += patterns('',
 )
 
 urlpatterns += patterns('',
-    url(r'^search/', include('haystack.urls')),
-)
-
-urlpatterns += patterns('',
     url(r'^$', Home.as_view(), name='home'),
     url(r'^about/$', About.as_view(), name='about'),
     url(r'^blogs/$', Blogs.as_view(), name='blogs'),
@@ -31,4 +31,12 @@ urlpatterns += patterns('',
     url(r'^projects/', include('website.projects.urls')),
     url(r'^packages/', include('website.packages.urls')),
     url(r'^users/', include('website.users.urls')),
+)
+
+
+# Haystack URLs
+sqs = SearchQuerySet().facet('creator')
+
+urlpatterns += patterns('haystack.views',
+    url(r'^search/$', FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs), name='haystack_search'),
 )

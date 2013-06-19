@@ -7,28 +7,36 @@
     <h1>Search</h1>
 </div>
 
-    <form method="get" action=".">
-        {{ form.as_p }}
-        <input type="submit" value="Search">
+<form method="get" action=".">
+    {{ form.as_p }}
+    <input type="submit" value="Search">
+</form>
+{% if query %}
+    <!-- Begin faceting. -->
+    <h2>By Author</h2>
 
-        {% if query %}
-            <h3>Results</h3>
-
-            {% for result in page.object_list %}
-                <p><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></p>
-            {% empty %}
-                <p>No results found.</p>
-            {% endfor %}
-
-            {% if page.has_previous or page.has_next %}
-                <div>
-                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
-                    |
-                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
-                </div>
+    <div>
+        <dl>
+            {% if facets.fields.author %}
+                <dt>Author</dt>
+                {# Provide only the top 5 authors #}
+                {% for author in facets.fields.creator|slice:":5" %}
+                    <dd><a href="{{ request.get_full_path }}&amp;selected_facets=creator_exact:{{ author.0|urlencode }}">{{ author.0 }}</a> ({{ author.1 }})</dd>
+                {% endfor %}
+            {% else %}
+                <p>No author facets.</p>
             {% endif %}
-        {% else %}
-            {# Show some example queries to run, maybe query syntax, something else? #}
-        {% endif %}
-    </form>
+        </dl>
+    </div>
+    <!-- End faceting -->
+
+    <!-- Display results... -->
+    {% for result in results %}
+        <div class="search_result">
+            <h4><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></h4>
+        </div>
+    {% empty %}
+        <p>Sorry, no results found.</p>
+    {% endfor %}
+{% endif %}
 {% endblock %}
