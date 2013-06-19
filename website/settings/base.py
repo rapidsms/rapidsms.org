@@ -150,6 +150,7 @@ INSTALLED_APPS = (
     'django_countries',
     'allaccess',
     'widget_tweaks',
+    'haystack',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -200,3 +201,12 @@ AUTHENTICATION_BACKENDS = [
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
+
+# Haystack Conf
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://127.0.0.1:8983/solr'
+    },
+}
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

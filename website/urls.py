@@ -18,6 +18,9 @@ urlpatterns += patterns('',
     url(r'^scribbler/', include('scribbler.urls')),
 )
 
+urlpatterns += patterns('',
+    url(r'^search/', include('haystack.urls')),
+)
 
 urlpatterns += patterns('',
     url(r'^$', Home.as_view(), name='home'),
