@@ -92,7 +92,7 @@ will need to rebuild the Solr schema. Due to an existing Haystack `issue <https:
 is a helper script to do this as well::
 
     cd scripts/
-    ./solr-run.sh
+    ./solr-rebuild-schema.sh
 
 After running the script, you will need to restart Solr.
 
