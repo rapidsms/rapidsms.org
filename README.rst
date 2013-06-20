@@ -88,7 +88,7 @@ This will install Solr in the root of the repository. To run Solr::
     ./solr-run.sh
 
 If you make changes to the `Haystack <http://haystacksearch.org/>`_ indices, you
-will need to rebuild the Solr schema. Due to an existing Haystack issue, there
+will need to rebuild the Solr schema. Due to an existing Haystack `issue <https://github.com/toastdriven/django-haystack/pull/706>`_, there
 is a helper script to do this as well::
 
     cd scripts/
