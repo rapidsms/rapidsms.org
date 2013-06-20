@@ -212,8 +212,10 @@ HAYSTACK_CONNECTIONS = {
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # Don't migrate allaccess. Its migrations depend on the Django user model,
-# which we don't use. If future versions of south introduce migrations we
+# which we don't use. If future versions of allaccess introduce migrations we
 # might have to do some manual work.
 SOUTH_MIGRATION_MODULES = {
     'allaccess': 'ignore',
 }
+
+RAPIDSMS_VERSION = '0.14.0'

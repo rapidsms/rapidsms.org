@@ -5,7 +5,6 @@
  * -- Individual pages
  */
 
-
 /* Includes
 ==================== */
 @import "../flat-ui/less/config.less";
@@ -17,6 +16,7 @@
 
 @navbarCollapseWidth: 1125px;
 @white: #FFFFFF;
+@twilight-blue: lighten(@midnight-blue, 20%);
 @inputWidth: 50%;
 
 
@@ -24,6 +24,16 @@
 ==================== */
 
 .row-fluid {
+    // Apply flat-ui's form styles to select dropdowns.
+    select {
+        border: 2px solid @lightgray;
+        color: @base;
+        .border-radius(6px);
+        .box-shadow(none);
+        outline: 0;
+        .transition(~"border .25s linear, color .25s linear");
+    }
+
     textarea, input[type="text"], input[type="password"],
     input[type="datetime"], input[type="datetime-local"],
     input[type="date"], input[type="month"], input[type="time"],
@@ -35,7 +45,7 @@
             width: 100% !important;
         }
         &:focus {
-        	border-color: @peter-river;
+            border-color: @peter-river;
         }
     }
 
@@ -61,6 +71,10 @@
     }
 }
 
+.has-switch span.switch-left {
+    color: @white;
+}
+
 .page-header {
     margin-top: 0px;
     padding-bottom: 0px;
@@ -80,7 +94,7 @@
 }
 
 #messages {
-	text-align: center;
+    text-align: center;
     min-height: 1px;
 }
 
@@ -90,87 +104,87 @@ footer {
         list-style: none;
     }
     img {
-    	width: 200px;
-    	@media (max-width: 767px) {
-    		width: 150px;
-    	}
+        width: 200px;
+        @media (max-width: 767px) {
+            width: 150px;
+        }
     }
     #footer-middle {
-    	@media (max-width: 767px) {
-    		ul { 
-    			margin: 20px 0;
-    		}
-    	}
+        @media (max-width: 767px) {
+            ul {
+                margin: 20px 0;
+            }
+        }
     }
     a {
-    	color: @peter-river;
-    	&:hover {
-    		color: @belize-hole;
-    	}
+        color: @peter-river;
+        &:hover {
+            color: @belize-hole;
+        }
     }
 }
 
 .navbar {
-	.nav {
-		> li > a {
-			border: none;
-			padding: 18px 15px 15px;
-			&:hover, &:focus {
-				color: @peter-river;
-				border: none;
-			}
-			@media (max-width: 979px) {
-				color: @white !important;
-				&:hover, &:focus {
-					background-color: @peter-river !important;
-				}
-			}
-		}
-		ul {
-			a {
-				&:hover {
-					background-color: @peter-river;
-				}
-			}
-		}
-	}
-	.navbar-inner {
-		.border-radius(0);
-	}
-	.brand {
-		border: none;
-		padding: 14px 15px 11px 0;
-		@media (max-width: 767px) {
-			padding-left: 15px;
-		}
-	}
-	form {
-		margin: 0;
-		position: relative;
-		input {
-			margin: 10px 0 10px 15px;
-			background-color: lighten(#2c3e50, 20%);
-			border: none;
-			padding-left: 25px;
-			&:focus {
-				background-color: @white;
-			}
-		}
-		i {
-			position: absolute;
-			top: 18px;
-			left: 25px;
-		}
-	}
-	@media (max-width: 767px) {
-		margin-left: -20px;
-		margin-right: -20px;
-	}
-	.btn-navbar {
-		&:hover, &:focus {
-			color: @peter-river;
-		}
-	}
+    .nav {
+        > li > a {
+            border: none;
+            padding: 18px 15px 15px;
+            &:hover, &:focus {
+                color: @peter-river;
+                border: none;
+            }
+            @media (max-width: 979px) {
+                color: @white !important;
+                &:hover, &:focus {
+                    background-color: @peter-river !important;
+                }
+            }
+        }
+        ul {
+            a {
+                &:hover {
+                    background-color: @peter-river;
+                }
+            }
+        }
+    }
+    .navbar-inner {
+        .border-radius(0);
+    }
+    .brand {
+        border: none;
+        padding: 14px 15px 11px 0;
+        @media (max-width: 767px) {
+            padding-left: 15px;
+        }
+    }
+    form {
+        margin: 0;
+        position: relative;
+        input {
+            margin: 10px 0 10px 15px;
+            background-color: @twilight-blue;
+            border: none;
+            padding-left: 25px;
+            &:focus {
+                background-color: @white;
+            }
+        }
+        i {
+            position: absolute;
+            top: 18px;
+            left: 25px;
+        }
+    }
+    @media (max-width: 767px) {
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+    .btn-navbar {
+        &:hover, &:focus {
+            color: @peter-river;
+        }
+    }
     #search-form {
         i {
             padding-top: 2px;
@@ -182,48 +196,109 @@ footer {
 }
 
 #content {
-	margin-bottom: 30px;
-	a {
-    	color: @peter-river;
-    	&:hover {
-    		color: @belize-hole;
-    	}
+    margin-bottom: 30px;
+    a {
+        color: @peter-river;
+        &:hover {
+            color: @belize-hole;
+        }
+        &.btn.btn-inverse {
+            color: @white;
+        }
     }
 }
+
 /* Individual pages
 ==================== */
 
 body#home {
-	#masthead {
-		text-align: center;
-		color: @white;
-		background: url('/static/images/home-masthead-bkg.jpg') top center no-repeat;
-		background-size: cover;
-		// width: 100%;
-		padding-top: 50px;
-		padding-bottom: 50px;
-		@media (max-width: 767px) {
-			margin-left: -20px;
-			margin-right: -20px;
-		}
-		header {
-			.clearfix;
-			padding-left: 20px;
-    		padding-right: 20px;
-			small {
-				display: block;
-				font-size: 18px;
-				padding: 10px 0;
-			}
-			p {
-				font-size: 22px;
-				margin: 0;
-				@media (max-width: 767px) {
-					font-size: 18px;
-				}
-			}
-		}
-	}
+    // Courtesy of http://codepo8.github.io/css-fork-on-github-ribbon/
+    #fork {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: block;
+        a {
+            background: @clouds;
+            color: @twilight-blue;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+            padding: 5px 40px;
+            font-size: 1rem;
+            line-height: 2rem;
+            transition: 0.5s;
+
+            &::before, &::after {
+                content: "";
+                width: 100%;
+                display: block;
+                position: absolute;
+                top: 1px;
+                left: 0;
+                height: 1px;
+                background: @twilight-blue;
+            }
+            &::after {
+                bottom: 1px;
+                top: auto;
+            }
+            &:hover {
+                background: @twilight-blue;
+                color: @clouds;
+
+                &::before, &::after {
+                    background: @clouds;
+                }
+            }
+       }
+
+       @media screen and (min-width: 767px) {
+            width: 200px;
+            overflow: hidden;
+            height: 200px;
+            a {
+                width: 200px;
+                position: absolute;
+                top: 60px;
+                right: -60px;
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+                box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+            }
+        }
+    }
+
+    #masthead {
+        text-align: center;
+        color: @white;
+        background: url('/static/images/home-masthead-bkg.jpg') top center no-repeat;
+        background-size: cover;
+        // width: 100%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        @media (max-width: 767px) {
+            margin-left: -20px;
+            margin-right: -20px;
+        }
+        header {
+            .clearfix;
+            padding-left: 20px;
+            padding-right: 20px;
+            small {
+                display: block;
+                font-size: 18px;
+                padding: 10px 0;
+            }
+            p {
+                font-size: 22px;
+                margin: 0;
+                @media (max-width: 767px) {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
 }
 
 body#login #content {
