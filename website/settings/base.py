@@ -217,3 +217,5 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 SOUTH_MIGRATION_MODULES = {
     'allaccess': 'ignore',
 }
+
+RAPIDSMS_VERSION = '0.14.0'

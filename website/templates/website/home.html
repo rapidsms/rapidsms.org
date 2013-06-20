@@ -1,21 +1,23 @@
 {% extends "base.html" %}
 {% load scribbler_tags %}
 
-{% block title %}A free and open-source SMS framework{% endblock title %}
-
+{% block title %}A Free and Open Source SMS Framework{% endblock title %}
 {% block body_id %}home{% endblock body_id %}
 
 {% block masthead %}
 <div id="masthead">
     <header>
-        {# The below should be dynamically brought in, if possible. #}
-        <small>Version 0.14.0</small>
+        <small>Version {{ RAPIDSMS_VERSION }}</small>
         <img src="{{ STATIC_URL }}images/rapidsms-logo.png" alt="RapidSMS">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore. </p>
+{% scribble "mission-statement" %}
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+{% endscribble %}
     </header>
 </div>
 {% endblock masthead %}
 
 {% block content %}
-    {% scribble "home" %}<p>Welcome to RapidSMS.org!</p>{% endscribble %}
+{% scribble "home" %}
+<p>Welcome to RapidSMS.org!</p>
+{% endscribble %}
 {% endblock content %}
