@@ -22,7 +22,6 @@
 
 /* Sitewide
 ==================== */
-
 .row-fluid {
     // Apply flat-ui's form styles to select dropdowns.
     select {
@@ -71,8 +70,17 @@
     }
 }
 
-.has-switch span.switch-left {
-    color: @white;
+.has-switch {
+    span.switch-left {
+        color: @white;
+    }
+    .switch-on label {
+        background-color: @peter-river !important;
+    }
+}
+
+.checkbox.checked, .radio.checked, .checkbox.checked .icons, .radio.checked .icons {
+    color: @peter-river;
 }
 
 .page-header {
@@ -202,7 +210,7 @@ footer {
         &:hover {
             color: @belize-hole;
         }
-        &.btn.btn-inverse {
+        &.btn, &.btn.btn-inverse {
             color: @white;
         }
     }
