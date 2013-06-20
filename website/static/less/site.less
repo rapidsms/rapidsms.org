@@ -23,6 +23,16 @@
 ==================== */
 
 .row-fluid {
+    // Apply flat-ui's form styles to select dropdowns.
+    select {
+        border: 2px solid @lightgray;
+        color: @base;
+        .border-radius(6px);
+        .box-shadow(none);
+        outline: 0;
+        .transition(~"border .25s linear, color .25s linear");
+    }
+
     textarea, input[type="text"], input[type="password"],
     input[type="datetime"], input[type="datetime-local"],
     input[type="date"], input[type="month"], input[type="time"],
