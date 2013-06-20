@@ -1,57 +1,56 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 
-{% block title %}Search{% endblock title %}
+{% block title %}Search Results{% endblock title %}
+{% block body_id %}search{% endblock body_id %}
 
 {% block content %}
-<div class="page-header">
-    <h1>Search</h1>
+
+<div id="search-box">
+    <form class="form-search" method="get" action=".">
+        {{ form.q|add_class:"search-query"|attr:"placeholder:Search" }}
+        <button class="btn btn-inverse" type="submit"><i class="fui-search"></i></button>
+    </form>
 </div>
 
-<form method="get" action=".">
-        {{ form.as_p }}
-        <input type="submit" value="Search">
-</form>
+<div class="row-fluid">
+    <div class="well span3">
+        <h3>Refine Results</h3>
 
-<!-- Begin faceting. -->
-{% for field, facets in facets.fields.items %}
-<div>
-    <dl>
-        {% if facets %}
-            {% if field == 'creator' %}
-                <dt>Author</dt>
-            {% elif field == 'countries' %}
-                <dt>Countries</dt>
-            {% elif field == 'pkg_type' %}
-                <dt>Package Type</dt>
-            {% elif field == 'model' %}
-                <dt>Type</dt>
+        <ul class="nav nav-list">
+        {% for field, facets in facets.fields.items %}
+            {% if facets %}
+                {% if field == 'creator' %}
+                <li class="nav-header">By Author</li>
+                {% elif field == 'pkg_type' %}
+                <li class="nav-header">By Package Type</li>
+                {% else %}
+                <li class="nav-header">By {{ field }}</li>
+                {% endif %}
+                {% for facet in facets %}
+                <li><a href="{{ request.get_full_path }}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0|title }} ({{ facet.1 }})</a></li>
+                {% endfor %}
             {% endif %}
-            {% for facet in facets %}
-                <dd><a href="{{ request.get_full_path }}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0 }}</a> ({{ facet.1 }})</dd>
-            {% endfor %}
-        {% endif %}
-    </dl>
-</div>
-{% endfor %}
-<!-- End faceting -->
+        {% endfor %}
+        </ul>
+    </div>
 
-{% if query %}
-    <h3>Results</h3>
-
-    {% for result in page.object_list %}
-        <p><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></p>
-    {% empty %}
+    <div class="span9 search-results">
+        {% for result in page.object_list %}
+        <div class="result">
+            <h3><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></h3>
+        </div>
+        {% empty %}
         <p>No results found.</p>
-    {% endfor %}
+        {% endfor %}
 
-    {% if page.has_previous or page.has_next %}
+        {% if page.has_previous or page.has_next %}
         <div>
             {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
             |
             {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
         </div>
-    {% endif %}
-{% else %}
-    {# Show some example queries to run, maybe query syntax, something else? #}
-{% endif %}
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
