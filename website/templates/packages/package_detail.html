@@ -15,7 +15,7 @@
         </span>
     </h1>
     {% else %}
-    <h1>{{ object }} {{ object.version }}</h1>
+    <h1>{{ object }}{% if object.version %} v{{ object.version }}{% endif %}</h1>
     {% endif %}
     {% if object.summary %}<div class="summary">{{ object.summary }}</div>{% endif %}
 </div>
