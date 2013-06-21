@@ -1,8 +1,11 @@
 <div class="navbar navbar-inverse">
     <div class="navbar-inner">
         <div class="container-fluid">
-            <button type="Button" class="btn btn-navbar"
-                    data-toggle="collapse" data-target=".nav-collapse"></button>
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                 <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
 
             <a href="{% url "home" %}" class="brand">
                 <img src="{{ STATIC_URL }}images/rapidsms-logo-sm.png" alt="RapidSMS">
@@ -15,9 +18,9 @@
                     <li><a href="http://rapidsms.readthedocs.org/en/develop/">Documentation</a></li>
                     <li><a href="{% url "project_list" %}">Projects</a></li>
                     <li><a href="{% url "package_list" %}">Packages</a></li>
-                    <li>
-                        <a>Community</a>
-                        <ul>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">Community</a>
+                        <ul class="dropdown-menu" role="menu">
                             <li><a href="{% url "blogs" %}">Blogs</a></li>
                             <li><a href="{% url "user_list" %}">Users</a></li>
                         </ul>
@@ -25,9 +28,9 @@
                     {% if not user.is_authenticated %}
                         <li><a href="{% url "login" %}">Register/Log In</a></li>
                     {% else %}
-                        <li>
-                            <a><i class="icon-white icon-user"></i> Account</a>
-                            <ul>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-white icon-user"></i> Account</a>
+                            <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ user.get_absolute_url }}">View Profile</a></li>
                                 <li><a href="{{ user.get_edit_url }}">Edit Profile</a></li>
                                 <li><a href="{% url "logout" %}">Log Out</a></li>
