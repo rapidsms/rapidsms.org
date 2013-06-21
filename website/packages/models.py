@@ -1,3 +1,4 @@
+import datetime
 from docutils.core import publish_parts
 import json
 import requests
@@ -7,6 +8,10 @@ from django.db import models
 from django.template.defaultfilters import slugify
 
 from website.users.models import User
+
+
+PYPI_JSON_API = 'http://pypi.python.org/pypi/{0}/json'
+PYPI_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
 
 
 class Package(models.Model):
@@ -21,8 +26,8 @@ class Package(models.Model):
 
     # Internal metadata, not displayed anywhere.
     creator = models.ForeignKey(User, related_name='created_packages',
-            help_text='The creator of this content, who may or may not be its '
-            'author.')
+            help_text="The creator of this content, who may or may not be its "
+            "author.")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -30,8 +35,8 @@ class Package(models.Model):
     # edited.
     pkg_type = models.CharField('Package Type', max_length=1,
             choices=PACKAGE_TYPES.items(), default=APPLICATION)
-    name = models.CharField(max_length=255, unique=True, help_text='The name '
-            'of the package on PyPI.')
+    name = models.CharField(max_length=255, unique=True, help_text="The name "
+            "of the package on PyPI.")
     slug = models.SlugField()  # Derived from name.
 
     # Other reference URLs for the package are optional.
@@ -61,9 +66,10 @@ class Package(models.Model):
     maintainer_email = models.EmailField(null=True, blank=True)
     version = models.CharField(max_length=32, null=True, blank=True)
     summary = models.TextField(null=True, blank=True)
+    release_date = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        ordering = ['-updated']
+        ordering = ['-release_date', '-updated']
 
     def __unicode__(self):
         return self.name
@@ -82,6 +88,10 @@ class Package(models.Model):
                 self.author_email = data['info']['author_email']
                 self.version = data['info']['version']
                 self.summary = data['info']['summary']
+
+                d = data['urls'][0]['upload_time']
+                if d:
+                    self.release_date = datetime.datetime.strptime(d, PYPI_DATE_FORMAT)
 
     def _retrieve_pypi_json(self):
         req = requests.get(self.get_pypi_json_url())
@@ -108,7 +118,7 @@ class Package(models.Model):
         return reverse('package_edit', args=(self.slug,))
 
     def get_pypi_json_url(self):
-        return 'http://pypi.python.org/pypi/{0}/json'.format(self.name)
+        return PYPI_JSON_API.format(self.name)
 
     def get_model_name(self):
         return self._meta.verbose_name
