@@ -81,3 +81,6 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
 
     def is_organization(self):
         return self.user_type == self.ORGANIZATION
+
+    def get_model_name(self):
+        return self._meta.verbose_name

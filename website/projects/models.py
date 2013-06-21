@@ -54,6 +54,9 @@ class Project(models.Model):
     def get_edit_url(self):
         return reverse('project_edit', args=(self.slug,))
 
+    def get_model_name(self):
+        return self._meta.verbose_name
+
     def save(self, *args, **kwargs):
         if not self.id:
             # Newly created object, so set slug

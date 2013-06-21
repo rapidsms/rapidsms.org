@@ -60,6 +60,9 @@ class Package(models.Model):
         except:
             return None
 
+    def get_model_name(self):
+        return self._meta.verbose_name
+
     def save(self, *args, **kwargs):
         if not self.id:
             # Newly created object, so set slug

@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib.auth.views import password_reset_confirm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
@@ -5,10 +7,14 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView, UpdateView, FormView
 
+from allaccess.models import AccountAccess
 from allaccess.views import OAuthRedirect, OAuthCallback
 
 from .forms import UserEditForm, UserRegistrationForm
 from .models import User
+
+
+logger = logging.getLogger(__name__)
 
 
 class RapidSMSOAuthRedirect(OAuthRedirect):
@@ -25,8 +31,8 @@ class RapidSMSOAuthRedirect(OAuthRedirect):
 
 class RapidSMSOAuthCallback(OAuthCallback):
 
-    def get_verified_user_emails(self, provider, access):
-        """Retrieve a list of emails that the user has verified with GitHub."""
+    def get_primary_email(self, provider, access):
+        """Retrieve the primary, verified email from the user's GitHub account."""
         # API endpoint for retrieving account emails from GitHub.
         email_url = 'https://api.github.com/user/emails'
         # Request v3 format that shows whether the email is verified.
@@ -35,31 +41,64 @@ class RapidSMSOAuthCallback(OAuthCallback):
         if response.status_code != 200:
             raise Exception('Error retrieving account emails.')
         emails = response.json()
-        return [email['email'] for email in emails if email['verified']]
+        for email in emails:
+            if email['verified'] and email['primary']:
+                return email['email']
+        return None
 
     def get_or_create_user(self, provider, access, info):
-        emails = self.get_verified_user_emails(provider, access)
-        if not emails:
-            # FIXME - Show error page.
-            raise Exception('Account has no verified emails?')
-        if len(emails) > 1:
-            # FIXME - Show a disambiguation page.
-            pass
-        email = emails[0]
+        """Try to find the user by their primary email address."""
+        try:
+            email = self.get_primary_email(provider, access)
+        except:
+            logger.exception()
+            return None
+        if not email:
+            logger.error('User has no verified, primary email.')
+            return None
+
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            kwargs = {
-                'email': email,
-                'name': info.get('name', info.get('login')),
-                'location': info.get('location', None),
-                'website_url': info.get('blog', None),
-                'github_url': info.get('html_url', None),
-            }
-            user = User(**kwargs)
-            user.set_unusable_password()
-            user.save()
+            try:
+                kwargs = {
+                    'email': email,
+                    'name': info.get('name', info.get('login')),
+                    'location': info.get('location', None),
+                    'website_url': info.get('blog', None),
+                    'github_url': info.get('html_url', None),
+                }
+                user = User(**kwargs)
+                user.set_unusable_password()
+                user.save()
+            except Exception as e1:
+                logger.exception()
+
+                # Try excluding the extra information, in case that is
+                # causing a validation or database error.
+                logger.debug('Attempting to mitigate error by saving '
+                        'the user without any additional information.')
+                try:
+                    user = User(email=email)
+                    user.set_unusable_password()
+                    user.save()
+                except Exception as e2:
+                    logger.exception()
+                    logger.debug('Log in has failed.')
+                    return None
+                else:
+                    logger.debug('Error was mitigated; log in continues.')
         return user
+
+    def handle_new_user(self, provider, access, info):
+        user = self.get_or_create_user(provider, access, info)
+        if not user:
+            return self.handle_login_failure(provider, 'Could not create user.')
+        access.user = user
+        AccountAccess.objects.filter(pk=access.pk).update(user=user)
+        user = authenticate(provider=access.provider, identifier=access.identifier)
+        login(self.request, user)
+        return redirect(self.get_login_redirect(provider, user, access, True))
 
 
 class Registration(FormView):

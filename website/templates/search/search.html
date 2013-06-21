@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Search Results{% endblock title %}
+{% block body_id %}search{% endblock body_id %}
+
+{% block content %}
+
+<div id="search-box">
+    <form class="form-search" method="get" action=".">
+        {{ form.q|add_class:"search-query"|attr:"placeholder:Search" }}
+        <button class="btn btn-inverse" type="submit"><i class="fui-search"></i></button>
+    </form>
+</div>
+
+<div class="row-fluid">
+    <div class="well span3">
+        <h3>Refine Results</h3>
+
+        <ul class="nav nav-list">
+        {% for field, facets in facets.fields.items %}
+            {% if facets %}
+                {% if field == 'creator' %}
+                <li class="nav-header">By Author</li>
+                {% elif field == 'pkg_type' %}
+                <li class="nav-header">By Package Type</li>
+                {% else %}
+                <li class="nav-header">By {{ field }}</li>
+                {% endif %}
+                {% for facet in facets %}
+                <li><a href="{{ request.get_full_path }}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0|title }} ({{ facet.1 }})</a></li>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="span9 search-results">
+        {% for result in page.object_list %}
+        <div class="result">
+            <h3><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></h3>
+        </div>
+        {% empty %}
+        <p>No results found.</p>
+        {% endfor %}
+
+        {% if page.has_previous or page.has_next %}
+        <div>
+            {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+            |
+            {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
