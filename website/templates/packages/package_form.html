@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load widget_tweaks %}
+{% load widget_tweaks scribbler_tags %}
 
 {% block title %}
 {% if object %}Edit {{ object.name }}{% else %}Add A New Package{% endif %}
@@ -14,6 +14,12 @@
     <h1>Add a New Package</h1>
     {% endif %}
 </div>
+
+{% if not object %}
+{% scribble "add-package" %}
+<p id="instructions">Some text explaining how the user should add a package.</p>
+{% endscribble %}
+{% endif %}
 
 <form class="form-horizontal" method="post" action=".">
     {% csrf_token %}
@@ -59,4 +65,12 @@
         </div>
     </div>
 </form>
+
+{% if object %}
+{% scribble "package-edit" %}
+<p>We pull most package data from its PyPI repository. If there is inaccurate
+information, or if this package is not appropriate for RapidSMS.org, please
+<a href="#">flag this package</a>.</p>
+{% endscribble %}
+{% endif %}
 {% endblock content %}

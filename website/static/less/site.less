@@ -83,20 +83,26 @@
     color: @peter-river;
 }
 
+.btn i {
+    margin-right: 5px;
+}
+
 .page-header {
     margin-top: 0px;
     padding-bottom: 0px;
 
     .header-split {
-        margin-bottom: 0;
+        margin: 0;
         span {
             display: inline-block;
         }
         .header-title {
             margin-right: 20px;
+            margin-bottom: 6px;
         }
         .header-buttons .btn {
             margin-bottom: 9px;
+            padding: 9px 12px;
         }
     }
 }
@@ -343,6 +349,31 @@ body#search #content {
         margin-bottom: 30px;
         form {
             margin: 0 auto;
+        }
+    }
+}
+
+body#package-form #content {
+    #instructions {
+        margin-bottom: 30px;
+    }
+}
+
+body#package-detail #content {
+    .page-header .summary {
+        color: @twilight-blue;
+        font-size: 18px;
+        margin-top: -3px;
+        margin-bottom: 6px;
+    }
+    #left-panel {
+        #links {
+            text-align: center;
+            margin-bottom: 30px;
+            .btn.btn-block {
+                width: 175px;
+                margin: 5px auto 0 auto;
+            }
         }
     }
 }

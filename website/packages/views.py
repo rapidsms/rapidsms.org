@@ -1,7 +1,6 @@
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
-from django.views.generic import CreateView, DeleteView, DetailView, ListView,\
-        UpdateView
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from .forms import PackageCreateEditForm
 from .models import Package
@@ -24,12 +23,6 @@ class PackageCreate(CreateView):
     def form_valid(self, form):
         form.instance.creator = self.request.user
         return super(PackageCreate, self).form_valid(form)
-
-
-class PackageDelete(PackageEditMixin, DeleteView):
-    model = Package
-    http_method_names = ('delete', 'post')
-    success_url = reverse_lazy('package_list')
 
 
 class PackageDetail(DetailView):

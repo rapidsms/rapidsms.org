@@ -39,3 +39,7 @@ class PackageCreateEditForm(forms.ModelForm):
             raise forms.ValidationError(msg)
         self.instance.pypi_json = r.json()
         return name
+
+    def save(self, *args, **kwargs):
+        if self.instance.pk:
+
