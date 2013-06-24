@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, url
 
-from .views import PackageCreate, PackageDetail, PackageEdit, PackageList
+from .views import PackageCreate, PackageDetail, PackageEdit,\
+        PackageList
+
 
 urlpatterns = patterns('',
     url('^$', PackageList.as_view(), name='package_list'),

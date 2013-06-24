@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load scribbler_tags %}
 
 {% block title %}Packages{% endblock title %}
 
@@ -7,14 +8,18 @@
     {% if user.is_authenticated %}
     <h1 class="header-split">
         <span class="header-title">RapidSMS Packages</span>
-        <span class="header-buttons btn-group">
-            <a href="{% url "project_create" %}" class="btn btn-inverse"><i class="icon-white icon-plus"></i> Add Package</a>
+        <span class="header-buttons">
+            <a href="{% url "package_create" %}" class="btn btn-inverse"><i class="icon-white icon-plus"></i> Add Package</a>
         </span>
     </h1>
     {% else %}
     <h1>RapidSMS Packages</h1>
     {% endif %}
 </div>
+
+{% scribble "about-packages" %}
+<p class="lead">This is some lead text explaining what RapidSMS packages are.</p>
+{% endscribble %}
 
 {% if object_list %}
     <ul>

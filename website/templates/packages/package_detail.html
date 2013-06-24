@@ -1,7 +1,81 @@
 {% extends "base.html" %}
 
+{% block title %}{{ object }}{% endblock title %}
+{% block body_id %}package-detail{% endblock body_id %}
+
 {% block content %}
-    <h1>{{ object.name }}</h1>
-    <p>{{ object.description }}</p>
-    <p>{{ object.get_pkg_type_display}}</p>
+
+<div class="page-header">
+    {% if user.is_authenticated and user == object.creator %}
+    <h1 class="header-split">
+        <span class="header-title">{{ object }}{% if object.version %} v{{ object.version }}{% endif %}</span>
+        <span class="header-buttons">
+            <a href="{{ object.get_edit_url }}" class="btn btn-inverse"><i class="icon-white icon-pencil"></i> Edit</a>
+            <a href="#" class="btn btn-inverse"><i class="icon-white icon-flag"></i> Flag</a>
+        </span>
+    </h1>
+    {% else %}
+    <h1>{{ object }}{% if object.version %} v{{ object.version }}{% endif %}</h1>
+    {% endif %}
+    {% if object.summary %}<div class="summary">{{ object.summary }}</div>{% endif %}
+</div>
+
+<div class="row-fluid">
+    <div id="left-panel" class="span3">
+        {% if object.home_url or object.docs_url or object.tests_url or object.repo_url %}
+        <div id="links">
+        {% if object.home_url %}
+            <a href="{{ object.home_url }}" class="btn btn-inverse btn-block"><i class="icon-white icon-home"></i> Home Page</a>
+        {% endif %}
+        {% if object.docs_url %}
+            <a href="{{ object.docs_url }}" class="btn btn-inverse btn-block"><i class="icon-white icon-book"></i> Documentation</a>
+        {% endif %}
+        {% if object.tests_url %}
+            <a href="{{ object.tests_url }}" class="btn btn-inverse btn-block"><i class="icon-white icon-bug"></i> Tests</a>
+        {% endif %}
+        {% if object.repo_url %}
+            <a href="{{ object.repo_url }}" class="btn btn-inverse btn-block"><i class="icon-white icon-code"></i> Source Code</a>
+        {% endif %}
+        </div>
+        {% endif %}
+        {% if object.version or object.release_date %}
+            <p>
+                {% if object.version %}v{{ object.version }}<br />{% endif %}
+                {% if object.release_date %}released {{ object.release_date|date }}{% endif %}
+            </p>
+        {% endif %}
+        <p>
+            <strong>Package Type</strong><br />
+            RapidSMS {{ object.get_pkg_type_display }}
+        </p>
+        {% if object.author_name or object.author_email %}
+        <p>
+            <strong>Author</strong><br />
+            {% if object.author_name and object.author_email %}
+            {{ object.author_name }} (<a href="mailto:{{ object.author_email }}">{{ object.author_email }}</a>)
+            {% elif object.author_name %}
+            {{ object.author_name }}
+            {% else %}
+            <a href="mailto:{{ object.author_email }}">{{ object.author_email }}</a>
+            {% endif %}
+        </p>
+        {% endif %}
+        {% if object.maintainer_name or object.maintainer_email %}
+        <p>
+            <strong>Maintainer</strong><br />
+            {% if object.maintainer_name and object.maintainer_email %}
+            {{ object.maintainer_name }} (<a href="mailto:{{ object.maintainer_email }}">{{ object.maintainer_email }}</a>)
+            {% elif object.maintainer_name %}
+            {{ object.maintainer_name }}
+            {% else %}
+            <a href="mailto:{{ object.maintainer_email }}">{{ object.maintainer_email }}</a>
+            {% endif %}
+        </p>
+        {% endif %}
+    </div>
+
+    <div id="right-panel" class="span9">
+        {% if object.description %}{{ object.description|safe }}{% endif %}
+    </div>
+</div>
 {% endblock %}

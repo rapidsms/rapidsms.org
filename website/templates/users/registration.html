@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load widget_tweaks %}
 
-{% block title %}Register{% endblock title %}
+{% block title %}Register for an Account{% endblock title %}
 {% block body_id %}register{% endblock body_id %}
 
 {% block messages %}
@@ -17,43 +17,56 @@
 </div>
 
 <div id="register">
-    <form method="post" action="{% url "register" %}">
+    <form class="form-horizontal" method="post" action="{% url "register" %}">
         {% csrf_token %}
         {% for field in form %}
         <div class="control-group{% if field.errors %} error{% endif %}">
+            <label class="control-label" for="{{ field.id_for_label }}">
+                {{ field.label }}
+            </label>
             <div class="controls" id="controls_{{ field.html_name }}">
-                {% ifequal field.name "for_hire" %}
-                    <label class="checkbox" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    <div class="switch" data-on-label="Yes" data-off-label="No">
-                        {{ field }}
-                    </div>
-                {% else %}{% ifequal field.name "user_type" %}
-                    <label for="{{ field.html_name }}">{{ field.label }}</label>
-                    {% for value, label in field.field.choices %}
-                    <label class="radio">
-                        <input name="{{ field.html_name }}" type="radio" value="{{ value }}" data-toggle="radio" />{{ label }}
-                    </label>
-                    {% endfor %}
-                {% else %}{% ifequal field.name "country" %}
-                    {{ field|add_class:"select-block" }}
+                {% if field.name == 'for_hire' %}
+                <div class="switch" data-on-label="Yes" data-off-label="No">
+                    {{ field|add_class:"span6" }}
+                </div>
+                {% elif field.name == 'user_type' %}
+                {% for value, label in field.field.choices %}
+                <label class="radio{% if field.value == value %} checked{% endif %}">
+                    <input type="radio" data-toggle="radio"
+                            name="{{ field.html_name }}" value="{{ value }}"
+                            {% if field.value == value %} checked{% endif%} />
+                    {{ label }}
+                </label>
+                {% endfor %}
+                {% elif field.name == 'country' %}
+                {{ field|add_class:"span6" }}
                 {% else %}
-                    {% with "placeholder:"|add:field.label|title as placeholder %}
-                    {{ field|attr:placeholder }}
-                    {% endwith %}
-                {% endifequal %}{% endifequal %}{% endifequal %}
-                {% if field.errors %}<span class="help-inline">{{ field.errors.as_text|safe }}</span>{% endif %}
+                {{ field|add_class:"span6" }}
+                {% endif %}
+                {% if field.errors %}
+                <span class="help-block">{{ field.errors.as_text|safe }}</span>
+                {% endif %}
+                {% if field.help_text %}
+                <span class="help-block">{{ field.help_text|safe }}</span>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
         <div class="control-group">
             <div class="controls">
                 <input class="btn btn-inverse" type="submit" value="Register" />
+
+                <div id="links">
+                    <p>
+                        Have an existing account?
+                        <a href="{% url "login" %}">Log In!</a>
+                    </p>
+                </div>
             </div>
         </div>
     </form>
 </div>
 
 <div id="links">
-    <p>Have an existing account? <a href="{% url "login" %}">Log In</a></p>
 </div>
 {% endblock content %}

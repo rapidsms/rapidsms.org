@@ -5,7 +5,6 @@
  * -- Individual pages
  */
 
-
 /* Includes
 ==================== */
 @import "../flat-ui/less/config.less";
@@ -17,81 +16,163 @@
 
 @navbarCollapseWidth: 1125px;
 @white: #FFFFFF;
+@twilight-blue: lighten(@midnight-blue, 20%);
+@inputWidth: 50%;
 
 
 /* Sitewide
 ==================== */
-
-@inputWidth: 192px;
-
-
 .row-fluid {
+    // Apply flat-ui's form styles to select dropdowns.
+    select {
+        border: 2px solid @lightgray;
+        color: @base;
+        .border-radius(6px);
+        .box-shadow(none);
+        outline: 0;
+        .transition(~"border .25s linear, color .25s linear");
+    }
+
     textarea, input[type="text"], input[type="password"],
+    input[type="datetime"], input[type="datetime-local"],
+    input[type="date"], input[type="month"], input[type="time"],
+    input[type="week"], input[type="number"], input[type="email"],
+    input[type="url"], input[type="search"], input[type="tel"],
+    input[type="color"], .uneditable-input, select {
+        width: @inputWidth !important;
+        @media(max-width: 767px) {
+            width: 100% !important;
+        }
+        &:focus {
+            border-color: @peter-river;
+        }
+    }
+
+    input[type="text"], input[type="password"],
     input[type="datetime"], input[type="datetime-local"],
     input[type="date"], input[type="month"], input[type="time"],
     input[type="week"], input[type="number"], input[type="email"],
     input[type="url"], input[type="search"], input[type="tel"],
     input[type="color"], .uneditable-input {
         height: 21px;
-        width: @inputWidth;
     }
+
+    .radio {
+        margin-bottom: 0px;
+        margin-top: 5px;
+        &:first-child {
+            padding-top: 0px !important;
+        }
+    }
+
+    textarea {
+        height: 96px; // 4x line height
+    }
+}
+
+.has-switch {
+    span.switch-left {
+        color: @white;
+    }
+    .switch-on label {
+        background-color: @peter-river !important;
+    }
+}
+
+.checkbox.checked, .radio.checked, .checkbox.checked .icons, .radio.checked .icons {
+    color: @peter-river;
+}
+
+.btn i, a i {
+    margin-right: 5px;
 }
 
 .page-header {
     margin-top: 0px;
+    padding-bottom: 0px;
 
     .header-split {
-        margin-bottom: 5px;
+        margin: 0;
         span {
             display: inline-block;
         }
         .header-title {
             margin-right: 20px;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
-        .header-buttons {
-            margin-top: -10px;
+        .header-buttons .btn {
+            margin-bottom: 9px;
+            padding: 9px 12px;
         }
     }
 }
 
 #messages {
-	text-align: center;
+    text-align: center;
     min-height: 1px;
 }
 
 footer {
-    margin-top: 20px;
-    padding: 22px 0;
+    background-color: transparent;
     ul {
         list-style: none;
-        margin-bottom: 0;
     }
-    @media(max-width: 767px) {
-        #footer-left {
-            padding-left: 25px;
+    img {
+        width: 200px;
+        @media (max-width: 767px) {
+            width: 150px;
         }
-        #footer-right {
-            padding-top: 25px;
+    }
+    #footer-middle {
+        @media (max-width: 767px) {
+            ul {
+                margin: 20px 0;
+            }
+        }
+    }
+    a {
+        color: @peter-river;
+        &:hover {
+            color: @belize-hole;
         }
     }
 }
 
-.navbar {
+.navbar&.navbar-inverse {
 	.nav {
-		> li > a {
-			border: none;
-			padding: 18px 15px 15px;
-			&:hover, &:focus {
-				color: @peter-river;
-				border: none;
-			}
-			@media (max-width: 979px) {
-				color: @white !important;
-				&:hover, &:focus {
-					background-color: @peter-river !important;
-				}
-			}
+        li.dropdown.open {
+            > .dropdown-toggle {
+               background-color: @peter-river;
+               border: none;
+            }
+        }
+		> li {  
+            line-height: 24px;
+            > a {
+    			border: none;
+    			padding: 18px 12px 15px;
+    			cursor: pointer;
+                font-size: 13px;
+    			&:hover, &:focus {
+    				color: @peter-river;
+    				border: none;
+    			}
+                @media (min-width: 1200px) {
+                    padding: 18px 15px 15px;
+                    font-size: 16px;
+                }
+    			@media (max-width: 979px) {
+    				color: @white !important;
+    				&:hover, &:focus {
+    					background-color: @peter-river !important;
+    				}
+    			}
+            }
+            @media (max-width: 979px) {
+                &:last-child {
+                    border-bottom: #ccc 1px solid;
+                }
+            }
 		}
 		ul {
 			a {
@@ -129,60 +210,141 @@ footer {
 			left: 25px;
 		}
 	}
-	@media (max-width: 767px) {
-		margin-left: -20px;
-		margin-right: -20px;
-	}
-	.btn-navbar {
-		&:hover, &:focus {
-			color: @peter-river;
-		}
-	}
+    .btn-navbar {
+        &:hover, &:focus {
+            color: @peter-river;
+        }
+    }
     #search-form {
         i {
             padding-top: 2px;
         }
         input {
-            padding-left: 30px;
+            width: 150px;
+        }
+        @media (min-width: 1200px) {
+            width: auto;
+        }
+        @media (max-width: 979px) {
+            i { padding-top: 30px; }
+            input {
+                width: 250px;
+                margin: 40px 10px 50px;
+                padding-left: 35px;
+                font-size: 18px;
+            }
+        }
+    }
+	@media (max-width: 767px) {
+		margin-left: -20px;
+		margin-right: -20px;
+	}
+}
+
+#content {
+    margin-bottom: 30px;
+    a {
+        color: @peter-river;
+        &:hover {
+            color: @belize-hole;
+        }
+        &.btn, &.btn.btn-inverse {
+            color: @white;
         }
     }
 }
-
 
 /* Individual pages
 ==================== */
 
 body#home {
-	#masthead {
-		text-align: center;
-		color: @white;
-		background: url('../images/home-masthead-bkg.jpg') top center no-repeat;
-		background-size: cover;
-		// width: 100%;
-		padding-top: 50px;
-		padding-bottom: 50px;
-		@media (max-width: 767px) {
-			margin-left: -20px;
-			margin-right: -20px;
-		}
-		header {
-			.clearfix;
-			padding-left: 20px;
-    		padding-right: 20px;
-			small {
-				display: block;
-				font-size: 18px;
-				padding: 10px 0;
-			}
-			p {
-				font-size: 22px;
-				margin: 0;
-				@media (max-width: 767px) {
-					font-size: 18px;
-				}
-			}
-		}
-	}
+    // Courtesy of http://codepo8.github.io/css-fork-on-github-ribbon/
+    #fork {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: block;
+        a {
+            background: @clouds;
+            color: @twilight-blue;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+            padding: 5px 40px;
+            font-size: 1rem;
+            line-height: 2rem;
+            transition: 0.5s;
+
+            &::before, &::after {
+                content: "";
+                width: 100%;
+                display: block;
+                position: absolute;
+                top: 1px;
+                left: 0;
+                height: 1px;
+                background: @twilight-blue;
+            }
+            &::after {
+                bottom: 1px;
+                top: auto;
+            }
+            &:hover {
+                background: @twilight-blue;
+                color: @clouds;
+
+                &::before, &::after {
+                    background: @clouds;
+                }
+            }
+       }
+
+       @media screen and (min-width: 767px) {
+            width: 200px;
+            overflow: hidden;
+            height: 200px;
+            a {
+                width: 200px;
+                position: absolute;
+                top: 60px;
+                right: -60px;
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+                box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+            }
+        }
+    }
+
+    #masthead {
+        text-align: center;
+        color: @white;
+        background: url('/static/images/home-masthead-bkg.jpg') top center no-repeat;
+        background-size: cover;
+        // width: 100%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        @media (max-width: 767px) {
+            margin-left: -20px;
+            margin-right: -20px;
+        }
+        header {
+            .clearfix;
+            padding-left: 20px;
+            padding-right: 20px;
+            small {
+                display: block;
+                font-size: 18px;
+                padding: 10px 0;
+            }
+            p {
+                font-size: 22px;
+                margin: 0;
+                @media (max-width: 767px) {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
 }
 
 body#login #content {
@@ -199,40 +361,42 @@ body#login #content {
 }
 
 body#register #content {
-    div#register, div#links {
+    #links {
+        margin-top: 20px;
+    }
+}
+
+body#search #content {
+    #search-box {
         text-align: center;
-    }
-    div#register {
-        padding: 30px 0;
-    }
-    label.checkbox {
-        display: inline-block;
-        vertical-align: top;
-        margin: 0;
-        padding: 8px 0 0 0;
-    }
-    .control-group.error {
-        .icons, label {
-            .input-states(#b94a48);
-        }
-    }
-    .controls {
-        &#controls_user_type, &#controls_for_hire {
-            width: @inputWidth;
+        margin-bottom: 30px;
+        form {
             margin: 0 auto;
         }
-        &#controls_user_type, &#controls_for_hire label {
-            text-align: left;
+    }
+}
+
+body#package-form #content {
+    #instructions {
+        margin-bottom: 30px;
+    }
+}
+
+body#package-detail #content {
+    .page-header .summary {
+        color: @twilight-blue;
+        font-size: 18px;
+        margin-top: -3px;
+        margin-bottom: 6px;
+    }
+    #left-panel {
+        #links {
+            text-align: center;
+            margin-bottom: 30px;
+            .btn.btn-block {
+                width: 175px;
+                margin: 5px auto 0 auto;
+            }
         }
-    }
-    label.radio {
-        margin-left: 30px;
-        padding-top: 0px;
-    }
-    .control-group.error .help-inline {
-        display: block;
-    }
-    .switch {
-        margin-top: 2px;
     }
 }

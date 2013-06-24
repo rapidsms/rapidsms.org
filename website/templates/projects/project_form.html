@@ -1,5 +1,47 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}
+{% if object %}Edit {{ object.name }}{% else %}Add A New Project{% endif %}
+{% endblock title %}
+{% block body_id %}project-form{% endblock body_id %}
 
 {% block content %}
-    <h1>Edit Project</h1>
+<div class="page-header">
+    {% if object %}
+    <h1>Edit {{ object.name }}</h1>
+    {% else %}
+    <h1>Add A New Project</h1>
+    {% endif %}
+</div>
+
+<form class="form-horizontal" method="post" action=".">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="control-group{% if field.errors %} error{% endif %}">
+        <label class="control-label" for="{{ field.id_for_label }}">
+            {{ field.label }}
+        </label>
+        <div class="controls" id="controls_{{ field.name }}">
+            {{ field|add_class:"span6" }}
+            {% if field.errors %}
+            <span class="help-block">{{ field.errors.as_text|safe }}</span>
+            {% endif %}
+            {% if field.help_text %}
+            <span class="help-block">{{ field.help_text|safe }}</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    <div class="control-group">
+        <div class="controls">
+            <input class="btn btn-inverse" type="submit" value="Submit" />
+            {% if object %}
+            <a href="{{object.get_absolute_url }}" class="btn">Cancel</a>
+            {% else %}
+            <a href="{% url "project_list" %}" class="btn">Cancel</a>
+            {% endif %}
+        </div>
+    </div>
+</form>
 {% endblock content %}

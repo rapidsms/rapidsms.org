@@ -1,17 +1,32 @@
 {% extends "base.html" %}
 
+{% block title %}Profile for {{ object.name }}{% endblock title %}
+{% block body_id %}user-detail{% endblock body_id %}
+
 {% block content %}
-<h1>Profile for {{ object.get_full_name }}</h1>
+<div class="page-header">
+    {% if user.is_authenticated and user == object %}
+    <h1 class="header-split">
+        <span class="header-title">{{ object }}</span>
+        <span class="header-buttons btn-group">
+            <a href="{{ object.get_edit_url }}" class="btn btn-inverse"><i class="icon-white icon-pencil"></i> Edit Profile</a>
+        </span>
+    </h1>
+    {% else %}
+    <h1>{{ object }}</h1>
+    {% endif %}
+</div>
 
 {% if object.for_hire %}<p>{{ object.get_full_name }} is for hire!</p>{% endif %}
 
-<table>
+<table class="table table-bordered">
+    <tbody>
     <tr>
         <th>PK</th>
         <td>{{ object.pk }}</td>
     </tr>
     <tr>
-        <th>{% if object.is_individual %}Name{% else %}Company Name{% endif %}</th>
+        <th>{% if object.is_individual %}Name{% else %}Organization Name{% endif %}</th>
         <td>{{ object.name }}</td>
     </tr>
     {% if object.location %}
@@ -38,5 +53,6 @@
         <td><a href="{{ object.github_url }}">{{ object.github_url }}</a></td>
     </tr>
     {% endif %}
+    </tbody>
 </table>
 {% endblock content %}
