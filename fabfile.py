@@ -191,9 +191,7 @@ def deploy(branch=None):
         run('git clone %(repo)s %(code_root)s' % env)
         with cd(env.code_root):
             run('git submodule init')
-            run('git submodule update')
             run('git checkout %(branch)s' % env)
-            run('git submodule init')
             run('git submodule update')
         requirements = True
         migrations = True
