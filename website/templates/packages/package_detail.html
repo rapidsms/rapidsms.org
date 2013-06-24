@@ -8,14 +8,14 @@
 <div class="page-header">
     {% if user.is_authenticated and user == object.creator %}
     <h1 class="header-split">
-        <span class="header-title">{{ object }}{% if object.version %} v{{ object.version }}{% endif %}</span>
+        <span class="header-title">{{ object }}{% if object.version %} <small>version {{ object.version }}</small>{% endif %}</span>
         <span class="header-buttons">
             <a href="{{ object.get_edit_url }}" class="btn btn-inverse"><i class="icon-white icon-pencil"></i> Edit</a>
             <a href="#" class="btn btn-inverse"><i class="icon-white icon-flag"></i> Flag</a>
         </span>
     </h1>
     {% else %}
-    <h1>{{ object }}{% if object.version %} v{{ object.version }}{% endif %}</h1>
+    <h1>{{ object }}{% if object.version %} <small>version {{ object.version }}</small>{% endif %}</h1>
     {% endif %}
     {% if object.summary %}<div class="summary">{{ object.summary }}</div>{% endif %}
 </div>
@@ -40,7 +40,8 @@
         {% endif %}
         {% if object.version or object.release_date %}
             <p>
-                {% if object.version %}v{{ object.version }}<br />{% endif %}
+                <strong>Current Release</strong><br />
+                {% if object.version %}version {{ object.version }}{% endif %}
                 {% if object.release_date %}released {{ object.release_date|date }}{% endif %}
             </p>
         {% endif %}
