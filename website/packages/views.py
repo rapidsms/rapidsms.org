@@ -64,7 +64,6 @@ class PackageFlag(SingleObjectMixin, FormView):
                     self.object.get_absolute_url()),
             'reason': form.cleaned_data['reason'],
         })
-        managers = settings.FLAG_EMAIL_MANAGERS
 
         subject_template = 'packages/flag_email/subject.txt'
         body_text_template = 'packages/flag_email/body.txt'
@@ -77,7 +76,7 @@ class PackageFlag(SingleObjectMixin, FormView):
             subject=subject,
             message=body_text,
             from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[manager[1] for manager in managers],
+            recipient_list=settings.FLAG_EMAIL_ALERTS or [],
         )
         return True
 
