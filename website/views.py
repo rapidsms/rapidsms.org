@@ -1,5 +1,11 @@
 from django.conf import settings
+from django.http import Http404
 from django.views.generic import TemplateView
+
+from haystack.query import SearchQuerySet
+from haystack.views import FacetedSearchView, search_view_factory
+
+from .forms import FacetedSearchListingForm
 
 
 class Home(TemplateView):
@@ -24,3 +30,19 @@ class Help(TemplateView):
 class Blogs(TemplateView):
     template_name = 'website/blogs.html'
 
+
+def search_listing(request):
+    # Extract the model type from the full path, which should be the plural name
+    # of a valid model type (ex: '/users/')
+    model_type = request.get_full_path().strip('/').rstrip('s')
+    if model_type not in ['package', 'project', 'user']:
+        raise Http404
+
+    sqs = SearchQuerySet().filter(model=model_type)
+    view = search_view_factory(
+        view_class=FacetedSearchView,
+        template='search/search.html',
+        searchqueryset=sqs,
+        form_class=FacetedSearchListingForm
+    )
+    return view(request)
