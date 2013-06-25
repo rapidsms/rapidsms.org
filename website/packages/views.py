@@ -1,8 +1,9 @@
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
+from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, ListView, UpdateView,\
-        FormView
+        FormView, View
 from django.views.generic.detail import SingleObjectMixin
 
 from .forms import PackageCreateEditForm, PackageFlagForm
@@ -96,3 +97,23 @@ class PackageFlag(SingleObjectMixin, FormView):
 class PackageList(ListView):
     model = Package
     paginate_by = 10
+
+
+class PackageRefresh(SingleObjectMixin, View):
+    model = Package
+    http_method_names = ['post']
+
+    def post(self, request, *args, **kwargs):
+        # TODO: Make it a celery task.
+        self.object = self.get_object()
+        updated = self.object.update_from_pypi()
+        if updated:
+            self.object.save()
+            messages.success(self.request, 'The PyPI information for this '
+                    'package has been updated.')
+        else:
+            messages.error(request, 'Sorry, an error occurred while '
+                    'updating the information for this package from PyPI. '
+                    'Please try again later.')
+        return redirect(self.object.get_edit_url())
+        return super(PackageRefresh, self).post(request, *args, **kwargs)

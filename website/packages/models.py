@@ -102,6 +102,9 @@ class Package(models.Model):
     def get_pypi_json_url(self):
         return PYPI_JSON_API.format(self.name)
 
+    def get_refresh_url(self):
+        return reverse('package_refresh', args=(self.slug,))
+
     def get_model_name(self):
         return self._meta.verbose_name
 
