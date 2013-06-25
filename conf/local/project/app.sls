@@ -145,5 +145,4 @@ solr_conf:
 solr:
   cmd.script:
     - name: salt://project/solr-install.sh
-    - user: {{ pillar['project_name'] }}
-    - group: {{ pillar['project_name'] }}
+    - runas: root
