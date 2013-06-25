@@ -151,6 +151,7 @@ INSTALLED_APPS = (
     'allaccess',
     'widget_tweaks',
     'haystack',
+    'sorl.thumbnail'
 )
 
 # A sample logging configuration. The only tangible logging

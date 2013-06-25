@@ -44,6 +44,17 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
     country = models.ForeignKey('projects.Country', null=True, blank=True)
     website_url = models.URLField('Website URL', null=True, blank=True)
     github_url = models.URLField('Github URL', null=True, blank=True)
+
+    gravatar_email = models.EmailField(
+        'Gravatar Email Address (private)',
+        blank=True, null=True,
+        help_text="If supplied,  RapidSMS.org will use your Gravatar."
+    )
+    avatar = models.ImageField(
+        upload_to="images/avatars",
+        blank=True, null=True,
+        help_text="Upload an image if you do not have or want to use your Gravatar.")
+
     for_hire = models.BooleanField('Are you available for RapidSMS-related '
             'hire or consulting?', default=False)
 
