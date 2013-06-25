@@ -132,8 +132,8 @@ solr_conf:
   file.managed:
     - name: /etc/supervisor/conf.d/{{ pillar['project_name'] }}-solr.conf
     - source: salt://project/supervisor/solr.conf
-    - user: root
-    - group: root
+    - user: {{ pillar['project_name'] }}
+    - group: {{ pillar['project_name'] }}
     - mode: 644
     - template: jinja
     - context:
@@ -145,4 +145,4 @@ solr_conf:
 solr:
   cmd.script:
     - name: salt://project/solr-install.sh
-    - runas: root
+    - runas: {{ pillar['project_name'] }}
