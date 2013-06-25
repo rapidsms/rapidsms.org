@@ -7,6 +7,12 @@ from haystack.views import FacetedSearchView, search_view_factory
 
 from .forms import FacetedSearchListingForm
 
+MODEL_FACETS = {
+    'package': ('countries', 'creator', 'pkg_type'),
+    'project': ('countries', 'creator'),
+    'user': ()  # TODO
+}
+
 
 class Home(TemplateView):
     template_name = 'website/home.html'
@@ -35,10 +41,12 @@ def search_listing(request):
     # Extract the model type from the full path, which should be the plural name
     # of a valid model type (ex: '/users/')
     model_type = request.get_full_path().strip('/').rstrip('s')
-    if model_type not in ['package', 'project', 'user']:
+    if model_type not in MODEL_FACETS.keys():
         raise Http404
 
     sqs = SearchQuerySet().filter(model=model_type)
+    for facet in MODEL_FACETS[model_type]:
+        sqs = sqs.facet(facet)
     view = search_view_factory(
         view_class=FacetedSearchView,
         template='search/search.html',
