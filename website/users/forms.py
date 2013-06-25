@@ -56,8 +56,8 @@ class UserEditForm(UserChangeForm):
     class Meta:
         model = User
         fields = ('user_type', 'name', 'location', 'country', 'email',
-                'website_url', 'github_url', 'for_hire', 'password1',
-                'password2')
+                'website_url', 'github_url', 'gravatar_email', 'avatar',
+                'for_hire', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
         super(UserEditForm, self).__init__(*args, **kwargs)
@@ -94,4 +94,5 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('user_type', 'name', 'location', 'country', 'email',
-                'website_url', 'github_url', 'for_hire')
+                'website_url', 'github_url', 'gravatar_email', 'avatar',
+                'for_hire')

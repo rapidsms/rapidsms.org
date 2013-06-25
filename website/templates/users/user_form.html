@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load widget_tweaks %}
+{% load widget_tweaks user_tags thumbnail%}
 
 {% block title %}Edit Profile{% endblock title %}
 {% block body_id %}user-form{% endblock body_id %}
@@ -30,8 +30,28 @@
                  {{ label }}
             </label>
             {% endfor %}
+            {% elif field.name == "avatar" %}
+                {# custom Avatar render with image preview #}
+                {% if user.avatar %}
+                {% thumbnail user.avatar "140x140" crop="center" as im %}
+                    <img class="profile"  src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ user.get_full_name }}" />
+                {% endthumbnail %}
+                <br />
+                <input id="avatar-clear_id" type="checkbox" name="avatar-clear">
+                <label id="avatar-label" for="avatar-clear_id">Clear</label>
+                {% endif %}
+                <br />
+                <input id="id_avatar" class="span6" type="file" value="{{ user.avatar }}" name="avatar">
             {% else %}
                 {{ field|add_class:"span6" }}
+                {% if field.name == "gravatar_email" %}
+                    <div class="gravatar-photo">
+                        {% if user.gravatar_email %}
+                            <img class="profile" src="{% gravatar_url user.gravatar_email %}" alt="{{ user.get_full_name }}" />
+                        {% endif %}
+                        <p><strong><a href="https://gravatar.com">Change your avatar at Gravatar.com</a></strong>.</p>
+                    </div>
+                {% endif %}
             {% endif %}
             {% if field.errors %}
             <span class="help-block">{{ field.errors.as_text|safe }}</span>
