@@ -41,7 +41,7 @@
         {% if object.version or object.release_date %}
             <p>
                 <strong>Current Release</strong><br />
-                {% if object.version %}version {{ object.version }}{% endif %}
+                <img src="{{ object.get_pypi_badge_url }}" /><br />
                 {% if object.release_date %}released {{ object.release_date|date }}{% endif %}
             </p>
         {% endif %}

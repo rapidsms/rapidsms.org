@@ -10,6 +10,7 @@ from django.template.defaultfilters import slugify
 from website.users.models import User
 
 
+PYPI_BADGE_URL = 'https://pypip.in/v/{0}/badge.png'
 PYPI_JSON_API = 'http://pypi.python.org/pypi/{0}/json'
 PYPI_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
 
@@ -98,6 +99,9 @@ class Package(models.Model):
 
     def get_flag_url(self):
         return reverse('package_flag', args=(self.slug,))
+
+    def get_pypi_badge_url(self):
+        return PYPI_BADGE_URL.format(self.name)
 
     def get_pypi_json_url(self):
         return PYPI_JSON_API.format(self.name)
