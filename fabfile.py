@@ -17,7 +17,7 @@ env.shell = '/bin/bash -c'
 env.disable_known_hosts = True
 env.forward_agent = True
 env.solr_base_dir = '/usr/local/'
-env.solr_dir = os.path.join(env.solr_base_dir, 'solr-4.3.0')
+env.solr_dir = os.path.join(env.solr_base_dir, 'apache-solr-3.6.2')
 
 
 @task
@@ -208,7 +208,8 @@ def deploy(branch=None):
     elif migrations:
         syncdb()
     collectstatic()
-    supervisor_command('restart %(project)s:*' % env)
+    supervisor_command('stop %(project)s:*' % env)
+    supervisor_command('start %(project)s:*' % env)
     configure_solr()
 
 
@@ -243,10 +244,10 @@ def configure_solr():
     django-haystack management command: build_solr_schema
     """
 
-    local_conf = os.path.join(CONF_ROOT, 'search', 'solrconfig.xml')
+    local_conf = os.path.join(CONF_ROOT, 'solr', 'solrconfig.xml')
     remote_conf = os.path.join(env.solr_project_dir, 'solr', 'conf', 'solrconfig.xml')
     put(local_conf, remote_conf, use_sudo=True)
-    local_conf = os.path.join(CONF_ROOT, 'search', 'schema.xml')
+    local_conf = os.path.join(CONF_ROOT, 'solr', 'schema.xml')
     remote_conf = os.path.join(env.solr_project_dir, 'solr', 'conf', 'schema.xml')
     put(local_conf, remote_conf, use_sudo=True)
     supervisor_command('update')
