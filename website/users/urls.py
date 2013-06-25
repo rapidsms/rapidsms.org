@@ -1,12 +1,25 @@
 from django.conf.urls import patterns, url
 from django.core.urlresolvers import reverse_lazy
 
-from .views import RapidSMSOAuthRedirect, RapidSMSOAuthCallback, Registration,\
-        UserDetail, UserEdit, UserList
+from haystack.query import SearchQuerySet
+from haystack.views import FacetedSearchView
 
+from ..forms import FacetedSearchListingForm
+
+from .models import User
+from .views import RapidSMSOAuthRedirect, RapidSMSOAuthCallback, Registration,\
+        UserDetail, UserEdit
+
+# Haystack configure SQS for User Listing
+sqs = SearchQuerySet()
+sqs = sqs.filter(model=User._meta.verbose_name)
+facet_list = ()
+for facet in facet_list:
+    sqs = sqs.facet(facet)
 
 urlpatterns = patterns('',
-    url(r'^$', UserList.as_view(), name='user_list'),
+    url(r'^$', FacetedSearchView(form_class=FacetedSearchListingForm, searchqueryset=sqs), name='user_list'),
+    #url(r'^$', UserList.as_view(), name='user_list'),
     url(r'^d/(?P<pk>\d+)/$', UserDetail.as_view(), name='user_detail'),
     url(r'^d/(?P<pk>\d+)/edit/$', UserEdit.as_view(), name='user_edit'),
 

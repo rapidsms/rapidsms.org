@@ -1,11 +1,10 @@
 import logging
 
-from django.contrib.auth.views import password_reset_confirm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import redirect
-from django.views.generic import DetailView, ListView, UpdateView, FormView
+from django.views.generic import DetailView, UpdateView, FormView, ListView
 
 from allaccess.models import AccountAccess
 from allaccess.views import OAuthRedirect, OAuthCallback
@@ -128,7 +127,3 @@ class UserEdit(UpdateView):
         if obj != self.request.user:
             raise Http404()
         return obj
-
-
-class UserList(ListView):
-    model = User

@@ -94,11 +94,6 @@ class PackageFlag(SingleObjectMixin, FormView):
         return super(PackageFlag, self).form_valid(form)
 
 
-class PackageList(ListView):
-    model = Package
-    paginate_by = 10
-
-
 class PackageRefresh(SingleObjectMixin, View):
     model = Package
     http_method_names = ['post']

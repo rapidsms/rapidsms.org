@@ -23,3 +23,4 @@ class Help(TemplateView):
 
 class Blogs(TemplateView):
     template_name = 'website/blogs.html'
+
