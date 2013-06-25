@@ -16,6 +16,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+FLAG_EMAIL_MANAGERS = MANAGERS
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -220,3 +222,5 @@ SOUTH_MIGRATION_MODULES = {
 }
 
 RAPIDSMS_VERSION = '0.14.0'
+
+DEFAULT_FROM_EMAIL = 'no-reply@rapidsms.org'

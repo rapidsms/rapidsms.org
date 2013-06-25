@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load scribbler_tags %}
+
+{% block title %}{{ object }}{% endblock title %}
+{% block body_id %}package-flag{% endblock body_id %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ object }}</h1>
+</div>
+
+{% scribble "flag-package" %}
+<p>Some instructions on flagging a package.</p>
+{% endscribble %}
+
+<form class="form-horizontal" method="post" action="{{ object.get_flag_url }}">
+    {% csrf_token %}
+    <div class="control-group{% if form.reason.errors %} error{% endif %}">
+        <label class="control-label" for="{{ form.reason.id_for_label }}">
+            {{ form.reason.label }}
+        </label>
+        <div class="controls">
+            {{ form.reason }}
+            {% if form.reason.errors %}
+            <span class="help-block">{{ form.reason.errors.as_text|safe }}</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" class="btn btn-inverse" value="Flag Package" />
+            <a class="btn" href="{{ object.get_absolute_url }}">Cancel</a>
+        </div>
+    </div>
+</form>
+{% endblock content %}

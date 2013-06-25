@@ -117,6 +117,9 @@ class Package(models.Model):
     def get_edit_url(self):
         return reverse('package_edit', args=(self.slug,))
 
+    def get_flag_url(self):
+        return reverse('package_flag', args=(self.slug,))
+
     def get_pypi_json_url(self):
         return PYPI_JSON_API.format(self.name)
 

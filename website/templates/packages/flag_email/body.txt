@@ -1,0 +1,7 @@
+Hello,
+
+{{ user }} has flagged {{ package }} for your review.
+
+User: {{ user_url }}
+Package: {{ package_url }}
+Reason: {{ reason|safe }}

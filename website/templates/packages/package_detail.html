@@ -11,7 +11,7 @@
         <span class="header-title">{{ object }}{% if object.version %} <small>version {{ object.version }}</small>{% endif %}</span>
         <span class="header-buttons">
             <a href="{{ object.get_edit_url }}" class="btn btn-inverse"><i class="icon-white icon-pencil"></i> Edit</a>
-            <a href="#" class="btn btn-inverse"><i class="icon-white icon-flag"></i> Flag</a>
+            <a href="{{ object.get_flag_url }}" class="btn btn-inverse"><i class="icon-white icon-flag"></i> Flag</a>
         </span>
     </h1>
     {% else %}

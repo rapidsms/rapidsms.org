@@ -39,3 +39,7 @@ class PackageCreateEditForm(forms.ModelForm):
             raise forms.ValidationError(msg)
         self.instance.pypi_json = r.json()
         return name
+
+
+class PackageFlagForm(forms.Form):
+    reason = forms.CharField(widget=forms.Textarea, label='Reason for Flagging')

@@ -1,6 +1,7 @@
 from django import template
 from hashlib import md5
 
+
 register = template.Library()
 
 
