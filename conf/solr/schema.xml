@@ -164,6 +164,10 @@
 
     <field name="pkg_type" type="text_en" indexed="true" stored="true" multiValued="false" />
 
+    <field name="for_hire_exact" type="string" indexed="true" stored="true" multiValued="false" />
+
+    <field name="for_hire" type="text_en" indexed="true" stored="true" multiValued="false" />
+
   </fields>
 
   <!-- field to use to determine and enforce document uniqueness. -->
