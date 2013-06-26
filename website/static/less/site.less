@@ -411,10 +411,20 @@ body#user-form #content {
             margin-right: 10px;
         }
     }
-    .profile {
-        border-radius: 3px;
-    }
     #avatar-label {
         display: inline;
+    }
+}
+
+body#user-detail #content {
+    .label.for-hire {
+        background-color: @turquoise;
+        margin: 10px auto;
+        padding: 5px 10px;
+    }
+    table#details {
+        tr:first-child th, tr:first-child td {
+            border-top: none;
+        }
     }
 }

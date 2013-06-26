@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% load user_tags thumbnail %}
-
 {% block title %}Profile for {{ object.name }}{% endblock title %}
 {% block body_id %}user-detail{% endblock body_id %}
 
@@ -19,56 +17,43 @@
     {% endif %}
 </div>
 
-{% if object.for_hire %}<p>{{ object.get_full_name }} is for hire!</p>{% endif %}
-
-<table class="table table-bordered">
-    <tbody>
-    <tr>
-        <th>PK</th>
-        <td>{{ object.pk }}</td>
-    </tr>
-    <tr>
-        <th>{% if object.is_individual %}Name{% else %}Organization Name{% endif %}</th>
-        <td>{{ object.name }}</td>
-    </tr>
-    {% if object.location %}
-    <tr>
-        <th>Location</th>
-        <td>{{ object.location }}</td>
-    </tr>
-    {% endif %}
-    {% if object.country %}
-    <tr>
-        <th>Country</th>
-        <td>{{ object.country }}</td>
-    </tr>
-    {% endif %}
-    {% if object.website_url %}
-    <tr>
-        <th>Website</th>
-        <td><a href="{{ object.website_url }}">{{ object.website_url }}</a></td>
-    </tr>
-    {% endif %}
-    {% if object.github_url %}
-    <tr>
-        <th>GitHub</th>
-        <td><a href="{{ object.github_url }}">{{ object.github_url }}</a></td>
-    </tr>
-    {% endif %}
-    <tr>
-        <th>Avatar</th>
-        <td>
-            {% if user.gravatar_email %}
-                <img class="profile" src="{% gravatar_url user.gravatar_email '140' %}" alt="{{ user.get_full_name }}" />
-            {% elif user.avatar %}
-                {% thumbnail user.avatar "140x140" crop="center" as im %}
-                    <img class="profile"  src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ user.get_full_name }}" />
-                {% endthumbnail %}
-            {% else %}
-                <img class="profile" src="{{ STATIC_URL }}img/no-photo.png" alt="{{ profile_user.username }}" width="140" height="140" />
+<div class="row-fluid">
+    <div class="span3 text-center">
+        {% include "includes/avatar.html" with user=object size="140" %}
+        {% if object.for_hire %}
+        <span class="label for-hire">{{ object }} is for hire!</label>
+        {% endif %}
+    </div>
+    <div class="span9">
+        <table id="details" class="table">
+            <tbody>
+            {% if object.location %}
+            <tr>
+                <th>Location</th>
+                <td>{{ object.location }}{% if object.country %}, {{ object.country }}{% endif %}</td>
+            </tr>
             {% endif %}
-        </td>
-    </tr>
-    </tbody>
-</table>
+            {% if object.email %}
+            <tr>
+                <th>Email</th>
+                <td>{{ object.email }}</td>
+            </tr>
+            {% endif %}
+            {% if object.website_url %}
+            <tr>
+                <th>Website</th>
+                <td><a href="{{ object.website_url }}">{{ object.website_url }}</a></td>
+            </tr>
+            {% endif %}
+            {% if object.github_url %}
+            <tr>
+                <th>GitHub</th>
+                <td><a href="{{ object.github_url }}">{{ object.github_url }}</a></td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
 {% endblock content %}
