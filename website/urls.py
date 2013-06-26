@@ -28,7 +28,7 @@ urlpatterns += patterns('',
     url(r'^blogs/$', Blogs.as_view(), name='blogs'),
     url(r'^help/$', Help.as_view(), name='help'),
 
-    url(r'^(?P<model_type>\w+)/$', search_listing, name='search_listing'),
+    url(r'^(?P<model_type>\w+)/l/', search_listing, name='search_listing'),
 
     url(r'^projects/', include('website.projects.urls')),
     url(r'^packages/', include('website.packages.urls')),
