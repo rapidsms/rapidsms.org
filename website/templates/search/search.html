@@ -48,7 +48,7 @@
                 {% endif %}
                 {% for facet in facets %}
                 {% with path=request.get_full_path %}
-                    <li><a href="{{ request.get_full_path }}{% if '?q=' not in path %}?q={% endif %}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0|title }} ({{ facet.1 }})</a></li>
+                    <li class="nav-item"><a href="{{ request.get_full_path }}{% if '?q=' not in path %}?q={% endif %}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0|title }} ({{ facet.1 }})</a></li>
                 {% endwith %}
                 {% endfor %}
             {% endif %}
