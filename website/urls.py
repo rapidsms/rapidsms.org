@@ -7,7 +7,7 @@ from haystack.forms import FacetedSearchForm
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
 
-from .views import About, Blogs, Help, Home, search_listing
+from .views import About, Blogs, Help, Home
 
 
 admin.autodiscover()
@@ -27,8 +27,6 @@ urlpatterns += patterns('',
     url(r'^about/$', About.as_view(), name='about'),
     url(r'^blogs/$', Blogs.as_view(), name='blogs'),
     url(r'^help/$', Help.as_view(), name='help'),
-
-    url(r'^(?P<model_type>\w+)/l/', search_listing, name='search_listing'),
 
     url(r'^projects/', include('website.projects.urls')),
     url(r'^packages/', include('website.packages.urls')),

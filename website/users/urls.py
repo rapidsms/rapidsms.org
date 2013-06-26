@@ -1,11 +1,13 @@
 from django.conf.urls import patterns, url
 from django.core.urlresolvers import reverse_lazy
 
+from ..views import search_listing
 from .views import RapidSMSOAuthRedirect, RapidSMSOAuthCallback, Registration,\
         UserDetail, UserEdit
 
 
 urlpatterns = patterns('',
+    url(r'^$', search_listing, {'model_type': 'users'}, name='user_list'),
     url(r'^d/(?P<pk>\d+)/$', UserDetail.as_view(), name='user_detail'),
     url(r'^d/(?P<pk>\d+)/edit/$', UserEdit.as_view(), name='user_edit'),
 
