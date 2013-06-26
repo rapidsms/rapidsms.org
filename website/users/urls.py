@@ -6,7 +6,6 @@ from .views import RapidSMSOAuthRedirect, RapidSMSOAuthCallback, Registration,\
 
 
 urlpatterns = patterns('',
-    url(r'^$', 'website.views.search_listing', name='user_list'),
     url(r'^d/(?P<pk>\d+)/$', UserDetail.as_view(), name='user_detail'),
     url(r'^d/(?P<pk>\d+)/edit/$', UserEdit.as_view(), name='user_edit'),
 
