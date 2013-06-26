@@ -13,36 +13,36 @@
 </div>
 
 <div class="row-fluid">
-    <div class="span3">
-        {% if facets.fields.items %}
-        <div class="well" id="refine-results">
-            <h3>Refine Results</h3>
-            <div id="reset-filters">
-                <a href="{{ request.path }}{% if query %}?q={{ query }}{% endif %}">Reset Filters</a>
-            </div>
-            <ul class="nav nav-list">
-            {% for field, facets in facets.fields.items %}
-                {% if facets %}
-                    {% if field == 'creator' %}
-                    <li class="nav-header">By Author</li>
-                    {% elif field == 'pkg_type' %}
-                    <li class="nav-header">By Package Type</li>
-                    {% else %}
-                    <li class="nav-header">By {{ field }}</li>
-                    {% endif %}
-                    {% for facet in facets %}
-                    {% with path=request.get_full_path %}
-                        <li><a href="{{ request.get_full_path }}{% if '?q=' not in path %}?q={% endif %}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0|title }} ({{ facet.1 }})</a></li>
-                    {% endwith %}
-                    {% endfor %}
-                {% endif %}
-            {% endfor %}
-            </ul>
+    {% if has_facets %}
+    <div class="well span3" id="refine-results">
+        <h3>Refine Results</h3>
+        <div id="reset-filters">
+            <a href="{{ request.path }}{% if query %}?q={{ query }}{% endif %}">Reset Filters</a>
         </div>
-        {% endif %}
+        <ul class="nav nav-list">
+        {% for field, facets in facets.fields.items %}
+            {% if facets %}
+                {% if field == 'creator' %}
+                <li class="nav-header">By Author</li>
+                {% elif field == 'pkg_type' %}
+                <li class="nav-header">By Package Type</li>
+                {% else %}
+                <li class="nav-header">By {{ field }}</li>
+                {% endif %}
+                {% for facet in facets %}
+                {% with path=request.get_full_path %}
+                    <li><a href="{{ request.get_full_path }}{% if '?q=' not in path %}?q={% endif %}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0|title }} ({{ facet.1 }})</a></li>
+                {% endwith %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        </ul>
     </div>
 
     <div class="span9 search-results">
+    {% else %}
+    <div class="span12 search-results">
+    {% endif %}
         <div class="page-header">
             {% if user.is_authenticated and model_type in user_add %}
             <h1 class="header-split">

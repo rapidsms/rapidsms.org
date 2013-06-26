@@ -1,3 +1,4 @@
+from itertools import chain
 import os
 
 from django.conf import settings
@@ -49,6 +50,9 @@ class FacetedSearchListingView(FacetedSearchView):
         else:
             extra['facets'] = self.results.facet_counts()
         model_type = self.request.path.split('/')[1].rstrip('s')
+
+        facets = chain(*extra['facets']['fields'].values())
+        extra['has_facets'] = bool(list(facets))
         extra['model_type'] = model_type
         extra['model_create'] = '%s_create' % model_type
         extra['user_add'] = ['package', 'project']
