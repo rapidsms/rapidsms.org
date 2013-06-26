@@ -38,6 +38,20 @@
     </div>
 
     <div class="span9 search-results">
+        <div class="page-header">
+            {% if user.is_authenticated and model_type in user_add %}
+            <h1 class="header-split">
+                <span class="header-title">RapidSMS {{ model_type|title }}s</span>
+                <span class="header-buttons">
+                    <a href="{% url model_create %}" class="btn btn-inverse"><i class="icon-white icon-plus"></i> Add {{ model_type|title }}</a>
+                </span>
+            </h1>
+            {% else %}
+            <h1>RapidSMS {{ model_type|title }}s</h1>
+            {% endif %}
+        </div>
+
+
         {% for result in page.object_list %}
         <div class="result">
             <h3><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></h3>

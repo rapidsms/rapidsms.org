@@ -58,7 +58,7 @@
         <div class="controls">
             <input class="btn btn-inverse" type="submit" value="Submit" />
             {% if not object %}
-            <a href="{% url "package_list" %}" class="btn">Cancel</a>
+            <a href="{% url "search_listing" "packages" %}" class="btn">Cancel</a>
             {% endif %}
         </div>
     </div>

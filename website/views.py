@@ -39,6 +39,20 @@ class Blogs(TemplateView):
     template_name = 'website/blogs.html'
 
 
+class FacetedSearchListingView(FacetedSearchView):
+    def extra_context(self):
+        extra = super(FacetedSearchView, self).extra_context()
+        if self.results == []:
+            extra['facets'] = self.form.search().facet_counts()
+        else:
+            extra['facets'] = self.results.facet_counts()
+        model_type = self.request.path.split('/')[1].rstrip('s')
+        extra['model_type'] = model_type
+        extra['model_create'] = '%s_create' % model_type
+        extra['user_add'] = ['package', 'project']
+        return extra
+
+
 def search_listing(request, model_type):
     # Extract the model type from the full path, which should be the plural name
     # of a valid model type (ex: '/users/')
@@ -49,9 +63,9 @@ def search_listing(request, model_type):
     for facet in MODEL_FACETS[model_type]:
         sqs = sqs.facet(facet)
     view = search_view_factory(
-        view_class=FacetedSearchView,
+        view_class=FacetedSearchListingView,
         template='search/search.html',
         searchqueryset=sqs,
-        form_class=FacetedSearchListingForm
+        form_class=FacetedSearchListingForm,
     )
     return view(request)
