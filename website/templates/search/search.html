@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load widget_tweaks %}
+{% load widget_tweaks scribbler_tags %}
 
 {% block title %}Search Results{% endblock title %}
 {% block body_id %}search{% endblock body_id %}
@@ -13,27 +13,33 @@
 </div>
 
 <div class="row-fluid">
-    <div class="well span3">
-        <h3>Refine Results</h3>
-        <ul class="nav nav-list">
-        {% for field, facets in facets.fields.items %}
-            {% if facets %}
-                {% if field == 'creator' %}
-                <li class="nav-header">By Author</li>
-                {% elif field == 'pkg_type' %}
-                <li class="nav-header">By Package Type</li>
-                {% else %}
-                <li class="nav-header">By {{ field }}</li>
+    <div class="span3">
+        {% if facets.fields.items %}
+        <div class="well" id="refine-results">
+            <h3>Refine Results</h3>
+            <div id="reset-filters">
+                <a href="{{ request.path }}{% if query %}?q={{ query }}{% endif %}">Reset Filters</a>
+            </div>
+            <ul class="nav nav-list">
+            {% for field, facets in facets.fields.items %}
+                {% if facets %}
+                    {% if field == 'creator' %}
+                    <li class="nav-header">By Author</li>
+                    {% elif field == 'pkg_type' %}
+                    <li class="nav-header">By Package Type</li>
+                    {% else %}
+                    <li class="nav-header">By {{ field }}</li>
+                    {% endif %}
+                    {% for facet in facets %}
+                    {% with path=request.get_full_path %}
+                        <li><a href="{{ request.get_full_path }}{% if '?q=' not in path %}?q={% endif %}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0|title }} ({{ facet.1 }})</a></li>
+                    {% endwith %}
+                    {% endfor %}
                 {% endif %}
-                {% for facet in facets %}
-                {% with path=request.get_full_path %}
-                    <li><a href="{{ request.get_full_path }}{% if '?q=' not in path %}?q={% endif %}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0|title }} ({{ facet.1 }})</a></li>
-                {% endwith %}
-                {% endfor %}
-            {% endif %}
-        {% endfor %}
-        </ul>
-        <em><a href="{{ request.path }}{% if query %}?q={{ query }}{% endif %}">Reset Filters</a></em>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
     </div>
 
     <div class="span9 search-results">
@@ -45,15 +51,24 @@
                     <a href="{% url model_create %}" class="btn btn-inverse"><i class="icon-white icon-plus"></i> Add {{ model_type|title }}</a>
                 </span>
             </h1>
-            {% else %}
+            {% elif model_type %}
             <h1>RapidSMS {{ model_type|title }}s</h1>
+            {% else %}
+            <h1>Search Results</h1>
             {% endif %}
         </div>
 
+        {% if model_type %}
+            {% with model_type|add:"_list" as name %}
+{% scribble name %}
+<p class="lead">Some lead text explaining this thing.</p>
+{% endscribble %}
+            {% endwith %}
+        {% endif %}
 
         {% for result in page.object_list %}
         <div class="result">
-            {% with "search/results/"|add:model_type|add:".html" as template %}
+            {% with "search/results/"|add:result.object.get_model_name|add:".html" as template %}
                 {% include template %}
             {% endwith %}
         </div>
