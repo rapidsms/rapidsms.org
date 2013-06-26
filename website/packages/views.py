@@ -98,10 +98,14 @@ class PackageRefresh(SingleObjectMixin, View):
     model = Package
     http_method_names = ['post']
 
-    def post(self, request, *args, **kwargs):
-        # TODO: Make it a celery task.
+    def refresh_package(self):
+        # TODO: Make it a Celery task.
+        # Shouldn't execute more than once every minute or so.
         self.object = self.get_object()
-        updated = self.object.update_from_pypi()
+        return self.object.update_from_pypi()
+
+    def post(self, request, *args, **kwargs):
+        updated = self.refresh_package()
         if updated:
             self.object.save()
             messages.success(self.request, 'The PyPI information for this '
@@ -111,4 +115,3 @@ class PackageRefresh(SingleObjectMixin, View):
                     'updating the information for this package from PyPI. '
                     'Please try again later.')
         return redirect(self.object.get_edit_url())
-        return super(PackageRefresh, self).post(request, *args, **kwargs)
