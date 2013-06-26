@@ -1,0 +1,11 @@
+{% with package=result.object %}
+<h3>
+    <a href="{{ package.get_absolute_url }}">{{ package }}</a>
+    {% if package.version %}
+    <small>version {{ package.version }}</small>
+    {% endif %}
+</h3>
+{% if package.summary %}
+<p>{{ package.summary }}</p>
+{% endif %}
+{% endwith %}

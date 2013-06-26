@@ -5,7 +5,6 @@
 {% block body_id %}search{% endblock body_id %}
 
 {% block content %}
-
 <div id="search-box">
     <form class="form-search" method="get" action=".">
         {{ form.q|add_class:"search-query"|attr:"placeholder:Search" }}
@@ -54,7 +53,9 @@
 
         {% for result in page.object_list %}
         <div class="result">
-            <h3><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></h3>
+            {% with "search/results/"|add:model_type|add:".html" as template %}
+                {% include template %}
+            {% endwith %}
         </div>
         {% empty %}
         <p>No results found.</p>

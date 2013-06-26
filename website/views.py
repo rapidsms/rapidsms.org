@@ -9,6 +9,7 @@ from haystack.views import FacetedSearchView, search_view_factory
 
 from .forms import FacetedSearchListingForm
 
+
 MODEL_FACETS = {
     'package': ('countries', 'creator', 'pkg_type'),
     'project': ('countries', 'creator'),
@@ -40,6 +41,7 @@ class Blogs(TemplateView):
 
 
 class FacetedSearchListingView(FacetedSearchView):
+
     def extra_context(self):
         extra = super(FacetedSearchView, self).extra_context()
         if self.results == []:

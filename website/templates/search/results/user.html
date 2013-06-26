@@ -1,0 +1,15 @@
+{% with user=result.object %}
+<h3>
+    {% if user.for_hire %}
+        <span class="label for-hire">For hire!</span>
+    {% endif %}
+    <a href="{{ result.object.get_absolute_url }}">{{ user }}</a>
+    {% if user.location and user.country %}
+        <small>{{ user.location }}, {{ user.country }}</small>
+    {% elif user.location %}
+        <small>{{ user.location }}</small>
+    {% elif user.country %}
+        <small>{{ user.country }}</small>
+    {% endif %}
+</h3>
+{% endwith %}

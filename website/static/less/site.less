@@ -107,6 +107,12 @@
     }
 }
 
+.label.for-hire {
+    background-color: @turquoise;
+    margin: 10px auto;
+    padding: 5px 10px;
+}
+
 #messages {
     text-align: center;
     min-height: 1px;
@@ -417,14 +423,18 @@ body#user-form #content {
 }
 
 body#user-detail #content {
-    .label.for-hire {
-        background-color: @turquoise;
-        margin: 10px auto;
-        padding: 5px 10px;
-    }
     table#details {
         tr:first-child th, tr:first-child td {
             border-top: none;
+        }
+    }
+}
+
+body#search #content {
+    .result h3 {
+        .label.for-hire {
+            vertical-align: middle;
+            margin: 0 5px 4px 0;
         }
     }
 }
