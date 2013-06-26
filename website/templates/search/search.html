@@ -7,8 +7,16 @@
 {% block content %}
 <div id="search-box">
     <form class="form-search" method="get" action=".">
-        {{ form.q|add_class:"search-query"|attr:"placeholder:Search" }}
-        <button class="btn btn-inverse" type="submit"><i class="fui-search"></i></button>
+        <div class="control-group">
+            {% if model_type %}
+                {% with "placeholder:Search "|add:model_type|add:"s"|title as placeholder%}
+                    {{ form.q|attr:placeholder }}
+                {% endwith %}
+            {% else %}
+                {{ form.q|attr:"placeholder:Search All of RapidSMS.org" }}
+            {% endif %}
+            <i class="input-icon fui-search"></i>
+        </div>
     </form>
 </div>
 
@@ -59,7 +67,7 @@
         </div>
 
         {% if model_type %}
-            {% with model_type|add:"_list" as name %}
+            {% with model_type|add:"-list" as name %}
 {% scribble name %}
 <p class="lead">Some lead text explaining this thing.</p>
 {% endscribble %}
