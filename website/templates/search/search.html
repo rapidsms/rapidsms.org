@@ -1,24 +1,33 @@
 {% extends "base.html" %}
 {% load widget_tweaks scribbler_tags %}
 
-{% block title %}Search Results{% endblock title %}
+{% block title %}{{ model_type|default:"search result"|add:"s"|title }}{% endblock title %}
 {% block body_id %}search{% endblock body_id %}
 
 {% block content %}
-<div id="search-box">
-    <form class="form-search" method="get" action=".">
-        <div class="control-group">
-            {% if model_type %}
-                {% with "placeholder:Search "|add:model_type|add:"s"|title as placeholder%}
-                    {{ form.q|attr:placeholder }}
-                {% endwith %}
-            {% else %}
-                {{ form.q|attr:"placeholder:Search All of RapidSMS.org" }}
-            {% endif %}
-            <i class="input-icon fui-search"></i>
-        </div>
-    </form>
+
+<div class="page-header">
+    {% if user.is_authenticated and model_type in user_add %}
+    <h1 class="header-split">
+        <span class="header-title">RapidSMS {{ model_type|title }}s</span>
+        <span class="header-buttons">
+            <a href="{% url model_create %}" class="btn btn-inverse"><i class="icon-white icon-plus"></i> Add {{ model_type|title }}</a>
+        </span>
+    </h1>
+    {% elif model_type %}
+    <h1>RapidSMS {{ model_type|title }}s</h1>
+    {% else %}
+    <h1>Search Results</h1>
+    {% endif %}
 </div>
+
+{% if model_type %}
+    {% with model_type|add:"-list" as name %}
+{% scribble name %}
+<p class="lead">Some lead text explaining this thing.</p>
+{% endscribble %}
+    {% endwith %}
+{% endif %}
 
 <div class="row-fluid">
     {% if has_facets %}
@@ -51,28 +60,21 @@
     {% else %}
     <div class="span12 search-results">
     {% endif %}
-        <div class="page-header">
-            {% if user.is_authenticated and model_type in user_add %}
-            <h1 class="header-split">
-                <span class="header-title">RapidSMS {{ model_type|title }}s</span>
-                <span class="header-buttons">
-                    <a href="{% url model_create %}" class="btn btn-inverse"><i class="icon-white icon-plus"></i> Add {{ model_type|title }}</a>
-                </span>
-            </h1>
-            {% elif model_type %}
-            <h1>RapidSMS {{ model_type|title }}s</h1>
-            {% else %}
-            <h1>Search Results</h1>
-            {% endif %}
-        </div>
 
-        {% if model_type %}
-            {% with model_type|add:"-list" as name %}
-{% scribble name %}
-<p class="lead">Some lead text explaining this thing.</p>
-{% endscribble %}
-            {% endwith %}
-        {% endif %}
+        <div id="search-box">
+            <form class="form-search" method="get" action=".">
+                <div class="control-group">
+                    {% if model_type %}
+                        {% with "placeholder:Search "|add:model_type|add:"s"|title as placeholder%}
+                            {{ form.q|attr:placeholder }}
+                        {% endwith %}
+                    {% else %}
+                        {{ form.q|attr:"placeholder:Search All of RapidSMS.org" }}
+                    {% endif %}
+                    <i class="input-icon fui-search"></i>
+                </div>
+            </form>
+        </div>
 
         {% for result in page.object_list %}
         <div class="result">
@@ -80,6 +82,7 @@
                 {% include template %}
             {% endwith %}
         </div>
+        {% if not forloop.last %}<hr />{% endif %}
         {% empty %}
         <p>No results found.</p>
         {% endfor %}

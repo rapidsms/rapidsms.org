@@ -1,15 +1,17 @@
 {% with user=result.object %}
-<h3>
-    {% if user.for_hire %}
-        <span class="label for-hire">For hire!</span>
-    {% endif %}
-    <a href="{{ result.object.get_absolute_url }}">{{ user }}</a>
+<div class="results-header">
+    <a href="{{ user.get_absolute_url }}">{{ user }}</a> {% if user.for_hire %}<span class="label for-hire">For hire!</span>{% endif %}
+</div>
+
+{% if user.location or user.country %}
+<div class="results-subheader">
     {% if user.location and user.country %}
-        <small>{{ user.location }}, {{ user.country }}</small>
+    {{ user.location }}, {{ user.country }}
     {% elif user.location %}
-        <small>{{ user.location }}</small>
-    {% elif user.country %}
-        <small>{{ user.country }}</small>
+    {{ user.location }}
+    {% else %}
+    {{ user.country }}
     {% endif %}
-</h3>
+</div>
+{% endif %}
 {% endwith %}

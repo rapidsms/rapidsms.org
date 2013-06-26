@@ -40,5 +40,8 @@ for facet in facet_list:
     sqs = sqs.facet(facet)
 
 urlpatterns += patterns('haystack.views',
-    url(r'^search/$', FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs), name='haystack_search'),
+    url(r'^search/$',
+        FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs),
+        name='haystack_search',
+    ),
 )

@@ -88,7 +88,7 @@
 }
 
 .page-header {
-    margin-top: 0px;
+    margin: 0 auto 20px;
     padding-bottom: 0px;
 
     .header-split {
@@ -372,29 +372,6 @@ body#register #content {
     }
 }
 
-body#search #content {
-    #search-box {
-        text-align: center;
-        margin: 0 auto;
-        width: 80%;
-        max-width: 500px;
-        form {
-            margin: 0 auto;
-            input {
-                width: 100% !important;
-                height: 30px;
-                line-height: 28px;
-                font-size: 20px;
-            }
-            i {
-                line-height: 28px;
-                right: 0;
-                padding: 9px 0;
-            }
-        }
-    }
-}
-
 body#package-form #content {
     #instructions {
         margin-bottom: 30px;
@@ -444,10 +421,21 @@ body#user-detail #content {
 }
 
 body#search #content {
-    .result h3 {
-        .label.for-hire {
-            vertical-align: middle;
-            margin: 0 5px 4px 0;
+    .result {
+        .results-header {
+            font-size: 20px;
+            .label.for-hire {
+                vertical-align: middle;
+                margin: 0 0 5px 5px;
+            }
+        }
+        .results-subheader {
+            margin-top: 3px;
+            font-size: 16px;
+            color: @concrete;
+        }
+        .results-description {
+            margin-top: 12px;
         }
     }
     #refine-results {
@@ -457,6 +445,27 @@ body#search #content {
         #reset-filters {
             margin: -5px 0 10px 0;
             font-size: 90%;
+        }
+    }
+    #search-box {
+        text-align: center;
+        margin: 0 auto 20px;
+        width: 100%;
+        form {
+            margin: 0 auto;
+            input {
+                box-sizing: border-box;
+                width: 100% !important;
+                line-height: 28px;
+                font-size: 20px;
+                padding: 20px 8px;
+            }
+            i {
+                line-height: 28px;
+                top: 2px;
+                right: 2px;
+                padding: 6px 12px;
+            }
         }
     }
 }
