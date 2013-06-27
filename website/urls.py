@@ -20,6 +20,7 @@ urlpatterns = patterns('',
 
 urlpatterns += patterns('',
     url(r'^scribbler/', include('scribbler.urls')),
+    url(r'^selectable/', include('selectable.urls')),
 )
 
 urlpatterns += patterns('',
