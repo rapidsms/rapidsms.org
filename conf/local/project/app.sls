@@ -100,14 +100,6 @@ gunicorn_conf:
       - pkg: supervisor
       - file: log_dir
 
-extend:
-  supervisor:
-    service:
-      - running
-      - watch:
-        - file: group_conf
-        - file: gunicorn_conf
-
 npm:
   pkg:
     - installed
@@ -122,3 +114,51 @@ less:
   file.symlink:
     - name: /usr/bin/lessc
     - target: /usr/local/bin/lessc
+
+openjdk-7-jre-headless:
+  pkg:
+    - installed
+
+solr_conf:
+  file.managed:
+    - name: /etc/supervisor/conf.d/{{ pillar['project_name'] }}-solr.conf
+    - source: salt://project/supervisor/solr.conf
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
+    - context:
+        log_dir: "/var/www/{{ pillar['project_name']}}/log"
+    - require:
+      - pkg: openjdk-7-jre-headless
+      - file: log_dir
+
+solr:
+  cmd.script:
+    - cwd: /var/www/{{ pillar['project_name']}}
+    - name: salt://project/solr-install.sh
+    - runas: {{ pillar['project_name'] }}
+
+
+/var/www/{{ pillar['project_name']}}/apache-solr-3.6.2/website/solr/conf/schema.xml:
+  file.managed:
+  - source: salt://project/solr/schema.xml
+  - user: www-data
+  - group: www-data
+  - mode: 644
+
+/var/www/{{ pillar['project_name']}}/apache-solr-3.6.2/website/solr/conf/solrconfig.xml:
+  file.managed:
+  - source: salt://project/solr/solrconfig.xml
+  - user: www-data
+  - group: www-data
+  - mode: 644
+
+extend:
+  supervisor:
+    service:
+      - running
+      - watch:
+        - file: group_conf
+        - file: gunicorn_conf
+        - file: solr_conf

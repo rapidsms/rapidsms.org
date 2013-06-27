@@ -37,7 +37,7 @@ def staging():
 @task
 def production():
     env.environment = 'production'
-    env.hosts = [] # FIXME: Add production hosts
+    env.hosts = []  # FIXME: Add production hosts
     env.branch = 'master'
     setup_path()
 
@@ -49,6 +49,7 @@ def setup_path():
     env.virtualenv_root = os.path.join(env.root, 'env')
     env.db = '%s_%s' % (env.project, env.environment)
     env.settings = '%(project)s.settings.%(environment)s' % env
+    env.solr_project_dir = os.path.join(env.root, 'apache-solr-3.6.2', u'%(project)s' % env)
 
 
 @task
@@ -188,7 +189,6 @@ def deploy(branch=None):
         run('git clone %(repo)s %(code_root)s' % env)
         with cd(env.code_root):
             run('git submodule init')
-            run('git submodule update')
             run('git checkout %(branch)s' % env)
             run('git submodule update')
         requirements = True
@@ -206,7 +206,9 @@ def deploy(branch=None):
     elif migrations:
         syncdb()
     collectstatic()
-    supervisor_command('restart %(project)s:*' % env)
+    supervisor_command('stop %(project)s:*' % env)
+    supervisor_command('start %(project)s:*' % env)
+    configure_solr()
 
 
 @task
@@ -229,3 +231,22 @@ def load_db_dump(dump_file):
     temp_file = os.path.join(env.home, '%(environment)s.sql' % env)
     put(dump_file, temp_file, use_sudo=True)
     sudo('psql -d %s -f %s' % (env.db, temp_file), user=env.project_user)
+
+
+@task
+def configure_solr():
+    """
+    Update solr configuration.
+
+    The schema.xml is stored in the repo but it should be generated from the
+    django-haystack management command: build_solr_schema
+    """
+    #TODO Move toward haystack cmd....
+    local_conf = os.path.join(CONF_ROOT, 'local', 'project', 'solr', 'solrconfig.xml')
+    remote_conf = os.path.join(env.solr_project_dir, 'solr', 'conf', 'solrconfig.xml')
+    put(local_conf, remote_conf, use_sudo=True)
+    local_conf = os.path.join(CONF_ROOT, 'local', 'project', 'solr', 'schema.xml')
+    remote_conf = os.path.join(env.solr_project_dir, 'solr', 'conf', 'schema.xml')
+    put(local_conf, remote_conf, use_sudo=True)
+    supervisor_command('update')
+    supervisor_command('restart %(project)s-solr' % env)
