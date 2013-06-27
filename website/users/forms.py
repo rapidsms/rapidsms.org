@@ -3,6 +3,9 @@ from django.contrib.auth import forms as auth
 from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 
+from selectable.forms import AutoCompleteSelectField
+
+from ..projects.lookups import CountryLookup
 from .models import User
 
 
@@ -76,6 +79,7 @@ class UserEditForm(UserChangeForm):
 class UserRegistrationForm(UserCreationForm):
     user_type = forms.ChoiceField(label='Account Type',
             widget=forms.RadioSelect, choices=User.USER_TYPES.items())
+    country = AutoCompleteSelectField(lookup_class=CountryLookup, required=False)
 
     def __init__(self, *args, **kwargs):
         super(UserRegistrationForm, self).__init__(*args, **kwargs)
