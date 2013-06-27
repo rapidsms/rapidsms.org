@@ -100,15 +100,6 @@ gunicorn_conf:
       - pkg: supervisor
       - file: log_dir
 
-extend:
-  supervisor:
-    service:
-      - running
-      - watch:
-        - file: group_conf
-        - file: gunicorn_conf
-        #- file: solr_conf
-
 npm:
   pkg:
     - installed
@@ -162,3 +153,12 @@ solr:
   - user: www-data
   - group: www-data
   - mode: 644
+
+extend:
+  supervisor:
+    service:
+      - running
+      - watch:
+        - file: group_conf
+        - file: gunicorn_conf
+        - file: solr_conf
