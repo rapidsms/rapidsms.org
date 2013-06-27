@@ -7,7 +7,7 @@
 {% block content %}
 
 <div class="page-header">
-    {% if user.is_authenticated and model_type in user_add %}
+    {% if user.is_authenticated and model_create %}
     <h1 class="header-split">
         <span class="header-title">RapidSMS {{ model_type|title }}s</span>
         <span class="header-buttons">
