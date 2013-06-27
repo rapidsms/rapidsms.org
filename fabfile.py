@@ -16,8 +16,6 @@ env.repo = u'git@github.com:rapidsms/rapidsms.org.git'
 env.shell = '/bin/bash -c'
 env.disable_known_hosts = True
 env.forward_agent = True
-env.solr_base_dir = '/usr/local/'
-env.solr_dir = os.path.join(env.solr_base_dir, 'apache-solr-3.6.2')
 
 
 @task
@@ -51,7 +49,7 @@ def setup_path():
     env.virtualenv_root = os.path.join(env.root, 'env')
     env.db = '%s_%s' % (env.project, env.environment)
     env.settings = '%(project)s.settings.%(environment)s' % env
-    env.solr_project_dir = os.path.join(env.solr_dir, u'%(project)s' % env)
+    env.solr_project_dir = os.path.join(env.root, 'apache-solr-3.6.2', u'%(project)s' % env)
 
 
 @task
@@ -100,6 +98,10 @@ def provision(common='master'):
             except (TypeError, ValueError) as e:
                 error(u'Non-JSON output from salt-call', exception=e)
             else:
+                try:
+                    results['local'].items()
+                except:
+                    import ipdb; ipdb.set_trace()
                 for state, result in results['local'].items():
                     if not result["result"]:
                         if 'name' in result:
@@ -243,11 +245,11 @@ def configure_solr():
     The schema.xml is stored in the repo but it should be generated from the
     django-haystack management command: build_solr_schema
     """
-
-    local_conf = os.path.join(CONF_ROOT, 'solr', 'solrconfig.xml')
+    #TODO Move toward haystack cmd....
+    local_conf = os.path.join(CONF_ROOT, 'local', 'project', 'solr', 'solrconfig.xml')
     remote_conf = os.path.join(env.solr_project_dir, 'solr', 'conf', 'solrconfig.xml')
     put(local_conf, remote_conf, use_sudo=True)
-    local_conf = os.path.join(CONF_ROOT, 'solr', 'schema.xml')
+    local_conf = os.path.join(CONF_ROOT, 'local', 'project', 'solr', 'schema.xml')
     remote_conf = os.path.join(env.solr_project_dir, 'solr', 'conf', 'schema.xml')
     put(local_conf, remote_conf, use_sudo=True)
     supervisor_command('update')

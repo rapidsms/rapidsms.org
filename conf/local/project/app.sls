@@ -107,7 +107,7 @@ extend:
       - watch:
         - file: group_conf
         - file: gunicorn_conf
-        - file: solr_conf
+        #- file: solr_conf
 
 npm:
   pkg:
@@ -144,5 +144,21 @@ solr_conf:
 
 solr:
   cmd.script:
+    - cwd: /var/www/{{ pillar['project_name']}}
     - name: salt://project/solr-install.sh
-    - runas: root
+    - runas: {{ pillar['project_name'] }}
+
+
+/var/www/{{ pillar['project_name']}}/apache-solr-3.6.2/website/solr/conf/schema.xml:
+  file.managed:
+  - source: salt://project/solr/schema.xml
+  - user: www-data
+  - group: www-data
+  - mode: 644
+
+/var/www/{{ pillar['project_name']}}/apache-solr-3.6.2/website/solr/conf/solrconfig.xml:
+  file.managed:
+  - source: salt://project/solr/solrconfig.xml
+  - user: www-data
+  - group: www-data
+  - mode: 644
