@@ -13,4 +13,4 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
         return Project
 
     def prepare_countries(self, obj):
-        return [country.pk for country in obj.countries.all()]
+        return [country.name for country in obj.countries.all()]
