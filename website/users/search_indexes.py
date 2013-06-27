@@ -7,6 +7,7 @@ class UserIndex(indexes.SearchIndex, indexes.Indexable):
     model = indexes.CharField(model_attr='get_model_name', faceted=True)
     for_hire = indexes.CharField(model_attr='for_hire', faceted=True)
     name = indexes.CharField(model_attr='name')
+    countries = indexes.CharField(model_attr='country', faceted=True, null=True)
 
     def get_model(self):
         return User
