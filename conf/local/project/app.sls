@@ -140,19 +140,36 @@ solr:
     - runas: {{ pillar['project_name'] }}
 
 
+/var/www/{{ pillar['project_name']}}/solr-run.sh:
+    file.managed:
+      - source: salt://project/solr-run.sh
+      - user: website
+      - group: admin
+      - mode: 775
+
+/var/www/{{ pillar['project_name']}}/apache-solr-3.6.2/website:
+    file.directory:
+    - user: website
+    - group: admin
+    - dir_mode: 755
+    - recurse:
+        - user
+        - group
+        - mode
+
 /var/www/{{ pillar['project_name']}}/apache-solr-3.6.2/website/solr/conf/schema.xml:
   file.managed:
   - source: salt://project/solr/schema.xml
-  - user: www-data
-  - group: www-data
-  - mode: 644
+  - user: website
+  - group: admin
+  - mode: 775
 
 /var/www/{{ pillar['project_name']}}/apache-solr-3.6.2/website/solr/conf/solrconfig.xml:
   file.managed:
   - source: salt://project/solr/solrconfig.xml
-  - user: www-data
-  - group: www-data
-  - mode: 644
+  - user: website
+  - group: admin
+  - mode: 775
 
 extend:
   supervisor:
