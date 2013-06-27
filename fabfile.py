@@ -98,10 +98,6 @@ def provision(common='master'):
             except (TypeError, ValueError) as e:
                 error(u'Non-JSON output from salt-call', exception=e)
             else:
-                try:
-                    results['local'].items()
-                except:
-                    import ipdb; ipdb.set_trace()
                 for state, result in results['local'].items():
                     if not result["result"]:
                         if 'name' in result:
