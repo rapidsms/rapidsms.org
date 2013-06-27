@@ -7,6 +7,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     creator = indexes.CharField(model_attr='creator', faceted=True)
     countries = indexes.MultiValueField(faceted=True)
     model = indexes.CharField(model_attr='get_model_name', faceted=True)
+    name = indexes.CharField(model_attr='name')
 
     def get_model(self):
         return Project

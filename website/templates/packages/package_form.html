@@ -57,20 +57,35 @@
     <div class="control-group">
         <div class="controls">
             <input class="btn btn-inverse" type="submit" value="Submit" />
-            {% if object %}
-            <a href="{{ object.get_absolute_url }}" class="btn">Cancel</a>
-            {% else %}
-            <a href="{% url "package_list" %}" class="btn">Cancel</a>
+            {% if not object %}
+            <a href="{% url "search_listing" "packages" %}" class="btn">Cancel</a>
             {% endif %}
         </div>
     </div>
 </form>
 
 {% if object %}
-{% scribble "package-edit" %}
-<p>We pull most package data from its PyPI repository. If there is inaccurate
-information, or if this package is not appropriate for RapidSMS.org, please
-<a href="#">flag this package</a>.</p>
-{% endscribble %}
+<div class="page-header">
+    <h3>Update Package Information</h3>
+</div>
+
+<p>We update this package's information from PyPI periodically. {{ object }}
+{% if object.pypi_updated %}was last updated on {{ object.pypi_updated }}
+{% else %}has never been updated{% endif %}.</p>
+
+<form method="post" action="{{ object.get_refresh_url }}">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-inverse" value="Trigger Update" />
+</form>
+
+{% endif %}
+
+{% if object %}
+<div class="page-header">
+    <h3>Report Package</h3>
+</div>
+
+<p>If there is inaccurate information, or if this package is not appropriate
+for RapidSMS.org, please <a href="{{ object.get_flag_url }}">flag this package</a>.</p>
 {% endif %}
 {% endblock content %}

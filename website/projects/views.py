@@ -39,7 +39,3 @@ class ProjectDetail(DetailView):
 class ProjectEdit(ProjectEditMixin, UpdateView):
     model = Project
     form_class = ProjectCreateEditForm
-
-
-class ProjectList(ListView):
-    model = Project

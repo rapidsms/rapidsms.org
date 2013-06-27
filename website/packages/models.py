@@ -10,6 +10,7 @@ from django.template.defaultfilters import slugify
 from website.users.models import User
 
 
+PYPI_BADGE_URL = 'https://pypip.in/v/{0}/badge.png'
 PYPI_JSON_API = 'http://pypi.python.org/pypi/{0}/json'
 PYPI_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
 
@@ -30,6 +31,7 @@ class Package(models.Model):
             "author.")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    pypi_updated = models.DateTimeField(null=True, blank=True)
 
     # Required data. Once this information has been entered, it cannot be
     # edited.
@@ -74,11 +76,62 @@ class Package(models.Model):
     def __unicode__(self):
         return self.name
 
-    def _update_fields_from_json(self):
+    def _get_pypi_request(self):
+        return requests.get(self.get_pypi_json_url())
+
+    @property
+    def description(self):
         """
-        Updates PyPI-derived fields on the model from the currently-stored
-        JSON blob.
+        This PyPI-derived field is not cached on the model, as we do not need
+        to filter or order by it.
         """
+        if self.pypi_json:
+            data = json.loads(self.pypi_json)
+            if data:
+                desc = data['info']['description']
+                return publish_parts(desc, writer_name='html')['html_body']
+
+    def get_absolute_url(self):
+        return reverse('package_detail', args=(self.slug,))
+
+    def get_edit_url(self):
+        return reverse('package_edit', args=(self.slug,))
+
+    def get_flag_url(self):
+        return reverse('package_flag', args=(self.slug,))
+
+    def get_pypi_badge_url(self):
+        return PYPI_BADGE_URL.format(self.name)
+
+    def get_pypi_json_url(self):
+        return PYPI_JSON_API.format(self.name)
+
+    def get_refresh_url(self):
+        return reverse('package_refresh', args=(self.slug,))
+
+    def get_model_name(self):
+        return self._meta.verbose_name
+
+    def save(self, *args, **kwargs):
+        # Set the slug on a newly-created package.
+        if not self.id:
+            self.slug = slugify(self.name)
+        super(Package, self).save(*args, **kwargs)
+
+    def update_from_pypi(self, request=None):
+        """
+        Retrieve data from PyPI, and if successful with that update the
+        PyPI-derived fields on this model. Optionally uses an existing request
+        to populate data.
+
+        Returns a boolean indicating if the update is successful. Does not save
+        the model.
+        """
+        req = request or self._get_pypi_request()
+        if req.status_code != 200:
+            return False
+
+        self.pypi_json = json.dumps(req.json())
         if self.pypi_json:
             data = json.loads(self.pypi_json)
             if data:
@@ -92,40 +145,6 @@ class Package(models.Model):
                 d = data['urls'][0]['upload_time']
                 if d:
                     self.release_date = datetime.datetime.strptime(d, PYPI_DATE_FORMAT)
+        self.pypi_updated = datetime.datetime.now()
 
-    def _retrieve_pypi_json(self):
-        req = requests.get(self.get_pypi_json_url())
-        if req.status_code >= 500:
-            return False
-        elif req.status_code >= 400:
-            return False
-        elif req.status_code != 200:
-            return False
-        self.pypi_json = json.dumps(req.json())
-
-    @property
-    def description(self):
-        if self.pypi_json:
-            data = json.loads(self.pypi_json)
-            if data:
-                desc = data['info']['description']
-                return publish_parts(desc, writer_name='html')['html_body']
-
-    def get_absolute_url(self):
-        return reverse('package_detail', args=(self.slug,))
-
-    def get_edit_url(self):
-        return reverse('package_edit', args=(self.slug,))
-
-    def get_pypi_json_url(self):
-        return PYPI_JSON_API.format(self.name)
-
-    def get_model_name(self):
-        return self._meta.verbose_name
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            # Newly created object, so set slug
-            self.slug = slugify(self.name)
-        self._update_fields_from_json()
-        super(Package, self).save(*args, **kwargs)
+        return True

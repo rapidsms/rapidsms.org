@@ -1,5 +1,3 @@
-import requests
-
 from django import forms
 
 from .models import Package
@@ -26,7 +24,7 @@ class PackageCreateEditForm(forms.ModelForm):
     def clean_name(self):
         name = self.cleaned_data['name']
         self.instance.name = name
-        r = requests.get(self.instance.get_pypi_json_url())
+        r = self.instance._get_pypi_request()
         if r.status_code > 500:
             msg = 'PyPI appears to be down. We apologize for the '\
                     'inconvenience. Please retry your upload later.'
@@ -37,5 +35,9 @@ class PackageCreateEditForm(forms.ModelForm):
         elif r.status_code != 200:
             msg = 'Could not validate the existence of this package.'
             raise forms.ValidationError(msg)
-        self.instance.pypi_json = r.json()
+        self.instance.update_from_pypi(r)
         return name
+
+
+class PackageFlagForm(forms.Form):
+    reason = forms.CharField(widget=forms.Textarea, label='Reason for Flagging')

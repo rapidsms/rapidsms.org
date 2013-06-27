@@ -16,7 +16,6 @@
 <div class="row-fluid">
     <div class="well span3">
         <h3>Refine Results</h3>
-
         <ul class="nav nav-list">
         {% for field, facets in facets.fields.items %}
             {% if facets %}
@@ -28,14 +27,31 @@
                 <li class="nav-header">By {{ field }}</li>
                 {% endif %}
                 {% for facet in facets %}
-                <li><a href="{{ request.get_full_path }}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0|title }} ({{ facet.1 }})</a></li>
+                {% with path=request.get_full_path %}
+                    <li><a href="{{ request.get_full_path }}{% if '?q=' not in path %}?q={% endif %}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0|title }} ({{ facet.1 }})</a></li>
+                {% endwith %}
                 {% endfor %}
             {% endif %}
         {% endfor %}
         </ul>
+        <em><a href="{{ request.path }}{% if query %}?q={{ query }}{% endif %}">Reset Filters</a></em>
     </div>
 
     <div class="span9 search-results">
+        <div class="page-header">
+            {% if user.is_authenticated and model_type in user_add %}
+            <h1 class="header-split">
+                <span class="header-title">RapidSMS {{ model_type|title }}s</span>
+                <span class="header-buttons">
+                    <a href="{% url model_create %}" class="btn btn-inverse"><i class="icon-white icon-plus"></i> Add {{ model_type|title }}</a>
+                </span>
+            </h1>
+            {% else %}
+            <h1>RapidSMS {{ model_type|title }}s</h1>
+            {% endif %}
+        </div>
+
+
         {% for result in page.object_list %}
         <div class="result">
             <h3><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></h3>

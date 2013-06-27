@@ -16,6 +16,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+FLAG_EMAIL_ALERTS = []
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -151,6 +153,7 @@ INSTALLED_APPS = (
     'allaccess',
     'widget_tweaks',
     'haystack',
+    'sorl.thumbnail'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -219,3 +222,5 @@ SOUTH_MIGRATION_MODULES = {
 }
 
 RAPIDSMS_VERSION = '0.14.0'
+
+DEFAULT_FROM_EMAIL = 'no-reply@rapidsms.org'

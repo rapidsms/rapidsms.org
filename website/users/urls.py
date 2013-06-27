@@ -2,13 +2,12 @@ from django.conf.urls import patterns, url
 from django.core.urlresolvers import reverse_lazy
 
 from .views import RapidSMSOAuthRedirect, RapidSMSOAuthCallback, Registration,\
-        UserDetail, UserEdit, UserList
+        UserDetail, UserEdit
 
 
 urlpatterns = patterns('',
-    url(r'^$', UserList.as_view(), name='user_list'),
-    url(r'^(?P<pk>\d+)/$', UserDetail.as_view(), name='user_detail'),
-    url(r'^(?P<pk>\d+)/edit/$', UserEdit.as_view(), name='user_edit'),
+    url(r'^d/(?P<pk>\d+)/$', UserDetail.as_view(), name='user_detail'),
+    url(r'^d/(?P<pk>\d+)/edit/$', UserEdit.as_view(), name='user_edit'),
 
     # Log in via GitHub.
     url(r'^login/github/$',

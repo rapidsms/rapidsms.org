@@ -146,7 +146,7 @@ footer {
                border: none;
             }
         }
-		> li {  
+		> li {
             line-height: 24px;
             > a {
     			border: none;
@@ -397,6 +397,34 @@ body#package-detail #content {
                 width: 175px;
                 margin: 5px auto 0 auto;
             }
+        }
+    }
+}
+
+body#user-form #content {
+    .gravatar-photo {
+        height: 35px;
+        margin-bottom: 5px;
+        padding-top: 10px;
+        img {
+            float: left;
+            margin-right: 10px;
+        }
+    }
+    #avatar-label {
+        display: inline;
+    }
+}
+
+body#user-detail #content {
+    .label.for-hire {
+        background-color: @turquoise;
+        margin: 10px auto;
+        padding: 5px 10px;
+    }
+    table#details {
+        tr:first-child th, tr:first-child td {
+            border-top: none;
         }
     }
 }
