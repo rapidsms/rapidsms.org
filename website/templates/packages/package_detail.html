@@ -6,17 +6,15 @@
 {% block content %}
 
 <div class="page-header">
-    {% if user.is_authenticated and user == object.creator %}
     <h1 class="header-split">
         <span class="header-title">{{ object }}{% if object.version %} <small>version {{ object.version }}</small>{% endif %}</span>
+        {% if user.is_authenticated and user == object.creator %}
         <span class="header-buttons">
             <a href="{{ object.get_edit_url }}" class="btn btn-inverse"><i class="icon-white icon-pencil"></i> Edit</a>
             <a href="{{ object.get_flag_url }}" class="btn btn-inverse"><i class="icon-white icon-flag"></i> Flag</a>
         </span>
+        {% endif %}
     </h1>
-    {% else %}
-    <h1>{{ object }}{% if object.version %} <small>version {{ object.version }}</small>{% endif %}</h1>
-    {% endif %}
     {% if object.summary %}<div class="summary">{{ object.summary }}</div>{% endif %}
 </div>
 

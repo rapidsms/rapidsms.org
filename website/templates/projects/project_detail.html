@@ -7,16 +7,14 @@
 {% include "includes/delete_confirm.html" with action=object.get_delete_url %}
 
 <div class="page-header">
-    {% if user.is_authenticated and user == object.creator %}
     <h1 class="header-split">
         <span class="header-title">{{ object }}</span>
+        {% if user.is_authenticated and user == object.creator %}
         <span class="header-buttons">
             <a href="{{ object.get_edit_url }}" class="btn btn-inverse"><i class="icon-white icon-pencil"></i> Edit</a>
             <a href="#delete-modal" role="button" class="btn btn-inverse" data-toggle="modal"><i class="icon-white icon-remove"></i> Delete</a>
         </span>
+        {% endif %}
     </h1>
-    {% else %}
-    <h1>{{ object }}</h1>
-    {% endif %}
 </div>
 {% endblock content %}

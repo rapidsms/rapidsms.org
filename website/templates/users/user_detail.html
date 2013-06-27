@@ -5,16 +5,14 @@
 
 {% block content %}
 <div class="page-header">
-    {% if user.is_authenticated and user == object %}
     <h1 class="header-split">
         <span class="header-title">{{ object }}</span>
+        {% if user.is_authenticated and user == object %}
         <span class="header-buttons btn-group">
             <a href="{{ object.get_edit_url }}" class="btn btn-inverse"><i class="icon-white icon-pencil"></i> Edit Profile</a>
         </span>
+        {% endif %}
     </h1>
-    {% else %}
-    <h1>{{ object }}</h1>
-    {% endif %}
 </div>
 
 <div class="row-fluid">
