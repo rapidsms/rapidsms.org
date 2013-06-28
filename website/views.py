@@ -51,8 +51,6 @@ class FacetedSearchListingView(FacetedSearchView):
             extra['facets'] = self.results.facet_counts()
         model_type = self.request.path.split('/')[1].rstrip('s')
 
-        facets = chain(*extra.get('facets', {}).get('fields', {}).values())
-        extra['has_facets'] = bool(list(facets))
         extra['model_type'] = model_type
         if model_type in ['package', 'project']:
             extra['model_create'] = '%s_create' % model_type

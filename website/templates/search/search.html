@@ -30,7 +30,6 @@
 {% endif %}
 
 <div class="row-fluid">
-    {% if has_facets %}
     <div class="well span3" id="refine-results">
         <h3>Refine Results</h3>
         <div id="reset-filters">
@@ -57,9 +56,6 @@
     </div>
 
     <div class="span9 search-results">
-    {% else %}
-    <div class="span12 search-results">
-    {% endif %}
 
         <div id="search-box">
             <form class="form-search" method="get" action=".">
