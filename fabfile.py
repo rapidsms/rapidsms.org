@@ -21,8 +21,8 @@ env.forward_agent = True
 @task
 def vagrant():
     env.environment = 'staging'
-    env.hosts = ['33.33.33.10', ]
-    env.branch = 'master'
+    env.hosts = ['staging.example.com', ]
+    env.branch = 'update-template'
     setup_path()
 
 
@@ -44,7 +44,7 @@ def production():
 
 def setup_path():
     env.home = '/home/%(project_user)s/' % env
-    env.root = os.path.join('/var/www/', env.project)
+    env.root = os.path.join('/var/www/', '%(project)s-%(environment)s' % env)
     env.code_root = os.path.join(env.root, 'source')
     env.virtualenv_root = os.path.join(env.root, 'env')
     env.db = '%s_%s' % (env.project, env.environment)
@@ -181,7 +181,7 @@ def deploy(branch=None):
             requirements = match_changes(changes, r"requirements/")
             migrations = match_changes(changes, r"/migrations/")
             if requirements or migrations:
-                supervisor_command('stop %(project)s:*' % env)
+                supervisor_command('stop %(project)s-%(environment)s:*' % env)
             run("git reset --hard origin/%(branch)s" % env)
             run("git submodule update")
     else:
@@ -206,9 +206,9 @@ def deploy(branch=None):
     elif migrations:
         syncdb()
     collectstatic()
-    supervisor_command('stop %(project)s:*' % env)
-    supervisor_command('start %(project)s:*' % env)
-    configure_solr()
+    supervisor_command('stop %(project)s-%(environment)s:*' % env)
+    supervisor_command('start %(project)s-%(environment)s:*' % env)
+    # configure_solr()
 
 
 @task
