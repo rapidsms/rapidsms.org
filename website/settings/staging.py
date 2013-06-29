@@ -7,7 +7,7 @@ TEMPLATE_DEBUG = DEBUG
 
 DATABASES['default']['NAME'] = 'website_staging'
 
-PUBLIC_ROOT = '/var/www/website/public/'
+PUBLIC_ROOT = '/var/www/website-staging/public/'
 
 STATIC_ROOT = os.path.join(PUBLIC_ROOT, 'static')
 

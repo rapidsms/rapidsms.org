@@ -4,5 +4,10 @@ from website.settings.staging import *
 
 DATABASES['default']['NAME'] = 'website_production'
 
-EMAIL_SUBJECT_PREFIX = '[Website Prod] '
+PUBLIC_ROOT = '/var/www/website-production/public/'
 
+STATIC_ROOT = os.path.join(PUBLIC_ROOT, 'static')
+
+MEDIA_ROOT = os.path.join(PUBLIC_ROOT, 'media')
+
+EMAIL_SUBJECT_PREFIX = '[Website Prod] '
