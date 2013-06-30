@@ -89,6 +89,8 @@ group_conf:
     - require:
       - pkg: supervisor
       - file: log_dir
+    - watch_in:
+      - cmd: supervisor_update
 
 gunicorn_conf:
   file.managed:
@@ -107,6 +109,8 @@ gunicorn_conf:
     - require:
       - pkg: supervisor
       - file: log_dir
+    - watch_in:
+      - cmd: supervisor_update
 
 gunicorn_process:
   supervisord:
@@ -116,6 +120,7 @@ gunicorn_process:
     - update: True
     - require:
       - pkg: supervisor
+      - file: group_conf
       - file: gunicorn_conf
 
 npm:
@@ -132,6 +137,7 @@ less:
   file.symlink:
     - name: /usr/bin/lessc
     - target: /usr/local/bin/lessc
+
 
 # openjdk-7-jre-headless:
 #   pkg:

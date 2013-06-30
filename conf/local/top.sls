@@ -11,4 +11,4 @@ base:
     - project.web
     - project.db
     # Uncomment to enable celery worker configuration
-    # - project.worker
+    - project.worker

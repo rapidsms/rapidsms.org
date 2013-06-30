@@ -23,14 +23,18 @@ celery_conf:
     - require:
       - pkg: supervisor
       - file: log_dir
+    - watch_in:
+      - cmd: supervisor_update
 
 celery_process:
   supervisord:
     - name: {{ vars.project }}:{{ vars.project }}-worker
     - running
     - restart: True
+    - update: True
     - require:
       - pkg: supervisor
+      - file: group_conf
       - file: celery_conf
 
 extend:
