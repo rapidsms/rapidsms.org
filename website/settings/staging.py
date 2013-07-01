@@ -7,7 +7,7 @@ TEMPLATE_DEBUG = DEBUG
 
 DATABASES['default']['NAME'] = 'website_staging'
 
-PUBLIC_ROOT = '/var/www/website/public/'
+PUBLIC_ROOT = '/var/www/website-staging/public/'
 
 STATIC_ROOT = os.path.join(PUBLIC_ROOT, 'static')
 
@@ -32,5 +32,6 @@ ALLOWED_HOSTS = ('*',)
 
 GITHUB_KEY = os.environ['GITHUB_KEY']
 GITHUB_SECRET = os.environ['GITHUB_SECRET']
+BROKER_URL = 'amqp://website:%s@127.0.0.1:5672/website_staging' % os.environ['BROKER_PASSWORD']
 
 FLAG_EMAIL_ALERTS = ['rapidsms-team@caktusgroup.com']

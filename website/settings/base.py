@@ -89,7 +89,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'qfl@h+@!%ft+3z1ci$&62*zix8v!vq#1ipycwiw(+$v+@y9x8('
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -155,6 +155,7 @@ INSTALLED_APPS = (
     'haystack',
     'sorl.thumbnail',
     'selectable',
+    'djcelery',
 )
 
 # A sample logging configuration. The only tangible logging
