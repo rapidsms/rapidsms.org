@@ -44,6 +44,11 @@ use it::
     echo "export DJANGO_SETTINGS_MODULE=website.settings.local" >> $VIRTUAL_ENV/bin/postactivate
     echo "unset DJANGO_SETTINGS_MODULE" >> $VIRTUAL_ENV/bin/postdeactivate
 
+You will also need to set a >=50 length secret key, as the settings files pulls the
+SECRET_KEY from the local environment::
+    echo "export SECRET_KEY=somethinglongerthan50chars" >> $VIRTUAL_ENV/bin/postactivate
+    echo "unset SECRET_KEY" >> $VIRTUAL_ENV/bin/postdeactivate
+
 Exit the virtualenv and reactivate it to activate the settings just changed::
 
     deactivate
