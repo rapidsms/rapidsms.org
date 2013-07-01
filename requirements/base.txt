@@ -17,3 +17,4 @@ docutils==0.10
 sorl-thumbnail==11.12
 factory_boy==2.0.2
 django-selectable==0.7.0
+django-celery==3.0.17

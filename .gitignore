@@ -13,3 +13,4 @@ public/static/
 public/media/
 secrets.sls
 apache-solr-*/
+output.json
