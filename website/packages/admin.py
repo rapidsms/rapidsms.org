@@ -10,19 +10,21 @@ class PackageAdmin(admin.ModelAdmin):
     list_filter = ('pkg_type', 'is_active')
     readonly_fields = ('created', 'updated', 'pypi_updated', 'pypi_json',
             'author_name', 'author_email', 'maintainer_name',
-            'maintainer_email', 'version', 'summary', 'release_date')
+            'maintainer_email', 'version', 'summary', 'release_date',
+            'license', 'docs_url', 'home_url')
     fieldsets = (
         (None,
             {'fields': ('created', 'updated', 'creator', 'pkg_type', 'name',
                     'slug', 'is_active', 'is_flagged')},
         ),
         ('URLs',
-            {'fields': ('docs_url', 'tests_url', 'repo_url', 'home_url')},
+            {'fields': ('tests_url', 'repo_url')},
         ),
         ('PyPI Information',
             {'fields': ('pypi_updated', 'pypi_json', 'author_name',
                     'author_email', 'maintainer_name', 'maintainer_email',
-                    'version', 'summary', 'release_date')},
+                    'version', 'summary', 'release_date', 'license',
+                    'docs_url', 'home_url')},
         ),
     )
 

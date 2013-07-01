@@ -9,8 +9,7 @@ class PackageCreateEditForm(forms.ModelForm):
 
     class Meta:
         model = Package
-        fields = ('pkg_type', 'name', 'docs_url', 'tests_url', 'repo_url',
-                'home_url')
+        fields = ('pkg_type', 'name', 'tests_url', 'repo_url')
 
     def __init__(self, *args, **kwargs):
         super(PackageCreateEditForm, self).__init__(*args, **kwargs)

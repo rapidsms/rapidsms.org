@@ -71,6 +71,12 @@
             {% endif %}
         </p>
         {% endif %}
+        {% if object.license %}
+        <p>
+            <strong>License</strong><br />
+            {{ object.license }}
+        </p>
+        {% endif %}
     </div>
 
     <div id="right-panel" class="span9">

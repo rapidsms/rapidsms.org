@@ -44,10 +44,6 @@ class Package(models.Model):
     slug = models.SlugField()  # Derived from name.
 
     # Other reference URLs for the package are optional.
-    docs_url = models.URLField('Documentation', null=True, blank=True,
-            help_text="Where the package's documentation is hosted, e.g. "
-            "<a href='http://rapidsms.readthedocs.org/'>"
-            "http://rapidsms.readthedocs.org</a>.")
     tests_url = models.URLField('CI/Tests', null=True, blank=True,
             help_text="Link to the package's public CI server, e.g. "
             "<a href='https://travis-ci.org/rapidsms/rapidsms'>"
@@ -56,9 +52,6 @@ class Package(models.Model):
             help_text="The package's source code repository, e.g. "
             "<a href='https://github.com/rapidsms/rapidsms'>"
             "https://github.com/rapidsms/rapidsms</a>.")
-    home_url = models.URLField('Home Page', null=True, blank=True,
-            help_text="The project's home page, e.g. "
-            "<a href='http://rapidsms.org'>http://rapidsms.org</a>.")
 
     # We'll retrieve the package data from PyPI, and cache it on the model.
     # Also storing a few fields on the model to make them easier to index by
@@ -71,6 +64,14 @@ class Package(models.Model):
     version = models.CharField(max_length=32, null=True, blank=True)
     summary = models.TextField(null=True, blank=True)
     release_date = models.DateTimeField(null=True, blank=True)
+    license = models.CharField(max_length=128, null=True, blank=True)
+    docs_url = models.URLField('Documentation', null=True, blank=True,
+            help_text="Where the package's documentation is hosted, e.g. "
+            "<a href='http://rapidsms.readthedocs.org/'>"
+            "http://rapidsms.readthedocs.org</a>.")
+    home_url = models.URLField('Home Page', null=True, blank=True,
+            help_text="The project's home page, e.g. "
+            "<a href='http://rapidsms.org'>http://rapidsms.org</a>.")
 
     class Meta:
         ordering = ['-release_date', '-updated']
@@ -143,7 +144,9 @@ class Package(models.Model):
                 self.author_email = data['info']['author_email']
                 self.version = data['info']['version']
                 self.summary = data['info']['summary']
-
+                self.docs_url = data['info']['docs_url']
+                self.home_url = data['info']['home_page']
+                self.license = data['info']['license']
                 d = data['urls'][0]['upload_time']
                 if d:
                     self.release_date = datetime.datetime.strptime(d, PYPI_DATE_FORMAT)
