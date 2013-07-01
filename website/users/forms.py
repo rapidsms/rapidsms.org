@@ -47,14 +47,12 @@ class UserChangeForm(auth.UserChangeForm):
 
 
 class UserEditForm(UserChangeForm):
-    password1 = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(widget=forms.PasswordInput)
-
     password1 = forms.CharField(label='New Password', required=False,
             widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password Confirm', required=False,
             widget=forms.PasswordInput, help_text='Enter the same password '
             'as above, for verification.')
+    country = AutoCompleteSelectField(lookup_class=CountryLookup, required=False)
 
     class Meta:
         model = User

@@ -50,8 +50,6 @@
                     {{ label }}
                 </label>
                 {% endfor %}
-                {% elif field.name == 'country' %}
-                {{ field|add_class:"span6" }}
                 {% else %}
                 {{ field|add_class:"span6" }}
                 {% endif %}
