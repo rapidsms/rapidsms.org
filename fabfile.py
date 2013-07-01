@@ -238,5 +238,8 @@ def configure_solr():
     schema_path = os.path.join(env.solr_project_dir, 'solr', 'conf',
                                'schema.xml')
     manage_run('build_solr_schema --filename=%s' % schema_path)
+    # https://github.com/toastdriven/django-haystack/pull/706
+    # Use sed to update reconcile the change the paths to stopwords_en.txt
+    sudo("sed -i 's/words=\"stopwords_en.txt\"/words=\"lang\/stopwords_en.txt\"/' %s" % schema_path)
     supervisor_command('restart %(project)s-%(environment)s:%(project)s-%(environment)s-solr' % env)
     manage_run('rebuild_index')
