@@ -4,3 +4,4 @@
 {{ object.challenges }}
 {{ object.audience }}
 {{ object.technologies }}
+{{ object.tags.all }}

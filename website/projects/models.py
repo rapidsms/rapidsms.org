@@ -2,6 +2,8 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
 
+from taggit.managers import TaggableManager
+
 from website.users.models import User
 
 
@@ -39,6 +41,7 @@ class Project(models.Model):
             help_text='Estimated number of users.')
     repository_url = models.URLField(blank=True, null=True, help_text='Link '
             'to the public code repository for this project.')
+    tags = TaggableManager(verbose_name="Taxonomy")
 
     class Meta:
         ordering = ['-updated']

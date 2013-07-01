@@ -156,6 +156,7 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'selectable',
     'djcelery',
+    'taggit',
 )
 
 # A sample logging configuration. The only tangible logging

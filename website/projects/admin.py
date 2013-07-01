@@ -17,7 +17,7 @@ class ProjectAdmin(admin.ModelAdmin):
         ('Project Information',
             {'fields': ('started', 'countries', 'description', 'challenges',
                     'audience', 'technologies', 'metrics', 'num_users',
-                    'repository_url')},
+                    'repository_url', 'tags')},
         ),
     )
 

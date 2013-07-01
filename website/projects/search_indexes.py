@@ -9,9 +9,13 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     model = indexes.CharField(model_attr='get_model_name', faceted=True)
     name = indexes.CharField(model_attr='name')
     is_active = indexes.BooleanField(model_attr='is_active')
+    taxonomy = indexes.MultiValueField(faceted=True)
 
     def get_model(self):
         return Project
 
     def prepare_countries(self, obj):
         return [country.name for country in obj.countries.all()]
+
+    def prepare_taxonomy(self, obj):
+        return [tag.name for tag in obj.tags.all()]
