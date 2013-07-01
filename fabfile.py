@@ -241,5 +241,8 @@ def configure_solr():
     # https://github.com/toastdriven/django-haystack/pull/706
     # Use sed to update reconcile the change the paths to stopwords_en.txt
     sudo("sed -i 's/words=\"stopwords_en.txt\"/words=\"lang\/stopwords_en.txt\"/' %s" % schema_path)
+    # https://github.com/toastdriven/django-haystack/issues/311
+    # Use sed to change the name field to a type that is sortable
+    sudo("sed -i 's/<field name=\"name\" type=\"text_en\"/<field name=\"name\" type=\"string\"/' %s" % schema_path)
     supervisor_command('restart %(project)s-%(environment)s:%(project)s-%(environment)s-solr' % env)
     manage_run('rebuild_index')
