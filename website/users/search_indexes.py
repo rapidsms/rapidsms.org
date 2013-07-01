@@ -8,9 +8,13 @@ class UserIndex(indexes.SearchIndex, indexes.Indexable):
     for_hire = indexes.CharField(model_attr='for_hire', faceted=True)
     name = indexes.CharField(model_attr='name')
     countries = indexes.CharField(model_attr='country', faceted=True, null=True)
+    user_type = indexes.CharField(model_attr='user_type', faceted=True)
 
     def get_model(self):
         return User
 
     def prepare_for_hire(self, obj):
         return 'Yes' if obj.for_hire else 'No'
+
+    def prepare_user_type(self, obj):
+        return obj.get_user_type_display()

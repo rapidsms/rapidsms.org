@@ -14,7 +14,7 @@ from .forms import FacetedSearchListingForm
 MODEL_FACETS = {
     'package': ('pkg_type', ),
     'project': ('countries', 'creator'),
-    'user': ('countries', 'for_hire', ),
+    'user': ('countries', 'for_hire', 'user_type'),
 }
 
 

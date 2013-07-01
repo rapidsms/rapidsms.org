@@ -12,4 +12,4 @@ class PackageIndex(indexes.SearchIndex, indexes.Indexable):
         return Package
 
     def prepare_pkg_type(self, obj):
-        return Package.PACKAGE_TYPES[obj.pkg_type]
+        return obj.get_pkg_type_display()
