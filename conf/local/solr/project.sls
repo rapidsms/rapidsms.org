@@ -7,8 +7,8 @@ solr_install:
     - name: salt://solr/solr-install.sh
     - user: {{ pillar['project_name'] }}
 
-solr_website:
-    file.directory:
+solr_project_dir:
+  file.directory:
     - name: /var/www/{{ pillar['project_name']}}-{{ pillar['environment']}}/apache-solr-3.6.2/website
     - user: {{ pillar['project_name'] }}
     - group: admin
@@ -21,26 +21,12 @@ solr_website:
       - group: admin
       - cmd: solr_install
 
-
-# /var/www/{{ pillar['project_name']}}/solr-run.sh:
-#     file.managed:
-#       - source: salt://project/solr-run.sh
-#       - user: website
-#       - group: admin
-#       - mode: 775
-
-
-
-# /var/www/{{ pillar['project_name']}}/apache-solr-3.6.2/website/solr/conf/schema.xml:
-#   file.managed:
-#   - source: salt://project/solr/schema.xml
-#   - user: website
-#   - group: admin
-#   - mode: 775
-
-# /var/www/{{ pillar['project_name']}}/apache-solr-3.6.2/website/solr/conf/solrconfig.xml:
-#   file.managed:
-#   - source: salt://project/solr/solrconfig.xml
-#   - user: website
-#   - group: admin
-#   - mode: 775
+solr_stop_words:
+  file.symlink:
+    - target: /var/www/{{ pillar['project_name']}}-{{ pillar['environment']}}/apache-solr-3.6.2/website/solr/conf/lang/stopwords_en.txt
+    - name: /var/www/{{ pillar['project_name']}}-{{ pillar['environment']}}/apache-solr-3.6.2/website/solr/conf/stopwords_en.txt
+    - user: {{ pillar['project_name'] }}
+    - group: admin
+    - require:
+      - group: admin
+      - file: solr_project_dir

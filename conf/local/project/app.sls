@@ -137,15 +137,3 @@ less:
   file.symlink:
     - name: /usr/bin/lessc
     - target: /usr/local/bin/lessc
-
-
-
-
-# extend:
-#   supervisor:
-#     service:
-#       - running
-#       - watch:
-#         - file: group_conf
-#         - file: gunicorn_conf
-#         - file: solr_conf
