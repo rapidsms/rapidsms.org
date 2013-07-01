@@ -32,5 +32,6 @@ ALLOWED_HOSTS = ('*',)
 
 GITHUB_KEY = os.environ['GITHUB_KEY']
 GITHUB_SECRET = os.environ['GITHUB_SECRET']
+BROKER_URL = os.environ['BROKER_URL']
 
 FLAG_EMAIL_ALERTS = ['rapidsms-team@caktusgroup.com']
