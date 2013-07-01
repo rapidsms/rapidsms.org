@@ -9,12 +9,12 @@ class Country(models.Model):
     code = models.CharField(max_length=2, primary_key=True)
     name = models.CharField(max_length=255, unique=True)
 
-    def __unicode__(self):
-        return self.name
-
     class Meta:
         ordering = ['name', ]
         verbose_name_plural = "Countries"
+
+    def __unicode__(self):
+        return self.name
 
 
 class Project(models.Model):
@@ -23,6 +23,7 @@ class Project(models.Model):
             'author.')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField('Active', default=True)
 
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField()

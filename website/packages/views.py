@@ -1,26 +1,16 @@
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
-from django.http import Http404
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, ListView, UpdateView,\
         FormView, View
 from django.views.generic.detail import SingleObjectMixin
 
+from ..mixins import AuthorEditMixin, IsActiveMixin
 from .forms import PackageCreateEditForm, PackageFlagForm
 from .models import Package
 
 
-class PackageEditMixin(object):
-    """Users may only edit and delete packages they created."""
-
-    def get_object(self, queryset=None):
-        obj = super(PackageEditMixin, self).get_object(queryset)
-        if obj.creator != self.request.user:
-            raise Http404()
-        return obj
-
-
-class PackageCreate(CreateView):
+class PackageCreate(IsActiveMixin, CreateView):
     model = Package
     form_class = PackageCreateEditForm
 
@@ -29,16 +19,21 @@ class PackageCreate(CreateView):
         return super(PackageCreate, self).form_valid(form)
 
 
-class PackageDetail(DetailView):
+class PackageDetail(IsActiveMixin, DetailView):
     model = Package
 
 
-class PackageEdit(PackageEditMixin, UpdateView):
+class PackageEdit(IsActiveMixin, AuthorEditMixin, UpdateView):
     model = Package
     form_class = PackageCreateEditForm
 
 
-class PackageFlag(SingleObjectMixin, FormView):
+class PackageFlag(IsActiveMixin, SingleObjectMixin, FormView):
+    """
+    Currently we allow users to freely upload RapidSMS packages to the site.
+    In case something gets on there that shouldn't, a user can email an
+    administrator through the package flag form.
+    """
     model = Package
     form_class = PackageFlagForm
     success_url = reverse_lazy('package_list')
@@ -94,7 +89,12 @@ class PackageFlag(SingleObjectMixin, FormView):
         return super(PackageFlag, self).form_valid(form)
 
 
-class PackageRefresh(SingleObjectMixin, View):
+class PackageRefresh(IsActiveMixin, SingleObjectMixin, View):
+    """
+    User-triggered refresh of the cached PyPI data, especially for use while
+    they are re-uploading their own package and want to see what changes
+    occurred.
+    """
     model = Package
     http_method_names = ['post']
 

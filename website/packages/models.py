@@ -31,7 +31,8 @@ class Package(models.Model):
             "author.")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    pypi_updated = models.DateTimeField(null=True, blank=True)
+    pypi_updated = models.DateTimeField('PyPI Updated', null=True, blank=True)
+    is_active = models.BooleanField('Active', default=True)
 
     # Required data. Once this information has been entered, it cannot be
     # edited.

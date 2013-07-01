@@ -9,6 +9,7 @@ class UserIndex(indexes.SearchIndex, indexes.Indexable):
     name = indexes.CharField(model_attr='name')
     countries = indexes.CharField(model_attr='country', faceted=True, null=True)
     user_type = indexes.CharField(model_attr='user_type', faceted=True)
+    is_active = indexes.BooleanField(model_attr='is_active')
 
     def get_model(self):
         return User
