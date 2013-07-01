@@ -33,6 +33,7 @@ class Package(models.Model):
     updated = models.DateTimeField(auto_now=True)
     pypi_updated = models.DateTimeField('PyPI Updated', null=True, blank=True)
     is_active = models.BooleanField('Active', default=True)
+    is_flagged = models.BooleanField('Flagged', default=False)
 
     # Required data. Once this information has been entered, it cannot be
     # edited.

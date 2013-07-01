@@ -77,6 +77,8 @@ class PackageFlag(IsActiveMixin, SingleObjectMixin, FormView):
         return True
 
     def form_valid(self, form):
+        self.object.is_flagged = True
+        self.object.save(update_fields=['is_flagged'])
         sent = self.send_flag_email(form)
         if sent:
             messages.success(self.request, 'Thanks for flagging {0}. We have '

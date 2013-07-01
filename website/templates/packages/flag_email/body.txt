@@ -1,6 +1,7 @@
 Hello,
 
-{{ user }} has flagged {{ package }} for your review.
+{{ user }} has flagged {{ package }} for your review. The package has been
+marked as flagged in the Django admin.
 
 User: {{ user_url }}
 Package: {{ package_url }}
