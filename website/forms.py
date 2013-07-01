@@ -7,4 +7,4 @@ class FacetedSearchListingForm(FacetedSearchForm):
         """
         Return all results for search queries with no parameter
         """
-        return self.searchqueryset.all().order_by('name')
+        return self.searchqueryset.all()
