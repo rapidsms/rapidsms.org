@@ -20,14 +20,23 @@ class UserAdmin(auth.UserAdmin):
         ),
     )
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('user_type', 'name',
-                'location', 'country', 'website_url', 'github_url',
-                'for_hire')}),
-        ('Avatar Options', {'fields': ('gravatar_email', 'avatar')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser',
-                'groups', 'user_permissions')}),
-        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+        (None,
+            {'fields': ('email', 'password')},
+        ),
+        ('Personal info',
+            {'fields': ('user_type', 'name', 'location', 'country',
+                    'website_url', 'github_url', 'for_hire')},
+        ),
+        ('Avatar Options',
+            {'fields': ('gravatar_email', 'avatar')},
+        ),
+        ('Permissions',
+            {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups',
+                    'user_permissions')},
+        ),
+        ('Important dates',
+            {'fields': ('last_login', 'date_joined')},
+        ),
     )
 
 
