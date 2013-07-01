@@ -5,12 +5,12 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView,\
         FormView, View
 from django.views.generic.detail import SingleObjectMixin
 
-from ..mixins import AuthorEditMixin, IsActiveMixin
+from ..mixins import AuthorEditMixin, IsActiveObjectMixin, LoginRequiredMixin
 from .forms import PackageCreateEditForm, PackageFlagForm
 from .models import Package
 
 
-class PackageCreate(IsActiveMixin, CreateView):
+class PackageCreate(LoginRequiredMixin, IsActiveObjectMixin, CreateView):
     model = Package
     form_class = PackageCreateEditForm
 
@@ -19,16 +19,19 @@ class PackageCreate(IsActiveMixin, CreateView):
         return super(PackageCreate, self).form_valid(form)
 
 
-class PackageDetail(IsActiveMixin, DetailView):
+class PackageDetail(IsActiveObjectMixin, DetailView):
     model = Package
 
 
-class PackageEdit(IsActiveMixin, AuthorEditMixin, UpdateView):
+class PackageEdit(LoginRequiredMixin, IsActiveObjectMixin, UpdateView):
     model = Package
     form_class = PackageCreateEditForm
 
 
-class PackageFlag(IsActiveMixin, SingleObjectMixin, FormView):
+# TODO: This probably doesn't need to require login. But in that case we may
+# want to integrate something like honeypot at least.
+class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin,
+        FormView):
     """
     Currently we allow users to freely upload RapidSMS packages to the site.
     In case something gets on there that shouldn't, a user can email an
@@ -91,7 +94,8 @@ class PackageFlag(IsActiveMixin, SingleObjectMixin, FormView):
         return super(PackageFlag, self).form_valid(form)
 
 
-class PackageRefresh(IsActiveMixin, SingleObjectMixin, View):
+class PackageRefresh(LoginRequiredMixin, IsActiveObjectMixin,
+        SingleObjectMixin, View):
     """
     User-triggered refresh of the cached PyPI data, especially for use while
     they are re-uploading their own package and want to see what changes

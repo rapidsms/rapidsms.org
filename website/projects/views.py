@@ -2,12 +2,12 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView,\
         UpdateView
 
-from ..mixins import AuthorEditMixin, IsActiveMixin
+from ..mixins import AuthorEditMixin, IsActiveObjectMixin, LoginRequiredMixin
 from .forms import ProjectCreateEditForm
 from .models import Project
 
 
-class ProjectCreate(IsActiveMixin, CreateView):
+class ProjectCreate(LoginRequiredMixin, IsActiveObjectMixin, CreateView):
     model = Project
     form_class = ProjectCreateEditForm
 
@@ -16,16 +16,18 @@ class ProjectCreate(IsActiveMixin, CreateView):
         return super(ProjectCreate, self).form_valid(form)
 
 
-class ProjectDelete(IsActiveMixin, AuthorEditMixin, DeleteView):
+class ProjectDelete(LoginRequiredMixin, IsActiveObjectMixin, AuthorEditMixin,
+        DeleteView):
     model = Project
     http_method_names = ('delete', 'post')
     success_url = reverse_lazy('project_list')
 
 
-class ProjectDetail(IsActiveMixin, DetailView):
+class ProjectDetail(IsActiveObjectMixin, DetailView):
     model = Project
 
 
-class ProjectEdit(IsActiveMixin, AuthorEditMixin, UpdateView):
+class ProjectEdit(LoginRequiredMixin, IsActiveObjectMixin, AuthorEditMixin,
+        UpdateView):
     model = Project
     form_class = ProjectCreateEditForm

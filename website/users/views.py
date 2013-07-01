@@ -9,7 +9,7 @@ from django.views.generic import DetailView, UpdateView, FormView, ListView
 from allaccess.models import AccountAccess
 from allaccess.views import OAuthRedirect, OAuthCallback
 
-from ..mixins import IsActiveMixin
+from ..mixins import IsActiveObjectMixin, LoginRequiredMixin
 from .forms import UserEditForm, UserRegistrationForm
 from .models import User
 
@@ -115,11 +115,11 @@ class Registration(FormView):
         return redirect(self.get_success_url())
 
 
-class UserDetail(IsActiveMixin, DetailView):
+class UserDetail(IsActiveObjectMixin, DetailView):
     model = User
 
 
-class UserEdit(IsActiveMixin, UpdateView):
+class UserEdit(LoginRequiredMixin, IsActiveObjectMixin, UpdateView):
     model = User
     form_class = UserEditForm
 
