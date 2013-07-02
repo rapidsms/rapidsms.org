@@ -19,3 +19,4 @@ sorl-thumbnail==11.12
 factory_boy==2.0.2
 django-selectable==0.7.0
 django-celery==3.0.17
+mock==1.0.1
