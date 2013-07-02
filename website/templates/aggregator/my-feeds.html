@@ -1,0 +1,53 @@
+{% extends "aggregator/base.html" %}
+{% load i18n %}
+
+{% block meta_title %}Manage your blog feeds{% endblock %}
+{% block title %}Manage your blog feeds{% endblock %}
+{% block body_id %}aggregator-userdashboard{% endblock %}
+
+{% block main %}
+<header>
+  <h2>Manage your blog feed(s)</h2>
+  <p>{% if feeds %}Edit or delete your currently approved blogs to our aggregator.{% else %}You do not have any feeds in the aggregator at this time.{% endif %}</p>
+</header>
+
+{% if feeds %}
+<ul class="blogs">
+    {% for feed in feeds %}
+        <li>
+            <span class="label {{ feed.get_approval_status_display|lower }}">{{ feed.get_approval_status_display }}</span>
+            {{ forloop.counter }}) <strong>{{ feed|capfirst }}</strong>
+            - <a href="{{ feed.feed_url }}" target="_blank">{{ feed.feed_url }}</a>
+            <a class="action edit" href="{% url 'community-edit-feed' feed.id %}">
+                <i class="icon-edit icon-white"></i> Edit
+            </a>
+            <a class="action delete" href="{% url 'community-delete-feed' feed.id %}">
+                <i class="icon-trash icon-white"></i> Delete
+            </a>
+        </li>
+      {% endfor %}
+    </ul>
+{% endif %}
+
+<div class="add-blog">
+    <h3>Add a blog feed:</h3>
+    <form method="post" action=".">
+          <select name="select-choice-0" id="select-choice-0" class="feed-type">
+            <option value="#"> -- Select a feed type -- </option>
+            {% for t in feed_types %}
+            <option value="{% url 'community-add-feed' t.slug %}">{{ t }}</option>
+            {% endfor %}
+          </select>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  $('.feed-type').change(function (e) {
+    e.preventDefault();
+    location.href = $(this).val();
+  });
+</script>
+{% endblock %}

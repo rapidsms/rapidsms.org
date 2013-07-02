@@ -1,0 +1,18 @@
+{% extends "aggregator/base.html" %}
+{% load i18n %}
+
+{% block meta_title %}Delete "{{ feed }}" feed from blog aggregator{% endblock %}
+{% block title %}Delete "{{ feed }}" feed from blog aggregator{% endblock %}
+{% block body_id %}aggregator-delete{% endblock %}
+
+{% block main %}
+<header>
+	<h2>Delete "{{ feed }}" feed from aggregator</h2>
+	<p class="alert alert-danger">All posts in the aggregator will be deleted, along with your blog.</p>
+</header>
+
+<form action="." method="post">
+  {% csrf_token %}
+  <input type="submit" value="Yes, delete the feed.">
+</form>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "aggregator/base.html" %}
+{% load i18n  %}
+{% load bootstrap_toolkit %}
+
+{% block meta_title %}Add/edit your blogs feed to our aggregator{% endblock %}
+{% block title %}Add/edit your blogs feed to our aggregator{% endblock %}
+{% block body_id %}aggregator-create-edit{% endblock %}
+
+{% block main %}
+{% if adding %}
+    <h2>Add your blogs feed to our community feed aggregator</h2>
+{% else %}
+    <h2>Edit "{{ feed }}" in our feed aggreagator</h2>
+{% endif %}
+
+<form method="POST" action="" id="add_feed_form">
+    {% csrf_token %}
+    {{ form|as_bootstrap }}
+    <input type="submit" value="{% if adding %}Add feed{% else %}Save{% endif %}">
+    <input type="button" value="Cancel" onclick="history.go(-1);">
+{% endblock %}

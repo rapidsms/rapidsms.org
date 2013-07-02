@@ -1,0 +1,64 @@
+{% extends "aggregator/base.html" %}
+{% load i18n %}
+
+{% block meta_title %}Community posts for {{ feed_type.name }}{% endblock %}
+{% block title %}Community posts for {{ feed_type.name }}{% endblock %}
+{% block body_id %}community-posts{% endblock %}
+
+{% block content %}
+<header>
+    <h2>Community posts for {{ feed_type.name }}
+        <a class="rss" href="{% url 'aggregator-feed' feed_type.slug %}">
+            <img src="{{ STATIC_URL }}images/feed-icon.png" width="25">
+        </a>
+    </h2>
+    <p class="alert alert-info">
+        This page, updated regularly, aggregates posts from the {{ feed_type.name }} community.
+    </p>
+</header>
+
+{% if is_paginated %}
+    <div class="pagination pagination-large">
+        <ul>
+          {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}">&larr; Older post</a></li>
+          {% endif %}
+          {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}">Newer posts &rarr;</a></li>
+          {% endif %}
+        </ul>
+    </div>
+{% endif %}
+
+<div class="item-list">
+    {% for item in object_list %}
+        <article>
+            <section>
+                <a href="{{ item.link }}"><h4>{{ item.title }}</h4></a>
+                <p>Posted on {{ item.date_modified|date:"F j, Y" }} at {{ item.date_modified|date:"g:i A" }} by
+                    <a class="rss" href="{{ item.feed.feed_url }}">
+                        {{ item.feed.title }}
+                        <img src="{{ STATIC_URL }}images/feed-icon.png" width="15">
+                    </a>
+                </p>
+                {{ item.summary|safe|truncatewords:"100" }}
+                <p><a class="more" href="{{ item.link }}">Read more</a></p>
+            </section>
+        </article>
+    {% endfor %}
+</div>
+
+{% if is_paginated %}
+    <div class="pagination pagination-large">
+        <ul>
+          {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}">&larr; Older post</a></li>
+          {% endif %}
+          {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}">Newer posts &rarr;</a></li>
+          {% endif %}
+        </ul>
+    </div>
+{% endif %}
+
+{% endblock %}
