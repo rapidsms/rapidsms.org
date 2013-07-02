@@ -11,15 +11,18 @@ __all__ = ['TestPackageCreateView', 'TestPackageDetailView',
         'TestPackageEditView', 'TestPackageFlagView', 'TestPackageRefreshView']
 
 
-class TestPackageCreateView(ViewTestMixin, WebsiteTestBase):
-    url_name = 'package_create'
-    template_name = 'packages/package_form.html'
+class PackageViewTestBase(ViewTestMixin, WebsiteTestBase):
 
     def _post(self, *args, **kwargs):
         status_code = kwargs.pop('mock_status_code', None)
         with mock.patch.object(Package, '_get_pypi_request') as mock_get:
             mock_get.return_value = MockPyPIRequest(status_code=status_code)
-            return super(TestPackageCreateView, self)._post(*args, **kwargs)
+            return super(PackageViewTestBase, self)._post(*args, **kwargs)
+
+
+class TestPackageCreateView(PackageViewTestBase):
+    url_name = 'package_create'
+    template_name = 'packages/package_form.html'
 
     def test_get_authenticated(self):
         self.login_user(factories.UserFactory.create())
@@ -59,7 +62,7 @@ class TestPackageCreateView(ViewTestMixin, WebsiteTestBase):
         self.assertFalse(response.context['form'].is_valid())
 
 
-class TestPackageDetailView(ViewTestMixin, WebsiteTestBase):
+class TestPackageDetailView(PackageViewTestBase):
     url_name = 'package_detail'
     template_name = 'packages/package_detail.html'
 
@@ -93,7 +96,7 @@ class TestPackageDetailView(ViewTestMixin, WebsiteTestBase):
         self.assertEquals(response.status_code, 404)
 
 
-class TestPackageEditView(ViewTestMixin, WebsiteTestBase):
+class TestPackageEditView(PackageViewTestBase):
     url_name = 'package_edit'
     template_name = 'packages/package_form.html'
 
@@ -152,7 +155,7 @@ class TestPackageEditView(ViewTestMixin, WebsiteTestBase):
 
 
 
-class TestPackageFlagView(ViewTestMixin, WebsiteTestBase):
+class TestPackageFlagView(PackageViewTestBase):
     url_name = 'package_flag'
     template_name = 'packages/package_flag.html'
 
@@ -199,7 +202,7 @@ class TestPackageFlagView(ViewTestMixin, WebsiteTestBase):
         # TODO: check that email was NOT sent.
 
 
-class TestPackageRefreshView(ViewTestMixin, WebsiteTestBase):
+class TestPackageRefreshView(PackageViewTestBase):
     url_name = 'package_refresh'
 
     def setUp(self):
