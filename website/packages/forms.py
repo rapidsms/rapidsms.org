@@ -4,6 +4,7 @@ from .models import Package
 
 
 class PackageCreateEditForm(forms.ModelForm):
+    # Use a radio select field rather than the default.
     pkg_type = forms.ChoiceField(label='Package Type',
             widget=forms.RadioSelect, choices=Package.PACKAGE_TYPES.items())
 
@@ -21,6 +22,13 @@ class PackageCreateEditForm(forms.ModelForm):
             self.fields.pop('name')
 
     def clean_name(self):
+        """
+        Ensure that a package with the given name is on PyPI, and add
+        PyPI-derived data to the instance.
+
+        Creates its own request to pass into update_from_pypi, in order to
+        save an RTT.
+        """
         name = self.cleaned_data['name']
         self.instance.name = name
         r = self.instance._get_pypi_request()
@@ -39,4 +47,5 @@ class PackageCreateEditForm(forms.ModelForm):
 
 
 class PackageFlagForm(forms.Form):
-    reason = forms.CharField(widget=forms.Textarea, label='Reason for Flagging')
+    reason = forms.CharField(widget=forms.Textarea,
+            label='Reason for Flagging')

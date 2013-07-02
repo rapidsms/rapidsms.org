@@ -10,7 +10,7 @@ from .forms import PackageCreateEditForm, PackageFlagForm
 from .models import Package
 
 
-class PackageCreate(LoginRequiredMixin, IsActiveObjectMixin, CreateView):
+class PackageCreate(LoginRequiredMixin, CreateView):
     model = Package
     form_class = PackageCreateEditForm
 
@@ -39,13 +39,15 @@ class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin,
     """
     model = Package
     form_class = PackageFlagForm
-    success_url = reverse_lazy('package_list')
     template_name = 'packages/package_flag.html'
     context_object_name = 'object'  # For consistency with other views.
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super(PackageFlag, self).dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
 
     def send_flag_email(self, form):
         # TODO: Make it a Celery task.

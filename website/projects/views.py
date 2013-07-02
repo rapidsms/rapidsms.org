@@ -7,7 +7,7 @@ from .forms import ProjectCreateEditForm
 from .models import Project
 
 
-class ProjectCreate(LoginRequiredMixin, IsActiveObjectMixin, CreateView):
+class ProjectCreate(LoginRequiredMixin, CreateView):
     model = Project
     form_class = ProjectCreateEditForm
 

@@ -149,7 +149,8 @@ class Package(models.Model):
                 self.license = data['info']['license']
                 d = data['urls'][0]['upload_time']
                 if d:
-                    self.release_date = datetime.datetime.strptime(d, PYPI_DATE_FORMAT)
+                    self.release_date = datetime.datetime.strptime(d,
+                            PYPI_DATE_FORMAT)
         self.pypi_updated = datetime.datetime.now()
 
         return True

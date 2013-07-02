@@ -1,6 +1,11 @@
 Rapidsms.org Website
 ====================
 
+.. image::
+   https://api.travis-ci.org/rapidsms/rapidsms.org.png?branch=master
+   :alt: Build Status
+   :target: https://travis-ci.org/rapidsms/rapidsms.org
+
 Below you will find basic setup and deployment instructions for the
 Rapidsms.org website project. To begin you should have the following
 applications installed on your local development system:
