@@ -208,7 +208,7 @@ def deploy(branch=None):
     collectstatic()
     supervisor_command('stop %(project)s-%(environment)s:*' % env)
     supervisor_command('start %(project)s-%(environment)s:*' % env)
-
+    configure_solr()
 
 @task
 def get_db_dump(clean=True):
@@ -245,4 +245,3 @@ def configure_solr():
     # Use sed to change the name field to a type that is sortable
     sudo("sed -i 's/<field name=\"name\" type=\"text_en\"/<field name=\"name\" type=\"string\"/' %s" % schema_path)
     supervisor_command('restart %(project)s-%(environment)s:%(project)s-%(environment)s-solr' % env)
-    manage_run('rebuild_index')
