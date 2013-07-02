@@ -1,6 +1,8 @@
 language: python
 python:
  - "2.7"
+env:
+ - SECRET_KEY='this-secret-key-is-not-so-very-secret-abcdefghijklmnopqrstuvwxyz'
 install:
  - pip install -r requirements/base.txt --use-mirrors
 script:
