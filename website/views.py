@@ -37,10 +37,6 @@ class Help(TemplateView):
     template_name = 'website/help.html'
 
 
-class Blogs(TemplateView):
-    template_name = 'website/blogs.html'
-
-
 class FacetedSearchListingView(FacetedSearchView):
 
     def extra_context(self):

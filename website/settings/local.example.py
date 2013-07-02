@@ -5,3 +5,6 @@ from website.settings.dev import *
 # Used for OAuth authentication.
 GITHUB_KEY = ''
 GITHUB_SECRET = ''
+
+# User for aggregator
+SUPERFEEDR_CREDS = ('username', 'password')
