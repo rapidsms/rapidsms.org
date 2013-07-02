@@ -225,3 +225,8 @@ class TestPackageRefreshView(PackageViewTestBase):
         response = self._post()
         self.assertRedirectsNoFollow(response, self.package.get_edit_url())
         # TODO: check that PyPI was called and data was updated.
+
+    def test_refresh_failure(self):
+        response = self._post(mock_status_code=500)
+        self.assertRedirectsNoFollow(response, self.package.get_edit_url())
+        # TODO: check that data was NOT updated.
