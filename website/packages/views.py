@@ -10,7 +10,7 @@ from .forms import PackageCreateEditForm, PackageFlagForm
 from .models import Package
 
 
-class PackageCreate(LoginRequiredMixin, IsActiveObjectMixin, CreateView):
+class PackageCreate(LoginRequiredMixin, CreateView):
     model = Package
     form_class = PackageCreateEditForm
 
