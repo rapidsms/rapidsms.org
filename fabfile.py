@@ -172,6 +172,7 @@ def deploy(branch=None):
         env.branch = branch
     requirements = False
     migrations = False
+    initial = False
     if files.exists(env.code_root):
         # Fetch latest changes
         with cd(env.code_root):
@@ -193,6 +194,7 @@ def deploy(branch=None):
             run('git submodule update')
         requirements = True
         migrations = True
+        initial = True
         # Add code root to the Python path
         path_file = os.path.join(env.virtualenv_root, 'lib', 'python2.7', 'site-packages', 'project.pth')
         files.append(path_file, env.code_root, use_sudo=True)
@@ -208,7 +210,10 @@ def deploy(branch=None):
     collectstatic()
     supervisor_command('stop %(project)s-%(environment)s:*' % env)
     supervisor_command('start %(project)s-%(environment)s:*' % env)
+    if initial:
+        manage_run('setup_github')
     configure_solr()
+
 
 @task
 def get_db_dump(clean=True):
