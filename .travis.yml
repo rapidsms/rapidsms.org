@@ -17,6 +17,7 @@ install:
 
 before_script:
  - psql -c "CREATE DATABASE rapidsms_website;" -U postgres
+ - python manage.py help
  - python manage.py syncdb --migrate --noinput
 
 script:
