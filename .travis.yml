@@ -12,5 +12,9 @@ before_install:
 install:
  - pip install -r requirements/base.txt --use-mirrors
 
+before_script:
+ - psql -c "CREATE_DATABASE test_rapidsms_website;" -U postgres
+ - python manage.py syncdb --migrate
+
 script:
  - python manage.py test packages projects users
