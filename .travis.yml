@@ -1,10 +1,7 @@
 language: python
 python:
  - "2.7"
-env:
- global:
-  - SECRET_KEY="thissecretkeyisnotsoverysecretabcdefghijklmnopqrstuvwxyz"
 install:
  - pip install -r requirements/base.txt --use-mirrors
 script:
- - python manage.py test packages projects users
+ - python manage.py test --settings=website.settings.travis packages projects users
