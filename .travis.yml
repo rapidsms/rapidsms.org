@@ -5,20 +5,12 @@ python:
 
 services: postgresql
 
-env:
- - DJANGO=1.5.1
-
 before_install:
  - export DJANGO_SETTINGS_MODULE=website.settings.test
  - export PYTHONPATH=$HOME/builds/rapidsms/rapidsms.org
 
 install:
  - pip install -r requirements/base.txt --use-mirrors
-
-before_script:
- - psql -c "CREATE DATABASE rapidsms_website;" -U postgres
- - python manage.py help
- - python manage.py syncdb --migrate --noinput
 
 script:
  - python manage.py test packages projects users
