@@ -2,7 +2,7 @@ Rapidsms.org Website
 ====================
 
 .. image::
-   https://secure.travis-ci.org/rapidsms/rapidsms.org?branch=master
+   https://api.travis-ci.org/rapidsms/rapidsms.org.png?branch=master
    :alt: Build Status
    :target: https://travis-ci.org/rapidsms/rapidsms.org
 
