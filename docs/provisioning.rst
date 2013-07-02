@@ -30,7 +30,7 @@ the ``fabfile.py``. E.g., change this::
 
 to this::
 
-    env.repo = u'git@github.com:account/reponame.git'
+    env.repo = u'git@github.com:rapidsms/rapidsms.org.git'
 
 You also need to set the project name in `conf/pillar/project.sls``. This should
 match the ``env.project`` in ``fabfile.py``. For the environment you want to setup
@@ -133,7 +133,7 @@ At this point we can run the first deploy::
     fab staging deploy
 
 This will do the initial checkout of the repo source, install the Python requirements,
-run syncdb/migrate, and collect the static resources.
+run syncdb/migrate, collect the static resources, setup github OAuth, and configure solr.
 
 
 Updates
