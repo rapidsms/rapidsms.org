@@ -4,8 +4,8 @@
         "model": "aggregator.feedtype",
         "fields": {
             "can_self_add": true,
-            "name": "Raspberry Pi",
-            "slug": "raspberry-pi"
+            "name": "RapidSMS",
+            "slug": "rapidsms"
         }
     },
     {

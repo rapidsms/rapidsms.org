@@ -50,8 +50,8 @@ class CommunityAggregatorFeed(BaseCommunityAggregatorFeed):
 
 
 class CommunityAggregatorFirehoseFeed(BaseCommunityAggregatorFeed):
-    title = 'RaspberryIO community aggregator firehose'
-    description = 'All activity from the RaspberryIO community aggregator'
+    title = 'RapidSMS community aggregator firehose'
+    description = 'All activity from the RapidSMS community aggregator'
 
     def link(self):
         return urlresolvers.reverse('aggregator-firehose-feed')
