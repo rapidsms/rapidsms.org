@@ -1,0 +1,14 @@
+{% extends "aggregator/base.html" %}
+{% load i18n %}
+
+{% block meta_title %}Access denied{% endblock %}
+{% block title %}Access denied{% endblock %}
+{% block body_id %}aggregator-denied{% endblock %}
+
+{% block main %}
+<header>
+	<h2>Access denied :(</h2>
+	<p class="alert alert-danger">Sorry, you can't do that.</p>
+	<a href="javascript:history.go(-1);">&larr; Go back</a>
+</header>
+{% endblock %}

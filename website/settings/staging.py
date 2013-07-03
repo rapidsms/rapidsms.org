@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ('*',)
 
 GITHUB_KEY = os.environ['GITHUB_KEY']
 GITHUB_SECRET = os.environ['GITHUB_SECRET']
+SUPERFEEDR_CREDS = os.environ['SECRET_KEY']
 BROKER_URL = 'amqp://website:%s@127.0.0.1:5672/website_staging' % os.environ['BROKER_PASSWORD']
 
 FLAG_EMAIL_ALERTS = ['rapidsms-team@caktusgroup.com']

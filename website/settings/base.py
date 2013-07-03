@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.sitemaps',
 
+    'website.aggregator',
     'website.projects',
     'website.packages',
     'website.users',
@@ -154,6 +155,7 @@ INSTALLED_APPS = (
     'selectable',
     'djcelery',
     'taggit',
+    'django_push.subscriber',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -224,3 +226,9 @@ SOUTH_MIGRATION_MODULES = {
 RAPIDSMS_VERSION = '0.14.0'
 
 DEFAULT_FROM_EMAIL = 'no-reply@rapidsms.org'
+
+# PubSubHubbub settings
+FEED_APPROVERS_GROUP_NAME = "feed-approver"
+SUPERFEEDR_CREDS = []  # set in production/staging/local.py
+PUSH_HUB = 'https://superfeedr.com/hubbub'
+PUSH_CREDENTIALS = 'website.aggregator.utils.push_credentials'

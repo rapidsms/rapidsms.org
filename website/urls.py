@@ -7,7 +7,9 @@ from haystack.forms import FacetedSearchForm
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
 
-from .views import About, Blogs, Help, Home
+from .aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
+
+from .views import About, Help, Home
 
 
 admin.autodiscover()
@@ -26,13 +28,19 @@ urlpatterns += patterns('',
 urlpatterns += patterns('',
     url(r'^$', Home.as_view(), name='home'),
     url(r'^about/$', About.as_view(), name='about'),
-    url(r'^blogs/$', Blogs.as_view(), name='blogs'),
     url(r'^help/$', Help.as_view(), name='help'),
 
     url(r'^projects/', include('website.projects.urls')),
     url(r'^packages/', include('website.packages.urls')),
     url(r'^users/', include('website.users.urls')),
+
+    url(r'^blogs/', include('website.aggregator.urls')),
+    url(r'^rss/community/blogs/firehose/$', CommunityAggregatorFirehoseFeed(), name='aggregator-firehose-feed'),
+    url(r'^rss/community/blogs/(?P<slug>[\w-]+)/$', CommunityAggregatorFeed(), name='aggregator-feed'),
+    # django-push
+    url(r'^subscriber/', include('django_push.subscriber.urls')),
 )
+
 
 # Haystack configure SQS for faceting
 sqs = SearchQuerySet()
