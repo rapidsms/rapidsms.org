@@ -5,7 +5,7 @@ be manually approved.
 from __future__ import absolute_import
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.core.management.base import NoArgsCommand
@@ -22,7 +22,7 @@ class Command(NoArgsCommand):
             verbosity = 1
 
         feeds = Feed.objects.filter(approval_status=PENDING_FEED)
-        to_email = [x.email for x in User.objects.filter(groups__name=settings.FEED_APPROVERS_GROUP_NAME)]
+        to_email = [x.email for x in get_user_model().objects.filter(groups__name=settings.FEED_APPROVERS_GROUP_NAME)]
 
         if len(feeds) == 0:
             if verbosity >= 1:
@@ -35,7 +35,7 @@ class Command(NoArgsCommand):
  - {{ feed.title }} ( {{ feed.feed_url }} ) {% endfor %}
 {% endfor %}
 
-To approve them, visit: http://{{ site.domain }}{% url admin:aggregator_feed_changelist %}
+To approve them, visit: http://{{ site.domain }}{% url 'admin:aggregator_feed_changelist' %}
 """
 
         message = Template(email).render(Context({'feeds': feeds, 'site': site}))

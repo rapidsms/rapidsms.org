@@ -7,7 +7,8 @@ import datetime
 from mock import patch
 
 from django.conf import settings
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group
+from django.contrib.auth import get_user_model
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -42,7 +43,7 @@ class AggregatorTests(TestCase):
         with patch.object(SubscriptionManager, 'subscription_request', return_value=MockResponse('fake')) as subreq:
             # Set up users who will get emailed
             g = Group.objects.create(name=settings.FEED_APPROVERS_GROUP_NAME)
-            self.user = User.objects.create(username="Mr. Potato", email="mr@potato.com")
+            self.user = get_user_model().objects.create(name="Mr. Potato", email="mr@potato.com")
             self.user.groups.add(g)
 
             self.feed_type = models.FeedType(name="Test Feed Type", slug="test-feed-type", can_self_add=True)

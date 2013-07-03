@@ -1,9 +1,12 @@
 import logging
 import datetime
+
 from django.db import models
 from django.conf import settings
 from django_push.subscriber import signals as push_signals
 from django_push.subscriber.models import Subscription
+
+from website.users.models import User
 
 log = logging.getLogger(__name__)
 
@@ -38,7 +41,7 @@ class Feed(models.Model):
     is_defunct = models.BooleanField()
     approval_status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=PENDING_FEED)
     feed_type = models.ForeignKey(FeedType)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name='owned_feeds')
+    owner = models.ForeignKey(User, blank=True, null=True, related_name='owned_feeds')
 
     def __unicode__(self):
         return self.title
