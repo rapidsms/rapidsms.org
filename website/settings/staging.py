@@ -5,6 +5,9 @@ import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = os.environ['SECRET_KEY']
+
 DATABASES['default']['NAME'] = 'website_staging'
 
 PUBLIC_ROOT = '/var/www/website-staging/public/'
