@@ -5,6 +5,8 @@ secrets:
   GITHUB_KEY: XXXXXX
   GITHUB_SECRET: XXXXXX
   BROKER_PASSWORD: XXXXXX
+  SUPERFEEDR_USER: XXXXXX
+  SUPERFEEDR_PWD: XXXXXX
 
 # Uncomment and update username/password to enable HTTP basic auth
 # http_auth:
