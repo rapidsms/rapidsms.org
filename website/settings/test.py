@@ -1,6 +1,6 @@
 from .base import *
 
-DATABASES['default']['name'] = 'test_' + DATABASES['default']['name']
+DATABASES['default']['NAME'] = 'test_' + DATABASES['default']['NAME']
 
 SECRET_KEY = 'asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf'
 

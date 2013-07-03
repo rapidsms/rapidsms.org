@@ -14,7 +14,7 @@ install:
 
 before_script:
  - psql -c "CREATE DATABASE test_rapidsms_website;" -U postgres
- - python manage.py syncdb --migrate
+ - python manage.py syncdb --migrate --no-input
 
 script:
  - python manage.py test packages projects users
