@@ -5,6 +5,11 @@ import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
+ADMINS = (
+        ('RapidSMS.org Team', 'rapidsms-team@caktusgroup.com'),
+    )
+MANAGERS = ADMINS
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = os.environ['SECRET_KEY']
 
