@@ -8,6 +8,9 @@ TEMPLATE_DEBUG = DEBUG
 INTERNAL_IPS = ('127.0.0.1', )
 
 
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = os.environ['SECRET_KEY']
+
 
 INSTALLED_APPS += ('debug_toolbar',)
 MIDDLEWARE_CLASSES += (

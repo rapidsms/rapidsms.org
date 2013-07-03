@@ -134,23 +134,22 @@ class Package(models.Model):
         if req.status_code != 200:
             return False
 
-        self.pypi_json = json.dumps(req.json())
+        data = req.json()
+        self.pypi_json = json.dumps(data)
         if self.pypi_json:
-            data = json.loads(self.pypi_json)
-            if data:
-                self.maintainer_name = data['info']['maintainer']
-                self.maintainer_email = data['info']['maintainer_email']
-                self.author_name = data['info']['author']
-                self.author_email = data['info']['author_email']
-                self.version = data['info']['version']
-                self.summary = data['info']['summary']
-                self.docs_url = data['info']['docs_url']
-                self.home_url = data['info']['home_page']
-                self.license = data['info']['license']
-                d = data['urls'][0]['upload_time']
-                if d:
-                    self.release_date = datetime.datetime.strptime(d,
-                            PYPI_DATE_FORMAT)
+            self.maintainer_name = data['info']['maintainer']
+            self.maintainer_email = data['info']['maintainer_email']
+            self.author_name = data['info']['author']
+            self.author_email = data['info']['author_email']
+            self.version = data['info']['version']
+            self.summary = data['info']['summary']
+            self.docs_url = data['info']['docs_url']
+            self.home_url = data['info']['home_page']
+            self.license = data['info']['license']
+            d = data['urls'][0]['upload_time']
+            if d:
+                self.release_date = datetime.datetime.strptime(d,
+                        PYPI_DATE_FORMAT)
         self.pypi_updated = datetime.datetime.now()
 
         return True
