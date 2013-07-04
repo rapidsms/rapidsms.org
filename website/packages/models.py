@@ -6,6 +6,7 @@ import requests
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.utils import timezone
 
 from website.users.models import User
 
@@ -150,6 +151,6 @@ class Package(models.Model):
             if d:
                 self.release_date = datetime.datetime.strptime(d,
                         PYPI_DATE_FORMAT)
-        self.pypi_updated = datetime.datetime.now()
+        self.pypi_updated = timezone.now()
 
         return True
