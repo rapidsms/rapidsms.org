@@ -7,7 +7,7 @@
 
 <div class="page-header">
     <h1 class="header-split">
-        <span class="header-title">{{ object }}{% if object.version %} <small>version {{ object.version }}</small>{% endif %}</span>
+        <span class="header-title"><i class="icon-white icon-archive"></i> {{ object }}{% if object.version %} <small>version {{ object.version }}</small>{% endif %}</span>
         {% if user.is_authenticated %}
         <span class="header-buttons">
             <a href="{{ object.get_edit_url }}" class="btn btn-inverse"><i class="icon-white icon-pencil"></i> Edit</a>

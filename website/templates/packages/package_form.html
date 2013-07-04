@@ -8,11 +8,13 @@
 
 {% block content %}
 <div class="page-header">
+    <h1><i class="icon-white icon-archive"></i>
     {% if object %}
-    <h1>Edit {{ object.name }}</h1>
+    Edit {{ object.name }}
     {% else %}
-    <h1>Add a New Package</h1>
+    Add a New Package
     {% endif %}
+    </h1>
 </div>
 
 {% if not object %}

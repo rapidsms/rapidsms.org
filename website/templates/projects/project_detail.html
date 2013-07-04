@@ -8,7 +8,7 @@
 
 <div class="page-header">
     <h1 class="header-split">
-        <span class="header-title">{{ object }}</span>
+        <span class="header-title"><i class="icon-white icon-file-text"></i> {{ object }}</span>
         {% if user.is_authenticated and user == object.creator %}
         <span class="header-buttons">
             <a href="{{ object.get_edit_url }}" class="btn btn-inverse"><i class="icon-white icon-pencil"></i> Edit</a>

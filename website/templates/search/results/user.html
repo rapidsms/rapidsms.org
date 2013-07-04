@@ -1,5 +1,6 @@
 {% with user=result.object %}
 <div class="results-header">
+    <i class="icon-white icon-user"></i>
     <a href="{{ user.get_absolute_url }}">{{ user }}</a> {% if user.for_hire %}<span class="label for-hire">For hire!</span>{% endif %}
 </div>
 
