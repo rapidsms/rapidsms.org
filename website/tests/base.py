@@ -10,6 +10,28 @@ from django.test import TestCase
 from django.test.client import Client
 
 
+class FormTestMixin(object):
+    form_class = None  # Must be defined by the implementing class.
+
+    def _get_form(self, *args, **kwargs):
+        data = kwargs.pop('data', self._get_form_data())
+        return self.form_class(data=data, *args, **kwargs)
+
+    def _get_form_data(self, **kwargs):
+        return kwargs
+
+
+class ModelFormTestMixin(FormTestMixin):
+
+    def _get_form(self, *args, **kwargs):
+        if 'instance' not in kwargs:
+            kwargs['instance'] = self._get_form_instance()
+        return super(ModelFormTestMixin, self)._get_form(*args, **kwargs)
+
+    def _get_form_instance(self):
+        return None
+
+
 class ViewTestMixin(object):
     """Utilities for more easily testing views."""
     url_name = ''  # Must be defined by implementing class.
