@@ -17,4 +17,28 @@
         {% endif %}
     </h1>
 </div>
+
+<div class="row-fluid">
+    <div class="span12">
+    <ul>
+        <li>Started: {{ object.started }}</li>
+        <li>Countries: {% for country in object.countries.all %}
+                        {{ country }}{% if not forloop.last %}, {% endif %}
+                      {% endfor %}
+        </li>
+        <li>Description: {{ object.description }}</li>
+        <li>Challenges: {{ object.challenges }}</li>
+        <li>Audience: {{ object.audience }}</li>
+        <li>Tech: {{ object.technologies }}</li>
+        <li>Metrics: {{ object.metrics }}</li>
+        <li>Users: {{ object.num_users }}</li>
+        <li>Repo: {{ object.repository_url }}</li>
+        <li>Taxonomy: {% for tag in object.tags.all %}
+                        {{ tag }}{% if not forloop.last %}, {% endif %}
+                      {% endfor %}
+        </li>
+    <ul>
+    </div>
+</div>
+
 {% endblock content %}
