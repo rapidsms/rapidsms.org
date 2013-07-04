@@ -31,18 +31,18 @@ class PackageCreateEditForm(forms.ModelForm):
         """
         name = self.cleaned_data['name']
         self.instance.name = name
-        r = self.instance._get_pypi_request()
-        if r.status_code > 500:
+        req = self.instance._get_pypi_request()
+        if req.status_code > 500:
             msg = 'PyPI appears to be down. We apologize for the '\
                     'inconvenience. Please retry your upload later.'
             raise forms.ValidationError(msg)
-        elif r.status_code > 400:
+        elif req.status_code > 400:
             msg = 'Could not find this package on PyPI.'
             raise forms.ValidationError(msg)
-        elif r.status_code != 200:
+        elif req.status_code != 200:
             msg = 'Could not validate the existence of this package.'
             raise forms.ValidationError(msg)
-        self.instance.update_from_pypi(r)
+        self.instance.update_from_pypi(req)
         return name
 
 
