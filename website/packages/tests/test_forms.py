@@ -125,13 +125,13 @@ class PackageEditFormTest(ModelFormTestMixin, WebsiteTestBase):
         """tests_url field should not be required."""
         data = self._get_form_data(test_url='')
         form = self._get_form(data=data)
-        self.assertTrue(self._validate_form(form), form.errors)
+        self.assertTrue(form.is_valid(), form.errors)
 
     def test_no_repo_url(self):
         """repo_url field should not be required."""
         data = self._get_form_data(repo_url='')
         form = self._get_form(data=data)
-        self.assertTrue(self._validate_form(form), form.errors)
+        self.assertTrue(form.is_valid(), form.errors)
 
     def test_valid(self):
         form = self._get_form()
