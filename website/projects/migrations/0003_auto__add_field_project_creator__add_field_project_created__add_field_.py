@@ -3,6 +3,7 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from django.utils import timezone
 
 
 class Migration(SchemaMigration):
@@ -19,17 +20,17 @@ class Migration(SchemaMigration):
 
         # Adding field 'Project.created'
         db.add_column(u'projects_project', 'created',
-                      self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, default=datetime.datetime(2013, 6, 12, 0, 0), blank=True),
+                      self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, default=timezone.now(), blank=True),
                       keep_default=False)
 
         # Adding field 'Project.updated'
         db.add_column(u'projects_project', 'updated',
-                      self.gf('django.db.models.fields.DateTimeField')(auto_now=True, default=datetime.datetime(2013, 6, 12, 0, 0), blank=True),
+                      self.gf('django.db.models.fields.DateTimeField')(auto_now=True, default=timezone.now(), blank=True),
                       keep_default=False)
 
         # Adding field 'Project.started'
         db.add_column(u'projects_project', 'started',
-                      self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2013, 6, 12, 0, 0)),
+                      self.gf('django.db.models.fields.DateField')(default=timezone.now()),
                       keep_default=False)
 
         # Adding field 'Project.description'
