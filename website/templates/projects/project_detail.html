@@ -16,28 +16,82 @@
         </span>
         {% endif %}
     </h1>
+    {% if object.countries %}<div class="summary">Located in {{ object.display_countries }}</div>{% endif %}
 </div>
 
 <div class="row-fluid">
-    <div class="span12">
-    <ul>
-        <li>Started: {{ object.started }}</li>
-        <li>Countries: {% for country in object.countries.all %}
-                        {{ country }}{% if not forloop.last %}, {% endif %}
-                      {% endfor %}
-        </li>
-        <li>Description: {{ object.description }}</li>
-        <li>Challenges: {{ object.challenges }}</li>
-        <li>Audience: {{ object.audience }}</li>
-        <li>Tech: {{ object.technologies }}</li>
-        <li>Metrics: {{ object.metrics }}</li>
-        <li>Users: {{ object.num_users }}</li>
-        <li>Repo: {{ object.repository_url }}</li>
-        <li>Taxonomy: {% for tag in object.tags.all %}
-                        {{ tag }}{% if not forloop.last %}, {% endif %}
-                      {% endfor %}
-        </li>
-    <ul>
+    <div id="left-panel" class="span3">
+        {% if object.started %}
+        <p>
+            <strong>Started</strong><br />
+            {{ object.started|date:"F Y" }}
+        </p>
+        {% endif %}
+        {% if object.num_users %}
+        <p>
+            <strong>Number of Users</strong><br/>
+            ~{{ object.num_users }} user{{ object.num_users|pluralize }}
+        </p>
+        {% endif %}
+        {% if object.collaborators.count %}
+        <p>
+            <strong>Collaborators</strong><br />
+            {% for collaborator in object.collaborators.all %}
+            <a href="{{ collaborator.get_absolute_url }}" class="label label-link">{{ collaborator }}</a><br />
+            {% endfor %}
+        </p>
+        {% endif %}
+        {% if object.repository_url %}
+        <p>
+            <strong>Repo</strong><br />
+            {{ object.repository_url }}
+        </p>
+        {% endif %}
+        {% if object.taxonomy %}
+        <p>
+            <strong>Taxonomy</strong><br />
+            {% for tag in object.tags.all %}
+            {{ tag }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        {% endif %}
+        {% if object.packages.count %}
+        <p>
+            <strong>Related Packages</strong><br />
+            {% for package in object.packages.all %}
+            <a href="{{ package.get_absolute_url }}" class="label label-link">{{ package }}</a><br />
+            {% endfor %}
+        </p>
+        {% endif %}
+    </div>
+    <div id="right-panel" class="span9">
+       {% if object.description %}<div class="lead">{{ object.description|linebreaks }}</div>{% endif %}
+        <ul class="thumbnails">
+            <li class="span3">
+                <div class="thumbnail">
+                    <h3>Challenges</h3>
+                    <p>{{ object.challenges }}</p>
+                </div>
+            </li>
+            <li class="span3">
+                <div class="thumbnail">
+                    <h3>Audience</h3>
+                    <p>{{ object.audience }}</p>
+                </div>
+            </li>
+            <li class="span3">
+                <div class="thumbnail">
+                    <h3>Key Technologies</h3>
+                    <p>{{ object.technologies }}</p>
+                </div>
+            </li>
+            <li class="span3">
+                <div class="thumbnail">
+                    <h3>Metrics</h3>
+                    <p>{{ object.metrics }}</p>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
 

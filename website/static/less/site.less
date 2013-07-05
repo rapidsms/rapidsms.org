@@ -7,6 +7,7 @@
 
 /* Includes
 ==================== */
+
 @import "../flat-ui/less/config.less";
 @import "../flat-ui/less/mixins.less";
 
@@ -22,6 +23,7 @@
 
 /* Sitewide
 ==================== */
+
 .row-fluid {
     // Apply flat-ui's form styles to select dropdowns.
     select {
@@ -94,7 +96,6 @@
     h1 {
         margin: 0 0 6px 0;
     }
-
     .header-split {
         margin: 0;
         span {
@@ -110,12 +111,58 @@
             padding: 9px 12px;
         }
     }
+    .summary {
+        color: @twilight-blue;
+        font-size: 18px;
+        margin-top: -3px;
+        margin-bottom: 6px;
+        padding-left: 30px;  // To clear the icon.
+    }
 }
 
 .label.for-hire {
     background-color: @turquoise;
     margin: 10px auto;
     padding: 5px 10px;
+}
+
+.btn.btn-selectable {
+    padding: 3px 8px;
+    margin: 5px;
+    i {
+        margin: 0;
+    }
+}
+
+span.help-block {
+    margin-top: 5px !important;
+}
+
+.selections {
+    padding-top: 3px;
+    min-height: 0px !important;
+    margin: 0 0 -3px 0 !important;
+    .label i {
+        margin: 0 0 0 4px;
+    }
+}
+
+span.label, a.label {
+    font-size: 14px;
+    padding: 4px 6px;
+    margin: 3px;
+
+    &.label-link {
+        &:hover {
+            background-color: @midnight-blue;
+        }
+     }
+}
+
+.label a, a.label {
+    color: @white !important;
+    text-decoration: none;
+    outline: none;
 }
 
 #messages {
@@ -384,12 +431,6 @@ body#package-form #content {
 }
 
 body#package-detail #content {
-    .page-header .summary {
-        color: @twilight-blue;
-        font-size: 18px;
-        margin-top: -3px;
-        margin-bottom: 6px;
-    }
     #left-panel {
         #links {
             text-align: center;
@@ -487,36 +528,6 @@ body#search #content {
                 top: 2px;
                 right: 2px;
                 padding: 6px 12px;
-            }
-        }
-    }
-}
-
-.btn.btn-selectable {
-    padding: 3px 8px;
-    margin: 5px;
-    i {
-        margin: 0;
-    }
-}
-
-span.help-block {
-    margin-top: 5px !important;
-}
-.selections {
-    padding-top: 3px;
-    min-height: 0px !important;
-    margin: 0 0 -3px 0 !important;
-    .label {
-        padding: 4px 6px;
-        font-size: 14px;
-        margin: 3px;
-        a {
-            text-decoration: none;
-            color: white !important;
-            outline: none;
-            i {
-                margin: 0 0 0 4px;
             }
         }
     }

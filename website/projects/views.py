@@ -13,7 +13,9 @@ class ProjectCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
-        return super(ProjectCreate, self).form_valid(form)
+        ret_val = super(ProjectCreate, self).form_valid(form)
+        self.object.collaborators.add(self.request.user)
+        return ret_val
 
 
 class ProjectDelete(LoginRequiredMixin, IsActiveObjectMixin, AuthorEditMixin,

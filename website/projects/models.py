@@ -4,6 +4,7 @@ from django.template.defaultfilters import slugify
 
 from taggit.managers import TaggableManager
 
+from website.packages.models import Package
 from website.users.models import User
 
 
@@ -21,33 +22,51 @@ class Country(models.Model):
 
 class Project(models.Model):
     creator = models.ForeignKey(User, related_name='created_projects',
-            help_text='The creator of this content, who may or may not be its '
-            'author.')
+            help_text="The creator of this content, who may or may not be its "
+            "author.")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField('Active', default=True)
 
+    collaborators = models.ManyToManyField(User, related_name='projects',
+            help_text="Users who have permission to edit this project.")
+
+    # Required data.
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField()
-    started = models.DateField('Project start date')
+    description = models.TextField()
 
+    # Optional information.
+    started = models.DateField('Project start date', null=True, blank=True)
     countries = models.ManyToManyField(Country, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
     challenges = models.TextField(blank=True, null=True)
     audience = models.TextField(blank=True, null=True)
-    technologies = models.TextField(blank=True, null=True)
+    technologies = models.TextField('Key technologies', blank=True, null=True)
     metrics = models.TextField(blank=True, null=True)
-    num_users = models.IntegerField(blank=True, null=True,
-            help_text='Estimated number of users.')
+    num_users = models.IntegerField('Number of users', blank=True, null=True,
+            help_text='Estimated number of users, a whole number.')
     repository_url = models.URLField(blank=True, null=True, help_text='Link '
             'to the public code repository for this project.')
     tags = TaggableManager(verbose_name="Taxonomy")
+    packages = models.ManyToManyField(Package, blank=True, null=True)
 
     class Meta:
         ordering = ['-updated']
 
     def __unicode__(self):
         return self.name
+
+    def display_countries(self):
+        """Display countries as a comma-separated list."""
+        total = self.countries.count()
+        result = ''
+        for index, country in enumerate(self.countries.all(), 1):
+            if index == total and index != 1:
+                result += 'and '
+            result += str(country)
+            if index != total:
+                result += ', ' if total > 2 else ' '
+        return result 
 
     def get_absolute_url(self):
         return reverse('project_detail', args=(self.slug,))
