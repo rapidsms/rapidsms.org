@@ -137,9 +137,3 @@ installed and run::
     coverage run --source=website manage.py test packages projects users
     # Show the coverage report with missing lines
     coverage report -m --omit="*/tests/*,*/migrations/*,*/settings/*,"
-
-
-
-
-coverage run --source=website manage.py test packages projects users
-
