@@ -66,7 +66,7 @@ class Project(models.Model):
             result += str(country)
             if index != total:
                 result += ', ' if total > 2 else ' '
-        return result 
+        return result
 
     def get_absolute_url(self):
         return reverse('project_detail', args=(self.slug,))
