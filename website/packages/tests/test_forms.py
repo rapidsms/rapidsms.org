@@ -2,8 +2,9 @@ import mock
 
 from django.db import IntegrityError
 
-from website.tests import factories
 from website.tests.base import FormTestMixin, ModelFormTestMixin, WebsiteTestBase
+from website.packages.tests.factories import PackageFactory
+from website.users.tests.factories import UserFactory
 
 from ..forms import PackageCreateEditForm, PackageFlagForm
 from ..models import Package
@@ -100,7 +101,7 @@ class PackageCreateFormTest(ModelFormTestMixin, WebsiteTestBase):
     def test_valid(self):
         form = self._get_form()
         self.assertTrue(self._validate_form(form), form.errors)
-        form.instance.creator = factories.UserFactory.create()
+        form.instance.creator = UserFactory.create()
         package = form.save()
         self.assertEquals(package.pkg_type, Package.APPLICATION)
         self.assertEquals(package.name, 'test-application')
@@ -110,7 +111,7 @@ class PackageEditFormTest(ModelFormTestMixin, WebsiteTestBase):
     form_class = PackageCreateEditForm
 
     def setUp(self):
-        self.package = factories.PackageFactory.create()
+        self.package = PackageFactory.create()
 
     def _get_form_instance(self):
         return self.package
