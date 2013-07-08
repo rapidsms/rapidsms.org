@@ -120,3 +120,26 @@ given, it will use the default branch defined for this environment in
 
 New requirements or South migrations are detected by parsing the VCS changes
 and will be installed/run automatically.
+
+Running the tests
+-----------------
+
+You can run the tests via::
+
+    python manage.py test packages projects users
+
+To check the test coverage you should have `coverage <https://pypi.python.org/pypi/coverage>`_
+installed and run::
+
+    # Install coverage
+    pip install coverage
+    # Run tests with coverage
+    coverage run --source=website manage.py test packages projects users
+    # Show the coverage report with missing lines
+    coverage report -m --omit="*/tests/*,*/migrations/*,*/settings/*,"
+
+
+
+
+coverage run --source=website manage.py test packages projects users
+
