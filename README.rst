@@ -134,6 +134,6 @@ installed and run::
     # Install coverage
     pip install coverage
     # Run tests with coverage
-    coverage run --source=website manage.py test packages projects users
+    coverage run --source=website manage.py test packages projects users aggregator
     # Show the coverage report with missing lines
     coverage report -m --omit="*/tests/*,*/migrations/*,*/settings/*,"
