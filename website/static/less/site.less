@@ -19,6 +19,7 @@
 @white: #FFFFFF;
 @twilight-blue: lighten(@midnight-blue, 20%);
 @inputWidth: 50%;
+@inputHeight: 21px;
 
 
 /* Sitewide
@@ -41,22 +42,15 @@
     input[type="week"], input[type="number"], input[type="email"],
     input[type="url"], input[type="search"], input[type="tel"],
     input[type="color"], .uneditable-input, select {
+        height: 21px;
         width: @inputWidth !important;
+        padding: 0px;
         @media(max-width: 767px) {
             width: 100% !important;
         }
         &:focus {
             border-color: @peter-river;
         }
-    }
-
-    input[type="text"], input[type="password"],
-    input[type="datetime"], input[type="datetime-local"],
-    input[type="date"], input[type="month"], input[type="time"],
-    input[type="week"], input[type="number"], input[type="email"],
-    input[type="url"], input[type="search"], input[type="tel"],
-    input[type="color"], .uneditable-input {
-        height: 21px;
     }
 
     .radio {
@@ -415,6 +409,10 @@ body#login #content {
     }
     div#login {
         padding: 30px 0;
+       input[type="text"], input[type="password"] {
+            width: 25%;
+            padding: 8px 5px;
+        }
     }
 }
 
