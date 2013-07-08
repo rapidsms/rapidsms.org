@@ -4,6 +4,14 @@
 {% block title %}A Free and Open Source SMS Framework{% endblock title %}
 {% block body_id %}home{% endblock body_id %}
 
+{% block scribbler-files %}
+    <link rel="stylesheet"
+        href="{{ STATIC_URL }}scribbler/css/scribbler.css" />
+    <script
+        data-main="{{ STATIC_URL }}js/home.js"
+        src="{{ STATIC_URL }}scribbler/libs/require.js"></script>
+{% endblock scribbler-files %}
+
 {% block masthead %}
 <div id="masthead">
     <header>
@@ -26,4 +34,10 @@
 {% scribble "home" %}
 <p>Welcome to RapidSMS.org!</p>
 {% endscribble %}
+
+<!-- Map -->
+<section id="map-block">
+    <div id="home-map" style="height: 500px; width: 960px"></div>
+</section>
+
 {% endblock content %}
