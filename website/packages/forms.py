@@ -32,7 +32,7 @@ class PackageCreateEditForm(forms.ModelForm):
         name = self.cleaned_data['name']
         self.instance.name = name
         req = self.instance._get_pypi_request()
-        if req.status_code > 500:
+        if req.status_code >= 500:
             msg = 'PyPI appears to be down. We apologize for the '\
                     'inconvenience. Please retry your upload later.'
             raise forms.ValidationError(msg)

@@ -56,6 +56,15 @@ class PackageCreateFormTest(ModelFormTestMixin, WebsiteTestBase):
         self.assertFalse(self._validate_form(form, mock_status_code=404))
         self.assertTrue('name' in form.errors)
 
+    def test_pypi_not_200(self):
+        """
+        name field should raise ValidationError if PyPI returns a response
+        other than >400.
+        """
+        form = self._get_form()
+        self.assertFalse(self._validate_form(form, mock_status_code=303))
+        self.assertTrue('name' in form.errors)
+
     def test_no_user(self):
         """User object must be set on the instance before it can be saved."""
         form = self._get_form()
