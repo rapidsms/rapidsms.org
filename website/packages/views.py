@@ -72,7 +72,6 @@ class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin,
         subject = loader.render_to_string(subject_template, context)
         subject = ''.join(subject.splitlines())
         body_text = loader.render_to_string(body_text_template, context)
-
         send_mail(
             subject=subject,
             message=body_text,

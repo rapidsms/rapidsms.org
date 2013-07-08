@@ -1,5 +1,8 @@
 import mock
 
+from django.core import mail
+from django.conf import settings
+
 from website.tests import factories
 from website.tests.base import ViewTestMixin, WebsiteTestBase
 
@@ -165,6 +168,11 @@ class TestPackageFlagView(PackageViewTestBase):
         self.login_user(self.user)
         self.package = factories.PackageFactory.create()
         self.url_kwargs = {'slug': self.package.slug}
+        self.default_setting = settings.FLAG_EMAIL_ALERTS
+        settings.FLAG_EMAIL_ALERTS = ['test@example.com', ]
+
+    def tearDown(self):
+        settings.FLAG_EMAIL_ALERTS = self.default_setting
 
     def test_get_authenticated(self):
         response = self._get()
@@ -189,7 +197,7 @@ class TestPackageFlagView(PackageViewTestBase):
         self.assertRedirectsNoFollow(response, self.package.get_absolute_url())
         pkg = Package.objects.get(pk=self.package.pk)
         self.assertTrue(pkg.is_flagged)
-        # TODO: check that email was sent.
+        self.assertEqual(len(mail.outbox), 1)
 
     def test_flag_invalid(self):
         response = self._post(data={
@@ -199,7 +207,7 @@ class TestPackageFlagView(PackageViewTestBase):
         self.assertTemplateUsed(response, self.template_name)
         self.assertEquals(response.context['object'], self.package)
         self.assertFalse(response.context['form'].is_valid())
-        # TODO: check that email was NOT sent.
+        self.assertEqual(len(mail.outbox), 0)
 
 
 class TestPackageRefreshView(PackageViewTestBase):
