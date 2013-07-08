@@ -3,11 +3,12 @@ import mock
 from django.core import mail
 from django.conf import settings
 
-from website.tests import factories
 from website.tests.base import ViewTestMixin, WebsiteTestBase
+from website.users.tests.factories import UserFactory
 
 from ..models import Package
 from .base import MockPyPIRequest
+from .factories import PackageFactory
 
 
 __all__ = ['TestPackageCreateView', 'TestPackageDetailView',
@@ -28,7 +29,7 @@ class TestPackageCreateView(PackageViewTestBase):
     template_name = 'packages/package_form.html'
 
     def test_get_authenticated(self):
-        self.login_user(factories.UserFactory.create())
+        self.login_user(UserFactory.create())
         response = self._get()
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, self.template_name)
@@ -45,7 +46,7 @@ class TestPackageCreateView(PackageViewTestBase):
         self.assertRedirectsToLogin(response)
 
     def test_create(self):
-        self.login_user(factories.UserFactory.create())
+        self.login_user(UserFactory.create())
         response = self._post(data={
             'pkg_type': Package.APPLICATION,
             'name': 'test-application',
@@ -55,7 +56,7 @@ class TestPackageCreateView(PackageViewTestBase):
         self.assertRedirectsNoFollow(response, pkg.get_absolute_url())
 
     def test_create_invalid(self):
-        self.login_user(factories.UserFactory.create())
+        self.login_user(UserFactory.create())
         response = self._post(data={
             'pkg_type': 'invalid',
             'name': 'test-application',
@@ -71,11 +72,11 @@ class TestPackageDetailView(PackageViewTestBase):
 
     def setUp(self):
         super(TestPackageDetailView, self).setUp()
-        self.package = factories.PackageFactory.create()
+        self.package = PackageFactory.create()
         self.url_kwargs = {'slug': self.package.slug}
 
     def test_get_authenticated(self):
-        self.login_user(factories.UserFactory.create())
+        self.login_user(UserFactory.create())
         response = self._get()
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, self.template_name)
@@ -105,9 +106,9 @@ class TestPackageEditView(PackageViewTestBase):
 
     def setUp(self):
         super(TestPackageEditView, self).setUp()
-        self.user = factories.UserFactory.create()
+        self.user = UserFactory.create()
         self.login_user(self.user)
-        self.package = factories.PackageFactory.create()
+        self.package = PackageFactory.create()
         self.url_kwargs = {'slug': self.package.slug}
 
     def test_get_authenticated(self):
@@ -164,9 +165,9 @@ class TestPackageFlagView(PackageViewTestBase):
 
     def setUp(self):
         super(TestPackageFlagView, self).setUp()
-        self.user = factories.UserFactory.create()
+        self.user = UserFactory.create()
         self.login_user(self.user)
-        self.package = factories.PackageFactory.create()
+        self.package = PackageFactory.create()
         self.url_kwargs = {'slug': self.package.slug}
         self.default_setting = settings.FLAG_EMAIL_ALERTS
         settings.FLAG_EMAIL_ALERTS = ['test@example.com', ]
@@ -215,9 +216,9 @@ class TestPackageRefreshView(PackageViewTestBase):
 
     def setUp(self):
         super(TestPackageRefreshView, self).setUp()
-        self.user = factories.UserFactory.create()
+        self.user = UserFactory.create()
         self.login_user(self.user)
-        self.package = factories.PackageFactory.create()
+        self.package = PackageFactory.create()
         self.url_kwargs = {'slug': self.package.slug}
 
     def test_get(self):
