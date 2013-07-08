@@ -21,7 +21,7 @@
     <h1><span class="header-title"><i class="icon-white icon-user"></i> Edit Profile</span></h1>
 </div>
 
-<form class="form-horizontal" method="post" action=".">
+<form class="form-horizontal" method="post" action="." enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in form %}
     <div class="control-group{% if field.errors %} error{% endif %}">
