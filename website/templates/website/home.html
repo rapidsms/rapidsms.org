@@ -4,20 +4,47 @@
 {% block title %}A Free and Open Source SMS Framework{% endblock title %}
 {% block body_id %}home{% endblock body_id %}
 
-{% block scribbler-files %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}scribbler/css/scribbler.css" />
-    <script
-        data-main="{{ STATIC_URL }}js/home.js"
-        src="{{ STATIC_URL }}scribbler/libs/require.js">
-    </script>
+{% block masthead %}
+<div id="masthead">
+    <header>
+        <small>Version {{ RAPIDSMS_VERSION }}</small>
+        <img src="{{ STATIC_URL }}images/rapidsms-logo.png" alt="RapidSMS">
+{% scribble "mission-statement" %}
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+{% endscribble %}
+    </header>
+</div>
+{% endblock masthead %}
+
+{% block content %}
+
+<!-- Courtesy of http://codepo8.github.io/css-fork-on-github-ribbon/ -->
+<span id="fork">
+    <a href="https://github.com/RapidSMS/RapidSMS">Fork me on GitHub!</a>
+</span>
+
+{% scribble "home" %}
+<p>Welcome to RapidSMS.org!</p>
+{% endscribble %}
+
+<!-- Map -->
+<section id="map-block">
+    <div id="home-map" style="height: 500px; width: 960px"></div>
+</section>
+
+{% endblock content %}
+
+{% block extra-js %}
     <script>
-        // TODO: To get data from Django into the map, replace the declaration below with the something like the following:
+        // TODO: To get data from Django into the map, replace the declaration
+        // below with the something like the following (assuming data from the
+        // view). (Leave the require() call the same):
         /*
-            define('map_data', {
+            define('homemap_data', {
                 {{ map_data_json }}
             });
         */
-        define('map_data', {
+        define('homemap_data', {
             "AZ": {
                 "fillKey": "REP",
                 "electoralVotes": 5
@@ -219,35 +246,11 @@
                 "electoralVotes": 32
             }
         });
+        require(['homemap_config', 'homemap_data'], function (HomeMap, homemap_data) {
+            // Load dependencies for the map on the homepage.
+            // Once homemap_data is provided, initialize the map and render it
+            var home_map = HomeMap.init(homemap_data);
+            home_map.render();
+        });
     </script>
-{% endblock scribbler-files %}
-
-{% block masthead %}
-<div id="masthead">
-    <header>
-        <small>Version {{ RAPIDSMS_VERSION }}</small>
-        <img src="{{ STATIC_URL }}images/rapidsms-logo.png" alt="RapidSMS">
-{% scribble "mission-statement" %}
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-{% endscribble %}
-    </header>
-</div>
-{% endblock masthead %}
-
-{% block content %}
-
-<!-- Courtesy of http://codepo8.github.io/css-fork-on-github-ribbon/ -->
-<span id="fork">
-    <a href="https://github.com/RapidSMS/RapidSMS">Fork me on GitHub!</a>
-</span>
-
-{% scribble "home" %}
-<p>Welcome to RapidSMS.org!</p>
-{% endscribble %}
-
-<!-- Map -->
-<section id="map-block">
-    <div id="home-map" style="height: 500px; width: 960px"></div>
-</section>
-
-{% endblock content %}
+{% endblock %}

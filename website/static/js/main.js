@@ -92,10 +92,3 @@ require(['jquery', 'scribblereditor', 'scribblermenu'], function ($, ScribbleEdi
         menu.render();
     });
 });
-
-require(['homemap_config', 'homemap_data'], function (HomeMap, homemap_data) {
-    // Load dependencies for the map on the homepage.
-    // Once homemap_data is provided, initialize the map and render it
-    var home_map = HomeMap.init(homemap_data);
-    home_map.render();
-});
