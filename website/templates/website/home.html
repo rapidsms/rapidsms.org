@@ -40,11 +40,9 @@
         // below with the something like the following (assuming data from the
         // view). (Leave the require() call the same):
         /*
-            define('homemap_data', {
-                {{ map_data_json }}
-            });
+            var homemap_data = {{ map_data_json }};
         */
-        define('homemap_data', {
+        var homemap_data = {
             "AZ": {
                 "fillKey": "REP",
                 "electoralVotes": 5
@@ -245,12 +243,11 @@
                 "fillKey": "REP",
                 "electoralVotes": 32
             }
-        });
-        require(['homemap_config', 'homemap_data'], function (HomeMap, homemap_data) {
+        };
+        require(['homemap_config'], function (HomeMap) {
             // Load dependencies for the map on the homepage.
             // Once homemap_data is provided, initialize the map and render it
-            var home_map = HomeMap.init(homemap_data);
-            home_map.render();
+            HomeMap.init(homemap_data).render();
         });
     </script>
 {% endblock %}
