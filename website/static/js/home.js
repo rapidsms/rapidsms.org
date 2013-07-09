@@ -8,7 +8,7 @@ require.config({
         // datamap libs and custom code
         d3: 'libs/d3',
         datamap: 'libs/datamaps-all-stripped',
-        homemap: 'home-map',
+        homemap: 'homemap_config',
         // Scribbler libs and custom code
         codemirror: '../scribbler/libs/codemirror/lib/codemirror',
         jsmode: '../scribbler/libs/codemirror/mode/javascript/javascript',
@@ -93,7 +93,9 @@ require(['jquery', 'scribblereditor', 'scribblermenu'], function ($, ScribbleEdi
     });
 });
 
-require(['homemap'], function (homemap) {
-    // Load and render the map for the homepage
-    homemap.render();
+require(['homemap_config', 'map_data'], function (HomeMap, map_data) {
+    // Load dependencies for the map on the homepage.
+    // Once map_data is provided, initialize the map and render it
+    var home_map = HomeMap.init(map_data);
+    home_map.render();
 });
