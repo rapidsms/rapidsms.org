@@ -111,7 +111,7 @@ class Registration(FormView):
         password = form.cleaned_data['password1']
         user = authenticate(username=user.email, password=password)
         login(self.request, user)
-        messages.success(request, 'Thanks for registering for RapidSMS.org!')
+        messages.success(self.request, 'Thanks for registering for RapidSMS.org!')
         return redirect(self.get_success_url())
 
 
