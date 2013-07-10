@@ -6,6 +6,7 @@ from ..forms import UserChangeForm
 from ..forms import UserEditForm
 from ..forms import UserRegistrationForm
 from ..models import User
+from ...projects.models import Country
 
 __all__ = ["UserCreationFormTest", "UserChangeFormTest", "UserEditFormTest",
     "UserRegistrationFormTest", ]
@@ -64,6 +65,10 @@ class UserCreationFormTest(TestCase):
         self.failUnless(form.errors)
         self.assertIn("email", form.errors)
 
+    def test_valid(self):
+        form = self.form(data=self._get_valid_data())
+        self.failUnless(form.is_valid())
+
 
 class UserChangeFormTest(TestCase):
 
@@ -106,6 +111,40 @@ class UserEditFormTest(TestCase):
         }
         return data
 
+    def test_country_validate_select(self):
+        "Test that a valid selection from the django-select widget validates"
+        us = Country.objects.get(name="United States")
+        data = self._get_valid_data()
+        data.update(
+            {"country_1": "US", "country_0": "United States", }
+        )
+        form = self.form(data=data, instance=self.user)
+#        import pdb; pdb.set_trace();
+        self.failUnless(form.is_valid())
+        self.assertEqual(form.cleaned_data['country'], us)
+
+    def test_country_validate_manual(self):
+        "Test that a valid manually entered country name validates"
+        us = Country.objects.get(name="United States")
+        data = self._get_valid_data()
+        data.update(
+            {"country_0": "united states", }
+        )
+        form = self.form(data=data, instance=self.user)
+#        import pdb; pdb.set_trace();
+        self.failUnless(form.is_valid())
+        self.assertEqual(form.cleaned_data['country'], us)
+
+    def test_country_invalidate_manual(self):
+        "Test that a invalid manually entered country name does not validate"
+        data = self._get_valid_data()
+        data.update(
+            {"country_0": "united states aaaaa", }
+        )
+        form = self.form(data=data, instance=self.user)
+        self.failIf(form.is_valid())
+        self.assertIn('country', form.errors)
+
     def test_meta_model(self):
         self.assertEqual(self.form._meta.model, User)
 
@@ -137,6 +176,17 @@ class UserRegistrationFormTest(TestCase):
     def setUp(self):
         self.form = UserRegistrationForm
 
+    def _get_valid_data(self):
+        data = {
+            "user_type": "I",
+            "name": "User",
+            "email": "newuser@example.com",
+            "for_hire": True,
+            "password1": "password",
+            "password2": "password",
+        }
+        return data
+
     def test_init(self):
         form = self.form()
         self.assertIn('duplicate_email', form.error_messages)
@@ -151,3 +201,37 @@ class UserRegistrationFormTest(TestCase):
                 'website_url', 'github_url', 'gravatar_email', 'avatar',
                 'for_hire')
         self.assertEqual(expected, self.form._meta.fields)
+
+    def test_country_validate_select(self):
+        "Test that a valid selection from the django-select widget validates"
+        us = Country.objects.get(name="United States")
+        data = self._get_valid_data()
+        data.update(
+            {"country_1": "US", "country_0": "United States", }
+        )
+        form = self.form(data=data)
+#        import pdb; pdb.set_trace();
+        self.failUnless(form.is_valid())
+        self.assertEqual(form.cleaned_data['country'], us)
+
+    def test_country_validate_manual(self):
+        "Test that a valid manually entered country name validates"
+        us = Country.objects.get(name="United States")
+        data = self._get_valid_data()
+        data.update(
+            {"country_0": "united states", }
+        )
+        form = self.form(data=data)
+#        import pdb; pdb.set_trace();
+        self.failUnless(form.is_valid())
+        self.assertEqual(form.cleaned_data['country'], us)
+
+    def test_country_invalidate_manual(self):
+        "Test that a invalid manually entered country name does not validate"
+        data = self._get_valid_data()
+        data.update(
+            {"country_0": "united states aaaaa", }
+        )
+        form = self.form(data=data)
+        self.failIf(form.is_valid())
+        self.assertIn('country', form.errors)
