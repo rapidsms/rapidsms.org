@@ -1,9 +1,11 @@
 import datetime
 import json
 
+from mock import patch
+import requests
+
 from website.tests.base import WebsiteTestBase
 from website.users.tests.factories import UserFactory
-
 from ..models import Package, PYPI_DATE_FORMAT
 from .base import MockPyPIRequest
 from .factories import PackageFactory
@@ -20,6 +22,23 @@ class PackageModelTest(WebsiteTestBase):
         self.assertTrue(updated)
         self.assertEquals(package.version, 'hello')
         self.assertIsNotNone(package.pypi_updated)
+
+    def test_get_pypi_request(self):
+        package = PackageFactory.create()
+        pypi_url = package.get_pypi_json_url()
+        with patch.object(requests, 'get') as get_request:
+            response = package._get_pypi_request()
+            get_request.assert_called_once_with(pypi_url)
+
+    def test_get_model_name(self):
+        package = PackageFactory.create()
+        expected_name = "package"
+        self.assertEqual(expected_name, package.get_model_name())
+
+    def test_get_pypi_badge_url(self):
+        package = PackageFactory.create(name="rapidsms")
+        expected_url = 'https://pypip.in/v/rapidsms/badge.png'
+        self.assertEqual(expected_url, package.get_pypi_badge_url())
 
     def test_update_from_pypi_200_release_date(self):
         package = PackageFactory.create()

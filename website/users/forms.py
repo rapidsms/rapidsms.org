@@ -64,13 +64,14 @@ class UserEditForm(UserChangeForm):
         super(UserEditForm, self).__init__(*args, **kwargs)
         self.fields.pop('password', None)
 
+    # TODO: change validation error to string or add a error_messages dict at
+    # __init__
     def clean_password2(self):
         """Require that passwords match."""
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError(
-                    self.error_messages['password_mismatch'])
+            raise forms.ValidationError(u"Verify that both passwords match.")
         return password2
 
 

@@ -10,8 +10,6 @@ class MockPyPIRequest(object):
         self.json_data = json_data
 
     def json(self):
-        if self.status_code != 200:
-            raise Exception("Can't get JSON data from a non-200 response.")
         return {
             'info': {
                 'maintainer': self.json_data.get('maintainer', ''),

@@ -9,6 +9,10 @@ __all__ = ['ProjectModelTest']
 
 class ProjectModelTest(WebsiteTestBase):
 
+    def test_unicode(self):
+        project = ProjectFactory.create(name="rapidsms")
+        self.assertEqual(project.name, project.__unicode__())
+
     def test_display_countries_empty(self):
         project = ProjectFactory.create()
         self.assertEqual(project.display_countries(), '')
@@ -26,3 +30,17 @@ class ProjectModelTest(WebsiteTestBase):
         project.countries.add(ca)
         formatted = '%s, %s, and %s' % (ca.name, cn.name, us.name)
         self.assertEqual(project.display_countries(), formatted)
+
+    def test_get_model_name(self):
+        project = ProjectFactory.create(name="rapidsms")
+        self.assertEqual(project.get_model_name(), 'project')
+
+    def test_get_delete_url(self):
+        expected = '/projects/d/rapidsms/delete/'
+        project = ProjectFactory.create(name="rapidsms")
+        self.assertEqual(project.get_delete_url(), expected)
+
+    def test_get_edit_url(self):
+        expected = '/projects/d/rapidsms/edit/'
+        project = ProjectFactory.create(name="rapidsms")
+        self.assertEqual(project.get_edit_url(), expected)

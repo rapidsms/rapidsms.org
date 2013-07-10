@@ -1,5 +1,3 @@
-import factory
-
 from django.test import TestCase
 
 from ..models import User
@@ -61,3 +59,26 @@ class UserTestCase(TestCase):
         self.user.user_type = User.ORGANIZATION
         self.user.save()
         self.assertIn(User.USER_TYPES[User.ORGANIZATION], str(self.user))
+
+    def test_user_unicode(self):
+        """Test unicode representation for a user as an individual."""
+        self.user.user_type = User.INDIVIDUAL
+        self.user.save()
+        self.assertEqual(self.user.get_full_name(), self.user.__unicode__())
+
+    def test_get_absolute_url(self):
+        """Test get_absolute_url for user"""
+        expected = '/users/d/{pk}/'.format(pk=self.user.id)
+        self.assertEqual(expected, self.user.get_absolute_url())
+
+    def test_get_edit_url(self):
+        """Test get_edit_url for user"""
+        expected = '/users/d/{pk}/edit/'.format(pk=self.user.id)
+        self.assertEqual(expected, self.user.get_edit_url())
+
+    def test_get_short_name(self):
+        "Test that get_short_name and get_full_name methods return the same"
+        self.assertEqual(self.user.get_short_name(), self.user.get_full_name())
+
+    def test_get_model_name(self):
+        self.assertEqual(self.user.get_model_name(), 'user')

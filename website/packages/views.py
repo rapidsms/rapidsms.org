@@ -83,15 +83,11 @@ class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin,
     def form_valid(self, form):
         self.object.is_flagged = True
         self.object.save(update_fields=['is_flagged'])
-        sent = self.send_flag_email(form)
-        if sent:
-            messages.success(self.request, 'Thanks for flagging {0}. We have '
-                    'notified the administrators and they will review this '
-                    'package shortly.'.format(self.object))
-        else:
-            messages.error(self.request, 'Sorry, an error occurred while '
-                    'sending the flag email to administrators. Please try '
-                    'again later.')
+        self.send_flag_email(form)
+        # email is sent async, no time to wait for the response
+        messages.success(self.request, 'Thanks for flagging {0}. We have '
+            'notified the administrators and they will review this '
+            'package shortly.'.format(self.object))
         return super(PackageFlag, self).form_valid(form)
 
 

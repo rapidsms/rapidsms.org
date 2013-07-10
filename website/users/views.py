@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import redirect
-from django.views.generic import DetailView, UpdateView, FormView, ListView
+from django.views.generic import DetailView, UpdateView, FormView
 
 from allaccess.models import AccountAccess
 from allaccess.views import OAuthRedirect, OAuthCallback
