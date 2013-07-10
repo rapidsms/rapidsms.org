@@ -9,6 +9,7 @@ from django.template.defaultfilters import slugify
 from django.utils import timezone
 
 from website.users.models import User
+from .managers import PackageManager
 
 
 PYPI_BADGE_URL = 'https://pypip.in/v/{0}/badge.png'
@@ -73,6 +74,7 @@ class Package(models.Model):
     home_url = models.URLField('Home Page', null=True, blank=True,
             help_text="The project's home page, e.g. "
             "<a href='http://rapidsms.org'>http://rapidsms.org</a>.")
+    objects = PackageManager()
 
     class Meta:
         ordering = ['-release_date', '-updated']

@@ -1,11 +1,12 @@
+import datetime
 import mock
 
 from django.core import mail
 from django.conf import settings
+from django.utils import timezone
 
 from website.tests.base import ViewTestMixin, WebsiteTestBase
 from website.users.tests.factories import UserFactory
-
 from ..models import Package
 from .base import MockPyPIRequest
 from .factories import PackageFactory
@@ -231,11 +232,62 @@ class TestPackageRefreshView(PackageViewTestBase):
         self.assertRedirectsToLogin(response)
 
     def test_refresh(self):
+        # Packages get a initial pypi_updated time stamp at creation time
+        # our package factory doesn't do. To account for that, i will set
+        # one manually. This is needed for this tests to execute. Only
+        # packages with a pypi_updated timestamp can be refreshed.
+
+        # Package last updated 2 minutes ago. It should update again.
+        self.package.pypi_updated = (
+            timezone.now() - datetime.timedelta(minutes=2)
+        )
+        self.package.save()
         response = self._post()
         self.assertRedirectsNoFollow(response, self.package.get_edit_url())
         # TODO: check that PyPI was called and data was updated.
+        # Package should be updated with mock object.
+        updated_packge = Package.objects.get(pk=self.package.id)
+        self.assertNotEqual(self.package.pypi_json, updated_packge.pypi_json)
 
     def test_refresh_failure(self):
+        # Packages get a initial pypi_updated time stamp at creation time
+        # our package factory doesn't do. To account for that, i will set
+        # one manually. This is needed for this tests to execute. Only
+        # packages with a pypi_updated timestamp can be refreshed.
+
+        # Package last updated 2 minutes ago. It should not update again.
+        self.package.pypi_updated = (
+            timezone.now() - datetime.timedelta(minutes=2)
+        )
+        self.package.save()
         response = self._post(mock_status_code=500)
         self.assertRedirectsNoFollow(response, self.package.get_edit_url())
+        # Package should not be updated.
         # TODO: check that data was NOT updated.
+        no_updated_packge = Package.objects.get(pk=self.package.id)
+        self.assertEqual(
+            self.package.pypi_updated,
+            no_updated_packge.pypi_updated
+        )
+
+    def test_refresh_rate_limit(self):
+        """ Packages can only be updated once every minute. """
+        # Packages get a initial pypi_updated time stamp at creation time
+        # our package factory doesn't do. To account for that, i will set
+        # one manually. This is needed for this tests to execute. Only
+        # packages with a pypi_updated timestamp can be refreshed.
+
+        # Package last updated 30 secs ago. It should not update again.
+        self.package.pypi_updated = (
+            timezone.now() - datetime.timedelta(seconds=30)
+        )
+        self.package.save()
+        response = self._post(mock_status_code=500)
+        self.assertRedirectsNoFollow(response, self.package.get_edit_url())
+        # Package should not be updated.
+        # TODO: check that data was NOT updated.
+        no_updated_packge = Package.objects.get(pk=self.package.id)
+        self.assertEqual(
+            self.package.pypi_updated,
+            no_updated_packge.pypi_updated
+        )
