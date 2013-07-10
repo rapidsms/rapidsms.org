@@ -1,6 +1,9 @@
+import datetime
+
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
+from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView,\
         FormView, View
 from django.views.generic.detail import SingleObjectMixin
@@ -8,6 +11,8 @@ from django.views.generic.detail import SingleObjectMixin
 from ..mixins import AuthorEditMixin, IsActiveObjectMixin, LoginRequiredMixin
 from .forms import PackageCreateEditForm, PackageFlagForm
 from .models import Package
+from .tasks import update_package
+from .tasks import send_email
 
 
 class PackageCreate(LoginRequiredMixin, CreateView):
@@ -52,7 +57,6 @@ class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin,
     def send_flag_email(self, form):
         # TODO: Make it a Celery task.
 
-        from django.core.mail import send_mail
         from django.template import Context, loader
         from django.conf import settings
 
@@ -72,7 +76,8 @@ class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin,
         subject = loader.render_to_string(subject_template, context)
         subject = ''.join(subject.splitlines())
         body_text = loader.render_to_string(body_text_template, context)
-        send_mail(
+        #sending email is delegated to celery
+        send_email(
             subject=subject,
             message=body_text,
             from_email=settings.DEFAULT_FROM_EMAIL,
@@ -101,20 +106,23 @@ class PackageRefresh(LoginRequiredMixin, IsActiveObjectMixin,
     model = Package
     http_method_names = ['post']
 
-    def refresh_package(self):
+    @staticmethod
+    def refresh_package(package):
         # TODO: Make it a Celery task.
         # Shouldn't execute more than once every minute or so.
-        self.object = self.get_object()
-        return self.object.update_from_pypi()
+        # Package update is delegated to celery.
+        update_package(package)
 
     def post(self, request, *args, **kwargs):
-        updated = self.refresh_package()
-        if updated:
-            self.object.save()
-            messages.success(self.request, 'The PyPI information for this '
-                    'package has been updated.')
+        package = self.get_object()
+        now = timezone.now()
+        last_updated = package.pypi_updated
+        needs_update = (now - last_updated > datetime.timedelta(minutes=1))
+        if needs_update:
+            self.refresh_package(package)
+            messages.success(self.request, 'Your package will be '
+                'updated shortly.')
         else:
-            messages.error(request, 'Sorry, an error occurred while '
-                    'updating the information for this package from PyPI. '
-                    'Please try again later.')
-        return redirect(self.object.get_edit_url())
+            messages.error(request, 'Your package can only be updated once '
+                'every minute.')
+        return redirect(package.get_edit_url())
