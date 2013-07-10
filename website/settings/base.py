@@ -223,8 +223,6 @@ SOUTH_MIGRATION_MODULES = {
     'allaccess': 'ignore',
 }
 
-RAPIDSMS_VERSION = '0.14.0'
-
 DEFAULT_FROM_EMAIL = 'no-reply@rapidsms.org'
 
 # PubSubHubbub settings
