@@ -41,7 +41,17 @@ ALLOWED_HOSTS = ('*',)
 GITHUB_KEY = os.environ['GITHUB_KEY']
 GITHUB_SECRET = os.environ['GITHUB_SECRET']
 SUPERFEEDR_CREDS = (os.environ['SUPERFEEDR_USER'], os.environ['SUPERFEEDR_PWD'])
-BROKER_URL = 'amqp://website:%s@127.0.0.1:5672/website_staging' % os.environ['BROKER_PASSWORD']
 PUSH_SSL_CALLBACK = True
 
 FLAG_EMAIL_ALERTS = ['rapidsms-team@caktusgroup.com']
+
+#celery settings
+import djcelery
+djcelery.setup_loader()
+BROKER_URL = 'amqp://website:%s@127.0.0.1:5672/website_staging' % os.environ['BROKER_PASSWORD']
+CELERYBEAT_SCHEDULE = {
+    'update-packages-every-hour': {
+        'task': 'website.packages.update_packages',
+        'schedule': timedelta(hours=1),
+    },
+}

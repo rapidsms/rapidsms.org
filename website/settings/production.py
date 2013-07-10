@@ -12,4 +12,13 @@ MEDIA_ROOT = os.path.join(PUBLIC_ROOT, 'media')
 
 EMAIL_SUBJECT_PREFIX = '[Website Prod] '
 
+#celery settings
+import djcelery
+djcelery.setup_loader()
 BROKER_URL = 'amqp://website:%s@127.0.0.1:5672/website_production' % os.environ['BROKER_PASSWORD']
+CELERYBEAT_SCHEDULE = {
+    'update-packages-every-hour': {
+        'task': 'website.packages.update_packages',
+        'schedule': timedelta(hours=1),
+    },
+}
