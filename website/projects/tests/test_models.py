@@ -18,9 +18,9 @@ class ProjectModelTest(WebsiteTestBase):
         self.assertEqual(project.display_countries(), '')
 
     def test_display_countries(self):
-        us = Country.objects.get(code='US')
-        cn = Country.objects.get(code='CN')
-        ca = Country.objects.get(code='CA')
+        us = Country.objects.get(code='USA')
+        cn = Country.objects.get(code='CHN')
+        ca = Country.objects.get(code='CAN')
         project = ProjectFactory.create()
         project.countries.add(us)
         self.assertEqual(project.display_countries(), us.name)

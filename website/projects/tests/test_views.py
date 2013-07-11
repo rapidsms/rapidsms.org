@@ -31,13 +31,13 @@ class TestProjectCreateView(ViewTestMixin, WebsiteTestBase):
 
     def test_create(self):
         self.login_user(UserFactory.create())
-        us = Country.objects.get(code='US')
+        us = Country.objects.get(code='USA')
         pkg = PackageFactory.create()
         response = self._post(data={
             'name': 'test-project',
             'description': 'Description',
             'tags': 'Tag',
-            'countries_1': ['US'],
+            'countries_1': [us.pk],
             'packages_1': [pkg.pk],
 
         })

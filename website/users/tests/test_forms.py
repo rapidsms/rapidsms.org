@@ -113,10 +113,10 @@ class UserEditFormTest(TestCase):
 
     def test_country_validate_select(self):
         "Test that a valid selection from the django-select widget validates"
-        us = Country.objects.get(name="United States")
+        us = Country.objects.get(name="United States of America")
         data = self._get_valid_data()
         data.update(
-            {"country_1": "US", "country_0": "United States", }
+            {"country_1": us.pk, "country_0": "United States of America", }
         )
         form = self.form(data=data, instance=self.user)
 #        import pdb; pdb.set_trace();
@@ -125,10 +125,10 @@ class UserEditFormTest(TestCase):
 
     def test_country_validate_manual(self):
         "Test that a valid manually entered country name validates"
-        us = Country.objects.get(name="United States")
+        us = Country.objects.get(name="United States of America")
         data = self._get_valid_data()
         data.update(
-            {"country_0": "united states", }
+            {"country_0": "united states of america", }
         )
         form = self.form(data=data, instance=self.user)
 #        import pdb; pdb.set_trace();
@@ -204,10 +204,10 @@ class UserRegistrationFormTest(TestCase):
 
     def test_country_validate_select(self):
         "Test that a valid selection from the django-select widget validates"
-        us = Country.objects.get(name="United States")
+        us = Country.objects.get(name="United States of America")
         data = self._get_valid_data()
         data.update(
-            {"country_1": "US", "country_0": "United States", }
+            {"country_1": us.pk, "country_0": "United States of America", }
         )
         form = self.form(data=data)
 #        import pdb; pdb.set_trace();
@@ -216,10 +216,10 @@ class UserRegistrationFormTest(TestCase):
 
     def test_country_validate_manual(self):
         "Test that a valid manually entered country name validates"
-        us = Country.objects.get(name="United States")
+        us = Country.objects.get(name="United States of America")
         data = self._get_valid_data()
         data.update(
-            {"country_0": "united states", }
+            {"country_0": "united states of america", }
         )
         form = self.form(data=data)
 #        import pdb; pdb.set_trace();
