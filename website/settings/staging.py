@@ -1,5 +1,7 @@
 from website.settings.base import *
 
+from datetime import timedelta
+
 import os
 
 DEBUG = False

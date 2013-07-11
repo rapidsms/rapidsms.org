@@ -34,6 +34,9 @@ class ProjectAdmin(admin.ModelAdmin):
         ),
     )
 
+class CountryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'code')
+
 
 admin.site.register(Project, ProjectAdmin)
-admin.site.register(Country)
+admin.site.register(Country, CountryAdmin)
