@@ -6,6 +6,7 @@ from django.utils.safestring import mark_safe
 from selectable.forms import AutoCompleteSelectField
 
 from ..projects.lookups import CountryLookup
+from ..projects.models import Country
 from .models import User
 
 
@@ -64,6 +65,26 @@ class UserEditForm(UserChangeForm):
         super(UserEditForm, self).__init__(*args, **kwargs)
         self.fields.pop('password', None)
 
+    def clean_country(self):
+        """ Validate country selected
+
+            django-selectable allows for non-validated data to be submitted
+            without raising a ValidationError. This method verifies that a
+            country exists when inputed manually.
+
+        """
+        country = self.cleaned_data["country"]
+        user_input = self.data.get('country_0', None)
+        if user_input and not country:
+            # If a user inputs the name of country manually (instead of
+            # selecting it from django-select's drop-down menu, existance of
+            # the country needs to be verified.
+            try:
+                country = Country.objects.get(name__iexact=user_input)
+            except Country.DoesNotExist:
+                raise forms.ValidationError("Please select a valid country.")
+        return country
+
     # TODO: change validation error to string or add a error_messages dict at
     # __init__
     def clean_password2(self):
@@ -99,3 +120,24 @@ class UserRegistrationForm(UserCreationForm):
         fields = ('user_type', 'name', 'location', 'country', 'email',
                 'website_url', 'github_url', 'gravatar_email', 'avatar',
                 'for_hire')
+
+    def clean_country(self):
+        """ Validate country selected
+
+
+            django-selectable allows for non-validated data to be submitted
+            without raising a ValidationError. This method verifies that a
+            country exists when inputed manually.
+
+        """
+        country = self.cleaned_data.get("country")
+        user_input = self.data.get('country_0')
+        if user_input and not country:
+            # If a user inputs the name of country manually (instead of
+            # selecting it from the django-select's drop-down menu, existance of
+            # the country needs to be verified.
+            try:
+                country = Country.objects.get(name__iexact=user_input)
+            except Country.DoesNotExist:
+                raise forms.ValidationError("Please select a valid country.")
+        return country
