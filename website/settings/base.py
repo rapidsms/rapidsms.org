@@ -147,7 +147,6 @@ INSTALLED_APPS = (
     'south',
     'compressor',
     'scribbler',
-    'django_countries',
     'allaccess',
     'widget_tweaks',
     'haystack',

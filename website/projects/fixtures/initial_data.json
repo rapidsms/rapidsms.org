@@ -1,0 +1,1394 @@
+[
+{
+    "pk": 1, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "AGO", 
+        "name": "Angola"
+    }
+},
+{
+    "pk": 2, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "DZA", 
+        "name": "Algeria"
+    }
+},
+{
+    "pk": 3, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "EGY", 
+        "name": "Egypt"
+    }
+},
+{
+    "pk": 4, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BGD", 
+        "name": "Bangladesh"
+    }
+},
+{
+    "pk": 5, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "QAT", 
+        "name": "Qatar"
+    }
+},
+{
+    "pk": 6, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "NAM", 
+        "name": "Namibia"
+    }
+},
+{
+    "pk": 7, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BGR", 
+        "name": "Bulgaria"
+    }
+},
+{
+    "pk": 8, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BOL", 
+        "name": "Bolivia"
+    }
+},
+{
+    "pk": 9, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "GHA", 
+        "name": "Ghana"
+    }
+},
+{
+    "pk": 10, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "PAK", 
+        "name": "Pakistan"
+    }
+},
+{
+    "pk": 11, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "PAN", 
+        "name": "Panama"
+    }
+},
+{
+    "pk": 12, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "JOR", 
+        "name": "Jordan"
+    }
+},
+{
+    "pk": 13, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "LBR", 
+        "name": "Liberia"
+    }
+},
+{
+    "pk": 14, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "LBY", 
+        "name": "Libya"
+    }
+},
+{
+    "pk": 15, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "MYS", 
+        "name": "Malaysia"
+    }
+},
+{
+    "pk": 16, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "DOM", 
+        "name": "Dominican Republic"
+    }
+},
+{
+    "pk": 17, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "PRI", 
+        "name": "Puerto Rico"
+    }
+},
+{
+    "pk": 18, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "PRK", 
+        "name": "North Korea"
+    }
+},
+{
+    "pk": 19, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "TZA", 
+        "name": "United Republic of Tanzania"
+    }
+},
+{
+    "pk": 20, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BWA", 
+        "name": "Botswana"
+    }
+},
+{
+    "pk": 21, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "KHM", 
+        "name": "Cambodia"
+    }
+},
+{
+    "pk": 22, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "PRY", 
+        "name": "Paraguay"
+    }
+},
+{
+    "pk": 23, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SAU", 
+        "name": "Saudi Arabia"
+    }
+},
+{
+    "pk": 24, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "LBN", 
+        "name": "Lebanon"
+    }
+},
+{
+    "pk": 25, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SVN", 
+        "name": "Slovenia"
+    }
+},
+{
+    "pk": 26, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BFA", 
+        "name": "Burkina Faso"
+    }
+},
+{
+    "pk": 27, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "CHE", 
+        "name": "Switzerland"
+    }
+},
+{
+    "pk": 28, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "MRT", 
+        "name": "Mauritania"
+    }
+},
+{
+    "pk": 29, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "HRV", 
+        "name": "Croatia"
+    }
+},
+{
+    "pk": 30, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "CHL", 
+        "name": "Chile"
+    }
+},
+{
+    "pk": 31, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "CHN", 
+        "name": "China"
+    }
+},
+{
+    "pk": 32, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "JAM", 
+        "name": "Jamaica"
+    }
+},
+{
+    "pk": 33, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "DJI", 
+        "name": "Djibouti"
+    }
+},
+{
+    "pk": 34, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "GIN", 
+        "name": "Guinea"
+    }
+},
+{
+    "pk": 35, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "FIN", 
+        "name": "Finland"
+    }
+},
+{
+    "pk": 36, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "URY", 
+        "name": "Uruguay"
+    }
+},
+{
+    "pk": 37, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "THA", 
+        "name": "Thailand"
+    }
+},
+{
+    "pk": 38, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "NPL", 
+        "name": "Nepal"
+    }
+},
+{
+    "pk": 39, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "LAO", 
+        "name": "Laos"
+    }
+},
+{
+    "pk": 40, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "YEM", 
+        "name": "Yemen"
+    }
+},
+{
+    "pk": 41, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "PHL", 
+        "name": "Philippines"
+    }
+},
+{
+    "pk": 42, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ZAF", 
+        "name": "South Africa"
+    }
+},
+{
+    "pk": 43, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "NIC", 
+        "name": "Nicaragua"
+    }
+},
+{
+    "pk": 44, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ROU", 
+        "name": "Romania"
+    }
+},
+{
+    "pk": 45, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SYR", 
+        "name": "Syria"
+    }
+},
+{
+    "pk": 46, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "KAZ", 
+        "name": "Kazakhstan"
+    }
+},
+{
+    "pk": 47, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SUR", 
+        "name": "Suriname"
+    }
+},
+{
+    "pk": 48, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BEN", 
+        "name": "Benin"
+    }
+},
+{
+    "pk": 49, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "NGA", 
+        "name": "Nigeria"
+    }
+},
+{
+    "pk": 50, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BEL", 
+        "name": "Belgium"
+    }
+},
+{
+    "pk": 51, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "TGO", 
+        "name": "Togo"
+    }
+},
+{
+    "pk": 52, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "DEU", 
+        "name": "Germany"
+    }
+},
+{
+    "pk": 53, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "LKA", 
+        "name": "Sri Lanka"
+    }
+},
+{
+    "pk": 54, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "FLK", 
+        "name": "Falkland Islands"
+    }
+},
+{
+    "pk": 55, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "GBR", 
+        "name": "United Kingdom"
+    }
+},
+{
+    "pk": 56, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "GUY", 
+        "name": "Guyana"
+    }
+},
+{
+    "pk": 57, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "CRI", 
+        "name": "Costa Rica"
+    }
+},
+{
+    "pk": 58, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "CMR", 
+        "name": "Cameroon"
+    }
+},
+{
+    "pk": 59, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "MAR", 
+        "name": "Morocco"
+    }
+},
+{
+    "pk": 60, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "LSO", 
+        "name": "Lesotho"
+    }
+},
+{
+    "pk": 61, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "HUN", 
+        "name": "Hungary"
+    }
+},
+{
+    "pk": 62, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "TKM", 
+        "name": "Turkmenistan"
+    }
+},
+{
+    "pk": 63, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "TTO", 
+        "name": "Trinidad and Tobago"
+    }
+},
+{
+    "pk": 64, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "NLD", 
+        "name": "Netherlands"
+    }
+},
+{
+    "pk": 65, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "TCD", 
+        "name": "Chad"
+    }
+},
+{
+    "pk": 66, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "GEO", 
+        "name": "Georgia"
+    }
+},
+{
+    "pk": 67, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "MNE", 
+        "name": "Montenegro"
+    }
+},
+{
+    "pk": 68, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "MNG", 
+        "name": "Mongolia"
+    }
+},
+{
+    "pk": 69, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "-99", 
+        "name": "Somaliland"
+    }
+},
+{
+    "pk": 70, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BLZ", 
+        "name": "Belize"
+    }
+},
+{
+    "pk": 71, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "MMR", 
+        "name": "Myanmar"
+    }
+},
+{
+    "pk": 72, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "AFG", 
+        "name": "Afghanistan"
+    }
+},
+{
+    "pk": 73, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BDI", 
+        "name": "Burundi"
+    }
+},
+{
+    "pk": 74, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BLR", 
+        "name": "Belarus"
+    }
+},
+{
+    "pk": 75, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "GRC", 
+        "name": "Greece"
+    }
+},
+{
+    "pk": 76, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "GRL", 
+        "name": "Greenland"
+    }
+},
+{
+    "pk": 77, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ZWE", 
+        "name": "Zimbabwe"
+    }
+},
+{
+    "pk": 78, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "MOZ", 
+        "name": "Mozambique"
+    }
+},
+{
+    "pk": 79, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "TJK", 
+        "name": "Tajikistan"
+    }
+},
+{
+    "pk": 80, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "HTI", 
+        "name": "Haiti"
+    }
+},
+{
+    "pk": 81, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "PSE", 
+        "name": "West Bank"
+    }
+},
+{
+    "pk": 82, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "IND", 
+        "name": "India"
+    }
+},
+{
+    "pk": 83, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "LVA", 
+        "name": "Latvia"
+    }
+},
+{
+    "pk": 84, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BTN", 
+        "name": "Bhutan"
+    }
+},
+{
+    "pk": 85, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "VNM", 
+        "name": "Vietnam"
+    }
+},
+{
+    "pk": 86, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "NOR", 
+        "name": "Norway"
+    }
+},
+{
+    "pk": 87, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "CZE", 
+        "name": "Czech Republic"
+    }
+},
+{
+    "pk": 88, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ATF", 
+        "name": "French Southern and Antarctic Lands"
+    }
+},
+{
+    "pk": 89, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "FJI", 
+        "name": "Fiji"
+    }
+},
+{
+    "pk": 90, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "HND", 
+        "name": "Honduras"
+    }
+},
+{
+    "pk": 91, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ATA", 
+        "name": "Antarctica"
+    }
+},
+{
+    "pk": 92, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "LUX", 
+        "name": "Luxembourg"
+    }
+},
+{
+    "pk": 93, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ISR", 
+        "name": "Israel"
+    }
+},
+{
+    "pk": 94, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "PER", 
+        "name": "Peru"
+    }
+},
+{
+    "pk": 95, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "IDN", 
+        "name": "Indonesia"
+    }
+},
+{
+    "pk": 96, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "VUT", 
+        "name": "Vanuatu"
+    }
+},
+{
+    "pk": 97, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "MKD", 
+        "name": "Macedonia"
+    }
+},
+{
+    "pk": 98, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "COD", 
+        "name": "Democratic Republic of the Congo"
+    }
+},
+{
+    "pk": 99, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "COG", 
+        "name": "Republic of the Congo"
+    }
+},
+{
+    "pk": 100, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ISL", 
+        "name": "Iceland"
+    }
+},
+{
+    "pk": 101, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ETH", 
+        "name": "Ethiopia"
+    }
+},
+{
+    "pk": 102, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "NER", 
+        "name": "Niger"
+    }
+},
+{
+    "pk": 103, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "COL", 
+        "name": "Colombia"
+    }
+},
+{
+    "pk": 104, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "PRT", 
+        "name": "Portugal"
+    }
+},
+{
+    "pk": 105, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "MDA", 
+        "name": "Moldova"
+    }
+},
+{
+    "pk": 106, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "MDG", 
+        "name": "Madagascar"
+    }
+},
+{
+    "pk": 107, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ECU", 
+        "name": "Ecuador"
+    }
+},
+{
+    "pk": 108, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SEN", 
+        "name": "Senegal"
+    }
+},
+{
+    "pk": 109, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SRB", 
+        "name": "Republic of Serbia"
+    }
+},
+{
+    "pk": 110, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "FRA", 
+        "name": "France"
+    }
+},
+{
+    "pk": 111, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "LTU", 
+        "name": "Lithuania"
+    }
+},
+{
+    "pk": 112, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "RWA", 
+        "name": "Rwanda"
+    }
+},
+{
+    "pk": 113, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ZMB", 
+        "name": "Zambia"
+    }
+},
+{
+    "pk": 114, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "GMB", 
+        "name": "Gambia"
+    }
+},
+{
+    "pk": 115, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "GTM", 
+        "name": "Guatemala"
+    }
+},
+{
+    "pk": 116, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "DNK", 
+        "name": "Denmark"
+    }
+},
+{
+    "pk": 117, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "UKR", 
+        "name": "Ukraine"
+    }
+},
+{
+    "pk": 118, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "AUS", 
+        "name": "Australia"
+    }
+},
+{
+    "pk": 119, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "AUT", 
+        "name": "Austria"
+    }
+},
+{
+    "pk": 120, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "VEN", 
+        "name": "Venezuela"
+    }
+},
+{
+    "pk": 121, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "KEN", 
+        "name": "Kenya"
+    }
+},
+{
+    "pk": 122, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "TUR", 
+        "name": "Turkey"
+    }
+},
+{
+    "pk": 123, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SDS", 
+        "name": "South Sudan"
+    }
+},
+{
+    "pk": 124, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ALB", 
+        "name": "Albania"
+    }
+},
+{
+    "pk": 125, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "OMN", 
+        "name": "Oman"
+    }
+},
+{
+    "pk": 126, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ITA", 
+        "name": "Italy"
+    }
+},
+{
+    "pk": 127, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BRN", 
+        "name": "Brunei"
+    }
+},
+{
+    "pk": 128, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "TUN", 
+        "name": "Tunisia"
+    }
+},
+{
+    "pk": 129, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "RUS", 
+        "name": "Russia"
+    }
+},
+{
+    "pk": 130, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "MEX", 
+        "name": "Mexico"
+    }
+},
+{
+    "pk": 131, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BRA", 
+        "name": "Brazil"
+    }
+},
+{
+    "pk": 132, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "CIV", 
+        "name": "Ivory Coast"
+    }
+},
+{
+    "pk": 133, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "TLS", 
+        "name": "East Timor"
+    }
+},
+{
+    "pk": 134, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "GNQ", 
+        "name": "Equatorial Guinea"
+    }
+},
+{
+    "pk": 135, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "USA", 
+        "name": "United States of America"
+    }
+},
+{
+    "pk": 136, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SWE", 
+        "name": "Sweden"
+    }
+},
+{
+    "pk": 137, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "AZE", 
+        "name": "Azerbaijan"
+    }
+},
+{
+    "pk": 138, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "GNB", 
+        "name": "Guinea Bissau"
+    }
+},
+{
+    "pk": 139, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SWZ", 
+        "name": "Swaziland"
+    }
+},
+{
+    "pk": 140, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "CAN", 
+        "name": "Canada"
+    }
+},
+{
+    "pk": 141, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "KOR", 
+        "name": "South Korea"
+    }
+},
+{
+    "pk": 142, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "CAF", 
+        "name": "Central African Republic"
+    }
+},
+{
+    "pk": 143, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SVK", 
+        "name": "Slovakia"
+    }
+},
+{
+    "pk": 144, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "CYP", 
+        "name": "Cyprus"
+    }
+},
+{
+    "pk": 145, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BIH", 
+        "name": "Bosnia and Herzegovina"
+    }
+},
+{
+    "pk": 146, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "TWN", 
+        "name": "Taiwan"
+    }
+},
+{
+    "pk": 147, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SOM", 
+        "name": "Somalia"
+    }
+},
+{
+    "pk": 148, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "UZB", 
+        "name": "Uzbekistan"
+    }
+},
+{
+    "pk": 149, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ERI", 
+        "name": "Eritrea"
+    }
+},
+{
+    "pk": 150, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "POL", 
+        "name": "Poland"
+    }
+},
+{
+    "pk": 151, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "KWT", 
+        "name": "Kuwait"
+    }
+},
+{
+    "pk": 152, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "GAB", 
+        "name": "Gabon"
+    }
+},
+{
+    "pk": 153, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "EST", 
+        "name": "Estonia"
+    }
+},
+{
+    "pk": 154, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "MWI", 
+        "name": "Malawi"
+    }
+},
+{
+    "pk": 155, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ESP", 
+        "name": "Spain"
+    }
+},
+{
+    "pk": 156, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "IRQ", 
+        "name": "Iraq"
+    }
+},
+{
+    "pk": 157, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SLV", 
+        "name": "El Salvador"
+    }
+},
+{
+    "pk": 158, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "MLI", 
+        "name": "Mali"
+    }
+},
+{
+    "pk": 159, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "IRL", 
+        "name": "Ireland"
+    }
+},
+{
+    "pk": 160, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "IRN", 
+        "name": "Iran"
+    }
+},
+{
+    "pk": 161, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SLE", 
+        "name": "Sierra Leone"
+    }
+},
+{
+    "pk": 162, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SDN", 
+        "name": "Sudan"
+    }
+},
+{
+    "pk": 163, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "SLB", 
+        "name": "Solomon Islands"
+    }
+},
+{
+    "pk": 164, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "NZL", 
+        "name": "New Zealand"
+    }
+},
+{
+    "pk": 165, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "JPN", 
+        "name": "Japan"
+    }
+},
+{
+    "pk": 166, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "KGZ", 
+        "name": "Kyrgyzstan"
+    }
+},
+{
+    "pk": 167, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "UGA", 
+        "name": "Uganda"
+    }
+},
+{
+    "pk": 168, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "NCL", 
+        "name": "New Caledonia"
+    }
+},
+{
+    "pk": 169, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ARE", 
+        "name": "United Arab Emirates"
+    }
+},
+{
+    "pk": 170, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ARG", 
+        "name": "Argentina"
+    }
+},
+{
+    "pk": 171, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "BHS", 
+        "name": "The Bahamas"
+    }
+},
+{
+    "pk": 172, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "ARM", 
+        "name": "Armenia"
+    }
+},
+{
+    "pk": 173, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "PNG", 
+        "name": "Papua New Guinea"
+    }
+},
+{
+    "pk": 174, 
+    "model": "projects.country", 
+    "fields": {
+        "code": "CUB", 
+        "name": "Cuba"
+    }
+}
+]
