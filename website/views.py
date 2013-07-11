@@ -24,9 +24,13 @@ class Home(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Home, self).get_context_data(**kwargs)
         map_data = {}
+        # TODO: refactor the logic to get N project per country
+        # Add Caching!
         projects = Project.objects.all()
         for project in projects:
-            data  = {'name': project.name, 'description': project.description}
+            data = {'name': project.name,
+                     'description': project.description,
+                     'fillKey': 'project',}
             for country in project.countries.all():
                 map_data[country.code] = data
         context.update({
