@@ -3,16 +3,23 @@ from django.contrib import admin
 from .models import Country, Project
 
 
+def publish_projects(modeladmin, request, queryset):
+    """Set project status to published"""
+    queryset.update(status=Project.PUBLISHED)
+publish_projects.short_description = "Publish projects"
+
+
 class ProjectAdmin(admin.ModelAdmin):
+    actions = [publish_projects, ]
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ('name', 'updated', 'is_active')
-    list_filter = ('is_active',)
+    list_display = ('name', 'updated', 'status')
+    list_filter = ('status',)
     readonly_fields = ('created', 'updated')
     filter_horizontal = ('countries',)
     fieldsets = (
         (None,
             {'fields': ('created', 'updated', 'creator', 'name', 'slug',
-                    'status', 'is_active')},
+                    'status')},
         ),
         ('Project Information',
             {'fields': ('started', 'countries', 'description', 'challenges',

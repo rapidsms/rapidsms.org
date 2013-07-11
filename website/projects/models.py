@@ -27,7 +27,7 @@ class Project(models.Model):
     DENIED = 'DN'
     STATUS = (
         (DRAFT, 'Draft'),
-        (NEEDS_REVIEW, 'Needs Review'),
+        (NEEDS_REVIEW, 'Review'),
         (PUBLISHED, 'Published'),
         (DENIED, 'Denied'),
     )
@@ -37,8 +37,8 @@ class Project(models.Model):
             "author.")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    # status = models.CharField(default=DRAFT, max_length=1, choices=STATUS)
-    is_active = models.BooleanField('Active', default=True)
+    status = models.CharField(default=DRAFT, max_length=1, choices=STATUS)
+    is_active = models.BooleanField('Active', default=False)
 
     collaborators = models.ManyToManyField(User, related_name='projects',
             help_text="Users who have permission to edit this project.")
@@ -61,7 +61,7 @@ class Project(models.Model):
             'to the public code repository for this project.')
     tags = TaggableManager(verbose_name="Taxonomy")
     packages = models.ManyToManyField(Package, blank=True, null=True)
-    # script = models.TextField(help_text="JS/JSON blob", blank=True)
+    script = models.TextField(help_text="JS/JSON blob", blank=True)
 
     class Meta:
         ordering = ['-updated']
@@ -103,4 +103,6 @@ class Project(models.Model):
         if not self.id:
             # Newly created object, so set slug
             self.slug = slugify(self.name)
+        if self.status == PUBLISHED:
+            self.is_active = True
         super(Project, self).save(*args, **kwargs)

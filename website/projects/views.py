@@ -42,10 +42,11 @@ class ProjectReviewRequest(LoginRequiredMixin, IsActiveObjectMixin,
     http_method_names = ['post', ]
     model = Project
 
-    def get_redirect_url(self):
+    def get_redirect_url(self, *args, **kargs):
         """ Return absolute url for current instance """
         project = self.get_object()
-        return project.get_absolute_url()
+        url = project.get_absolute_url()
+        return url
 
     def post(self, request, *args, **kwargs):
         # import pdb; pdb.set_trace()
