@@ -3,58 +3,24 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
-from django.utils import timezone
 
 
 class Migration(SchemaMigration):
+    depends_on = (
+        ("website.projects", "0001_initial"),
+    )
 
     def forwards(self, orm):
-        # Adding field 'Package.creator'
-        db.add_column(u'packages_package', 'creator',
-                      self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['users.User']),
+        # Adding field 'User.country'
+        db.add_column(u'users_user', 'country',
+                      self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Country'], null=True, blank=True),
                       keep_default=False)
 
-        # Adding field 'Package.created'
-        db.add_column(u'packages_package', 'created',
-                      self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, default=timezone.now(), blank=True),
-                      keep_default=False)
-
-        # Adding field 'Package.updated'
-        db.add_column(u'packages_package', 'updated',
-                      self.gf('django.db.models.fields.DateTimeField')(auto_now=True, default=timezone.now(), blank=True),
-                      keep_default=False)
-
-        # Adding field 'Package.repository_url'
-        db.add_column(u'packages_package', 'repository_url',
-                      self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True),
-                      keep_default=False)
-
-
-        # Changing field 'Package.name'
-        db.alter_column(u'packages_package', 'name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255))
-
-        # Changing field 'Package.description'
-        db.alter_column(u'packages_package', 'description', self.gf('django.db.models.fields.TextField')(null=True))
 
     def backwards(self, orm):
-        # Deleting field 'Package.creator'
-        db.delete_column(u'packages_package', 'creator_id')
+        # Deleting field 'User.country'
+        db.delete_column(u'users_user', 'country_id')
 
-        # Deleting field 'Package.created'
-        db.delete_column(u'packages_package', 'created')
-
-        # Deleting field 'Package.updated'
-        db.delete_column(u'packages_package', 'updated')
-
-        # Deleting field 'Package.repository_url'
-        db.delete_column(u'packages_package', 'repository_url')
-
-
-        # Changing field 'Package.name'
-        db.alter_column(u'packages_package', 'name', self.gf('django.db.models.fields.CharField')(max_length=50, unique=True))
-
-        # Changing field 'Package.description'
-        db.alter_column(u'packages_package', 'description', self.gf('django.db.models.fields.TextField')(default=' '))
 
     models = {
         u'auth.group': {
@@ -77,33 +43,21 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'packages.package': {
-            'Meta': {'ordering': "['-updated']", 'object_name': 'Package'},
-            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'creator': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['users.User']"}),
-            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'has_docs': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'has_tests': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
-            'pkg_type': ('django.db.models.fields.CharField', [], {'default': "'A'", 'max_length': '1'}),
-            'pypi_url': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
-            'repository_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'}),
-            'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
-        },
         u'projects.country': {
-            'Meta': {'ordering': "['name']", 'object_name': 'Country'},
-            'code': ('django.db.models.fields.CharField', [], {'max_length': '2', 'primary_key': 'True'}),
+            'Meta': {'ordering': "['name']", 'unique_together': "(('code', 'name'),)", 'object_name': 'Country'},
+            'code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '3'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
         },
         u'users.user': {
             'Meta': {'object_name': 'User'},
+            'avatar': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'country': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['projects.Country']", 'null': 'True', 'blank': 'True'}),
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '75'}),
             'for_hire': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'github_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'gravatar_email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'null': 'True', 'blank': 'True'}),
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
@@ -119,4 +73,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['packages']
+    complete_apps = ['users']
