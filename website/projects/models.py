@@ -24,10 +24,10 @@ class Project(models.Model):
     DRAFT = 'D'
     NEEDS_REVIEW = 'R'
     PUBLISHED = 'P'
-    DENIED = 'DN'
+    DENIED = 'N'
     STATUS = (
         (DRAFT, 'Draft'),
-        (NEEDS_REVIEW, 'Review'),
+        (NEEDS_REVIEW, 'Needs Review'),
         (PUBLISHED, 'Published'),
         (DENIED, 'Denied'),
     )
@@ -103,6 +103,6 @@ class Project(models.Model):
         if not self.id:
             # Newly created object, so set slug
             self.slug = slugify(self.name)
-        if self.status == PUBLISHED:
+        if self.status == self.PUBLISHED:
             self.is_active = True
         super(Project, self).save(*args, **kwargs)
