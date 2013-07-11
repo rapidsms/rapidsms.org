@@ -22,12 +22,24 @@ class Country(models.Model):
 
 
 class Project(models.Model):
+    DRAFT = 'D'
+    NEEDS_REVIEW = 'R'
+    PUBLISHED = 'P'
+    DENIED = 'N'
+    STATUS = (
+        (DRAFT, 'Draft'),
+        (NEEDS_REVIEW, 'Needs Review'),
+        (PUBLISHED, 'Published'),
+        (DENIED, 'Denied'),
+    )
+
     creator = models.ForeignKey(User, related_name='created_projects',
             help_text="The creator of this content, who may or may not be its "
             "author.")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField('Active', default=True)
+    status = models.CharField(default=DRAFT, max_length=1, choices=STATUS)
+    is_active = models.BooleanField('Active', default=False)
 
     collaborators = models.ManyToManyField(User, related_name='projects',
             help_text="Users who have permission to edit this project.")
@@ -50,12 +62,19 @@ class Project(models.Model):
             'to the public code repository for this project.')
     tags = TaggableManager(verbose_name="Taxonomy")
     packages = models.ManyToManyField(Package, blank=True, null=True)
+    script = models.TextField(help_text="JS/JSON blob", blank=True)
 
     class Meta:
         ordering = ['-updated']
 
     def __unicode__(self):
         return self.name
+
+    def change_status(self, new_status, send_notification=False):
+        """Change current status of instance"""
+        self.status = new_status
+        self.save(update_fields=['status', ])
+        return True
 
     def display_countries(self):
         """Display countries as a comma-separated list."""
@@ -85,4 +104,6 @@ class Project(models.Model):
         if not self.id:
             # Newly created object, so set slug
             self.slug = slugify(self.name)
+        if self.status == self.PUBLISHED:
+            self.is_active = True
         super(Project, self).save(*args, **kwargs)

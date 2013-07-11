@@ -4,13 +4,20 @@
 {% block body_id %}project-detail{% endblock body_id %}
 
 {% block content %}
+{% if user.is_authenticated and user == object.creator %}
 {% include "includes/delete_confirm.html" with action=object.get_delete_url %}
+{% url 'project_review_request' slug=object.slug as request_review %}
+{% include "includes/request_review_confirm.html" with action=request_review %}
+{% endif %}
 
 <div class="page-header">
     <h1 class="header-split">
         <span class="header-title"><i class="icon-white icon-file-text"></i> {{ object }}</span>
         {% if user.is_authenticated and user == object.creator %}
         <span class="header-buttons">
+            {% if object.status = 'D' %}
+            <a href="#request-review" role="button" class="btn btn-inverse" data-toggle="modal"><i class="icon-white icon-pencil"></i> Request review</a>            
+            {% endif %}
             <a href="{{ object.get_edit_url }}" class="btn btn-inverse"><i class="icon-white icon-pencil"></i> Edit</a>
             <a href="#delete-modal" role="button" class="btn btn-inverse" data-toggle="modal"><i class="icon-white icon-remove"></i> Delete</a>
         </span>
@@ -37,7 +44,7 @@
         <p>
             <strong>Collaborators</strong><br />
             {% for collaborator in object.collaborators.all %}
-            <a href="{{ collaborator.get_absolute_url }}" class="label label-link">{{ collaborator }}</a><br />
+            <a href="{{ collaborator.get_absolute_url }}" class="label label-link"><i class="icon-user icon-white"></i> {{ collaborator }}</a><br />
             {% endfor %}
         </p>
         {% endif %}
@@ -47,51 +54,65 @@
             {{ object.repository_url }}
         </p>
         {% endif %}
-        {% if object.taxonomy %}
-        <p>
-            <strong>Taxonomy</strong><br />
-            {% for tag in object.tags.all %}
-            {{ tag }}{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-        </p>
-        {% endif %}
         {% if object.packages.count %}
         <p>
             <strong>Related Packages</strong><br />
             {% for package in object.packages.all %}
-            <a href="{{ package.get_absolute_url }}" class="label label-link">{{ package }}</a><br />
+            <a href="{{ package.get_absolute_url }}" class="label label-link"><i class="icon-archive icon-white"></i> {{ package }}</a><br />
+            {% endfor %}
+        </p>
+        {% endif %}
+        {% if object.tags %}
+        <p>
+            <strong>Taxonomy</strong><br />
+            {% for tag in object.tags.all %}
+            <span class="label {% cycle 'label-success' 'label-info' 'label-inverse'%}"><a href="{% url 'haystack_search' %}?q={{tag}}">{{ tag }}</a></span>
             {% endfor %}
         </p>
         {% endif %}
     </div>
     <div id="right-panel" class="span9">
-       {% if object.description %}<div class="lead">{{ object.description|linebreaks }}</div>{% endif %}
-        <ul class="thumbnails">
+        <div class="project-header">
+           <h1>
+                {{ object.name }} 
+                {% if user.is_authenticated and user == object.creator %}
+                   <br> <small>Status: {{ object.get_status_display }}</small>
+                {%endif%}
+            </h1>
+           <hr>
+           <div class="description">{{ object.description|linebreaks }}</div>
+        </div>
+        <ul class="unstyled">
             <li class="span3">
-                <div class="thumbnail">
-                    <h3>Challenges</h3>
+                <div class="">
+                    <h3 class="underline">Challenge(s)</h3>
                     <p>{{ object.challenges }}</p>
                 </div>
             </li>
             <li class="span3">
-                <div class="thumbnail">
-                    <h3>Audience</h3>
+                <div class="">
+                    <h3 class="underline">Audience</h3>
                     <p>{{ object.audience }}</p>
                 </div>
             </li>
             <li class="span3">
-                <div class="thumbnail">
-                    <h3>Key Technologies</h3>
+                <div class="">
+                    <h3 class="underline">Key Technologies</h3>
                     <p>{{ object.technologies }}</p>
                 </div>
             </li>
             <li class="span3">
-                <div class="thumbnail">
-                    <h3>Metrics</h3>
+                <div class="">
+                    <h3 class="underline">Metrics/ Evidence</h3>
                     <p>{{ object.metrics }}</p>
                 </div>
             </li>
         </ul>
+        {% if object.script %}
+        <div class="javacript-blob">
+            {{ object.script|safe }}
+        </div>
+        {% endif %}
     </div>
 </div>
 
