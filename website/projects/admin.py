@@ -12,7 +12,7 @@ class ProjectAdmin(admin.ModelAdmin):
     fieldsets = (
         (None,
             {'fields': ('created', 'updated', 'creator', 'name', 'slug',
-                    'is_active')},
+                    'status', 'is_active')},
         ),
         ('Project Information',
             {'fields': ('started', 'countries', 'description', 'challenges',

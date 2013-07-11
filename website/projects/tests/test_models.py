@@ -13,6 +13,11 @@ class ProjectModelTest(WebsiteTestBase):
         project = ProjectFactory.create(name="rapidsms")
         self.assertEqual(project.name, project.__unicode__())
 
+    def test_change_status(self):
+        project = ProjectFactory.create(name="rapidsms", status='D')
+        project.change_status('R')
+        self.assertEqual(project.status, 'R')
+
     def test_display_countries_empty(self):
         project = ProjectFactory.create()
         self.assertEqual(project.display_countries(), '')
