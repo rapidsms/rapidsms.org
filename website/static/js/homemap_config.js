@@ -2,22 +2,23 @@ define(['jquery', 'underscore', 'backbone', 'd3', 'datamap'], function ($, _, Ba
     return {
         init: function(data) {
             return new Map({
-                scope: 'usa',
+                scope: 'world',
                 el: $('#home-map'),
                 geography_config: {
                     highlightBorderColor: '#222',
                     highlightOnHover: true,
                     popupTemplate: _.template(
-                        '<div class="hoverinfo"><strong><%= geography.properties.name %></strong> <% if (data.electoralVotes) { %><hr/>  Electoral Votes: <%= data.electoralVotes %> <% } %></div>'
+                       '<div class="hoverinfo">',
+                       '<% if (data.name) { %> <strong><%= data.name %></strong><br/><% } %>',
+                       '<% if (data.description) { %>',
+                       'Started in <%= data.description %><br/> <% } %>',
+                       '<%= geography.properties.name %>',
+                       '</div>'
                     )
                 },
+
                 fills: {
-                    'REP': '#CC4731',
-                    'DEM': '#306596',
-                    'HEAVY_DEM': '#667FAF',
-                    'LIGHT_DEM': '#A9C0DE',
-                    'HEAVY_REP': '#CA5E5B',
-                    'LIGHT_REP': '#EAA9A8',
+                    project: 'green',
                     defaultFill: '#EDDC4E'
                 },
                 data: data

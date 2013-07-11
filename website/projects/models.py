@@ -9,12 +9,13 @@ from website.users.models import User
 
 
 class Country(models.Model):
-    code = models.CharField(max_length=2, primary_key=True)
+    code = models.CharField(max_length=3, unique=True)
     name = models.CharField(max_length=255, unique=True)
 
     class Meta:
         ordering = ['name', ]
         verbose_name_plural = "Countries"
+        unique_together = (("code", "name"),)
 
     def __unicode__(self):
         return self.name

@@ -7,10 +7,6 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
-    depends_on = (
-        ("website.projects", "0002_populate_countries"),
-    )
-
     def forwards(self, orm):
         # Adding model 'User'
         db.create_table(u'users_user', (
@@ -22,9 +18,10 @@ class Migration(SchemaMigration):
             ('email', self.gf('django.db.models.fields.EmailField')(unique=True, max_length=75)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('location', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('country', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Country'], null=True, blank=True)),
             ('website_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
             ('github_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
+            ('gravatar_email', self.gf('django.db.models.fields.EmailField')(max_length=75, null=True, blank=True)),
+            ('avatar', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
             ('for_hire', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('is_staff', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('is_active', self.gf('django.db.models.fields.BooleanField')(default=True)),
@@ -81,18 +78,14 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'projects.country': {
-            'Meta': {'ordering': "['name']", 'object_name': 'Country'},
-            'code': ('django.db.models.fields.CharField', [], {'max_length': '2', 'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
-        },
         u'users.user': {
             'Meta': {'object_name': 'User'},
-            'country': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['projects.Country']", 'null': 'True', 'blank': 'True'}),
+            'avatar': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '75'}),
             'for_hire': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'github_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'gravatar_email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'null': 'True', 'blank': 'True'}),
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),

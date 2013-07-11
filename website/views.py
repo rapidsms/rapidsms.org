@@ -1,12 +1,12 @@
-from itertools import chain
-import os
+import json
 
-from django.conf import settings
 from django.http import Http404
 from django.views.generic import TemplateView
 
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView, search_view_factory
+
+from website.projects.models import Project
 
 from .forms import FacetedSearchListingForm
 
@@ -20,6 +20,19 @@ MODEL_FACETS = {
 
 class Home(TemplateView):
     template_name = 'website/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(Home, self).get_context_data(**kwargs)
+        map_data = {}
+        projects = Project.objects.all()
+        for project in projects:
+            data  = {'name': project.name, 'description': project.description}
+            for country in project.countries.all():
+                map_data[country.code] = data
+        context.update({
+            'map_data_json':  json.dumps(map_data)
+        })
+        return context
 
 
 class About(TemplateView):
