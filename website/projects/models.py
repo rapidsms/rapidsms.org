@@ -21,11 +21,23 @@ class Country(models.Model):
 
 
 class Project(models.Model):
+    DRAFT = 'D'
+    NEEDS_REVIEW = 'R'
+    PUBLISHED = 'P'
+    DENIED = 'D'
+    STATUS = (
+        (DRAFT, 'Draft'),
+        (NEEDS_REVIEW, 'Needs Review'),
+        (PUBLISHED, 'Published'),
+        (DENIED, 'Denied'),
+    )
+
     creator = models.ForeignKey(User, related_name='created_projects',
             help_text="The creator of this content, who may or may not be its "
             "author.")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    status = models.CharField(default=DRAFT, max_length=1, choices=STATUS)
     is_active = models.BooleanField('Active', default=True)
 
     collaborators = models.ManyToManyField(User, related_name='projects',
