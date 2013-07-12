@@ -39,7 +39,7 @@ class Project(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(default=DRAFT, max_length=1, choices=STATUS)
-    is_active = models.BooleanField('Active', default=True)
+    is_active = models.BooleanField('Active', default=False)
 
     collaborators = models.ManyToManyField(User, related_name='projects',
             help_text="Users who have permission to edit this project.")
@@ -69,6 +69,11 @@ class Project(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def can_edit(self, user):
+        "Check if a users has rights to edit this instance"
+        if user == self.creator or user in self.collaborators.all():
+            return True
 
     def change_status(self, new_status, send_notification=False):
         """Change current status of instance"""
