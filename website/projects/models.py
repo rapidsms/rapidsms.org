@@ -104,6 +104,4 @@ class Project(models.Model):
         if not self.id:
             # Newly created object, so set slug
             self.slug = slugify(self.name)
-        if self.status == self.PUBLISHED:
-            self.is_active = True
         super(Project, self).save(*args, **kwargs)
