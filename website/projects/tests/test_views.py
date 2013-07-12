@@ -55,3 +55,6 @@ class TestProjectCreateView(ViewTestMixin, WebsiteTestBase):
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, self.template_name)
         self.assertFalse(response.context['form'].is_valid())
+
+class ProjectReviewRequestTest(ViewTestMixin, WebsiteTestBase):
+    pass
