@@ -20,10 +20,12 @@ PYPI_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
 class Package(models.Model):
     APPLICATION = 'A'
     BACKEND = 'B'
+    LIBRARY = 'L'
     ROUTER = 'R'
     PACKAGE_TYPES = {
         APPLICATION: 'Application',
         BACKEND: 'Backend',
+        LIBRARY: 'Library',
         ROUTER: 'Router',
     }
 
