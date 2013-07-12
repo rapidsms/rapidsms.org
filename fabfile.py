@@ -29,7 +29,7 @@ def vagrant():
 @task
 def staging():
     env.environment = 'staging'
-    env.hosts = ["rapidsms-staging.caktusgroup.com"]
+    env.hosts = ["staging.rapidsms.org"]
     env.branch = 'master'
     setup_path()
 
