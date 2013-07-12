@@ -14,6 +14,9 @@ class UserIndex(indexes.SearchIndex, indexes.Indexable):
     def get_model(self):
         return User
 
+    def index_queryset(self, using=None):
+        return self.get_model().objects.filter(is_active=True)
+
     def prepare_for_hire(self, obj):
         return 'Yes' if obj.for_hire else 'No'
 

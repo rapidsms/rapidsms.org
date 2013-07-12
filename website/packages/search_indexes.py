@@ -13,5 +13,8 @@ class PackageIndex(indexes.SearchIndex, indexes.Indexable):
     def get_model(self):
         return Package
 
+    def index_queryset(self, using=None):
+        return self.get_model().objects.filter(is_active=True)
+
     def prepare_pkg_type(self, obj):
         return obj.get_pkg_type_display()

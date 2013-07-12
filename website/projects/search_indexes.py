@@ -14,6 +14,9 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     def get_model(self):
         return Project
 
+    def index_queryset(self, using=None):
+        return self.get_model().objects.filter(is_active=True)
+
     def prepare_countries(self, obj):
         return [country.name for country in obj.countries.all()]
 
