@@ -39,7 +39,7 @@ class Project(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(default=DRAFT, max_length=1, choices=STATUS)
-    is_active = models.BooleanField('Active', default=False)
+    is_active = models.BooleanField('Active', default=True)
 
     collaborators = models.ManyToManyField(User, related_name='projects',
             help_text="Users who have permission to edit this project.")

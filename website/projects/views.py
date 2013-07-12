@@ -19,7 +19,6 @@ class ProjectCreate(LoginRequiredMixin, CreateView):
         self.object.collaborators.add(self.request.user)
         return ret_val
 
-
 class ProjectDelete(LoginRequiredMixin, IsActiveObjectMixin, AuthorEditMixin,
         DeleteView):
     model = Project
