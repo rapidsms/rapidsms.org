@@ -6,7 +6,8 @@ from .models import Package
 class PackageCreateEditForm(forms.ModelForm):
     # Use a radio select field rather than the default.
     pkg_type = forms.ChoiceField(label='Package Type',
-            widget=forms.RadioSelect, choices=Package.PACKAGE_TYPES.items())
+            widget=forms.RadioSelect, choices=Package.PACKAGE_TYPES.items(),
+            initial=Package.APPLICATION)
 
     class Meta:
         model = Package
