@@ -1,3 +1,4 @@
+{% load drafts %}
 <div class="navbar navbar-inverse">
     <div class="navbar-inner">
         <div class="container-fluid">
@@ -10,13 +11,13 @@
             <a href="{% url "home" %}" class="brand">
                 <img src="{{ STATIC_URL }}images/rapidsms-logo-sm.png" alt="RapidSMS">
             </a>
-
+            {% count_drafts request as pending_drafts %}
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     <li><a href="{% url "about" %}">About</a></li>
                     <li><a href="https://pypi.python.org/pypi/RapidSMS/">Download</a></li>
                     <li><a href="http://rapidsms.readthedocs.org/en/develop/">Documentation</a></li>
-                    <li><a href="{% url "project_list" %}">Projects</a></li>
+                    <li><a href="{% url "project_list" %}">Projects <span class="badge badge-important">{{ pending_drafts }}</span></a></li>
                     <li><a href="{% url "package_list" %}">Packages</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown">Community</a>

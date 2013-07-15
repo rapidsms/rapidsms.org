@@ -5,7 +5,7 @@
 {% block body_id %}search{% endblock body_id %}
 
 {% block content %}
-
+{% load drafts %}
 <div class="page-header">
     {% if user.is_authenticated and model_create %}
     <h1 class="header-split">
@@ -21,6 +21,10 @@
     {% endif %}
 </div>
 
+{% if model_type = "project" %}
+{% show_drafts request %}
+{% endif %}
+
 {% if model_type %}
     {% with model_type|add:"-list" as name %}
 {% scribble name %}
@@ -28,6 +32,7 @@
 {% endscribble %}
     {% endwith %}
 {% endif %}
+
 
 <div class="row-fluid">
     <div class="well span3" id="refine-results">

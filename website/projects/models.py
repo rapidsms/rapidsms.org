@@ -4,6 +4,7 @@ from django.template.defaultfilters import slugify
 
 from taggit.managers import TaggableManager
 
+from .managers import ProjectManager
 from website.packages.models import Package
 from website.users.models import User
 
@@ -63,6 +64,7 @@ class Project(models.Model):
     tags = TaggableManager(verbose_name="Taxonomy")
     packages = models.ManyToManyField(Package, blank=True, null=True)
     script = models.TextField(help_text="JS/JSON blob", blank=True)
+    objects = ProjectManager()
 
     class Meta:
         ordering = ['-updated']

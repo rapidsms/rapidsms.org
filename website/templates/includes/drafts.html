@@ -1,0 +1,5 @@
+{% for project in projects %}
+<div class="alert alert-danger">
+    {{ project.name }} is in draft status. Do you want to <a href="{{ project.get_absolute_url }}">review it</a>?
+</div>
+{% endfor %}
