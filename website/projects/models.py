@@ -33,6 +33,13 @@ class Project(models.Model):
         (PUBLISHED, 'Published'),
         (DENIED, 'Denied'),
     )
+    NUM_USERS = (
+        (1, 'Under 100'),
+        (2, '100 - 1,000'),
+        (3, '1,000 - 5,000'),
+        (4, '5,000 - 100,000'),
+        (5, '100,000+')
+    )
 
     creator = models.ForeignKey(User, related_name='created_projects',
             help_text="The creator of this content, who may or may not be its "
@@ -58,7 +65,7 @@ class Project(models.Model):
     technologies = models.TextField('Key technologies', blank=True, null=True)
     metrics = models.TextField(blank=True, null=True)
     num_users = models.IntegerField('Number of users', blank=True, null=True,
-            help_text='Estimated number of users, a whole number.')
+            choices=NUM_USERS, help_text='Choose one of the options available.')
     repository_url = models.URLField(blank=True, null=True, help_text='Link '
             'to the public code repository for this project.')
     tags = TaggableManager(verbose_name="Taxonomy")
