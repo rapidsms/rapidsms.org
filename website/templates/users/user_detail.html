@@ -6,7 +6,14 @@
 {% block content %}
 <div class="page-header">
     <h1 class="header-split">
-        <span class="header-title"><i class="icon-white icon-user"></i> {{ object }}</span>
+        <span class="header-title">
+            {% if object.user_type = 'I' %}
+            <i class="icon-white icon-user"></i>
+            {% else %}
+            <i class="icon-white icon-building"></i>
+            {% endif %}
+            {{ object }}
+        </span>
         {% if user.is_authenticated and user == object %}
         <span class="header-buttons btn-group">
             <a href="{{ object.get_edit_url }}" class="btn btn-inverse"><i class="icon-white icon-pencil"></i> Edit Profile</a>
@@ -19,7 +26,7 @@
     <div class="span3 text-center">
         {% include "includes/avatar.html" with user=object size="140" %}
         {% if object.for_hire %}
-        <span class="label for-hire">{{ object }} is for hire!</label>
+        <span class="label for-hire">{{ object }} is available for hire!</label>
         {% endif %}
     </div>
     <div class="span9">
@@ -31,7 +38,7 @@
                 <td>{{ object.location }}{% if object.country %}, {{ object.country }}{% endif %}</td>
             </tr>
             {% endif %}
-            {% if object.email %}
+            {% if object.email and object.display_email%}
             <tr>
                 <th>Email</th>
                 <td>{{ object.email }}</td>

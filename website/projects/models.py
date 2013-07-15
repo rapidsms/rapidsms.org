@@ -71,6 +71,11 @@ class Project(models.Model):
     tags = TaggableManager(verbose_name="Taxonomy")
     packages = models.ManyToManyField(Package, blank=True, null=True)
     script = models.TextField(help_text="JS/JSON blob", blank=True)
+    project_url = models.URLField(blank=True, null=True)
+    image = models.ImageField(upload_to='logos', blank=True, null=True,
+        help_text="Project Logo")
+    files = models.FileField('Attach a file', upload_to='files', blank=True,
+        null=True)
     objects = ProjectManager()
 
     class Meta:

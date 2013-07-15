@@ -18,4 +18,5 @@ class ProjectCreateEditForm(forms.ModelForm):
         model = Project
         fields = ('name', 'description', 'countries', 'tags',
                 'challenges', 'audience', 'technologies', 'metrics',
-                'num_users', 'started', 'packages', 'collaborators')
+                'num_users', 'started', 'packages', 'collaborators',
+                'repository_url', 'project_url', 'image', 'files')

@@ -54,13 +54,7 @@ class UserTestCase(TestCase):
         self.assertTrue(user.is_staff)
         self.assertTrue(user.is_superuser)
 
-    def test_organization_unicode(self):
-        "Return appropriate string for a User that identifies as an Organization"
-        self.user.user_type = User.ORGANIZATION
-        self.user.save()
-        self.assertIn(User.USER_TYPES[User.ORGANIZATION], str(self.user))
-
-    def test_user_unicode(self):
+    def test_unicode(self):
         """Test unicode representation for a user as an individual."""
         self.user.user_type = User.INDIVIDUAL
         self.user.save()
