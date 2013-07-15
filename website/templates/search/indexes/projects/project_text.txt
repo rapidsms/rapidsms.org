@@ -5,3 +5,5 @@
 {{ object.audience }}
 {{ object.technologies }}
 {{ object.tags.all }}
+{{ object.collaborators.all }}
+{{ object.get_num_users_display }}

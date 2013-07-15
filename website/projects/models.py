@@ -58,7 +58,8 @@ class Project(models.Model):
     description = models.TextField()
 
     # Optional information.
-    started = models.DateField('Project start date', null=True, blank=True)
+    started = models.DateField('Project start date', null=True, blank=True,
+        help_text='mm/dd/yyyy')
     countries = models.ManyToManyField(Country, blank=True, null=True)
     challenges = models.TextField(blank=True, null=True)
     audience = models.TextField(blank=True, null=True)
@@ -90,9 +91,14 @@ class Project(models.Model):
             return True
 
     def change_status(self, new_status, send_notification=False):
-        """Change current status of instance"""
+        """Change current status of instance and determines whether or not
+        this instance is active"""
         self.status = new_status
-        self.save(update_fields=['status', ])
+        if new_status == self.PUBLISHED:
+            self.is_active = True
+        else:
+            self.is_active = False
+        self.save(update_fields=['status', 'is_active'])
         return True
 
     def display_countries(self):
