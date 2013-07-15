@@ -10,6 +10,8 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     name = indexes.CharField(model_attr='name')
     is_active = indexes.BooleanField(model_attr='is_active')
     taxonomy = indexes.MultiValueField(faceted=True)
+    collaborators = indexes.MultiValueField(faceted=True)
+    num_users = indexes.CharField(model_attr='num_users', faceted=True)
 
     def get_model(self):
         return Project
@@ -20,5 +22,12 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_countries(self, obj):
         return [country.name for country in obj.countries.all()]
 
+    def prepare_num_users(self, obj):
+        # import pdb; pdb.set_trace()
+        return obj.get_num_users_display()
+
     def prepare_taxonomy(self, obj):
         return [tag.name for tag in obj.tags.all()]
+
+    def prepare_collaborators(self, obj):
+        return [user.name for user in obj.collaborators.all()]

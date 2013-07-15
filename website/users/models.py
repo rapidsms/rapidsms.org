@@ -38,9 +38,10 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
             choices=USER_TYPES.items(), default=INDIVIDUAL)
 
     email = models.EmailField('Email Address', unique=True)
-
+    display_email = models.BooleanField(default=False)
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255, null=True, blank=True)
+    biography = models.TextField(blank=True, null=True)
     country = models.ForeignKey('projects.Country', null=True, blank=True)
     website_url = models.URLField('Website URL', null=True, blank=True)
     github_url = models.URLField('Github URL', null=True, blank=True)
@@ -71,8 +72,6 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
     REQUIRED_FIELDS = ('name',)
 
     def __unicode__(self):
-        if self.is_organization():
-            return 'Organization: {0}'.format(self.get_full_name())
         return self.get_full_name()
 
     def get_absolute_url(self):

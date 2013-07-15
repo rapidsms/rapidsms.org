@@ -5,7 +5,7 @@
 {% block body_id %}search{% endblock body_id %}
 
 {% block content %}
-
+{% load drafts %}
 <div class="page-header">
     {% if user.is_authenticated and model_create %}
     <h1 class="header-split">
@@ -21,6 +21,10 @@
     {% endif %}
 </div>
 
+{% if model_type = "project" %}
+{% show_drafts request %}
+{% endif %}
+
 {% if model_type %}
     {% with model_type|add:"-list" as name %}
 {% scribble name %}
@@ -29,10 +33,14 @@
     {% endwith %}
 {% endif %}
 
+
 <div class="row-fluid">
     <div class="well span3" id="refine-results">
         <h3>Refine Results</h3>
         <div id="reset-filters">
+            {% for filter, value in filters %}
+                {{ filter }}: {{ value }}<br>
+            {% endfor %}
             <a href="{{ request.path }}{% if query %}?q={{ query }}{% endif %}">Reset Filters</a>
         </div>
         <ul class="nav nav-list">
@@ -42,13 +50,17 @@
                 <li class="nav-header">By Author</li>
                 {% elif field == 'pkg_type' %}
                 <li class="nav-header">By Package Type</li>
+                {% elif field == 'num_users' %}
+                <li class="nav-header">By Number of Users</li>
                 {% else %}
                 <li class="nav-header">By {{ field }}</li>
                 {% endif %}
                 {% for facet in facets %}
-                {% with path=request.get_full_path %}
-                    <li class="nav-item"><a href="{{ request.get_full_path }}{% if '?q=' not in path %}?q={% endif %}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0|title }} ({{ facet.1 }})</a></li>
-                {% endwith %}
+                    {% if facet.1 %}
+                        {% with path=request.get_full_path %}
+                            <li class="nav-item"><a href="{{ request.get_full_path }}{% if '?q=' not in path %}?q={% endif %}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0|title }} ({{ facet.1 }})</a></li>
+                        {% endwith %}
+                    {% endif %}
                 {% endfor %}
             {% endif %}
         {% endfor %}

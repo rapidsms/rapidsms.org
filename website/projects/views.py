@@ -4,7 +4,8 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView,\
     UpdateView, RedirectView
 from django.views.generic.detail import SingleObjectMixin
 
-from ..mixins import AuthorEditMixin, IsActiveObjectMixin, LoginRequiredMixin
+from ..mixins import AuthorEditMixin, IsActiveObjectMixin, LoginRequiredMixin,\
+    CanEditMixin
 from .forms import ProjectCreateEditForm
 from .models import Project
 
@@ -19,25 +20,26 @@ class ProjectCreate(LoginRequiredMixin, CreateView):
         self.object.collaborators.add(self.request.user)
         return ret_val
 
-class ProjectDelete(LoginRequiredMixin, IsActiveObjectMixin, AuthorEditMixin,
+
+class ProjectDelete(LoginRequiredMixin, CanEditMixin,
         DeleteView):
     model = Project
     http_method_names = ('delete', 'post')
     success_url = reverse_lazy('project_list')
 
 
-class ProjectDetail(IsActiveObjectMixin, DetailView):
+class ProjectDetail(DetailView):
     model = Project
 
 
-class ProjectEdit(LoginRequiredMixin, IsActiveObjectMixin, AuthorEditMixin,
+class ProjectEdit(LoginRequiredMixin, CanEditMixin,
         UpdateView):
     model = Project
     form_class = ProjectCreateEditForm
 
 
-class ProjectReviewRequest(LoginRequiredMixin, IsActiveObjectMixin,
-        AuthorEditMixin, SingleObjectMixin, RedirectView):
+class ProjectReviewRequest(LoginRequiredMixin, CanEditMixin,
+        SingleObjectMixin, RedirectView):
     http_method_names = ['post', ]
     model = Project
 
@@ -48,7 +50,7 @@ class ProjectReviewRequest(LoginRequiredMixin, IsActiveObjectMixin,
         return url
 
     def post(self, request, *args, **kwargs):
-        # import pdb; pdb.set_trace()
+        """Updates project status to 'needs revision'"""
         project = self.get_object()
         project.change_status('R', send_notification=True)  # Status saved.
         messages.success(self.request, 'We have notified the administrators'

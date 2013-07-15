@@ -13,7 +13,8 @@ from .forms import FacetedSearchListingForm
 
 MODEL_FACETS = {
     'package': ('pkg_type', ),
-    'project': ('countries', 'creator', 'taxonomy'),
+    'project': ('countries', 'creator', 'taxonomy', 'collaborators',
+        'num_users'),
     'user': ('countries', 'for_hire', 'user_type'),
 }
 
@@ -49,8 +50,23 @@ class Help(TemplateView):
 
 class FacetedSearchListingView(FacetedSearchView):
 
+    def clean_filters(self):
+        "Returns a list of tuples (filter, value) of applied facets"
+        filters = []
+        facets = self.form.selected_facets
+        for facet in facets:
+            if ":" not in facet:
+                continue
+            field, value = facet.split(":", 1)
+            field = field.replace('_', ' ').replace('exact', '').title()
+            filters.append((field, value))
+        return filters
+
+
     def extra_context(self):
         extra = super(FacetedSearchView, self).extra_context()
+        # import pdb; pdb.set_trace()
+        extra['filters'] = self.clean_filters
         if self.results == []:
             extra['facets'] = self.form.search().facet_counts()
         else:
