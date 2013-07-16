@@ -4,6 +4,7 @@
 {% block body_id %}user-detail{% endblock body_id %}
 
 {% block content %}
+{% load related_projects %}
 <div class="page-header">
     <h1 class="header-split">
         <span class="header-title">
@@ -26,8 +27,15 @@
     <div class="span3 text-center">
         {% include "includes/avatar.html" with user=object size="140" %}
         {% if object.for_hire %}
-        <span class="label for-hire">{{ object }} is available for hire!</label>
+        <label class="label for-hire">{{ object }} is available for hire!</label>
         {% endif %}
+
+        <!-- RELATED PROJECTS -->
+        <h4>Related Projects</h4>
+        {% show_related_projects object as related_projects%}
+        {% for related_project in related_projects %}
+            <p><a href="{{related_project.get_absolute_url }}">{{related_project.name}}</a></p>
+        {% endfor %}
     </div>
     <div class="span9">
         <table id="details" class="table">

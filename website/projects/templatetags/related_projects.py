@@ -6,8 +6,9 @@ from ..models import Project
 register = template.Library()
 
 
-@register.inclusion_tag('includes/related_projects.html')
-def show_related_projects(package):
-    "Renders template with all ralated projects for a given package"
-    projects = Project.objects.get_related_projects(package)
-    return {'projects': projects}
+@register.assignment_tag
+def show_related_projects(user_or_package):
+    """Renders template with all ralated projects for a given user or
+    package"""
+    projects = Project.objects.get_related_projects(user_or_package)
+    return projects
