@@ -36,6 +36,12 @@
     <div id="home-map" style="height: 500px; width: 960px"></div>
 </section>
 
+
+<!-- FEATURE PROJECT -->
+{% if feature_project %}
+    {{ feature_project }}
+{% endif %}
+
 {% endblock content %}
 
 {% block extra-js %}
