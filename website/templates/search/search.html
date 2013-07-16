@@ -99,6 +99,7 @@
         {% endfor %}
 
         {% if page.has_previous or page.has_next %}
+        <br>
         <div>
             {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
             |

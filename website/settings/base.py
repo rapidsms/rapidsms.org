@@ -138,11 +138,11 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.sitemaps',
 
+    'website.taxonomy',
     'website.aggregator',
     'website.projects',
     'website.packages',
     'website.users',
-    'website.taxonomy',
 
     # External apps
     'south',

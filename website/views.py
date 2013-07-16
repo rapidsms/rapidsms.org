@@ -62,10 +62,8 @@ class FacetedSearchListingView(FacetedSearchView):
             filters.append((field, value))
         return filters
 
-
     def extra_context(self):
         extra = super(FacetedSearchView, self).extra_context()
-        # import pdb; pdb.set_trace()
         extra['filters'] = self.clean_filters
         if self.results == []:
             extra['facets'] = self.form.search().facet_counts()
