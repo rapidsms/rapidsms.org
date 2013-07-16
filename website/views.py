@@ -44,6 +44,10 @@ class About(TemplateView):
     template_name = 'website/about.html'
 
 
+class Community(TemplateView):
+    template_name = 'website/community.html'
+
+
 class Help(TemplateView):
     template_name = 'website/help.html'
 

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}RapidSMS Community {{ object.name }}{% endblock title %}
+{% block body_id %}community-page{% endblock body_id %}
+
+{% block content %}
+{% load related_projects feed_aggregator%}
+<div class="page-header">
+    <h1 class="">Community</h1>
+</div>
+
+<div class="row-fluid">
+    <div class="span8">
+        <div class="row-fluid">
+            <div class="span6">
+                <p><strong>mailing lists</strong></p>
+            </div>
+            <div class='span6'>
+                <p>discuss projects using rapidsms, keep up-to-date on current development, consult with experts. link to main list. link to dev list</p>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span6">
+                <p><strong>IRC</strong></p>
+            </div>
+            <div class='span6'>
+                <p>chat with rapidsms developers and implementers
+ on irc.freenode.org #rapidsms</p>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span6">
+                <p><strong>Developers, companies, and implementers</strong></p>
+            </div>
+            <div class='span6'>
+                <p>connect with other <a href="{% url 'user_list' %}?q=&selected_facets=user_type_exact:Individual">developers</a>, find <a href="{% url 'user_list' %}?q=&selected_facets=user_type_exact:Organization">software development firms</a> with rapidsms experience</p>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span6">
+                <p><strong>Ecosystem</strong></p>
+            </div>
+            <div class='span6'>
+                <p>other software based on rapidsms (goes to static page listing commcare, childcount, rapidandroid, etc), logos, and publications (like WHO bulletin mwana article)</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="span4">
+        <p><strong>Blogs</strong></p>
+        {% get_latest_feeditems as feeds %}
+        <ul>
+        {% for feed in feeds %}
+            <li><a href="{{ feed.link }}">{{ feed }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock content %}
