@@ -4,7 +4,7 @@
 {% block body_id %}package-detail{% endblock body_id %}
 
 {% block content %}
-
+{% load related_projects %}
 <div class="page-header">
     <h1 class="header-split">
         <span class="header-title"><i class="icon-white icon-archive"></i> {{ object }}{% if object.version %} <small>version {{ object.version }}</small>{% endif %}</span>
@@ -39,7 +39,7 @@
         {% if object.version or object.release_date %}
             <p>
                 <strong>Current Release</strong><br />
-                <img src="{{ object.get_pypi_badge_url }}" /><br />
+                {{ object.version }}<br />
                 {% if object.release_date %}released {{ object.release_date|date }}{% endif %}
             </p>
         {% endif %}
@@ -77,6 +77,25 @@
             {{ object.license }}
         </p>
         {% endif %}
+
+        <!-- TAXONOMY -->
+        {% with tags=object.tags.all %}
+        {% if tags %}
+        <p>
+            <strong>Taxonomy</strong><br />
+            {% for tag in object.tags.all %}
+            <span class="label {% cycle 'label-success' 'label-info' 'label-inverse'%}"><a href="{% url 'haystack_search' %}?q={{tag}}">{{ tag }}</a></span>
+            {% endfor %}
+        </p>
+        {% endif %}
+        {% endwith %}
+
+        <!-- RELATED PROJECTS -->
+        <p><strong>Related Projects</strong></p>
+        {% show_related_projects object as related_projects%}
+        {% for related_project in related_projects %}
+            <p><a href="{{related_project.get_absolute_url }}">{{related_project.name}}</a></p>
+        {% endfor %}
     </div>
 
     <div id="right-panel" class="span9">

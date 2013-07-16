@@ -9,7 +9,7 @@ from haystack.views import FacetedSearchView
 
 from .aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 
-from .views import About, Help, Home
+from .views import About, Community, Help, Home
 
 
 admin.autodiscover()
@@ -28,6 +28,7 @@ urlpatterns += patterns('',
 urlpatterns += patterns('',
     url(r'^$', Home.as_view(), name='home'),
     url(r'^about/$', About.as_view(), name='about'),
+    url(r'^community/$', Community.as_view(), name='community'),
     url(r'^help/$', Help.as_view(), name='help'),
 
     url(r'^projects/', include('website.projects.urls')),
@@ -45,7 +46,7 @@ urlpatterns += patterns('',
 # Haystack configure SQS for faceting
 sqs = SearchQuerySet()
 facet_list = ('countries', 'creator', 'pkg_type', 'model', 'user_type',
-    'taxonomy')
+    'taxonomy', 'num_users', 'collaborators', 'license')
 for facet in facet_list:
     sqs = sqs.facet(facet)
 

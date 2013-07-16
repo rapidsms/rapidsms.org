@@ -1,0 +1,12 @@
+{% if projects %}
+
+<h3>Related Projects</h3>
+<ul class="unstyled">
+{% for project in projects %}
+    <li><a href="{{project.get_absolute_url}}"><img src="{{project.image.url}}" alt="{{project.name}}"/></a><br>
+        <h4><a href="{{project.get_absolute_url}}">{{project.name}}</a></h4>
+    </li>
+{% endfor %}
+</ul>
+
+{% endif %}

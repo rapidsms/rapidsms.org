@@ -21,6 +21,7 @@
 {% block extra-js %}
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.js"></script>
     <script src="{{ STATIC_URL }}selectable/js/jquery.dj.selectable.js"></script>
+    <script src="{{ STATIC_URL }}js/mirror_emails.js"></script>
 {% endblock extra-js %}
 
 {% block content %}
@@ -29,7 +30,7 @@
 </div>
 
 <div id="register">
-    <form class="form-horizontal" method="post" action="{% url "register" %}">
+    <form class="form-horizontal" method="post" action="{% url "register" %}" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
         <div class="control-group{% if field.errors %} error{% endif %}">

@@ -1,5 +1,7 @@
 from django import forms
+from selectable.forms import AutoCompleteSelectMultipleField
 
+from website.taxonomy.lookups import TaxonomyLookup
 from .models import Package
 
 
@@ -8,10 +10,12 @@ class PackageCreateEditForm(forms.ModelForm):
     pkg_type = forms.ChoiceField(label='Package Type',
             widget=forms.RadioSelect, choices=Package.PACKAGE_TYPES.items(),
             initial=Package.APPLICATION)
+    tags = AutoCompleteSelectMultipleField(lookup_class=TaxonomyLookup,
+        required=False)
 
     class Meta:
         model = Package
-        fields = ('pkg_type', 'name', 'tests_url', 'repo_url')
+        fields = ('pkg_type', 'name', 'tags', 'tests_url', 'repo_url')
 
     def __init__(self, *args, **kwargs):
         super(PackageCreateEditForm, self).__init__(*args, **kwargs)
@@ -19,7 +23,7 @@ class PackageCreateEditForm(forms.ModelForm):
         # Package type and name are not editable once the project has been
         # created.
         if self.instance.pk:
-            self.fields.pop('pkg_type')
+            # self.fields.pop('pkg_type')
             self.fields.pop('name')
 
     def clean_name(self):

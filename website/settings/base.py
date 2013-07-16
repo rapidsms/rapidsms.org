@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.sitemaps',
 
+    'website.taxonomy',
     'website.aggregator',
     'website.projects',
     'website.packages',
@@ -214,6 +215,8 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
+
 
 # Don't migrate allaccess. Its migrations depend on the Django user model,
 # which we don't use. If future versions of allaccess introduce migrations we

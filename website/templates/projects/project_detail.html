@@ -16,7 +16,7 @@
         {% if user.is_authenticated and user == object.creator %}
         <span class="header-buttons">
             {% if object.status = 'D' %}
-            <a href="#request-review" role="button" class="btn btn-inverse" data-toggle="modal"><i class="icon-white icon-pencil"></i> Request review</a>            
+            <a href="#request-review" role="button" class="btn btn-inverse" data-toggle="modal"><i class="icon-white icon-pencil"></i> Request review</a>
             {% endif %}
             <a href="{{ object.get_edit_url }}" class="btn btn-inverse"><i class="icon-white icon-pencil"></i> Edit</a>
             <a href="#delete-modal" role="button" class="btn btn-inverse" data-toggle="modal"><i class="icon-white icon-remove"></i> Delete</a>
@@ -28,16 +28,25 @@
 
 <div class="row-fluid">
     <div id="left-panel" class="span3">
+        {% if object.image %}
+            <p><img src="{{ object.image.url }}"/>
+        {% endif %}
         {% if object.started %}
         <p>
-            <strong>Started</strong><br />
+            <strong>Started: </strong>
             {{ object.started|date:"F Y" }}
         </p>
         {% endif %}
         {% if object.num_users %}
         <p>
-            <strong>Number of Users</strong><br/>
-            ~{{ object.num_users }} user{{ object.num_users|pluralize }}
+            <strong>Number of Users: </strong>
+            {{ object.get_num_users_display }} users
+        </p>
+        {% endif %}
+        {% if object.files %}
+        <p>
+            <strong>Attached File: </strong>
+            <a href="{{object.files.url}}"> Download File</a>
         </p>
         {% endif %}
         {% if object.collaborators.count %}
@@ -137,7 +146,8 @@
         // TODO: To get data from Django into the map, replace the declaration
         // below with the something like the following (assuming data from the
         // view). (Leave the require() call the same):
-        var homemap_data = {"ZMB": {"fillKey": "project", "name": "Project Mwana", "description": "Project Mwana\r\nChallenge(s)\r\nAudience\r\nKey Technologies\r\nMetrics/Evidence\r\nZambia\r\nMalawi\r\nThe Mwana Initiative has improved test result turn-around time by over 50%. It\r\ndelivers early infant diagnosis (HIV ) results to rural and under-served communities\r\nin Zambia and Malawi via text messages rather than paper. Community Health\r\nWorkers also register births and trace patients via SMS to ensure that they receive\r\nkey childhood interventions"}, "MWI": {"fillKey": "project", "name": "Project Mwana", "description": "Project Mwana\r\nChallenge(s)\r\nAudience\r\nKey Technologies\r\nMetrics/Evidence\r\nZambia\r\nMalawi\r\nThe Mwana Initiative has improved test result turn-around time by over 50%. It\r\ndelivers early infant diagnosis (HIV ) results to rural and under-served communities\r\nin Zambia and Malawi via text messages rather than paper. Community Health\r\nWorkers also register births and trace patients via SMS to ensure that they receive\r\nkey childhood interventions"}, "GBR": {"fillKey": "project", "name": "ma", "description": "dfsdf"}, "TUN": {"fillKey": "project", "name": "djha", "description": "hja"}};
+        var homemap_data = {}
+
         require(['homemap_config'], function (HomeMap) {
             // Load dependencies for the map on the homepage.
             // Once homemap_data is provided, initialize the map and render it

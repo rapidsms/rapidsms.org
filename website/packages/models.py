@@ -8,6 +8,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils import timezone
 
+from website.taxonomy.models import Taxonomy
 from website.users.models import User
 from .managers import PackageManager
 
@@ -46,6 +47,8 @@ class Package(models.Model):
     name = models.CharField(max_length=255, unique=True, help_text="The name "
             "of the package on PyPI.")
     slug = models.SlugField()  # Derived from name.
+    tags = models.ManyToManyField(Taxonomy, related_name="packages",
+        verbose_name="Taxonomy")
 
     # Other reference URLs for the package are optional.
     tests_url = models.URLField('CI/Tests', null=True, blank=True,

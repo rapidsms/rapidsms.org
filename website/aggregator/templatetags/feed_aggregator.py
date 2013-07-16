@@ -1,7 +1,10 @@
 from __future__ import absolute_import
 
 from django import template
-from .models import Feed
+from ..models import Feed, FeedItem
+
+register = template.Library()
+
 
 class FeedListNode(template.Node):
     def __init__(self, varname):
@@ -22,5 +25,14 @@ def do_get_feed_list(parser, token):
         raise template.TemplateSyntaxError, "First argument to '%s' tag must be 'as'" % bits[0]
     return FeedListNode(bits[2])
 
-register = template.Library()
+
+@register.assignment_tag
+def get_latest_feeditems():
+    """Returns a list of the latest 10 feed items """
+    items = FeedItem.objects.all()
+    num_items = items.count()
+    if num_items > 10:
+        return items[:10]
+    return items
+
 register.tag('get_feed_list', do_get_feed_list)
