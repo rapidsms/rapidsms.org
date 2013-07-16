@@ -146,7 +146,7 @@
         // TODO: To get data from Django into the map, replace the declaration
         // below with the something like the following (assuming data from the
         // view). (Leave the require() call the same):
-        var homemap_data = {}
+        var homemap_data = {{ map_data_json|safe }};
 
         require(['homemap_config'], function (HomeMap) {
             // Load dependencies for the map on the homepage.

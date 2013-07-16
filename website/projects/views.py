@@ -1,3 +1,5 @@
+import json
+
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView,\
@@ -30,6 +32,22 @@ class ProjectDelete(LoginRequiredMixin, CanEditMixin,
 
 class ProjectDetail(DetailView):
     model = Project
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectDetail, self).get_context_data(**kwargs)
+        map_data = {}
+        project = context['object']
+        data = {
+            'name': project.name,
+            'description': project.description,
+            'fillKey': 'project'
+        }
+        for country in project.countries.all():
+            map_data[country.code] = data
+        context.update({
+            'map_data_json': json.dumps(map_data)
+        })
+        return context
 
 
 class ProjectEdit(LoginRequiredMixin, CanEditMixin,

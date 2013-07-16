@@ -1,3 +1,5 @@
+import random
+
 from django.db import models
 from django.db.models import Q
 
@@ -5,7 +7,6 @@ from website.users.models import User
 
 
 class ProjectManager(models.Manager):
-    "Provides functionality to filter projects by current user."
 
     def get_drafts_for_user(self, user):
         """Returns a queryset of drafts a user can edit"""
@@ -25,3 +26,15 @@ class ProjectManager(models.Manager):
             package = user_or_package
             projects = active.filter(packages__in=[package, ])
         return projects
+
+    def get_feature_projects(self):
+        """Returns a queryset off all feature projects"""
+        return self.filter(feature=True)
+
+    def get_feature_project(self):
+        """Returns a random feature projects or None"""
+        projects = self.get_feature_projects()
+        if projects:
+            project = random.choice(projects)
+            return project
+        return None
