@@ -45,7 +45,7 @@ urlpatterns += patterns('',
 # Haystack configure SQS for faceting
 sqs = SearchQuerySet()
 facet_list = ('countries', 'creator', 'pkg_type', 'model', 'user_type',
-    'taxonomy', 'num_users', 'collaborators')
+    'taxonomy', 'num_users', 'collaborators', 'license')
 for facet in facet_list:
     sqs = sqs.facet(facet)
 

@@ -41,11 +41,11 @@ class ProjectModelTest(WebsiteTestBase):
         self.assertEqual(project.get_model_name(), 'project')
 
     def test_get_delete_url(self):
-        expected = '/projects/d/rapidsms/delete/'
+        expected = '/projects/rapidsms/delete/'
         project = ProjectFactory.create(name="rapidsms")
         self.assertEqual(project.get_delete_url(), expected)
 
     def test_get_edit_url(self):
-        expected = '/projects/d/rapidsms/edit/'
+        expected = '/projects/rapidsms/edit/'
         project = ProjectFactory.create(name="rapidsms")
         self.assertEqual(project.get_edit_url(), expected)

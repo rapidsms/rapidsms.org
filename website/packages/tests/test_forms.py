@@ -35,11 +35,12 @@ class PackageCreateFormTest(ModelFormTestMixin, WebsiteTestBase):
     def test_fields(self):
         """Four fields should be included when there is no instance."""
         form = self._get_form(data=None)
-        self.assertEquals(len(form.fields), 4)
+        self.assertEquals(len(form.fields), 5)
         self.assertTrue('pkg_type' in form.fields)
         self.assertTrue('name' in form.fields)
         self.assertTrue('tests_url' in form.fields)
         self.assertTrue('repo_url' in form.fields)
+        self.assertTrue('tags' in form.fields)
 
     def test_pypi_500(self):
         """
@@ -120,6 +121,7 @@ class PackageEditFormTest(ModelFormTestMixin, WebsiteTestBase):
         data = {
             'repo_url': u'http://example.com/',
             'tests_url': u'http://example.com/',
+            'pkg_type': u'A',
         }
         data.update(kwargs)
         return data
@@ -127,9 +129,11 @@ class PackageEditFormTest(ModelFormTestMixin, WebsiteTestBase):
     def test_fields(self):
         """Edit field field should not have name or pkg_type fields."""
         form = self._get_form(data=None)
-        self.assertEquals(len(form.fields), 2)
+        self.assertEquals(len(form.fields), 4)
         self.assertTrue('tests_url' in form.fields)
         self.assertTrue('repo_url' in form.fields)
+        self.assertTrue('pkg_type' in form.fields)
+        self.assertTrue('tags' in form.fields)
 
     def test_no_tests_url(self):
         """tests_url field should not be required."""

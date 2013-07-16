@@ -84,6 +84,9 @@
             </form>
         </div>
 
+        <div class="results-found">
+            <p class="muted">{{ page.paginator.count }} Result{{ page.paginator.count|pluralize:"s" }} found</p>
+        </div>
         {% for result in page.object_list %}
         <div class="result">
             {% with "search/results/"|add:result.object.get_model_name|add:".html" as template %}

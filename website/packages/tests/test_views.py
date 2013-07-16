@@ -142,6 +142,7 @@ class TestPackageEditView(PackageViewTestBase):
         new_url = 'http://example.com/tests'
         response = self._post(data={
             'tests_url': new_url,
+            'pkg_type': u'A',
         })
         self.assertRedirectsNoFollow(response, self.package.get_absolute_url())
         package = Package.objects.get(pk=self.package.pk)

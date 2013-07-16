@@ -6,6 +6,7 @@ from taggit.managers import TaggableManager
 
 from .managers import ProjectManager
 from website.packages.models import Package
+from website.taxonomy.models import Taxonomy
 from website.users.models import User
 
 
@@ -69,7 +70,8 @@ class Project(models.Model):
             choices=NUM_USERS, help_text='Choose one of the options available.')
     repository_url = models.URLField(blank=True, null=True, help_text='Link '
             'to the public code repository for this project.')
-    tags = TaggableManager(verbose_name="Taxonomy")
+    tags = models.ManyToManyField(Taxonomy, related_name="projects",
+        verbose_name="Taxonomy")
     packages = models.ManyToManyField(Package, blank=True, null=True)
     script = models.TextField(help_text="JS/JSON blob", blank=True)
     project_url = models.URLField(blank=True, null=True)

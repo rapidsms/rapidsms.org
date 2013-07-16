@@ -9,6 +9,12 @@ class ProjectManager(models.Manager):
         """Return a queryset of drafts a user can edit"""
         drafts = self.filter(status=self.model.DRAFT)
         user_drafts = drafts.filter(
-            Q(creator=user) | Q(collaborators__in=[user,])
+            Q(creator=user) | Q(collaborators__in=[user, ])
         )
         return user_drafts
+
+    def get_related_projects(self, package):
+        "Returns a queryset with all projects that use a certain package."
+        active = self.filter(is_active=True)
+        projects = active.filter(packages__in=[package, ])
+        return projects

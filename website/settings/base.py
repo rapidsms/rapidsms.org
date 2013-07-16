@@ -142,6 +142,7 @@ INSTALLED_APPS = (
     'website.projects',
     'website.packages',
     'website.users',
+    'website.taxonomy',
 
     # External apps
     'south',

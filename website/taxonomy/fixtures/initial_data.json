@@ -1,0 +1,191 @@
+[
+    {
+        "pk": 1,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Appointments"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Scheduling & Reminders"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Supply & Logistics"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Registration"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Polling"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Lab results delivery"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Patient tracing"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Group coordination"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "EID (early infant diagnosis)"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "PMTCT (prevention of mother to child transmission)"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "HIV & AIDS"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Nutrition and micronutrient fulfillment"
+        }
+    },
+    {
+        "pk": 13,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "ANC (antenatal care)"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "PNC (postnatal care)"
+        }
+    },
+    {
+        "pk": 15,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Communication for behavior change"
+        }
+    },
+    {
+        "pk": 16,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Treatment adherence"
+        }
+    },
+    {
+        "pk": 17,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Pregnancy registration"
+        }
+    },
+    {
+        "pk": 18,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Birth notification"
+        }
+    },
+    {
+        "pk": 19,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Family planning"
+        }
+    },
+    {
+        "pk": 20,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Management of childhood illness"
+        }
+    },
+    {
+        "pk": 21,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Growth monitoring & Nutrition"
+        }
+    },
+    {
+        "pk": 22,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Routine immunizations"
+        }
+    },
+    {
+        "pk": 23,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Referrals"
+        }
+    },
+    {
+        "pk": 24,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Education"
+        }
+    },
+    {
+        "pk": 25,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "WASH (water and sanitation)"
+        }
+    },
+    {
+        "pk": 26,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "Accountability"
+        }
+    },
+    {
+        "pk": 27,
+        "model": "taxonomy.Taxonomy",
+        "fields": {
+            "name": "STI prevention & management"
+        }
+    }
+]

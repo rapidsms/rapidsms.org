@@ -39,7 +39,7 @@
         {% if object.version or object.release_date %}
             <p>
                 <strong>Current Release</strong><br />
-                <img src="{{ object.get_pypi_badge_url }}" /><br />
+                {{ object.version }}<br />
                 {% if object.release_date %}released {{ object.release_date|date }}{% endif %}
             </p>
         {% endif %}
@@ -77,6 +77,22 @@
             {{ object.license }}
         </p>
         {% endif %}
+
+        <!-- TAXONOMY -->
+        {% with tags=object.tags.all %}
+        {% if tags %}
+        <p>
+            <strong>Taxonomy</strong><br />
+            {% for tag in object.tags.all %}
+            <span class="label {% cycle 'label-success' 'label-info' 'label-inverse'%}"><a href="{% url 'haystack_search' %}?q={{tag}}">{{ tag }}</a></span>
+            {% endfor %}
+        </p>
+        {% endif %}
+        {% endwith %}
+
+        <!-- RELATED PROJECTS -->
+        {% load related_projects %}
+        {% show_related_projects object %}
     </div>
 
     <div id="right-panel" class="span9">
