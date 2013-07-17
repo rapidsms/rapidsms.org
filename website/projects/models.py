@@ -1,10 +1,13 @@
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.template.loader import render_to_string
 
 from taggit.managers import TaggableManager
 
 from .managers import ProjectManager
+from .tasks import send_email
 from website.packages.models import Package
 from website.taxonomy.models import Taxonomy
 from website.users.models import User
@@ -68,7 +71,8 @@ class Project(models.Model):
     technologies = models.TextField('Key technologies', blank=True, null=True)
     metrics = models.TextField(blank=True, null=True)
     num_users = models.IntegerField('Number of users', blank=True, null=True,
-            choices=NUM_USERS, help_text='Choose one of the options available.')
+            choices=NUM_USERS, help_text='Choose one of the options available.',
+            default=1)
     repository_url = models.URLField(blank=True, null=True, help_text='Link '
             'to the public code repository for this project.')
     tags = models.ManyToManyField(Taxonomy, related_name="projects",
@@ -93,12 +97,20 @@ class Project(models.Model):
         if user == self.creator or user in self.collaborators.all():
             return True
 
-    def change_status(self, new_status, send_notification=False):
+    def change_status(self, status, send_notification=False):
         """Change current status of instance and determines whether or not
         this instance is active"""
-        self.status = new_status
-        if new_status == self.PUBLISHED:
+        self.status = status
+        if status == self.PUBLISHED and not self.status == self.PUBLISHED:
             self.is_active = True
+            self.notify('users', status)
+        elif status == self.DENIED and not self.status == self.DENIED:
+            self.is_active = False
+            self.notify('users', status)
+        elif status == self.NEEDS_REVIEW and not (
+                self.status == self.NEEDS_REVIEW):
+            self.is_active = False
+            self.notify('admins', status)
         else:
             self.is_active = False
         self.save(update_fields=['status', 'is_active'])
@@ -116,6 +128,51 @@ class Project(models.Model):
                 result += ', ' if total > 2 else ' '
         return result
 
+    def _get_email_content(self, status):
+        "Loads and renders subject and body contents for email notifications."
+        context = {'object': self}
+        if status == self.NEEDS_REVIEW:
+            subject = render_to_string(
+                'projects/emails/project_needs_revision_subject.txt',
+                context
+            )
+            body = render_to_string(
+                'projects/emails/project_needs_revision_body.txt',
+                context
+            )
+        elif status == self.PUBLISHED:
+            subject = render_to_string(
+                'projects/emails/project_published_subject.txt',
+                context
+            )
+            body = render_to_string(
+                'projects/emails/project_published_subject.txt',
+                context
+            )
+        else: # last option: status == self.DENIED
+            subject = render_to_string(
+                'projects/emails/project_denied_subject.txt',
+                context
+            )
+            body = render_to_string(
+                'projects/emails/project_denied_subject.txt',
+                context
+            )
+        return subject, body
+
+
+
+    def _get_to_addresses(self, to):
+        """Returns a list of email addresses.
+
+        args:
+        to -> takes two possible values ('users', 'admins')
+        """
+        if to == 'users':
+            return [self.creator.eamil, ]
+        else:
+            return settings.PROJECT_EMAIL_ALERTS
+
     def get_absolute_url(self):
         return reverse('project_detail', args=(self.slug,))
 
@@ -127,6 +184,22 @@ class Project(models.Model):
 
     def get_model_name(self):
         return self._meta.verbose_name
+
+    def notify(self, to, status):
+        """Sends email notification to users or admins.
+
+        args:
+        to -> takes to possible values "users" or "admins"
+        status -> takes the status that needs to be notified.
+
+        eg.
+        notify('admins', 'Needs_Review') #send email alerting admins that
+        a project needs review.
+        """
+        subject, body = self._get_email_content(status)
+        to = self._get_to_addresses(to)
+        send_email(subject, body, settings.DEFAULT_FROM_EMAIL,
+            to)
 
     def save(self, *args, **kwargs):
         if not self.id:

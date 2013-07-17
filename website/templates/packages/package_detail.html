@@ -91,11 +91,16 @@
         {% endwith %}
 
         <!-- RELATED PROJECTS -->
-        <p><strong>Related Projects</strong></p>
         {% show_related_projects object as related_projects%}
-        {% for related_project in related_projects %}
-            <p><a href="{{related_project.get_absolute_url }}">{{related_project.name}}</a></p>
-        {% endfor %}
+        {% if related_projects %}
+            <h4><strong>Related Projects</strong></h4>
+            {% for related_project in related_projects %}
+            <div class="related_project">
+                <p><strong>{{ related_project.name }}</strong><br>
+                {{ related_project.description|truncatewords:20 }} <a href="{{related_project.get_absolute_url }}">Read more.</a></p>
+            </div>
+            {% endfor %}
+        {% endif %}
     </div>
 
     <div id="right-panel" class="span9">

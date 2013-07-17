@@ -18,9 +18,11 @@
     {% endwith %}
 {% else %}
     {% if user.user_type = 'I' %}
-    <img class="img-circle" src="{{ STATIC_URL }}img/no-photo.png" alt="{{ profile_user.username }}" width="{{ size }}" height="{{ size }}" />
+<!--     <img class="img-circle" src="{{ STATIC_URL }}img/no-photo.png" alt="{{ profile_user.username }}" width="{{ size }}" height="{{ size }}" /> -->
+    <i class="icon-user icon-5x"></i>
     {% else %}
-    <img class="" src="{{ STATIC_URL }}img/no-photo.png" alt="{{ profile_user.username }}" width="{{ size }}" height="{{ size }}" />
+<!--     <img class="" src="{{ STATIC_URL }}img/no-photo.png" alt="{{ profile_user.username }}" width="{{ size }}" height="{{ size }}" /> -->
+    <i class="icon-building icon-5x"></i>
     {% endif %}
 {% endif %}
 </div>

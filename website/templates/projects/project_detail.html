@@ -71,14 +71,16 @@
             {% endfor %}
         </p>
         {% endif %}
-        {% if object.tags %}
+        {% with tags=object.tags.all %}
+        {% if tags %}
         <p>
             <strong>Taxonomy</strong><br />
-            {% for tag in object.tags.all %}
+            {% for tag in tags %}
             <span class="label {% cycle 'label-success' 'label-info' 'label-inverse'%}"><a href="{% url 'haystack_search' %}?q={{tag}}">{{ tag }}</a></span>
             {% endfor %}
         </p>
         {% endif %}
+        {% endwith %}
 <!--         <section id="map-block">
             <div id="home-map" style="height: 200px; width: 300px"></div>
         </section> -->
