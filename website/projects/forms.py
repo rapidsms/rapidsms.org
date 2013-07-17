@@ -16,6 +16,7 @@ class ProjectCreateEditForm(forms.ModelForm):
         required=False)
     collaborators = AutoCompleteSelectMultipleField(lookup_class=UserLookup,
         required=False)
+    num_users = forms.ChoiceField(choices=Project.NUM_USERS)
 
     class Meta:
         model = Project
