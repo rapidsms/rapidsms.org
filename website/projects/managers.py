@@ -13,7 +13,7 @@ class ProjectManager(models.Manager):
         drafts = self.filter(status=self.model.DRAFT)
         user_drafts = drafts.filter(
             Q(creator=user) | Q(collaborators__in=[user, ])
-        )
+        ).distinct()
         return user_drafts
 
     def get_related_projects(self, user_or_package):
