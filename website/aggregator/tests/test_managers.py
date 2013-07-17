@@ -1,3 +1,5 @@
+import datetime
+
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
@@ -70,7 +72,10 @@ class FeedItemManagerTest(TestCase):
                 feed.save()
 
     def test_create_or_update_by_guid_item_doesnt_exists(self):
-        kwargs = {"feed_id": self.approved_feed.id}
+        kwargs = {
+            "feed_id": self.approved_feed.id,
+            "date_modified": datetime.datetime.now()
+        }
         items = FeedItem.objects.all()
         self.failIf(items.count())
         item = FeedItem.objects.create_or_update_by_guid("abc", **kwargs)
