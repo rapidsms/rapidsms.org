@@ -57,6 +57,12 @@
                 <td>{{ object.email }}</td>
             </tr>
             {% endif %}
+            {% if object.biography%}
+            <tr>
+                <th>Biography</th>
+                <td>{{ object.biography }}</td>
+            </tr>
+            {% endif %}
             {% if object.website_url %}
             <tr>
                 <th>Website</th>

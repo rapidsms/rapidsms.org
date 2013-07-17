@@ -58,7 +58,7 @@ class UserEditForm(UserChangeForm):
     class Meta:
         model = User
         fields = ('user_type', 'name', 'location', 'country', 'email',
-                'display_email', 'website_url', 'github_url',
+                'display_email', 'biography', 'website_url', 'github_url',
                 'gravatar_email', 'avatar', 'for_hire', 'password1',
                 'password2')
 
@@ -119,7 +119,7 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('user_type', 'name', 'location', 'country', 'email',
-                'display_email', 'website_url', 'github_url',
+                'display_email', 'biography', 'website_url', 'github_url',
                 'gravatar_email', 'avatar', 'for_hire',)
 
     def clean_country(self):
