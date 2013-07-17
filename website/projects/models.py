@@ -100,7 +100,6 @@ class Project(models.Model):
     def change_status(self, status, send_notification=False):
         """Change current status of instance and determines whether or not
         this instance is active"""
-        self.status = status
         if status == self.PUBLISHED and not self.status == self.PUBLISHED:
             self.is_active = True
             self.notify('users', status)
@@ -113,6 +112,7 @@ class Project(models.Model):
             self.notify('admins', status)
         else:
             self.is_active = False
+        self.status = status
         self.save(update_fields=['status', 'is_active'])
         return True
 
