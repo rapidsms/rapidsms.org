@@ -6,7 +6,7 @@ from .models import Country, Project
 def publish_projects(modeladmin, request, queryset):
     """Set project status to published"""
     for project in queryset:
-        project.status=Project.PUBLISHED
+        project.change_status(Project.PUBLISHED)
         project.save()
 publish_projects.short_description = "Publish selected projects"
 
@@ -14,7 +14,7 @@ publish_projects.short_description = "Publish selected projects"
 def deny_projects(modeladmin, request, queryset):
     """Set project status to denied"""
     for project in queryset:
-        project.status=Project.DENIED
+        project.change_status(Project.DENIED)
         project.save()
 deny_projects.short_description = "Deny selected projects"
 
