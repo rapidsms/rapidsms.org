@@ -37,6 +37,7 @@ class TestProjectCreateView(ViewTestMixin, WebsiteTestBase):
             'name': 'test-project',
             'description': 'Description',
             'tags': 'Tag',
+            'num_users': 1,
             'countries_1': [us.pk],
             'packages_1': [pkg.pk],
 
@@ -55,6 +56,7 @@ class TestProjectCreateView(ViewTestMixin, WebsiteTestBase):
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, self.template_name)
         self.assertFalse(response.context['form'].is_valid())
+
 
 class ProjectReviewRequestTest(ViewTestMixin, WebsiteTestBase):
     pass

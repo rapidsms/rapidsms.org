@@ -1,27 +1,18 @@
-# email test
-# https://docs.djangoproject.com/en/dev/topics/testing/#email-services
-from __future__ import absolute_import
-
-import datetime
-
-from mock import patch
-
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
-from django.core import mail
-from django.core.urlresolvers import reverse
 from django.test import TestCase
-from django.test.client import Client
-
+from mock import patch
 from django_push.subscriber.models import SubscriptionManager
 
 from .base import MockResponse
-from ..management.commands import send_pending_approval_email
+from ..models import FeedItem
 from .. import models
 
+__all__ = ['FeedItemManagerTest', ]
 
-class AggregatorTests(TestCase):
+
+class FeedItemManagerTest(TestCase):
 
     def setUp(self):
         Group.objects.all().delete()
@@ -77,26 +68,11 @@ class AggregatorTests(TestCase):
             ]
             for feed in feeds:
                 feed.save()
-                feed_item = models.FeedItem(feed=feed,
-                    title="%s Item" % feed.title, link=feed.public_url,
-                    date_modified=datetime.datetime.now(), guid=feed.title)
-                feed_item.save()
-                self.assertEqual(feed.__unicode__(), feed.title)
 
-            self.client = Client()
-
-    def test_feed_list_only_approved_and_active(self):
-        response = self.client.get(reverse('community-feed-list',
-            kwargs={'feed_type_slug': self.feed_type.slug}))
-        for item in response.context['object_list']:
-            self.assertEqual(models.APPROVED_FEED, item.feed.approval_status)
-
-    def test_management_command_sends_no_email_with_no_pending_feeds(self):
-        self.pending_feed.delete()
-        send_pending_approval_email.Command().handle_noargs()
-        self.assertEqual(0, len(mail.outbox))
-
-    def test_management_command_sends_email_with_pending_feeds(self):
-        send_pending_approval_email.Command().handle_noargs()
-        self.assertEqual(1, len(mail.outbox))
-        self.assertEqual(mail.outbox[0].to, [self.user.email])
+    def test_create_or_update_by_guid_item_doesnt_exists(self):
+        kwargs = {"feed_id": self.approved_feed.id}
+        items = FeedItem.objects.all()
+        self.failIf(items.count())
+        item = FeedItem.objects.create_or_update_by_guid("abc", **kwargs)
+        items = FeedItem.objects.all()
+        self.assertEqual(items.count(), 1)
