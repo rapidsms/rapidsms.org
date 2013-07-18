@@ -38,12 +38,15 @@
     <div class="well span3" id="refine-results">
         <h3>Refine Results</h3>
         <div id="reset-filters">
+            <br>
+            {% if filters %}
             <a href="#">Active Filters: </a><br>
             {% for filter, value in filters %}
                 {{ filter }}: {{ value }}<br>
             {% endfor %}
             <br>
             <a href="{{ request.path }}{% if query %}?q={{ query }}{% endif %}">Reset Filters</a>
+            {% endif %}
         </div>
         <ul class="nav nav-list">
         {% for field, facets in facets.fields.items %}

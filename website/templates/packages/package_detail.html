@@ -84,7 +84,7 @@
         <p>
             <strong>Taxonomy</strong><br />
             {% for tag in object.tags.all %}
-            <span class="label {% cycle 'label-success' 'label-info' 'label-inverse'%}"><a href="{% url 'haystack_search' %}?q={{tag}}">{{ tag }}</a></span>
+            <span class="label {% cycle 'label-success' 'label-info' 'label-inverse'%}"><a href="{% url "package_list" %}?q=&selected_facets=taxonomy_exact:{{tag|urlencode}}">{{ tag }}</a></span>
             {% endfor %}
         </p>
         {% endif %}
