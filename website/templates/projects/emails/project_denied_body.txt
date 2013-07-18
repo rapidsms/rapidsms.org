@@ -1,0 +1,1 @@
+After reviewing your project, {{ object }}, we concluded that it violated one or more of our publication guidelines and it will not be included on RapidSMS.org. If you think we have made a mistake, feel free to resubmit your work.

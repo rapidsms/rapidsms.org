@@ -24,18 +24,23 @@
 </div>
 
 <div class="row-fluid">
-    <div class="span3 text-center">
+    <div class="span3">
         {% include "includes/avatar.html" with user=object size="140" %}
         {% if object.for_hire %}
         <label class="label for-hire">{{ object }} is available for hire!</label>
         {% endif %}
 
         <!-- RELATED PROJECTS -->
+        {% show_related_projects object as related_projects %}
+        {% if related_projects %}
         <h4>Related Projects</h4>
-        {% show_related_projects object as related_projects%}
         {% for related_project in related_projects %}
-            <p><a href="{{related_project.get_absolute_url }}">{{related_project.name}}</a></p>
+            <div class="related_project">
+                <p><strong>{{ related_project.name }}</strong><br>
+                {{ related_project.description|truncatewords:20 }} <a href="{{related_project.get_absolute_url }}">Read more.</a></p>
+            </div>
         {% endfor %}
+        {% endif %}
     </div>
     <div class="span9">
         <table id="details" class="table">
@@ -50,6 +55,12 @@
             <tr>
                 <th>Email</th>
                 <td>{{ object.email }}</td>
+            </tr>
+            {% endif %}
+            {% if object.biography%}
+            <tr>
+                <th>Biography</th>
+                <td>{{ object.biography }}</td>
             </tr>
             {% endif %}
             {% if object.website_url %}
