@@ -27,4 +27,3 @@ class RapidSMSOAuthRedirectTest(TestCase):
 
     def test_GET(self):
         response = self.client.get(self.url)
-#        import pdb; pdb.set_trace()

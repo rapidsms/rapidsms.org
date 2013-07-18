@@ -87,7 +87,6 @@ class ViewTestMixin(object):
         requires that the page be renderable in the current test context
         (possibly requiring additional, unrelated setup).
         """
-        # import pdb; pdb.set_trace()
         self.assertEqual(response.status_code, status_code)
         response_url = response['location']
         parsed1 = urlparse(response_url)
