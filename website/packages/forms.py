@@ -11,7 +11,7 @@ class PackageCreateEditForm(forms.ModelForm):
             widget=forms.RadioSelect, choices=Package.PACKAGE_TYPES.items(),
             initial=Package.APPLICATION)
     tags = AutoCompleteSelectMultipleField(lookup_class=TaxonomyLookup,
-        required=False)
+        required=False, label='Taxonomy')
 
     class Meta:
         model = Package

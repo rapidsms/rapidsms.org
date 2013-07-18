@@ -13,7 +13,7 @@ class ProjectCreateEditForm(forms.ModelForm):
     packages = AutoCompleteSelectMultipleField(lookup_class=PackageLookup,
         required=False)
     tags = AutoCompleteSelectMultipleField(lookup_class=TaxonomyLookup,
-        required=False)
+        required=False, label='Taxonomy')
     collaborators = AutoCompleteSelectMultipleField(lookup_class=UserLookup,
         required=False)
     num_users = forms.ChoiceField(choices=Project.NUM_USERS)
