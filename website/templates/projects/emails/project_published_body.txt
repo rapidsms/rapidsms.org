@@ -1,1 +1,3 @@
-project_published_body.txt
+Your project has been published!
+
+Please visit http://{{ site.domain }}{{ object.get_absolute_url }} to review your project.

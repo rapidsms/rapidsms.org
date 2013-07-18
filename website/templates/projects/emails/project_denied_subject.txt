@@ -1,1 +1,1 @@
-Your project has been denied.
+Your project, {{ object }}, has not been admitted for publication on RapidSMS.org

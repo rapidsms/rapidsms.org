@@ -1,0 +1,3 @@
+A new project has been submitted for your review. To publish or deny a project visit the link below.
+
+http://{{ site.domain }}{% url 'admin:projects_project_change' object.id %}
