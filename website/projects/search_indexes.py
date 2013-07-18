@@ -8,16 +8,16 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     countries = indexes.MultiValueField(faceted=True)
     model = indexes.CharField(model_attr='get_model_name', faceted=True)
     name = indexes.CharField(model_attr='name')
-    is_active = indexes.BooleanField(model_attr='is_active')
     taxonomy = indexes.MultiValueField(faceted=True)
     collaborators = indexes.MultiValueField(faceted=True)
+    status = indexes.CharField(model_attr='status')
     num_users = indexes.CharField(model_attr='num_users', faceted=True)
 
     def get_model(self):
         return Project
 
     def index_queryset(self, using=None):
-        return self.get_model().objects.filter(is_active=True)
+        return self.get_model().objects.filter(status=Project.PUBLISHED)
 
     def prepare_countries(self, obj):
         return [country.name for country in obj.countries.all()]

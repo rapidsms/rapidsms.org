@@ -18,7 +18,7 @@ class ProjectManager(models.Manager):
 
     def get_related_projects(self, user_or_package):
         """"Returns a queryset with all projects that are related."""
-        active = self.filter(is_active=True)
+        active = self.filter(status=self.model.PUBLISHED)
         if isinstance(user_or_package, User):
             user = user_or_package
             projects = active.filter(collaborators__in=[user, ])
