@@ -42,6 +42,10 @@
                 <div class="switch" data-on-label="Yes" data-off-label="No">
                     {{ field|add_class:"span6" }}
                 </div>
+                {% elif field.name = 'display_email' %}
+                <div class="switch" data-on-label="Yes" data-off-label="No">
+                    {{ field|add_class:"span6" }}
+                </div>
                 {% elif field.name == 'user_type' %}
                 {% for value, label in field.field.choices %}
                 <label class="radio{% if field.value == value %} checked{% endif %}">

@@ -22,14 +22,14 @@ deny_projects.short_description = "Deny selected projects"
 class ProjectAdmin(admin.ModelAdmin):
     actions = [publish_projects, deny_projects, ]
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ('name', 'updated', 'status')
-    list_filter = ('status',)
+    list_display = ('name', 'updated', 'status', 'feature')
+    list_filter = ('status', 'feature')
     readonly_fields = ('created', 'updated')
     filter_horizontal = ('countries',)
     fieldsets = (
         (None,
             {'fields': ('created', 'updated', 'creator', 'name', 'slug',
-                    'status', 'is_active')},
+                    'status', 'is_active', 'feature')},
         ),
         ('Project Information',
             {'fields': ('started', 'countries', 'description', 'challenges',

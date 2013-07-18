@@ -13,8 +13,7 @@ from .forms import FacetedSearchListingForm
 
 MODEL_FACETS = {
     'package': ('pkg_type', 'license'),
-    'project': ('countries', 'creator', 'taxonomy', 'collaborators',
-        'num_users'),
+    'project': ('countries', 'taxonomy', 'collaborators', 'num_users'),
     'user': ('countries', 'for_hire', 'user_type'),
 }
 
@@ -27,6 +26,7 @@ class Home(TemplateView):
         map_data = {}
         # TODO: refactor the logic to get N project per country
         # Add Caching!
+        feature_project = Project.objects.get_feature_project()
         projects = Project.objects.all()
         for project in projects:
             data = {'name': project.name,
@@ -35,7 +35,8 @@ class Home(TemplateView):
             for country in project.countries.all():
                 map_data[country.code] = data
         context.update({
-            'map_data_json':  json.dumps(map_data)
+            'map_data_json':  json.dumps(map_data),
+            'feature_project': feature_project
         })
         return context
 

@@ -12,7 +12,7 @@ from ..mixins import AuthorEditMixin, IsActiveObjectMixin, LoginRequiredMixin
 from .forms import PackageCreateEditForm, PackageFlagForm
 from .models import Package
 from .tasks import update_package
-from .tasks import send_email
+from website.tasks import send_email
 
 
 class PackageCreate(LoginRequiredMixin, CreateView):

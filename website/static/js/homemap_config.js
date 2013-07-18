@@ -7,6 +7,8 @@ define(['jquery', 'underscore', 'backbone', 'd3', 'datamap'], function ($, _, Ba
                        '<%= geography.properties.name %>' +
                        '</div>';
             return new Map({
+                // restore scope: 'world'
+                // scope: 'africa',
                 scope: 'world',
                 el: $('#home-map'),
                 geography_config: {

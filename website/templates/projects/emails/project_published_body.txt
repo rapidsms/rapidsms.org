@@ -1,0 +1,3 @@
+Your project has been published!
+
+Please visit http://{{ site.domain }}{{ object.get_absolute_url }} to review your project.
