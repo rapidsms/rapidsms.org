@@ -51,7 +51,6 @@ class Project(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(default=DRAFT, max_length=1, choices=STATUS)
-    is_active = models.BooleanField('Active', default=False)
     feature = models.BooleanField('Feature on Homepage', default=False)
 
     collaborators = models.ManyToManyField(User, related_name='projects',
@@ -100,20 +99,17 @@ class Project(models.Model):
     def change_status(self, status, send_notification=False):
         """Change current status of instance and determines whether or not
         this instance is active"""
+        #send email only when a change in status occurs
         if status == self.PUBLISHED and not self.status == self.PUBLISHED:
-            self.is_active = True
             self.notify('users', status)
         elif status == self.DENIED and not self.status == self.DENIED:
-            self.is_active = False
             self.notify('users', status)
         elif status == self.NEEDS_REVIEW and not (
                 self.status == self.NEEDS_REVIEW):
-            self.is_active = False
             self.notify('admins', status)
-        else:
-            self.is_active = False
+        #set new status and save changes
         self.status = status
-        self.save(update_fields=['status', 'is_active'])
+        self.save(update_fields=['status', ])
         return True
 
     def display_countries(self):
