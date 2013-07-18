@@ -43,6 +43,18 @@
             {{ object.get_num_users_display }} users
         </p>
         {% endif %}
+        {% if object.repository_url %}
+        <p>
+            <strong>Code Repository: </strong>
+            <a href="{{ object.repository_url }}">{{ object.repository_url }}</a>
+        </p>
+        {% endif %}
+        {% if object.project_url %}
+        <p>
+            <strong>Project Website: </strong>
+            <a href="{{ object.project_url }}">{{ object.project_url }}</a>
+        </p>
+        {% endif %}
         {% if object.files %}
         <p>
             <strong>Attached File: </strong>
@@ -55,12 +67,6 @@
             {% for collaborator in object.collaborators.all %}
             <a href="{{ collaborator.get_absolute_url }}" class="label label-link"><i class="icon-user icon-white"></i> {{ collaborator }}</a><br />
             {% endfor %}
-        </p>
-        {% endif %}
-        {% if object.repository_url %}
-        <p>
-            <strong>Repo</strong><br />
-            {{ object.repository_url }}
         </p>
         {% endif %}
         {% if object.packages.count %}
@@ -81,9 +87,6 @@
         </p>
         {% endif %}
         {% endwith %}
-<!--         <section id="map-block">
-            <div id="home-map" style="height: 200px; width: 300px"></div>
-        </section> -->
 
     </div>
     <div id="right-panel" class="span9">
