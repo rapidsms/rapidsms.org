@@ -29,7 +29,7 @@ class ProjectAdmin(admin.ModelAdmin):
     fieldsets = (
         (None,
             {'fields': ('created', 'updated', 'creator', 'name', 'slug',
-                    'status', 'is_active', 'feature')},
+                    'status', 'feature')},
         ),
         ('Project Information',
             {'fields': ('started', 'countries', 'description', 'challenges',
