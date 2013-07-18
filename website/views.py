@@ -12,7 +12,7 @@ from .forms import FacetedSearchListingForm
 
 
 MODEL_FACETS = {
-    'package': ('pkg_type', 'license'),
+    'package': ('pkg_type', 'license', 'taxonomy',),
     'project': ('countries', 'taxonomy', 'collaborators', 'num_users'),
     'user': ('countries', 'for_hire', 'user_type'),
 }
