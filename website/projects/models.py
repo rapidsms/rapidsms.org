@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
@@ -7,7 +8,7 @@ from django.template.loader import render_to_string
 from taggit.managers import TaggableManager
 
 from .managers import ProjectManager
-from .tasks import send_email
+from website.tasks import send_email
 from website.packages.models import Package
 from website.taxonomy.models import Taxonomy
 from website.users.models import User
@@ -130,14 +131,15 @@ class Project(models.Model):
 
     def _get_email_content(self, status):
         "Loads and renders subject and body contents for email notifications."
-        context = {'object': self}
+        site = Site.objects.get(pk=1)
+        context = {'object': self, 'site': site}
         if status == self.NEEDS_REVIEW:
             subject = render_to_string(
-                'projects/emails/project_needs_revision_subject.txt',
+                'projects/emails/project_needs_review_subject.txt',
                 context
             )
             body = render_to_string(
-                'projects/emails/project_needs_revision_body.txt',
+                'projects/emails/project_needs_review_body.txt',
                 context
             )
         elif status == self.PUBLISHED:
@@ -160,8 +162,6 @@ class Project(models.Model):
             )
         return subject, body
 
-
-
     def _get_to_addresses(self, to):
         """Returns a list of email addresses.
 
@@ -169,7 +169,7 @@ class Project(models.Model):
         to -> takes two possible values ('users', 'admins')
         """
         if to == 'users':
-            return [self.creator.eamil, ]
+            return [self.creator.email, ]
         else:
             return settings.PROJECT_EMAIL_ALERTS
 
