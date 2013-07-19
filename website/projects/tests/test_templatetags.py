@@ -1,8 +1,8 @@
 from django.test import RequestFactory
 from django.test import TestCase
-from django.template import Context, Template
 
 from ..templatetags.facet_tags import faceted_next_prev_querystring
+from ..templatetags.facet_tags import remove_facet
 
 
 class FacetTagsTestCase(TestCase):
@@ -11,21 +11,15 @@ class FacetTagsTestCase(TestCase):
     def setUp(self):
         self.request_factory = RequestFactory()
 
-    def tag_test(self, template, context, output):
-        t = Template('{% load facet_tags %}' + template)
-        c = Context(context)
-        self.assertEqual(t.render(c).strip(), output)
-
     def test_remove_facet(self):
         """Case where selected_facets is wholly removed"""
         request = self.request_factory.get(
             '/page',
             data={'q': u'', 'selected_facets': u'facet:Yes'}
         )
-        template = "{% remove_facet request value %}"
-        context = {"request": request, "value": 'Yes'}
-        output = u'<a href="?q="><i class="icon-remove-sign"></i></a>'
-        self.tag_test(template, context, output)
+        facet_value = 'Yes'
+        qs = remove_facet(request, facet_value)
+        self.assertNotIn('selected_facets%3A:%s' % facet_value, qs)
 
     def test_partial_remove_facet(self):
         """Case where 1 of N selected facets is removed"""
@@ -33,10 +27,11 @@ class FacetTagsTestCase(TestCase):
             '/page',
             data={'q': u'', 'selected_facets': [u'facet:Yes', u'facet1:Blue']}
         )
-        template = "{% remove_facet request value %}"
-        context = {"request": request, "value": 'Blue'}
-        output = u'<a href="?q=&amp;selected_facets=facet%3AYes"><i class="icon-remove-sign"></i></a>'
-        self.tag_test(template, context, output)
+        removed_facet_value = 'Yes'
+        retained_facet_value = 'Blue'
+        qs = remove_facet(request, removed_facet_value)
+        self.assertNotIn('selected_facets%3A:%s' % removed_facet_value, qs)
+        self.assertIn('selected_facets%3A:%s' % retained_facet_value, qs)
 
     def test_faceted_next_prev_querystring(self):
         request = self.request_factory.get(

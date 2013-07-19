@@ -42,7 +42,7 @@
             {% if filters %}
             <strong>Active Filters: </strong><br>
             {% for facet, value in filters %}
-                {{ facet }}: {{ value }} {% remove_facet request value %}<br />
+                {{ facet }}: {{ value }} <a href="{% remove_facet request value %}"><i class="icon-remove-sign"></i></a><br />
             {% endfor %}
             <br>
             <a href="{{ request.path }}{% if query %}?q={{ query }}{% endif %}">Reset Filters</a>
