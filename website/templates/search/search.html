@@ -88,6 +88,9 @@
                     {% else %}
                         {{ form.q|attr:"placeholder:Search All of RapidSMS.org" }}
                     {% endif %}
+                    {% for facet in form.selected_facets %}
+                        <input type="hidden" name="selected_facets" value="{{ facet }}" />
+                    {% endfor %}
                     <i class="input-icon fui-search"></i>
                 </div>
             </form>
