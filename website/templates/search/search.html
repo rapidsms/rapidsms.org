@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load widget_tweaks scribbler_tags %}
+{% load widget_tweaks scribbler_tags facet_tags %}
 
 {% block title %}{{ model_type|default:"search result"|add:"s"|title }}{% endblock title %}
 {% block body_id %}search{% endblock body_id %}
@@ -40,9 +40,9 @@
         <div id="reset-filters">
             <br>
             {% if filters %}
-            <a href="#">Active Filters: </a><br>
-            {% for filter, value in filters %}
-                {{ filter }}: {{ value }}<br>
+            <strong>Active Filters: </strong><br>
+            {% for facet, value in filters %}
+                {{ facet }}: {{ value }} {% remove_facet request value %}<br />
             {% endfor %}
             <br>
             <a href="{{ request.path }}{% if query %}?q={{ query }}{% endif %}">Reset Filters</a>
