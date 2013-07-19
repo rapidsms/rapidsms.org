@@ -1,6 +1,8 @@
 import json
 
+from django.core.paginator import Paginator, InvalidPage
 from django.http import Http404
+from django.shortcuts import redirect, render_to_response
 from django.views.generic import TemplateView
 
 from haystack.query import SearchQuerySet
@@ -29,9 +31,11 @@ class Home(TemplateView):
         feature_project = Project.objects.get_feature_project()
         projects = Project.objects.all()
         for project in projects:
-            data = {'name': project.name,
-                     'description': project.description,
-                     'fillKey': 'project',}
+            data = {
+                'name': project.name,
+                'description': project.description,
+                'fillKey': 'project'
+            }
             for country in project.countries.all():
                 map_data[country.code] = data
         context.update({
@@ -53,7 +57,41 @@ class Help(TemplateView):
     template_name = 'website/help.html'
 
 
-class FacetedSearchListingView(FacetedSearchView):
+class FacetedSearchCustomView(FacetedSearchView):
+    """Overrides various default methods to allow for additional context, smoother
+       UX for faceting
+    """
+
+    def build_page(self):
+        """
+        Paginates the results appropriately.
+
+        Overriden to redirect to page 1 if a page_no is not found
+        """
+        try:
+            page_no = int(self.request.GET.get('page', 1))
+        except (TypeError, ValueError):
+            raise Http404("Not a valid number for page.")
+
+        if page_no < 1:
+            raise Http404("Pages should be 1 or greater.")
+
+        start_offset = (page_no - 1) * self.results_per_page
+        self.results[start_offset:start_offset + self.results_per_page]
+
+        paginator = Paginator(self.results, self.results_per_page)
+
+        try:
+            page = paginator.page(page_no)
+        except InvalidPage:
+            # Redirect to page 1 of the
+            path = self.request.path
+            qs = self.request.GET.copy()
+            qs['page'] = 1
+            url = '%s?%s' % (path, qs.urlencode())
+            return redirect(url)
+
+        return (paginator, page)
 
     def clean_filters(self):
         "Returns a list of tuples (filter, value) of applied facets"
@@ -66,6 +104,31 @@ class FacetedSearchListingView(FacetedSearchView):
             field = field.replace('_', ' ').replace('exact', '').title()
             filters.append((field, value))
         return filters
+
+    def create_response(self):
+        """
+        Generates the actual HttpResponse to send back to the user.
+
+        Overriding to allow the redirect to pass through from overriden build_page
+        """
+        try:
+            (paginator, page) = self.build_page()
+        except ValueError:
+            return self.build_page()
+
+        context = {
+            'query': self.query,
+            'form': self.form,
+            'page': page,
+            'paginator': paginator,
+            'suggestion': None,
+        }
+
+        if self.results and hasattr(self.results, 'query') and self.results.query.backend.include_spelling:
+            context['suggestion'] = self.form.get_suggestion()
+
+        context.update(self.extra_context())
+        return render_to_response(self.template, context, context_instance=self.context_class(self.request))
 
     def extra_context(self):
         extra = super(FacetedSearchView, self).extra_context()
@@ -93,7 +156,7 @@ def search_listing(request, model_type):
     for facet in MODEL_FACETS[model_type]:
         sqs = sqs.facet(facet)
     view = search_view_factory(
-        view_class=FacetedSearchListingView,
+        view_class=FacetedSearchCustomView,
         template='search/search.html',
         searchqueryset=sqs,
         form_class=FacetedSearchListingForm,
