@@ -19,7 +19,7 @@ class FacetTagsTestCase(TestCase):
         )
         facet_value = 'Yes'
         qs = remove_facet(request, facet_value)
-        self.assertNotIn('selected_facets%3A:%s' % facet_value, qs)
+        self.assertNotIn('selected_facets=facet%3A:{0}'.format(facet_value), qs)
 
     def test_partial_remove_facet(self):
         """Case where 1 of N selected facets is removed"""
@@ -30,8 +30,8 @@ class FacetTagsTestCase(TestCase):
         removed_facet_value = 'Yes'
         retained_facet_value = 'Blue'
         qs = remove_facet(request, removed_facet_value)
-        self.assertNotIn('selected_facets%3A:%s' % removed_facet_value, qs)
-        self.assertIn('selected_facets%3A:%s' % retained_facet_value, qs)
+        self.assertNotIn('selected_facets=facet%3A:{0}'.format(removed_facet_value), qs)
+        self.assertIn('selected_facets=facet1%3A{0}'.format(retained_facet_value), qs)
 
     def test_faceted_next_prev_querystring(self):
         request = self.request_factory.get(
@@ -40,4 +40,4 @@ class FacetTagsTestCase(TestCase):
         )
         page_number = 5
         qs = faceted_next_prev_querystring(request, page_number)
-        self.assertIn('page=%s' % page_number, qs)
+        self.assertIn('page={0}'.format(page_number), qs)
