@@ -5,6 +5,7 @@ from urllib import urlencode
 register = template.Library()
 
 
+@register.simple_tag
 def remove_facet(request, facet_value):
     """"Returns a string that extracts the supplied facet_value's facect from
         the current querystring
