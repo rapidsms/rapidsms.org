@@ -138,9 +138,10 @@ class FacetedSearchCustomView(FacetedSearchView):
             extra['facets'] = self.form.search().facet_counts()
         else:
             extra['facets'] = self.results.facet_counts()
-        model_type = self.request.path.split('/')[1].rstrip('s')
 
+        model_type = self.request.path.split('/')[1].rstrip('s')
         extra['model_type'] = model_type
+
         if model_type in ['package', 'project']:
             extra['model_create'] = '%s_create' % model_type
         return extra
