@@ -96,7 +96,8 @@ class FacetedSearchCustomView(FacetedSearchView):
     def clean_filters(self):
         "Returns a list of tuples (filter, value) of applied facets"
         filters = []
-        facets = self.form.selected_facets
+        # get distinct facets
+        facets = list(set(self.form.selected_facets))
         for facet in facets:
             if ":" not in facet:
                 continue
