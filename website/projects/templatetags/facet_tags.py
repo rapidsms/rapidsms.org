@@ -35,7 +35,7 @@ def remove_facet(request, facet_value):
 
 @register.simple_tag
 def faceted_next_prev_querystring(request, page_number):
-    """"Returns a template that provides the URL required to pagination in
+    """"Returns a string that provides the querystring required to paginate in
         search results while retaining the selected facets
 
         Example:
