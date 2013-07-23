@@ -7,7 +7,7 @@ define(['jquery', 'underscore', 'backbone', 'd3', 'topojson', 'datamaps'],
             },
             bubbles: function(bubbles){
                 var map = this.draw()
-                return map.bubbles(bubbles, {
+                map.bubbles(bubbles, {
                     popupTemplate:function (geography, data) {
                         var node = '<div class="hoverinfo">' +
                            '<% if (data.name) { %> <strong><%= data.name %></strong><% } %>' +
@@ -18,10 +18,11 @@ define(['jquery', 'underscore', 'backbone', 'd3', 'topojson', 'datamaps'],
                         return _.template(node, {'data': data})
                     }
                 });
+                return this
             },
             init: function(scope, data, fills, element) {
                 this.map = new Datamap({
-                    element: element,
+                    element: document.getElementById(element),
                     scope: 'world',
                     geographyConfig: {
                         hideAntarctica: false,
@@ -39,6 +40,10 @@ define(['jquery', 'underscore', 'backbone', 'd3', 'topojson', 'datamaps'],
                     },
                     fills: fills,
                     data: data
+                });
+
+                $("#"+element).on('map-click', function(event, data){
+                   console.log(data);
                 });
                 return this
             }

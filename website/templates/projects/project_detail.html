@@ -148,13 +148,13 @@
         var bubbles = {{ map_bubbles|safe }};
         var fills = {{ fills|safe }};
         var homemap_data = {};
-        var element = document.getElementById("home-map")
+        var element_id = "home-map"
         var scope = {{ scope|safe }}
 
         require(['homemap_config'], function (HomeMap) {
             // Load dependencies for the map on the homepage.
             // Once homemap_data is provided, initialize the map and render it
-            HomeMap.init(scope, homemap_data, fills, element).bubbles(bubbles);
+            HomeMap.init(scope, homemap_data, fills, element_id).bubbles(bubbles);
         });
     </script>
 {% endblock %}
