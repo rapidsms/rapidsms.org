@@ -21,8 +21,7 @@ class ProjectQueryset(QuerySet):
             return self
         else:
             random_indexes = random.sample(xrange(length), max_number)
-            conditions = [Q(id=pk) for pk in random_indexes]
-            return self.filter(reduce(OR, conditions))
+            return [self[index] for index in random_indexes]
 
 
 class ProjectManager(models.Manager):

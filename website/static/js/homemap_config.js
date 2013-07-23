@@ -1,9 +1,10 @@
-define(['jquery', 'underscore', 'backbone', 'd3', 'topojson', 'datamaps'],
-    function ($, _, Backbone, d3, topojson, Datamap) {
+define(['jquery', 'underscore', 'd3', 'topojson', 'datamaps'],
+    function ($, _, d3, topojson, Datamap) {
         return {
             draw: function(){
                 var map = this.map
-                return map.draw()
+                map.draw()
+                return map
             },
             bubbles: function(bubbles){
                 var map = this.draw()
@@ -18,6 +19,12 @@ define(['jquery', 'underscore', 'backbone', 'd3', 'topojson', 'datamaps'],
                         return _.template(node, {'data': data})
                     }
                 });
+
+                // hack to bind to a onclick event
+                this.map.svg.selectAll(".datamaps-bubble").on('click', function(){
+                    data = JSON.parse(this.dataset.info)
+                    window.location = data.url
+                })
                 return this
             },
             init: function(scope, data, fills, element) {
@@ -39,12 +46,10 @@ define(['jquery', 'underscore', 'backbone', 'd3', 'topojson', 'datamaps'],
                         return {path: path, projection: projection};
                     },
                     fills: fills,
-                    data: data
+                    data: data,
+
                 });
 
-                $("#"+element).on('map-click', function(event, data){
-                   //console.log(data);
-                });
                 return this
             }
     };

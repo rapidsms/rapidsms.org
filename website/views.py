@@ -41,6 +41,8 @@ class Home(TemplateView):
         published_projects = Project.objects.published()
         if published_projects:
             random_project = random.choice(published_projects)
+            # There is no a right way to determine the scope for a project
+            # with multiple scopes.
             country = random_project.countries.all()[0]
             scope = country.scope
         else:

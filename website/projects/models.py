@@ -183,6 +183,7 @@ class Project(models.Model):
         return {'name': self.name,
                 'radius': random.choice(radius_options),
                 'fillKey': 'project',
+                'url': self.get_absolute_url(),
                 'description': self.description,
                 'latitude': country.lat,
                 'longitude': country.lon,

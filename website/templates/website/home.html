@@ -46,10 +46,11 @@
 
 {% block extra-js %}
     <script>
-        // TODO: To get data from Django into the map, replace the declaration
         // below with the something like the following (assuming data from the
         // view). (Leave the require() call the same):
         var bubbles = {{ map_bubbles|safe }};
+        // Hack to allow for clickable links
+        window.bubbles = bubbles
         var fills = {{ fills|safe }};
         var homemap_data = {}; //
         var element = "home-map"
@@ -57,7 +58,8 @@
         require(['homemap_config'], function (HomeMap) {
             // Load dependencies for the map on the homepage.
             // Once homemap_data is provided, initialize the map and render it
-            HomeMap.init(scope, homemap_data, fills, element).bubbles(bubbles);
+            HomeMap.init(scope, homemap_data, fills, element)
+                   .bubbles(bubbles);
         });
     </script>
 {% endblock %}
