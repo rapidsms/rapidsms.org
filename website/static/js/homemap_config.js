@@ -43,7 +43,7 @@ define(['jquery', 'underscore', 'backbone', 'd3', 'topojson', 'datamaps'],
                 });
 
                 $("#"+element).on('map-click', function(event, data){
-                   console.log(data);
+                   //console.log(data);
                 });
                 return this
             }
