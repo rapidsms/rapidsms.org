@@ -139,6 +139,9 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.sitemaps',
 
+    # External apps that other apps depend on
+    'datamaps',
+
     'website.taxonomy',
     'website.aggregator',
     'website.projects',
@@ -157,7 +160,6 @@ INSTALLED_APPS = (
     'djcelery',
     'taggit',
     'django_push.subscriber',
-    'datamaps',
 )
 
 # A sample logging configuration. The only tangible logging
