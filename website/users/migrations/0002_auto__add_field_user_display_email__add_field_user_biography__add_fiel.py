@@ -6,18 +6,31 @@ from django.db import models
 
 
 class Migration(SchemaMigration):
-    depends_on = (
-        ("website.projects", "0001_initial"),
-    )
 
     def forwards(self, orm):
+        # Adding field 'User.display_email'
+        db.add_column(u'users_user', 'display_email',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
+                      keep_default=False)
+
+        # Adding field 'User.biography'
+        db.add_column(u'users_user', 'biography',
+                      self.gf('django.db.models.fields.TextField')(null=True, blank=True),
+                      keep_default=False)
+
         # Adding field 'User.country'
         db.add_column(u'users_user', 'country',
-                      self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Country'], null=True, blank=True),
+                      self.gf('django.db.models.fields.related.ForeignKey')(to=orm['datamaps.Country'], null=True, blank=True),
                       keep_default=False)
 
 
     def backwards(self, orm):
+        # Deleting field 'User.display_email'
+        db.delete_column(u'users_user', 'display_email')
+
+        # Deleting field 'User.biography'
+        db.delete_column(u'users_user', 'biography')
+
         # Deleting field 'User.country'
         db.delete_column(u'users_user', 'country_id')
 
@@ -43,17 +56,38 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'projects.country': {
-            'Meta': {'ordering': "['name']", 'unique_together': "(('code', 'name'),)", 'object_name': 'Country'},
-            'code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '3'}),
+        u'datamaps.country': {
+            'Meta': {'ordering': "('name',)", 'object_name': 'Country'},
+            'code': ('django.db.models.fields.CharField', [], {'max_length': '3'}),
+            'color': ('django.db.models.fields.CharField', [], {'default': "'#EDDC4E'", 'max_length': '8'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
+            'lat': ('django.db.models.fields.FloatField', [], {'default': '0'}),
+            'lon': ('django.db.models.fields.FloatField', [], {'default': '0'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
+            'radius': ('django.db.models.fields.PositiveIntegerField', [], {'default': '10'}),
+            'scope': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['datamaps.Scope']", 'null': 'True', 'blank': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'}),
+            'topo': ('django.db.models.fields.TextField', [], {'blank': 'True'})
+        },
+        u'datamaps.scope': {
+            'Meta': {'object_name': 'Scope'},
+            'code': ('django.db.models.fields.CharField', [], {'max_length': '2'}),
+            'color': ('django.db.models.fields.CharField', [], {'default': "'#EDDC4E'", 'max_length': '8'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'lat': ('django.db.models.fields.FloatField', [], {'default': '0'}),
+            'lon': ('django.db.models.fields.FloatField', [], {'default': '0'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
+            'scale': ('django.db.models.fields.FloatField', [], {'default': '0'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'}),
+            'topo': ('django.db.models.fields.TextField', [], {'blank': 'True'})
         },
         u'users.user': {
             'Meta': {'object_name': 'User'},
             'avatar': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'country': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['projects.Country']", 'null': 'True', 'blank': 'True'}),
+            'biography': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'country': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['datamaps.Country']", 'null': 'True', 'blank': 'True'}),
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'display_email': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '75'}),
             'for_hire': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'github_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),

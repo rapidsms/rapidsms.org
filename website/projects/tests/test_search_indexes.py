@@ -1,6 +1,5 @@
 from django.test import TestCase
 
-from .factories import ProjectFactory
 from ..models import Project
 from ..search_indexes import ProjectIndex
 
