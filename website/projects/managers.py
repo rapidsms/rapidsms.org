@@ -15,8 +15,11 @@ class ProjectQueryset(QuerySet):
         return self.filter(countries__scope=scope).distinct()
 
     def get_random_sample(self):
-        """Returns a random Generator with at most 'max_number' of elements
-        or an empty tuple.
+        """Returns a random sample Generator.
+
+        The number of elements in the Generator is defined by the
+        setting, 'DISPLAY_NUM_PROJECTS', and defaults to the length
+        of the queryset.
         """
         length = self.count() or 1
         sample_size = getattr(settings, 'DISPLAY_NUM_PROJECTS', length)
