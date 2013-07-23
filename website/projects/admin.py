@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Country, Project
+from .models import Project
 
 
 def publish_projects(modeladmin, request, queryset):
@@ -43,4 +43,3 @@ class CountryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Project, ProjectAdmin)
-admin.site.register(Country, CountryAdmin)

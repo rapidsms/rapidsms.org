@@ -1,13 +1,13 @@
 import json
+import random
 
+from datamaps.models import Scope
 from django.http import Http404
 from django.views.generic import TemplateView
-
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView, search_view_factory
 
 from website.projects.models import Project
-
 from .forms import FacetedSearchListingForm
 
 
@@ -24,19 +24,30 @@ class Home(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Home, self).get_context_data(**kwargs)
         map_data = {}
-        # TODO: refactor the logic to get N project per country
+        map_bubbles = []
+        fills = {'defaultFill': '#EDDC4E', 'project': '#1f77b4'}
+        # TODO: make this more efficient
         # Add Caching!
+
         feature_project = Project.objects.get_feature_project()
-        projects = Project.objects.all()
+        scope = random.choice(Scope.objects.all())
+        # Only projects that belong to this scope will render
+        countries = scope.country_set.all()
+        projects = Project.objects.published().in_countries(countries)
+
         for project in projects:
-            data = {'name': project.name,
-                     'description': project.description,
-                     'fillKey': 'project',}
+            data = project.get_popup_data()
             for country in project.countries.all():
+                bubble = project.get_bubble_data(country)
+                map_bubbles.append(bubble)
                 map_data[country.code] = data
+
         context.update({
-            'map_data_json':  json.dumps(map_data),
-            'feature_project': feature_project
+            'map_data':  json.dumps(map_data),
+            'feature_project': feature_project,
+            'fills': json.dumps(fills),
+            'map_bubbles': json.dumps(map_bubbles),
+            'scope': json.dumps(scope.json_serializable()),
         })
         return context
 

@@ -42,7 +42,7 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255, null=True, blank=True)
     biography = models.TextField(blank=True, null=True)
-    country = models.ForeignKey('projects.Country', null=True, blank=True)
+    country = models.ForeignKey('datamaps.Country', null=True, blank=True)
     website_url = models.URLField('Website URL', null=True, blank=True)
     github_url = models.URLField('Github URL', null=True, blank=True)
 

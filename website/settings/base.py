@@ -157,6 +157,7 @@ INSTALLED_APPS = (
     'djcelery',
     'taggit',
     'django_push.subscriber',
+    'datamaps',
 )
 
 # A sample logging configuration. The only tangible logging

@@ -1,8 +1,8 @@
+from datamaps.lookups import CountryLookup
 from django import forms
 from selectable.forms import AutoCompleteSelectMultipleField
 
 from ..packages.lookups import PackageLookup
-from .lookups import CountryLookup
 from .models import Project
 from website.taxonomy.lookups import TaxonomyLookup
 from website.users.lookups import UserLookup

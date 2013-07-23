@@ -1,13 +1,13 @@
 import json
+import random
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView,\
+from django.views.generic import CreateView, DeleteView, DetailView,\
     UpdateView, RedirectView
 from django.views.generic.detail import SingleObjectMixin
 
-from ..mixins import AuthorEditMixin, IsActiveObjectMixin, LoginRequiredMixin,\
-    CanEditMixin
+from ..mixins import LoginRequiredMixin, CanEditMixin
 from .forms import ProjectCreateEditForm
 from .models import Project
 
@@ -35,17 +35,22 @@ class ProjectDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ProjectDetail, self).get_context_data(**kwargs)
-        map_data = {}
         project = context['object']
-        data = {
-            'name': project.name,
-            'description': project.description,
-            'fillKey': 'project'
-        }
+        map_data = {}
+        map_bubbles = []
+        fills = {'defaultFill': '#EDDC4E', 'project': '#1f77b4'}
+        data = project.get_popup_data()
         for country in project.countries.all():
+            scope = country.scope
+            bubble = project.get_bubble_data(country)
             map_data[country.code] = data
+            map_bubbles.append(bubble)
+
         context.update({
-            'map_data_json': json.dumps(map_data)
+            'map_data':  json.dumps(map_data),
+            'fills': json.dumps(fills),
+            'map_bubbles': json.dumps(map_bubbles),
+            'scope': json.dumps(scope.json_serializable()),
         })
         return context
 

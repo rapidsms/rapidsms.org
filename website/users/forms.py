@@ -1,3 +1,5 @@
+from datamaps.models import Country
+from datamaps.lookups import CountryLookup
 from django import forms
 from django.contrib.auth import forms as auth
 from django.core.urlresolvers import reverse
@@ -5,8 +7,6 @@ from django.utils.safestring import mark_safe
 
 from selectable.forms import AutoCompleteSelectField
 
-from ..projects.lookups import CountryLookup
-from ..projects.models import Country
 from .models import User
 
 
