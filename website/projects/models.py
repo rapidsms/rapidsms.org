@@ -4,7 +4,6 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.http import Http404
 from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 
@@ -54,6 +53,7 @@ class Project(models.Model):
     started = models.DateField('Project start date', null=True, blank=True,
         help_text='mm/dd/yyyy')
     countries = models.ManyToManyField('datamaps.Country', blank=True, null=True)
+    scopes = models.ManyToManyField('datamaps.Scope', blank=True, null=True)
     challenges = models.TextField(blank=True, null=True)
     audience = models.TextField(blank=True, null=True)
     technologies = models.TextField('Key technologies', blank=True, null=True)
@@ -170,12 +170,16 @@ class Project(models.Model):
     def get_model_name(self):
         return self._meta.verbose_name
 
-    def get_popup_data(self):
-        data = {'name': self.name, 'description': self.description, }
-        return data
-
     def get_bubble_data(self, country):
-        radius_options = [5, 8, 11, 14, 17]
+        """Returns a dict with info for bubbles drawing.
+
+        At a bare minimum it should contain the following keys:
+        radius, latitude and longitude. You can pass more keys
+        and they will be available for you to use on your map's
+        popup template.
+
+        """
+        radius_options = [5, 8, 11, 14, 17]  # Radius selected a random
         return {'name': self.name,
                 'radius': random.choice(radius_options),
                 'fillKey': 'project',
@@ -198,10 +202,10 @@ class Project(models.Model):
         """
         subject, body = self._get_email_content(status)
         to = self._get_to_addresses(to)
-        send_email(subject, body, settings.DEFAULT_FROM_EMAIL,
-            to)
+        send_email(subject, body, settings.DEFAULT_FROM_EMAIL, to)
 
     def save(self, *args, **kwargs):
+        """Saves instance slug field"""
         if not self.id:
             # Newly created object, so set slug
             self.slug = slugify(self.name)

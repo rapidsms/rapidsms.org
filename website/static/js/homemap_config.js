@@ -34,9 +34,7 @@ define(['jquery', 'underscore', 'backbone', 'd3', 'topojson', 'datamaps'],
                           .scale(element.offsetWidth * scope.scale)
                           .translate([element.offsetWidth / 2, element.offsetHeight / 1.8])
                           .center([scope.lon, scope.lat]);
-                        path = d3.geo.path()
-                            .projection( projection );
-
+                        path = d3.geo.path().projection( projection );
                         return {path: path, projection: projection};
                     },
                     fills: fills,

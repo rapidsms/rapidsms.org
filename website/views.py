@@ -22,28 +22,37 @@ class Home(TemplateView):
     template_name = 'website/home.html'
 
     def get_context_data(self, **kwargs):
+        """Returns extra context for datamaps to render.
+
+        Context variables:
+        fills -> json object with map coloring info.
+        map_bubbles -> json object with info bubbles location and popup data.
+
+
+        """
         context = super(Home, self).get_context_data(**kwargs)
-        map_data = {}
         map_bubbles = []
         fills = {'defaultFill': '#EDDC4E', 'project': '#1f77b4'}
-        # TODO: make this more efficient
         # Add Caching!
-
         feature_project = Project.objects.get_feature_project()
-        scope = random.choice(Scope.objects.all())
-        # Only projects that belong to this scope will render
-        countries = scope.country_set.all()
-        projects = Project.objects.published().in_countries(countries)
+        # countries = Country.objects.exclude(projects__)
+        published_projects = Project.objects.published()
+        if published_projects:
+            random_project = random.choice(published_projects)
+            country = random_project.countries.all()[0]
+            scope = country.scope
+        else:
+            scope = random.choice(Scope.objects.all())
+        # Returns all published projects that belong to the same scope.
+        projects = published_projects.filter_by_scope(scope).get_random(5)
 
         for project in projects:
-            data = project.get_popup_data()
-            for country in project.countries.all():
+            countries = project.countries.all()
+            for country in countries:
                 bubble = project.get_bubble_data(country)
                 map_bubbles.append(bubble)
-                map_data[country.code] = data
 
         context.update({
-            'map_data':  json.dumps(map_data),
             'feature_project': feature_project,
             'fills': json.dumps(fills),
             'map_bubbles': json.dumps(map_bubbles),

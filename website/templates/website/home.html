@@ -51,7 +51,7 @@
         // view). (Leave the require() call the same):
         var bubbles = {{ map_bubbles|safe }};
         var fills = {{ fills|safe }};
-        var homemap_data = {{ map_data|safe }};
+        var homemap_data = {}; //
         var element = document.getElementById("home-map")
         var scope = {{ scope|safe }}
         require(['homemap_config'], function (HomeMap) {

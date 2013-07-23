@@ -1,3 +1,4 @@
+from operator import __or__ as OR
 import random
 
 from django.db import models
@@ -9,9 +10,19 @@ from website.users.models import User
 
 class ProjectQueryset(QuerySet):
 
-    def in_countries(self, countries):
+    def filter_by_scope(self, scope=None):
         """Returns QS of all projects in a given scope."""
-        return self.filter(countries__in=countries)
+        return self.filter(countries__scope=scope).distinct()
+
+    def get_random(self, max_number):
+        """Returns a random QS with at most 'max_number' of elements"""
+        length = self.count()
+        if length <= max_number:
+            return self
+        else:
+            random_indexes = random.sample(xrange(length), max_number)
+            conditions = [Q(id=pk) for pk in random_indexes]
+            return self.filter(reduce(OR, conditions))
 
 
 class ProjectManager(models.Manager):
@@ -47,7 +58,7 @@ class ProjectManager(models.Manager):
         return self.filter(feature=True)
 
     def get_feature_project(self):
-        """Returns a random feature projects or None"""
-        projects = self.get_feature_projects() or self.published()
+        """Returns a random feature project or None"""
+        projects = self.get_feature_projects()
         project = random.choice(projects) if projects else None
         return project
