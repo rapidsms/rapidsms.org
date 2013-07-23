@@ -34,7 +34,6 @@ class Home(TemplateView):
         """
         context = super(Home, self).get_context_data(**kwargs)
         map_bubbles = []
-        fills = {'defaultFill': '#EDDC4E', 'project': '#1f77b4'}
         # Add Caching!
         feature_project = Project.objects.get_feature_project()
         # countries = Country.objects.exclude(projects__)
@@ -47,9 +46,8 @@ class Home(TemplateView):
             scope = country.scope
         else:
             scope = random.choice(Scope.objects.all())
-        # Returns all published projects that belong to the same scope.
-        projects = published_projects.filter_by_scope(scope).get_random(5)
-
+        # Returns a random sample of published projects in the scope.
+        projects = published_projects.filter_by_scope(scope).get_random_sample()
         for project in projects:
             countries = project.countries.all()
             for country in countries:
@@ -57,7 +55,6 @@ class Home(TemplateView):
                 map_bubbles.append(bubble)
         context.update({
             'feature_project': feature_project,
-            'fills': json.dumps(fills),
             'map_bubbles': json.dumps(map_bubbles),
             'scope': json.dumps(scope.json_serializable()),
         })

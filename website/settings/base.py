@@ -236,3 +236,6 @@ FEED_APPROVERS_GROUP_NAME = "feed-approver"
 SUPERFEEDR_CREDS = []  # set in production/staging/local.py
 PUSH_HUB = 'https://superfeedr.com/hubbub'
 PUSH_CREDENTIALS = 'website.aggregator.utils.push_credentials'
+
+# Maximum number of projects to show on the map
+MAX_NUM_PROJECTS = 5

@@ -37,15 +37,12 @@ class ProjectDetail(DetailView):
         context = super(ProjectDetail, self).get_context_data(**kwargs)
         project = context['object']
         map_bubbles = []
-        fills = {'defaultFill': '#EDDC4E', 'project': '#1f77b4'}
         countries = project.countries.all()
         for country in countries:
             scope = country.scope
             bubble = project.get_bubble_data(country)
             map_bubbles.append(bubble)
-
         context.update({
-            'fills': json.dumps(fills),
             'map_bubbles': json.dumps(map_bubbles),
             'scope': json.dumps(scope.json_serializable()),
         })

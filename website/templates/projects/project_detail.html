@@ -152,7 +152,7 @@
         // below with the something like the following (assuming data from the
         // view). (Leave the require() call the same):
         var bubbles = {{ map_bubbles|safe }};
-        var fills = {{ fills|safe }};
+        var fills = {'defaultFill': '#EDDC4E', 'project': '#1f77b4'};
         var homemap_data = {};
         var element_id = "home-map"
         var scope = {{ scope|safe }}

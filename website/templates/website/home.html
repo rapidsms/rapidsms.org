@@ -50,9 +50,8 @@
         // view). (Leave the require() call the same):
         var bubbles = {{ map_bubbles|safe }};
         // Hack to allow for clickable links
-        window.bubbles = bubbles
-        var fills = {{ fills|safe }};
-        var homemap_data = {}; //
+        var fills = {'defaultFill': '#EDDC4E', 'project': '#1f77b4'};
+        var homemap_data = {};
         var element = "home-map"
         var scope = {{ scope|safe }}
         require(['homemap_config'], function (HomeMap) {
