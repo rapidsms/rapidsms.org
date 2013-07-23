@@ -5,11 +5,10 @@ from django.contrib import admin
 
 from haystack.forms import FacetedSearchForm
 from haystack.query import SearchQuerySet
-from haystack.views import FacetedSearchView
 
 from .aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 
-from .views import About, Community, Help, Home
+from .views import About, Community, FacetedSearchCustomView, Help, Home
 
 
 admin.autodiscover()
@@ -52,7 +51,7 @@ for facet in facet_list:
 
 urlpatterns += patterns('haystack.views',
     url(r'^search/$',
-        FacetedSearchView(form_class=FacetedSearchForm, searchqueryset=sqs),
+        FacetedSearchCustomView(form_class=FacetedSearchForm, searchqueryset=sqs),
         name='haystack_search',
     ),
 )

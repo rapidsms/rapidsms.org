@@ -23,7 +23,6 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
         return [country.name for country in obj.countries.all()]
 
     def prepare_num_users(self, obj):
-        # import pdb; pdb.set_trace()
         return obj.get_num_users_display()
 
     def prepare_taxonomy(self, obj):

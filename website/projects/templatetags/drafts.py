@@ -19,7 +19,6 @@ def count_drafts(request):
 def show_drafts(request):
     "Render template with context variable 'projects'"
     # drafts current user can edit.
-    # import pdb; pdb.set_trace()
     if request.user.is_authenticated():
         drafts = Project.objects.get_drafts_for_user(request.user)
         return {"projects": drafts}
