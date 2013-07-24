@@ -1,3 +1,14 @@
-{{ object.name }}
-{{ object.creator }}
-{{ object.description }}
+{% with package=object %}
+<div class="results-header">
+    <i class="icon-white icon-archive"></i>
+    <a href="{{ package.get_absolute_url }}">{{ package }}</a>
+</div>
+
+{% if package.version %}
+<div class="results-subheader">version {{ package.version }}</div>
+{% endif %}
+
+{% if package.summary %}
+<div class="results-description">{{ package.summary }}</div>
+{% endif %}
+{% endwith %}

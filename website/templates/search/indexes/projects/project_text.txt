@@ -1,9 +1,10 @@
-{{ object.name }}
-{{ object.creator }}
-{{ object.description }}
-{{ object.challenges }}
-{{ object.audience }}
-{{ object.technologies }}
-{{ object.tags.all }}
-{{ object.collaborators.all }}
-{{ object.get_num_users_display }}
+<div class="results-header">
+    <i class="icon-white icon-file-text"></i>
+    <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+</div>
+<div class="results-subheader">
+    located in {{ object.display_countries }}
+</div>
+<div class="results-description">
+    {{ object.description|safe }}
+</div>

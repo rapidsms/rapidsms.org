@@ -1,6 +1,6 @@
-from operator import __or__ as OR
 import random
 
+from django.conf import settings
 from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
@@ -12,18 +12,22 @@ from website.packages.models import Package
 class ProjectQueryset(QuerySet):
 
     def filter_by_scope(self, scope=None):
-        """Returns QS of all projects in a given scope."""
+        """Returns a QS or Tuple of all projects in a given scope."""
         return self.filter(countries__scope=scope).distinct()
 
-    def get_random(self, max_number):
-        """Returns a random QS with at most 'max_number' of elements"""
+    def get_random_sample(self):
+        """Returns a random sample Generator.
+
+        The number of elements in the Generator is defined by the
+        setting, 'DISPLAY_NUM_PROJECTS', and defaults to the length
+        of the queryset.
+        """
         length = self.count()
-        if length <= max_number:
-            return self
-        else:
-            random_indexes = random.sample(xrange(length), max_number)
-            conditions = [Q(id=pk) for pk in random_indexes]
-            return self.filter(reduce(OR, conditions))
+        sample_size = getattr(settings, 'DISPLAY_NUM_PROJECTS', length)
+        if length < sample_size:
+            sample_size = length
+        return [self[index] for index in random.sample(xrange(length),
+                                                       sample_size)]
 
 
 class ProjectManager(models.Manager):
