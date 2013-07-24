@@ -33,27 +33,19 @@
 
 <!-- Map -->
 <section id="map-block" class="hidden-phone">
-    <div id="home-map" style="height: 500px; width: 960px"></div>
+    <div id="home-map" style="position: relative; height: 500px; width: 960px"></div>
 </section>
 
 
 <!-- FEATURE PROJECT -->
 {% if feature_project %}
-    {{ feature_project }}
+    <h3>Feature project</h3>
+    <h4>{{ feature_project }}</h4>
+    <p>{{ feature_project.description }}</p>
 {% endif %}
 
 {% endblock content %}
 
 {% block extra-js %}
-    <script>
-        // TODO: To get data from Django into the map, replace the declaration
-        // below with the something like the following (assuming data from the
-        // view). (Leave the require() call the same):
-        var homemap_data = {{ map_data_json|safe }};
-        require(['homemap_config'], function (HomeMap) {
-            // Load dependencies for the map on the homepage.
-            // Once homemap_data is provided, initialize the map and render it
-            HomeMap.init(homemap_data).render();
-        });
-    </script>
+    {% include "includes/map_init.html" %}
 {% endblock %}

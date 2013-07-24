@@ -6,8 +6,9 @@ require.config({
         backbone: 'libs/backbone',
         underscore: 'libs/underscore',
         // datamap libs and custom code
-        d3: 'libs/d3',
-        datamap: 'libs/datamaps-all-stripped',
+        d3: '../datamaps/js/libs/d3/d3.v3.min',
+        topojson: '../datamaps/js/libs/topojson/topojson.v1.min',
+        datamaps: 'libs/datamaps',
         homemap: 'homemap_config',
         // Scribbler libs and custom code
         codemirror: '../scribbler/libs/codemirror/lib/codemirror',
@@ -50,6 +51,14 @@ require.config({
         },
         underscore: {
             exports: '_'
+        },
+        datamaps: {
+            deps: ['d3', 'topojson'],
+            exports: "Datamap"
+        },
+        topojson: {
+            deps: ['d3'],
+            exports: 'topojson'
         },
         d3: {
             exports: 'd3'

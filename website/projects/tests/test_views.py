@@ -1,14 +1,16 @@
+from datamaps.models import Country
+
 from website.packages.tests.factories import PackageFactory
 from website.tests.base import ViewTestMixin, WebsiteTestBase
 from website.users.tests.factories import UserFactory
-
-from ..models import Country, Project
+from ..models import Project
 from .factories import ProjectFactory
 
-__all__ = ['TestProjectCreateView']
+__all__ = ['TestProjectCreateView', 'ProjectReviewRequestTest', ]
 
 
 class TestProjectCreateView(ViewTestMixin, WebsiteTestBase):
+    fixtures = ['countries.json']  # Loads initial django-datamaps data
     url_name = 'project_create'
     template_name = 'projects/project_form.html'
 

@@ -1,13 +1,13 @@
-from website.tests.base import WebsiteTestBase
-from website.users.tests.factories import UserFactory
+from datamaps.models import Country
 
-from ..models import Country, Project
+from website.tests.base import WebsiteTestBase
 from .factories import ProjectFactory
 
 __all__ = ['ProjectModelTest']
 
 
 class ProjectModelTest(WebsiteTestBase):
+    fixtures = ['countries.json']  # Loads initial django-datamaps data
 
     def test_unicode(self):
         project = ProjectFactory.create(name="rapidsms")

@@ -1,7 +1,7 @@
 /* Used in conjunction with django-selectable to override some of the
    defaults and use Bootstrap styles. */
 
-(function( $ ){
+(function($){
     $.ui.djselectable.prototype._initDeck = function() {
         // Use a custom div to hold selected items, and append it after the field.
         var self = this;
