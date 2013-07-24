@@ -1,0 +1,15 @@
+<script>
+    // below with the something like the following (assuming data from the
+    // view). (Leave the require() call the same):
+    var fills = {'defaultFill': '#EDDC4E', 'project': '#1f77b4'};
+    var homemap_data = {{ map_data|safe }};
+    var element = "home-map"
+    var scope = {{ scope|safe }}
+
+    require(['homemap_config'], function (HomeMap) {
+        // Load dependencies for the map on the homepage.
+        // Once homemap_data is provided, initialize the map and render it
+        HomeMap.init(scope, homemap_data, fills, element)
+               .draw();
+    });
+</script>

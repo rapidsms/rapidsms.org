@@ -33,7 +33,7 @@ class Home(TemplateView):
 
         """
         context = super(Home, self).get_context_data(**kwargs)
-        map_bubbles = []
+        map_data = {}
         # Add Caching!
         feature_project = Project.objects.get_feature_project()
         # countries = Country.objects.exclude(projects__)
@@ -51,11 +51,10 @@ class Home(TemplateView):
         for project in projects:
             countries = project.countries.all()
             for country in countries:
-                bubble = project.get_bubble_data(country)
-                map_bubbles.append(bubble)
+                map_data[country.code] = project.get_map_data(country)
         context.update({
             'feature_project': feature_project,
-            'map_bubbles': json.dumps(map_bubbles),
+            'map_data': json.dumps(map_data),
             'scope': json.dumps(scope.json_serializable()),
         })
         return context
@@ -92,11 +91,8 @@ class FacetedSearchCustomView(FacetedSearchView):
         if page_no < 1:
             raise Http404("Pages should be 1 or greater.")
 
-        start_offset = (page_no - 1) * self.results_per_page
-        self.results[start_offset:start_offset + self.results_per_page]
-
         paginator = Paginator(self.results, self.results_per_page)
-
+        # import pdb; pdb.set_trace()
         try:
             page = paginator.page(page_no)
         except InvalidPage:
@@ -107,7 +103,7 @@ class FacetedSearchCustomView(FacetedSearchView):
             url = '%s?%s' % (path, qs.urlencode())
             return redirect(url)
 
-        return (paginator, page)
+        return paginator, page
 
     def clean_filters(self):
         """Returns a list of tuples (filter, value) of applied facets"""
@@ -148,8 +144,8 @@ class FacetedSearchCustomView(FacetedSearchView):
         return render_to_response(self.template, context, context_instance=self.context_class(self.request))
 
     def extra_context(self):
-        extra = super(FacetedSearchView, self).extra_context()
-        extra['filters'] = self.clean_filters
+        extra = super(FacetedSearchCustomView, self).extra_context()
+        extra['filters'] = self.clean_filters()
         if self.results == []:
             extra['facets'] = self.form.search().facet_counts()
         else:

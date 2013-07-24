@@ -8,7 +8,7 @@ require.config({
         // datamap libs and custom code
         d3: '../datamaps/js/libs/d3/d3.v3.min',
         topojson: '../datamaps/js/libs/topojson/topojson.v1.min',
-        datamaps: '../datamaps/js/libs/datamaps/datamaps.world.min',
+        datamaps: 'libs/datamaps',
         homemap: 'homemap_config',
         // Scribbler libs and custom code
         codemirror: '../scribbler/libs/codemirror/lib/codemirror',

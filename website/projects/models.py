@@ -53,7 +53,6 @@ class Project(models.Model):
     started = models.DateField('Project start date', null=True, blank=True,
         help_text='mm/dd/yyyy')
     countries = models.ManyToManyField('datamaps.Country', blank=True, null=True)
-    scopes = models.ManyToManyField('datamaps.Scope', blank=True, null=True)
     challenges = models.TextField(blank=True, null=True)
     audience = models.TextField(blank=True, null=True)
     technologies = models.TextField('Key technologies', blank=True, null=True)
@@ -170,6 +169,14 @@ class Project(models.Model):
     def get_model_name(self):
         return self._meta.verbose_name
 
+    def get_map_data(self, country):
+        return {'name': self.name,
+                'fillKey': 'project',
+                'url': self.get_absolute_url(),
+                'description': self.short_description,
+                'country': country.name
+                }
+
     def get_bubble_data(self, country):
         """Returns a dict with info for bubbles drawing.
 
@@ -184,7 +191,7 @@ class Project(models.Model):
                 'radius': random.choice(radius_options),
                 'fillKey': 'project',
                 'url': self.get_absolute_url(),
-                'description': self.description,
+                'description': self.short_description,
                 'latitude': country.lat,
                 'longitude': country.lon,
                 'country': country.name
@@ -211,3 +218,11 @@ class Project(models.Model):
             # Newly created object, so set slug
             self.slug = slugify(self.name)
         super(Project, self).save(*args, **kwargs)
+
+    @property
+    def short_description(self):
+        description = self.description
+        lenght = len(description)
+        if lenght <= 120:
+            return description
+        return description[0:119]

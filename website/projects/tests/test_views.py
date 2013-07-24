@@ -6,7 +6,7 @@ from website.users.tests.factories import UserFactory
 from ..models import Project
 from .factories import ProjectFactory
 
-__all__ = ['TestProjectCreateView']
+__all__ = ['TestProjectCreateView', 'ProjectReviewRequestTest', ]
 
 
 class TestProjectCreateView(ViewTestMixin, WebsiteTestBase):

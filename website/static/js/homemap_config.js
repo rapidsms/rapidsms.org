@@ -4,37 +4,35 @@ define(['jquery', 'underscore', 'd3', 'topojson', 'datamaps'],
             draw: function(){
                 var map = this.map
                 map.draw()
-                return map
-            },
-            bubbles: function(bubbles){
-                var map = this.draw()
-                map.bubbles(bubbles, {
-                    popupTemplate:function (geography, data) {
-                        var node = '<div class="hoverinfo">' +
-                           '<% if (data.name) { %> <strong><%= data.name %></strong><% } %>' +
-                           '<br/>' +
-                           '<% if (data.description) { %> Started in <%= data.description %><br/> <% } %>' +
-                           '<%= data.country %>' +
-                           '</div>';
-                        return _.template(node, {'data': data})
-                    }
-                });
-
-                // hack to bind to a onclick event
-                this.map.svg.selectAll(".datamaps-bubble").on('click', function(){
-                    data = JSON.parse(this.dataset.info)
-                    window.location = data.url
-                })
                 return this
             },
             init: function(scope, data, fills, element) {
+
+                var node = '<div class="hoverinfo">' +
+                   '<% if (data.name) { %> <strong><%= data.name %></strong><% } %>' +
+                   '<br/>' +
+                   '<% if (data.description) { %> Started in <%= data.description %><br/> <% } %>' +
+                   '<%= data.country %>' +
+                   '</div>';
+
                 this.map = new Datamap({
                     element: document.getElementById(element),
                     scope: 'world',
                     geographyConfig: {
                         hideAntarctica: false,
                         popupOnHover: true,
-                        highlightOnHover: false
+                        highlightOnHover: false,
+                        popupTemplate: function (geography, data) {
+                            if (data){
+                                var node = '<div class="hoverinfo">' +
+                                   '<strong><%= data.name %> in <%= data.country %> </strong>' +
+                                   '<br/>' +
+                                   '<% if (data.description) { %> <%= data.description %>...<br/> <% } %>' +
+
+                                   '</div>';
+                                return _.template(node, {'data': data})
+                            }
+                        }
                     },
                     setProjection: function(element, options) {
                         var projection, path;
@@ -47,7 +45,16 @@ define(['jquery', 'underscore', 'd3', 'topojson', 'datamaps'],
                     },
                     fills: fills,
                     data: data,
-
+                    done: function(datamap) {
+                        datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
+                            var data = datamap.options.data
+                            var country_code = geography.id
+                            var country = datamap.options.data[country_code]
+                            if (country){
+                                window.location = country.url
+                            }
+                        });
+                    }
                 });
 
                 return this

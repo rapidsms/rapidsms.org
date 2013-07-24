@@ -17,4 +17,4 @@ before_script:
  - python manage.py syncdb --migrate --noinput
 
 script:
- - python manage.py test packages projects users aggregator taxonomy
+ - python manage.py test packages projects users aggregator taxonomy website_tests

@@ -21,12 +21,12 @@ class ProjectQueryset(QuerySet):
         setting, 'DISPLAY_NUM_PROJECTS', and defaults to the length
         of the queryset.
         """
-        length = self.count() or 1
+        length = self.count()
         sample_size = getattr(settings, 'DISPLAY_NUM_PROJECTS', length)
         if length < sample_size:
             sample_size = length
-        return (self[index] for index in random.sample(xrange(length),
-                                                       sample_size))
+        return [self[index] for index in random.sample(xrange(length),
+                                                       sample_size)]
 
 
 class ProjectManager(models.Manager):

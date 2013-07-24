@@ -101,9 +101,7 @@
         </div>
         {% for result in page.object_list %}
         <div class="result">
-            {% with "search/results/"|add:result.object.get_model_name|add:".html" as template %}
-                {% include template %}
-            {% endwith %}
+            {{ result.text|safe }}
         </div>
         {% if not forloop.last %}<hr />{% endif %}
         {% empty %}
