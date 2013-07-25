@@ -1,2 +1,2 @@
 # FIXME: Change to match project name
-project_name: website
+project_name: rapidsms
