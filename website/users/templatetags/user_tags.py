@@ -6,7 +6,7 @@ register = template.Library()
 
 
 @register.simple_tag
-def gravatar_url(email, size=32):
+def gravatar_url(email="", size=32):
     """
     Return the full URL for a Gravatar given an email hash.
     """
