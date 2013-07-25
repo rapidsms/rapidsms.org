@@ -1,3 +1,5 @@
+import random
+
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
@@ -5,26 +7,11 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 
-from taggit.managers import TaggableManager
-
 from .managers import ProjectManager
 from website.tasks import send_email
 from website.packages.models import Package
 from website.taxonomy.models import Taxonomy
 from website.users.models import User
-
-
-class Country(models.Model):
-    code = models.CharField(max_length=3, unique=True)
-    name = models.CharField(max_length=255, unique=True)
-
-    class Meta:
-        ordering = ['name', ]
-        verbose_name_plural = "Countries"
-        unique_together = (("code", "name"),)
-
-    def __unicode__(self):
-        return self.name
 
 
 class Project(models.Model):
@@ -65,7 +52,7 @@ class Project(models.Model):
     # Optional information.
     started = models.DateField('Project start date', null=True, blank=True,
         help_text='mm/dd/yyyy')
-    countries = models.ManyToManyField(Country, blank=True, null=True)
+    countries = models.ManyToManyField('datamaps.Country', blank=True, null=True)
     challenges = models.TextField(blank=True, null=True)
     audience = models.TextField(blank=True, null=True)
     technologies = models.TextField('Key technologies', blank=True, null=True)
@@ -104,13 +91,14 @@ class Project(models.Model):
         if status == self.PUBLISHED and not self.status == self.PUBLISHED:
             self.notify('users', status)
         elif status == self.DENIED and not self.status == self.DENIED:
+            self.feature = False
             self.notify('users', status)
-        elif status == self.NEEDS_REVIEW and not (
-                self.status == self.NEEDS_REVIEW):
+        elif not (self.status == self.NEEDS_REVIEW):
+            self.feature = False
             self.notify('admins', status)
         #set new status and save changes
         self.status = status
-        self.save(update_fields=['status', ])
+        self.save(update_fields=['status', 'feature'])
         return True
 
     def display_countries(self):
@@ -181,6 +169,34 @@ class Project(models.Model):
     def get_model_name(self):
         return self._meta.verbose_name
 
+    def get_map_data(self, country):
+        return {'name': self.name,
+                'fillKey': 'project',
+                'url': self.get_absolute_url(),
+                'description': self.short_description,
+                'country': country.name
+                }
+
+    def get_bubble_data(self, country):
+        """Returns a dict with info for bubbles drawing.
+
+        At a bare minimum it should contain the following keys:
+        radius, latitude and longitude. You can pass more keys
+        and they will be available for you to use on your map's
+        popup template.
+
+        """
+        radius_options = [5, 8, 11, 14, 17]  # Radius selected a random
+        return {'name': self.name,
+                'radius': random.choice(radius_options),
+                'fillKey': 'project',
+                'url': self.get_absolute_url(),
+                'description': self.short_description,
+                'latitude': country.lat,
+                'longitude': country.lon,
+                'country': country.name
+                }
+
     def notify(self, to, status):
         """Sends email notification to users or admins.
 
@@ -194,11 +210,19 @@ class Project(models.Model):
         """
         subject, body = self._get_email_content(status)
         to = self._get_to_addresses(to)
-        send_email(subject, body, settings.DEFAULT_FROM_EMAIL,
-            to)
+        send_email(subject, body, settings.DEFAULT_FROM_EMAIL, to)
 
     def save(self, *args, **kwargs):
+        """Saves instance slug field"""
         if not self.id:
             # Newly created object, so set slug
             self.slug = slugify(self.name)
         super(Project, self).save(*args, **kwargs)
+
+    @property
+    def short_description(self):
+        description = self.description
+        lenght = len(description)
+        if lenght <= 120:
+            return description
+        return description[0:119]

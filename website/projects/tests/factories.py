@@ -13,3 +13,5 @@ class ProjectFactory(factory.DjangoModelFactory):
 
     creator = factory.SubFactory(UserFactory)
     name = factory.Sequence(lambda n: 'project-%s' % n)
+    feature = False
+    status = Project.PUBLISHED

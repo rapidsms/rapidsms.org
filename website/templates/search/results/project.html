@@ -1,13 +1,13 @@
 {% with project=result.object %}
 <div class="results-header">
     <i class="icon-white icon-file-text"></i>
-    <a href="{{ project.get_absolute_url }}">{{ project }}</a>
+    <a href="{{ result.get_absolute_url }}">{{ project }}</a>
 </div>
 
-{% if project.countries.exists  %}
+{% if result.countries  %}
 <div class="results-subheader">
     located in
-    {% for country in project.countries.all %}
+    {% for country in result.countries %}
         {{ country }}{% if not forloop.last %}, {% endif %}
     {% endfor %}
 </div>

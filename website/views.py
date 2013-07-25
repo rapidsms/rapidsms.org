@@ -1,15 +1,15 @@
 import json
+import random
 
+from datamaps.models import Scope
 from django.core.paginator import Paginator, InvalidPage
 from django.http import Http404
 from django.shortcuts import redirect, render_to_response
 from django.views.generic import TemplateView
-
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView, search_view_factory
 
 from website.projects.models import Project
-
 from .forms import FacetedSearchListingForm
 
 
@@ -24,23 +24,38 @@ class Home(TemplateView):
     template_name = 'website/home.html'
 
     def get_context_data(self, **kwargs):
+        """Returns extra context for datamaps to render.
+
+        Context variables:
+        fills -> json object with map coloring info.
+        map_bubbles -> json object with info bubbles location and popup data.
+
+
+        """
         context = super(Home, self).get_context_data(**kwargs)
         map_data = {}
-        # TODO: refactor the logic to get N project per country
         # Add Caching!
         feature_project = Project.objects.get_feature_project()
-        projects = Project.objects.all()
+        # countries = Country.objects.exclude(projects__)
+        published_projects = Project.objects.published()
+        if published_projects:
+            random_project = random.choice(published_projects)
+            # There is no a right way to determine the scope for a project
+            # with multiple scopes.
+            country = random_project.countries.all()[0]
+            scope = country.scope
+        else:
+            scope = random.choice(Scope.objects.all())
+        # Returns a random sample of published projects in the scope.
+        projects = published_projects.filter_by_scope(scope).get_random_sample()
         for project in projects:
-            data = {
-                'name': project.name,
-                'description': project.description,
-                'fillKey': 'project'
-            }
-            for country in project.countries.all():
-                map_data[country.code] = data
+            countries = project.countries.all()
+            for country in countries:
+                map_data[country.code] = project.get_map_data(country)
         context.update({
-            'map_data_json':  json.dumps(map_data),
-            'feature_project': feature_project
+            'feature_project': feature_project,
+            'map_data': json.dumps(map_data),
+            'scope': json.dumps(scope.json_serializable()),
         })
         return context
 
@@ -76,11 +91,8 @@ class FacetedSearchCustomView(FacetedSearchView):
         if page_no < 1:
             raise Http404("Pages should be 1 or greater.")
 
-        start_offset = (page_no - 1) * self.results_per_page
-        self.results[start_offset:start_offset + self.results_per_page]
-
         paginator = Paginator(self.results, self.results_per_page)
-
+        # import pdb; pdb.set_trace()
         try:
             page = paginator.page(page_no)
         except InvalidPage:
@@ -91,10 +103,10 @@ class FacetedSearchCustomView(FacetedSearchView):
             url = '%s?%s' % (path, qs.urlencode())
             return redirect(url)
 
-        return (paginator, page)
+        return paginator, page
 
     def clean_filters(self):
-        "Returns a list of tuples (filter, value) of applied facets"
+        """Returns a list of tuples (filter, value) of applied facets"""
         filters = []
         # get distinct facets
         facets = list(set(self.form.selected_facets))
@@ -132,8 +144,8 @@ class FacetedSearchCustomView(FacetedSearchView):
         return render_to_response(self.template, context, context_instance=self.context_class(self.request))
 
     def extra_context(self):
-        extra = super(FacetedSearchView, self).extra_context()
-        extra['filters'] = self.clean_filters
+        extra = super(FacetedSearchCustomView, self).extra_context()
+        extra['filters'] = self.clean_filters()
         if self.results == []:
             extra['facets'] = self.form.search().facet_counts()
         else:

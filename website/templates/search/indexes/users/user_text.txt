@@ -1,1 +1,22 @@
-{{ object.get_full_name }}
+{% with user=object %}
+<div class="results-header">
+    {% if user.user_type = 'I' %}
+    <i class="icon-white icon-user"></i>
+    {% else %}
+    <i class="icon-white icon-building"></i>
+    {% endif %}
+    <a href="{{ user.get_absolute_url }}">{{ user }}</a> {% if user.for_hire %}<span class="label for-hire">For hire!</span>{% endif %}
+</div>
+
+{% if user.location or user.country %}
+<div class="results-subheader">
+    {% if user.location and user.country %}
+    {{ user.location }}, {{ user.country }}
+    {% elif user.location %}
+    {{ user.location }}
+    {% else %}
+    {{ user.country }}
+    {% endif %}
+</div>
+{% endif %}
+{% endwith %}

@@ -1,3 +1,4 @@
+from datamaps.models import Country
 from django.test import TestCase
 
 from .factories import UserFactory
@@ -6,7 +7,6 @@ from ..forms import UserChangeForm
 from ..forms import UserEditForm
 from ..forms import UserRegistrationForm
 from ..models import User
-from ...projects.models import Country
 
 __all__ = ["UserCreationFormTest", "UserChangeFormTest", "UserEditFormTest",
     "UserRegistrationFormTest", ]
@@ -84,6 +84,8 @@ class UserChangeFormTest(TestCase):
 
 
 class UserEditFormTest(TestCase):
+
+    fixtures = ['countries.json']  # Loads initial django-datamaps data
 
     def setUp(self):
         self.form = UserEditForm
@@ -173,6 +175,8 @@ class UserEditFormTest(TestCase):
 
 
 class UserRegistrationFormTest(TestCase):
+
+    fixtures = ['countries.json']  # Loads initial django-datamaps data
 
     def setUp(self):
         self.form = UserRegistrationForm

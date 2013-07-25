@@ -7,7 +7,8 @@ from django.contrib.auth import login
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpRequest
 from django.test import TestCase
-from django.test.client import Client
+
+from website.users.tests.factories import UserFactory
 
 
 class FormTestMixin(object):
@@ -134,3 +135,25 @@ class WebsiteTestBase(TestCase):
 
         # Save the session values.
         request.session.save()
+
+class BasicGetTest(ViewTestMixin, WebsiteTestBase):
+    """Simple view that tests that a given view returns a 200 for authenticated
+    users and unauthenticated users"""
+    url_name = ''
+    template_name = ''
+
+    def tearDown(self):
+        self.client.logout()
+
+    def test_get_authenticated(self):
+        """Logged in users can view the home page"""
+        self.login_user(UserFactory.create())
+        response = self._get()
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, self.template_name)
+
+    def test_get_unauthenticated(self):
+        """Unregistered users can view the home page"""
+        response = self._get()
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, self.template_name)
