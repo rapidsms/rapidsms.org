@@ -62,7 +62,7 @@ require.config({
         },
         d3: {
             exports: 'd3'
-        },
+        }
     }
 });
 
