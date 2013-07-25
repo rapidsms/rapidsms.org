@@ -212,6 +212,7 @@ def deploy(branch=None):
     supervisor_command('start %(project)s-%(environment)s:*' % env)
     if initial:
         manage_run('setup_github')
+        manage_run('loaddata countries.json')
     configure_solr()
 
 
