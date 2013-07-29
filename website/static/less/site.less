@@ -380,9 +380,16 @@ body#home {
         color: @white;
         background: url('/static/images/home-masthead-bkg.jpg') top center no-repeat;
         background-size: cover;
-        // width: 100%;
         padding-top: 50px;
         padding-bottom: 50px;
+         @media (min-width: 1300px) {
+            padding-top: 100px;
+            padding-bottom: 100px;
+        }
+        @media (min-width: 767px) and (max-width: 1300px) {
+            padding-top: 70px;
+            padding-bottom: 70px;
+        }
         @media (max-width: 767px) {
             margin-left: -20px;
             margin-right: -20px;
