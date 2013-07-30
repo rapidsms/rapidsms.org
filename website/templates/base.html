@@ -55,6 +55,7 @@
 
     {% block content-outer %}
     <div id="content" class="container-fluid">
+        {% if messages %}
         <div class="row-fluid">
             {% block messages-outer %}
             <div id="messages" class="span12">
@@ -66,6 +67,7 @@
             </div>
             {% endblock messages-outer %}
         </div>
+        {% endif %}
         <div class="row-fluid">
             <div class="span12">
             {% block content %}{% endblock content %}
@@ -93,7 +95,7 @@
         <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/jquery.stacktable.js"></script>
         <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/application.js"></script>
         <script charset="utf-8" src="{{ STATIC_URL }}js/site.js"></script>
-    {% endcompress %}
+        {% endcompress %}
     {% endblock js %}
     {% block extra-js %}{% endblock extra-js %}
 </body>
