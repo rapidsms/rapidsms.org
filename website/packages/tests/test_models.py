@@ -5,7 +5,7 @@ from mock import patch
 import requests
 
 from website.tests.base import WebsiteTestBase
-from website.users.tests.factories import UserFactory
+from website.users.factories import UserFactory
 from ..models import Package, PYPI_DATE_FORMAT
 from .base import MockPyPIRequest
 from .factories import PackageFactory

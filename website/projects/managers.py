@@ -11,7 +11,7 @@ from website.users.models import User
 class ProjectQueryset(QuerySet):
 
     def filter_by_scope(self, scope=None):
-        """Returns a QS or Tuple of all projects in a given scope."""
+        """Returns a QS all projects in a given scope."""
         return self.filter(countries__scope=scope).distinct()
 
     def get_random_sample(self):

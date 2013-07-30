@@ -2,7 +2,7 @@ from datamaps.models import Scope
 
 from website.projects.tests.factories import ProjectFactory
 from website.tests.base import ViewTestMixin, WebsiteTestBase, BasicGetTest
-from website.users.tests.factories import UserFactory
+from website.users.factories import UserFactory
 from website.views import FacetedSearchCustomView
 
 __all__ = ["HomePageViewTest", "AboutTest", "CommunityTest", "HelpTest",

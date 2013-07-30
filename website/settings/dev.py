@@ -3,6 +3,9 @@ import sys
 from website.settings.base import *
 
 
+FLAG_EMAIL_ALERTS = []
+PROJECT_EMAIL_ALERTS = []
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 INTERNAL_IPS = ('127.0.0.1', )
