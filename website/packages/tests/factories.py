@@ -1,6 +1,6 @@
 import factory
 
-from website.users.tests.factories import UserFactory
+from website.users.factories import UserFactory
 
 from ..models import Package
 
