@@ -142,14 +142,3 @@ class UserRegistrationForm(UserCreationForm):
             except Country.DoesNotExist:
                 raise forms.ValidationError("Please select a valid country.")
         return country
-
-    def clean(self):
-        """Raises an error if user provides both his gravatar email address and
-        avatar image."""
-        cleaned_data = self.cleaned_data
-        gravatar_email = cleaned_data.get('gravatar_email')
-        avatar = cleaned_data.get('avatar')
-        if gravatar_email and avatar:
-            raise forms.ValidationError("Provide only Gravatar Email Address"
-                " or Avatar image, not both.")
-        return cleaned_data
