@@ -33,29 +33,34 @@ class ProjectDelete(LoginRequiredMixin, CanEditMixin,
 class ProjectDetail(DetailView):
     model = Project
 
+    @staticmethod
+    def get_map_data(project, countries):
+        scope = countries[0].scope
+        map_data = {country.code: project.get_map_data(country)
+                    for country in countries}
+        data = {
+            'map_data': json.dumps(map_data),
+            'scope': json.dumps(scope.json_serializable()),
+        }
+        return data
+
     def get_context_data(self, **kwargs):
         context = super(ProjectDetail, self).get_context_data(**kwargs)
         project = context['object']
-        map_data = {}
         countries = project.countries.all()
-        for country in countries:
-            scope = country.scope
-            map_data[country.code] = project.get_map_data(country)
-        context.update({
-            'map_data': json.dumps(map_data),
-            'scope': json.dumps(scope.json_serializable()),
-        })
+        if countries:
+            map_data = self.get_map_data(project, countries)
+            context.update(map_data)
         return context
 
 
-class ProjectEdit(LoginRequiredMixin, CanEditMixin,
-        UpdateView):
+class ProjectEdit(LoginRequiredMixin, CanEditMixin, UpdateView):
     model = Project
     form_class = ProjectCreateEditForm
 
 
-class ProjectReviewRequest(LoginRequiredMixin, CanEditMixin,
-        SingleObjectMixin, RedirectView):
+class ProjectReviewRequest(LoginRequiredMixin, CanEditMixin, SingleObjectMixin,
+                           RedirectView):
     http_method_names = ['post', ]
     model = Project
 
@@ -68,8 +73,8 @@ class ProjectReviewRequest(LoginRequiredMixin, CanEditMixin,
     def post(self, request, *args, **kwargs):
         """Updates project status to 'needs revision'"""
         project = self.get_object()
-        project.change_status('R', send_notification=True)  # Status saved.
+        project.change_status('R')  # Project saved and status changed.
         messages.success(self.request, 'We have notified the administrators'
             ' and they will review this request shortly')
         return super(ProjectReviewRequest, self).get(self, self.request, *args,
-            **kwargs)
+                                                     **kwargs)

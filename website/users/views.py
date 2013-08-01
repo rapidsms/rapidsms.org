@@ -2,6 +2,7 @@ import logging
 
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import redirect
 from django.views.generic import DetailView, UpdateView, FormView
@@ -37,6 +38,7 @@ class RapidSMSOAuthCallback(OAuthCallback):
         email_url = 'https://api.github.com/user/emails'
         # Request v3 format that shows whether the email is verified.
         headers = {'Accept': 'application/vnd.github.v3'}
+        # import pdb; pdb.set_trace()
         response = access.api_client.request('GET', email_url, headers=headers)
         if response.status_code != 200:
             raise Exception('Error retrieving account emails.')
@@ -44,14 +46,17 @@ class RapidSMSOAuthCallback(OAuthCallback):
         for email in emails:
             if email['verified'] and email['primary']:
                 return email['email']
+        messages.error(self.request,
+                       'Your email address could not be verified!')
         return None
 
     def get_or_create_user(self, provider, access, info):
         """Try to find the user by their primary email address."""
         try:
+            # import pdb; pdb.set_trace()
             email = self.get_primary_email(provider, access)
         except:
-            logger.exception()
+            logger.exception("Client time out.")
             return None
         if not email:
             logger.error('User has no verified, primary email.')
@@ -72,7 +77,7 @@ class RapidSMSOAuthCallback(OAuthCallback):
                 user.set_unusable_password()
                 user.save()
             except Exception as e1:
-                logger.exception()
+                logger.exception(e1)
 
                 # Try excluding the extra information, in case that is
                 # causing a validation or database error.
@@ -83,7 +88,7 @@ class RapidSMSOAuthCallback(OAuthCallback):
                     user.set_unusable_password()
                     user.save()
                 except Exception as e2:
-                    logger.exception()
+                    logger.exception(e2)
                     logger.debug('Log in has failed.')
                     return None
                 else:
@@ -126,5 +131,5 @@ class UserEdit(LoginRequiredMixin, IsActiveObjectMixin, UpdateView):
     def get_object(self, queryset=None):
         obj = super(UserEdit, self).get_object(queryset)
         if obj != self.request.user:
-            raise Http404()
+            raise PermissionDenied
         return obj

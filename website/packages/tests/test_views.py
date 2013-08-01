@@ -6,7 +6,7 @@ from django.conf import settings
 from django.utils import timezone
 
 from website.tests.base import ViewTestMixin, WebsiteTestBase
-from website.users.tests.factories import UserFactory
+from website.users.factories import UserFactory
 from ..models import Package
 from .base import MockPyPIRequest
 from .factories import PackageFactory
