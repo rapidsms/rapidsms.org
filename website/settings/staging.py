@@ -7,6 +7,9 @@ import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
+FLAG_EMAIL_ALERTS = []
+PROJECT_EMAIL_ALERTS = []
+
 ADMINS = (
         ('RapidSMS.org Team', 'rapidsms-team@caktusgroup.com'),
     )

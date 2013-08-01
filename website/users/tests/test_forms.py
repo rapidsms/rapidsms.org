@@ -1,7 +1,7 @@
 from datamaps.models import Country
 from django.test import TestCase
 
-from .factories import UserFactory
+from ..factories import UserFactory
 from ..forms import UserCreationForm
 from ..forms import UserChangeForm
 from ..forms import UserEditForm

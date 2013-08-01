@@ -16,8 +16,6 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-FLAG_EMAIL_ALERTS = []
-PROJECT_EMAIL_ALERTS = []
 
 DATABASES = {
     'default': {

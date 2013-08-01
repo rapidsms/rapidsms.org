@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpRequest
 from django.test import TestCase
 
-from website.users.tests.factories import UserFactory
+from website.users.factories import UserFactory
 
 
 class FormTestMixin(object):
