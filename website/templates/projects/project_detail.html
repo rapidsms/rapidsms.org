@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load thumbnail %}
+
 {% block title %}{{ object }}{% endblock title %}
 {% block body_id %}project-detail{% endblock body_id %}
 
@@ -11,21 +13,37 @@
 {% endif %}
 
 <div class="page-header">
-    <h1 class="header-split">
-        <span class="header-title"><i class="icon-white icon-file-text"></i> {{ object }}</span>
-        {% if user.is_authenticated and user == object.creator %}
-        <span class="header-buttons">
-            {% if object.status = 'D' %}
-            <a href="#request-review" role="button" class="btn btn-inverse" data-toggle="modal"><i class="icon-white icon-pencil"></i> Request review</a>
-            {% endif %}
-            <a href="{{ object.get_edit_url }}" class="btn btn-inverse"><i class="icon-white icon-pencil"></i> Edit</a>
-            <a href="#delete-modal" role="button" class="btn btn-inverse" data-toggle="modal"><i class="icon-white icon-remove"></i> Delete</a>
-        </span>
+    {# {% if user.is_authenticated and user == object.creator %} #}
+    <div class="header-buttons">
+        {% if object.status = 'D' %}
+        <a href="#request-review" role="button" data-toggle="modal"><i class="icon-white icon-pencil"></i> Request review</a>
         {% endif %}
-    </h1>
-    {% if object.countries %}<div class="summary">Located in {{ object.display_countries }}</div>{% endif %}
+        <a href="{{ object.get_edit_url }}" class="btn btn-info"><i class="icon-white icon-pencil"></i> Edit</a>
+        <a href="#delete-modal" role="button" class="btn btn-danger" data-toggle="modal"><i class="icon-white icon-remove"></i> Delete</a>
+    </div>
+    {# {% endif %} #}
+
+    <h1><i class="icon-white icon-file-text"></i> {{ object }}</h1>
+    {% if object.countries %}<p class="locale">Located in {{ object.display_countries }}</p>{% endif %}
 </div>
 
+<div id="main-content">
+    <div class="row-fluid">
+        <div class="span6">
+            <p class="description">{{ object.description }}</p>
+            <div class="map-container">
+                <div id="home-map" style="height: 100%; width: 100%"></div>
+            </div>
+        </div>
+        <div class="span4 offset2">
+
+            <img class="project-logo" src="{{ object.image.url }}" alt="{{ object }} logo">
+        </div>
+
+    </div>
+</div>
+
+{% comment %}
 <div class="row-fluid">
     <div id="left-panel" class="span3">
         {% if object.image %}
@@ -142,7 +160,7 @@
         {% endif %}
     </div>
 </div>
-
+{% endcomment %}
 {% endblock content %}
 
 
