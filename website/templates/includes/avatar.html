@@ -18,9 +18,9 @@
     {% endif %}
 {% else %}
     {% if user.user_type = 'I' %}
-    <img class="img-circle" src="{% gravatar_url user.email size %}" alt="{{ user.get_full_name }}" />
+    <img class="img-circle" src="{% gravatar_url '' size %}" alt="{{ user.get_full_name }}" />
     {% else %}
-    <img class="" src="{% gravatar_url user.email size %}" alt="{{ user.get_full_name }}" />
+    <img class="" src="{% gravatar_url '' size %}" alt="{{ user.get_full_name }}" />
     {% endif %}
 {% endif %}
 </div>
