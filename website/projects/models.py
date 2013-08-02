@@ -217,6 +217,8 @@ class Project(models.Model):
         if not self.id:
             # Newly created object, so set slug
             self.slug = slugify(self.name)
+        if self.feature:
+            self.__class__.objects.get_feature_projects().update(feature=False)
         super(Project, self).save(*args, **kwargs)
 
     @property

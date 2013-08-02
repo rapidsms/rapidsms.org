@@ -57,6 +57,9 @@ class ProjectManager(models.Manager):
             projects = active.filter(packages__in=[package, ])
         return projects
 
+    def get_feature_projects(self):
+        return self.filter(feature=True)
+
     def get_feature_project(self):
         """Returns a random feature project or None"""
         try:
