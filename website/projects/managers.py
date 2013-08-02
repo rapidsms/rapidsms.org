@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.db.models.query import QuerySet
 
 from website.users.models import User
+from website.packages.models import Package
 
 
 class ProjectQueryset(QuerySet):
@@ -48,13 +49,16 @@ class ProjectManager(models.Manager):
 
     def get_related_projects(self, user_or_package):
         """"Returns a queryset with all projects that are related."""
-        active = self.filter(status=self.model.PUBLISHED)
+        active = self.published()
         if isinstance(user_or_package, User):
             user = user_or_package
             projects = active.filter(collaborators__in=[user, ])
-        else:
+        elif isinstance(user_or_package, Package):
             package = user_or_package
             projects = active.filter(packages__in=[package, ])
+        else:
+            raise Exception("This method only accepts an user or a packages as"
+                " arguments.")
         return projects
 
     def get_feature_project(self):
