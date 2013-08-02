@@ -1,12 +1,6 @@
 {% load user_tags thumbnail %}
 <div class="avatar">
-{% if user.gravatar_email %}
-    {% if user.user_type = 'I' %}
-    <img class="img-circle" src="{% gravatar_url user.gravatar_email size %}" alt="{{ user.get_full_name }}" />
-    {% else %}
-    <img class="" src="{% gravatar_url user.gravatar_email size %}" alt="{{ user.get_full_name }}" />
-    {% endif %}
-{% elif user.avatar %}
+{% if user.avatar %}
     {% with size|add:'x'|add:size as thumbnail_size %}
     {% thumbnail user.avatar thumbnail_size crop="center" as im %}
         {% if user.user_type = 'I' %}
@@ -16,13 +10,17 @@
         {% endif %}
     {% endthumbnail %}
     {% endwith %}
+{% elif user.gravatar_email %}
+    {% if user.user_type = 'I' %}
+    <img class="img-circle" src="{% gravatar_url user.gravatar_email size %}" alt="{{ user.get_full_name }}" />
+    {% else %}
+    <img class="" src="{% gravatar_url user.gravatar_email size %}" alt="{{ user.get_full_name }}" />
+    {% endif %}
 {% else %}
     {% if user.user_type = 'I' %}
-<!--     <img class="img-circle" src="{{ STATIC_URL }}img/no-photo.png" alt="{{ profile_user.username }}" width="{{ size }}" height="{{ size }}" /> -->
-    <i class="icon-user icon-5x"></i>
+    <img class="img-circle" src="{% gravatar_url '' size %}" alt="{{ user.get_full_name }}" />
     {% else %}
-<!--     <img class="" src="{{ STATIC_URL }}img/no-photo.png" alt="{{ profile_user.username }}" width="{{ size }}" height="{{ size }}" /> -->
-    <i class="icon-building icon-5x"></i>
+    <img class="" src="{% gravatar_url '' size %}" alt="{{ user.get_full_name }}" />
     {% endif %}
 {% endif %}
 </div>

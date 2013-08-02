@@ -74,7 +74,7 @@ Github account settings, and create a new application.
   as the callback URL.
 
 Add the Github-generated Client ID (``GITHUB_KEY``) and Client Secret
-(``GITHUB_SECRET``) to your `local_settings.py` file, and run::
+(``GITHUB_SECRET``) to your `local.py` file, and run::
 
     python manage.py setup_github
 

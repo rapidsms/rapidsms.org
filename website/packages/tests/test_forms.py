@@ -4,7 +4,7 @@ from django.db import IntegrityError
 
 from website.tests.base import FormTestMixin, ModelFormTestMixin, WebsiteTestBase
 from website.packages.tests.factories import PackageFactory
-from website.users.tests.factories import UserFactory
+from website.users.factories import UserFactory
 
 from ..forms import PackageCreateEditForm, PackageFlagForm
 from ..models import Package

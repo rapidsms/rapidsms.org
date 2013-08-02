@@ -24,3 +24,8 @@ class ProjectCreateEditForm(forms.ModelForm):
                 'challenges', 'audience', 'technologies', 'metrics',
                 'num_users', 'started', 'packages', 'collaborators',
                 'repository_url', 'project_url', 'image', 'files')
+
+
+class ProjectAdminForm(forms.ModelForm):
+    class Meta:
+        model = Project

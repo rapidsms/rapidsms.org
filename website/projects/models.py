@@ -84,10 +84,10 @@ class Project(models.Model):
         if user == self.creator or user in self.collaborators.all():
             return True
 
-    def change_status(self, status, send_notification=False):
+    def change_status(self, status):
         """Change current status of instance and determines whether or not
         this instance is active"""
-        #send email only when a change in status occurs
+        # Sends email only when a change in status occurs
         if status == self.PUBLISHED and not self.status == self.PUBLISHED:
             self.notify('users', status)
         elif status == self.DENIED and not self.status == self.DENIED:
@@ -135,7 +135,7 @@ class Project(models.Model):
                 'projects/emails/project_published_subject.txt',
                 context
             )
-        else: # last option: status == self.DENIED
+        else:  # Last option: status == self.DENIED
             subject = render_to_string(
                 'projects/emails/project_denied_subject.txt',
                 context
@@ -217,6 +217,8 @@ class Project(models.Model):
         if not self.id:
             # Newly created object, so set slug
             self.slug = slugify(self.name)
+        if self.feature:
+            self.__class__.objects.get_feature_projects().update(feature=False)
         super(Project, self).save(*args, **kwargs)
 
     @property
