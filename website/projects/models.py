@@ -39,7 +39,8 @@ class Project(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(default=DRAFT, max_length=1, choices=STATUS)
-    feature = models.BooleanField('Feature on Homepage', default=False)
+    feature = models.BooleanField('Featured on Homepage', default=False,
+            help_text="Check box to make this project the featured project.")
 
     collaborators = models.ManyToManyField(User, related_name='projects',
             help_text="Users who have permission to edit this project.")

@@ -25,7 +25,7 @@ class ProjectAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('name', 'updated', 'status', 'feature')
     list_filter = ['created', 'updated', ]
-    readonly_fields = ['created', 'updated', ]
+    readonly_fields = ['created', 'updated', 'status']
     filter_horizontal = ('countries',)
     fieldsets = (
         (None,
@@ -43,8 +43,6 @@ class ProjectAdmin(admin.ModelAdmin):
         """
         Hook for specifying custom readonly fields.
         """
-        readonly_fields = self.readonly_fields
-        # import pdb; pdb.set_trace()
         if obj:
             if obj.feature:
                 return ['created', 'updated', 'feature']
