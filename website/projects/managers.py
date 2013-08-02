@@ -57,12 +57,10 @@ class ProjectManager(models.Manager):
             projects = active.filter(packages__in=[package, ])
         return projects
 
-    def get_feature_projects(self):
-        """Returns a queryset off all feature projects"""
-        return self.filter(feature=True)
-
     def get_feature_project(self):
         """Returns a random feature project or None"""
-        projects = self.get_feature_projects()
-        project = random.choice(projects) if projects else None
+        try:
+            project = self.get(feature=True)
+        except self.model.DoesNotExist:
+            project = None
         return project
