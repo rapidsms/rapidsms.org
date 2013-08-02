@@ -88,17 +88,12 @@ class Project(models.Model):
         """Change current status of instance and determines whether or not
         this instance is active"""
         # Sends email only when a change in status occurs
-        if status == self.PUBLISHED and not self.status == self.PUBLISHED:
-            self.notify('users', status)
-        elif status == self.DENIED and not self.status == self.DENIED:
-            self.feature = False
-            self.notify('users', status)
-        elif not (self.status == self.NEEDS_REVIEW):
-            self.feature = False
-            self.notify('admins', status)
+        recipients = 'admins' if status == self.NEEDS_REVIEW else 'users'
+        if not self.status == status:
+            self.notify(recipients, status)
         #set new status and save changes
         self.status = status
-        self.save(update_fields=['status', 'feature'])
+        self.save(update_fields=['status', ])
         return True
 
     def display_countries(self):
@@ -208,9 +203,10 @@ class Project(models.Model):
         notify('admins', 'Needs_Review') #send email alerting admins that
         a project needs review.
         """
+        # import pdb; pdb.set_trace()
         subject, body = self._get_email_content(status)
         to = self._get_to_addresses(to)
-        send_email(subject, body, settings.DEFAULT_FROM_EMAIL, to)
+        send_email.delay(subject, body, settings.DEFAULT_FROM_EMAIL, to)
 
     def save(self, *args, **kwargs):
         """Saves instance slug field"""
