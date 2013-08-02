@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import Project
+from .forms import ProjectAdminForm
 
 
 def publish_projects(modeladmin, request, queryset):
@@ -23,8 +24,8 @@ class ProjectAdmin(admin.ModelAdmin):
     actions = [publish_projects, deny_projects, ]
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('name', 'updated', 'status', 'feature')
-    list_filter = ('status', 'feature')
-    readonly_fields = ('created', 'updated')
+    list_filter = ['created', 'updated', ]
+    readonly_fields = ['created', 'updated', ]
     filter_horizontal = ('countries',)
     fieldsets = (
         (None,
@@ -38,8 +39,16 @@ class ProjectAdmin(admin.ModelAdmin):
         ),
     )
 
-class CountryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'code')
+    def get_readonly_fields(self, request, obj=None):
+        """
+        Hook for specifying custom readonly fields.
+        """
+        readonly_fields = self.readonly_fields
+        # import pdb; pdb.set_trace()
+        if obj:
+            if obj.feature:
+                return ['created', 'updated', 'feature']
+        return ['created', 'updated', ]
 
 
 admin.site.register(Project, ProjectAdmin)

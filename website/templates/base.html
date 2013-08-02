@@ -10,6 +10,7 @@
     <meta name="keywords" content="{% block meta-keywords %}SMS, mhealth, mobile health, python, django, open source, framework, sms applications{% endblock meta-keywords %}">
     {% block extra-meta %}{% endblock extra-meta %}
     {% block js-variables %}{% endblock js-variables %}
+    <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico">
     {% block css %}
     <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui/bootstrap/css/bootstrap-responsive.css">
@@ -55,6 +56,7 @@
 
     {% block content-outer %}
     <div id="content" class="container-fluid">
+        {% if messages %}
         <div class="row-fluid">
             {% block messages-outer %}
             <div id="messages" class="span12">
@@ -66,6 +68,7 @@
             </div>
             {% endblock messages-outer %}
         </div>
+        {% endif %}
         <div class="row-fluid">
             <div class="span12">
             {% block content %}{% endblock content %}
@@ -93,7 +96,7 @@
         <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/jquery.stacktable.js"></script>
         <script charset="utf-8" src="{{ STATIC_URL }}flat-ui/js/application.js"></script>
         <script charset="utf-8" src="{{ STATIC_URL }}js/site.js"></script>
-    {% endcompress %}
+        {% endcompress %}
     {% endblock js %}
     {% block extra-js %}{% endblock extra-js %}
 </body>

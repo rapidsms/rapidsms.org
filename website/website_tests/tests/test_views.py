@@ -13,7 +13,6 @@ class HomePageViewTest(ViewTestMixin, WebsiteTestBase):
     fixtures = ['countries.json']  # Loads initial django-datamaps data
     url_name = 'home'
     template_name = 'website/home.html'
-    context_variables = ["feature_project", "map_data", "scope", ]
 
     def setUp(self):
         self.scope = Scope.objects.get(pk=1)
@@ -43,12 +42,6 @@ class HomePageViewTest(ViewTestMixin, WebsiteTestBase):
         response = self._get()
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, self.template_name)
-
-    def test_context_varaibles(self):
-        """Tests that the context variables that the template will get."""
-        response = self._get()
-        for var in self.context_variables:
-            self.assertIn(var, response.context)
 
     def test_feature_project(self):
         """Tests that view returns a 200 when there is a feature project"""
