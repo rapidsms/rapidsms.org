@@ -66,7 +66,10 @@ require.config({
 });
 
 require([
-    'app'
-], function (App) {
-    App.initialize()
-});
+    'scribblerMain',
+    'mapMain'
+], function (scribblerMain, HomeMap) {
+    scribblerMain.initialize()
+    HomeMap.initialize()
+
+})
