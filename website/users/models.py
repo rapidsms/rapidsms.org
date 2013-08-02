@@ -54,7 +54,8 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
     avatar = models.ImageField(
         upload_to="images/avatars",
         blank=True, null=True,
-        help_text="Upload a profile or company logo image if you do not have or want to use your Gravatar.")
+        help_text="Upload a profile or company logo image if you do not have"
+                  " or want to use your Gravatar.")
 
     for_hire = models.BooleanField('Are you available for RapidSMS-related '
             'hire or consulting?', default=False)
