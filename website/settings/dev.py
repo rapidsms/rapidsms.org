@@ -28,13 +28,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 SOUTH_TESTS_MIGRATE = True
 
-# CELERY_ALWAYS_EAGER = True
-
-# #celery settings
-# import djcelery
-# djcelery.setup_loader()
-# BROKER_URL = 'amqp://guest:guest@localhost:5672/'
-
 COMPRESS_ENABLED = False
 
 # Special test settings

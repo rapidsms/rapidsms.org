@@ -11,6 +11,7 @@ GITHUB_KEY = 'key'
 GITHUB_SECRET = 'secret'
 
 CELERY_ALWAYS_EAGER = True
+BROKER_BACKEND = 'memory'
 
 COMPRESS_ENABLED = False
 
