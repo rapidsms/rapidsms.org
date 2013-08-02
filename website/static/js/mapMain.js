@@ -1,12 +1,14 @@
 define(['jquery', 'underscore', 'd3', 'topojson', 'datamaps'],
     function ($, _, d3, topojson, Datamap) {
-        return {
+
+        var HomeMap = {
+            container: document.getElementById("home-map"),
             draw: function(){
                 var map = this.map
                 map.draw()
                 return this
             },
-            init: function(scope, data, fills, element) {
+            init: function(scope, data, fills) {
 
                 var node = '<div class="hoverinfo">' +
                    '<% if (data.name) { %> <strong><%= data.name %></strong><% } %>' +
@@ -16,7 +18,7 @@ define(['jquery', 'underscore', 'd3', 'topojson', 'datamaps'],
                    '</div>';
 
                 this.map = new Datamap({
-                    element: document.getElementById(element),
+                    element: this.container,
                     scope: 'world',
                     geographyConfig: {
                         hideAntarctica: false,
@@ -58,6 +60,13 @@ define(['jquery', 'underscore', 'd3', 'topojson', 'datamaps'],
                 });
 
                 return this
+            },
+
+            initialize: function(){
+                if (this.container){
+                    this.init(scope, homemap_data, fills).draw();
+                }
             }
-    };
+        };
+        return HomeMap
 });
