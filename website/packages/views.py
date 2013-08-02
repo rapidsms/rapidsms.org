@@ -77,7 +77,7 @@ class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin,
         subject = ''.join(subject.splitlines())
         body_text = loader.render_to_string(body_text_template, context)
         #sending email is delegated to celery
-        send_email(
+        send_email.delay(
             subject=subject,
             message=body_text,
             from_email=settings.DEFAULT_FROM_EMAIL,

@@ -1,4 +1,5 @@
 from haystack import indexes
+
 from .models import Project
 
 
@@ -44,3 +45,8 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_collaborators(self, obj):
         return [user.name for user in obj.collaborators.all()]
+
+    def should_update(self, instance, **kwargs):
+        if instance.status == instance.PUBLISHED:
+            return True
+        return False
