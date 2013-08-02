@@ -210,7 +210,7 @@ class Project(models.Model):
         """
         subject, body = self._get_email_content(status)
         to = self._get_to_addresses(to)
-        send_email(subject, body, settings.DEFAULT_FROM_EMAIL, to)
+        send_email.delay(subject, body, settings.DEFAULT_FROM_EMAIL, to)
 
     def save(self, *args, **kwargs):
         """Saves instance slug field"""

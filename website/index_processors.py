@@ -6,6 +6,8 @@ from django.db import models
 from haystack.signals import BaseSignalProcessor
 from haystack.exceptions import NotHandled
 
+from website.tasks import update_object, remove_object
+
 
 class BaseSignal(BaseSignalProcessor):
     "BaseSignalProcessor had to be rewritten to account for m2m relationships"
@@ -15,12 +17,16 @@ class BaseSignal(BaseSignalProcessor):
         Given an individual model instance, determine which backends the
         update should be sent to & update the object on those backends.
         """
+        # import pdb; pdb.set_trace()
+        # changed_fields = kwargs['update_fields']
+        # if not changed_fields:
+        #     return False
         using_backends = self.connection_router.for_write(instance=instance)
         sender = sender if isinstance(instance, sender) else instance.__class__
         for using in using_backends:
             try:
                 index = self.connections[using].get_unified_index().get_index(sender)
-                index.update_object(instance, using=using)
+                update_object.delay(index, instance, using=using)
             except NotHandled:
                 # TODO: Maybe log it or let the exception bubble?
                 pass
@@ -30,12 +36,12 @@ class BaseSignal(BaseSignalProcessor):
         Given an individual model instance, determine which backends the
         delete should be sent to & delete the object on those backends.
         """
-        using_backends = self.connection_router.for_write(instance=instance)
+        using_backends = self.connection_router.for_write(instance =instance)
         sender = sender if isinstance(instance, sender) else instance.__class__
         for using in using_backends:
             try:
                 index = self.connections[using].get_unified_index().get_index(sender)
-                index.remove_object(instance, using=using)
+                remove_object.delay(index, instance, using=using)
             except NotHandled:
                 # TODO: Maybe log it or let the exception bubble?
                 pass
