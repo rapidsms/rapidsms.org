@@ -23,40 +23,25 @@ MODEL_FACETS = {
 class Home(TemplateView):
     template_name = 'website/home.html'
 
-    def get_context_data(self, **kwargs):
-        """Returns extra context for datamaps to render.
-
-        Context variables:
-        fills -> json object with map coloring info.
-        map_bubbles -> json object with info bubbles location and popup data.
-
-
-        """
-        context = super(Home, self).get_context_data(**kwargs)
-        map_data = {}
-        # Add Caching!
-        feature_project = Project.objects.get_feature_project()
-        # countries = Country.objects.exclude(projects__)
-        published_projects = Project.objects.published()
-        if published_projects:
-            random_project = random.choice(published_projects)
-            # There is no a right way to determine the scope for a project
-            # with multiple scopes.
-            country = random_project.countries.all()[0]
-            scope = country.scope
-        else:
-            scope = random.choice(Scope.objects.all())
-        # Returns a random sample of published projects in the scope.
-        projects = published_projects.filter_by_scope(scope).get_random_sample()
-        for project in projects:
-            countries = project.countries.all()
-            for country in countries:
-                map_data[country.code] = project.get_map_data(country)
-        context.update({
-            'feature_project': feature_project,
+    @staticmethod
+    def get_map_data(project, countries):
+        scope = countries[0].scope
+        map_data = {country.code: project.get_map_data(country)
+                    for country in countries}
+        data = {
             'map_data': json.dumps(map_data),
             'scope': json.dumps(scope.json_serializable()),
-        })
+        }
+        return data
+
+    def get_context_data(self, **kwargs):
+        context = super(Home, self).get_context_data(**kwargs)
+        feature_project = Project.objects.get_feature_project()
+        context.update({'feature_project': feature_project})
+        if feature_project:
+            countries = feature_project.countries.all()
+            map_data = self.get_map_data(feature_project, countries)
+            context.update(map_data)
         return context
 
 

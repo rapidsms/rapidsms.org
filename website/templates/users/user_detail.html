@@ -25,10 +25,12 @@
 
 <div class="row-fluid">
     <div class="span3">
-        {% include "includes/avatar.html" with user=object size="140" %}
-        {% if object.for_hire %}
-        <label class="label for-hire">{{ object }} is available for hire!</label>
-        {% endif %}
+        <div class="profile-image text-center">
+            {% include "includes/avatar.html" with user=object size="140" %}
+            {% if object.for_hire %}
+            <label class="label for-hire">{{ object }} is available for hire!</label>
+            {% endif %}
+        </div>
 
         <!-- RELATED PROJECTS -->
         {% show_related_projects object as related_projects %}
