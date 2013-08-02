@@ -90,7 +90,7 @@ class Project(models.Model):
         # Sends email only when a change in status occurs
         recipients = 'admins' if status == self.NEEDS_REVIEW else 'users'
         if not self.status == status:
-            sent = self.notify(recipients, status)
+            self.notify(recipients, status)
         #set new status and save changes
         self.status = status
         self.save(update_fields=['status', ])
@@ -203,11 +203,10 @@ class Project(models.Model):
         notify('admins', 'Needs_Review') #send email alerting admins that
         a project needs review.
         """
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         subject, body = self._get_email_content(status)
         to = self._get_to_addresses(to)
-        sent = send_email.delay(subject, body, settings.DEFAULT_FROM_EMAIL, to)
-        return sent
+        send_email.delay(subject, body, settings.DEFAULT_FROM_EMAIL, to)
 
     def save(self, *args, **kwargs):
         """Saves instance slug field"""
