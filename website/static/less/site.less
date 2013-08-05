@@ -88,30 +88,22 @@
     margin: 0 auto 20px;
     padding-bottom: 0px;
 
-    h1 {
-        margin: 0 0 6px 0;
-    }
-    .header-split {
-        margin: 0;
-        span {
-            display: inline-block;
-        }
-        .header-title {
-            margin-right: 20px;
-            margin-bottom: 6px;
-        }
-        .header-buttons .btn {
-            margin-top: -5px;
-            margin-bottom: 4px;
+    .header-buttons {
+        float: right;
+        margin-top: 10px;
+        a {
             padding: 9px 12px;
         }
     }
-    .summary {
+    .locale {
         color: @twilight-blue;
         font-size: 18px;
         margin-top: -3px;
         margin-bottom: 6px;
-        padding-left: 30px;  // To clear the icon.
+    }
+    img {
+        float: left;
+        .clearfix;
     }
 }
 
@@ -311,6 +303,25 @@ footer {
         &.btn, &.btn.btn-inverse {
             color: @white;
         }
+    }
+}
+
+.map-container {
+    position: relative;
+    padding-bottom: 400px;
+    padding-top: 20px;
+    height: 0;
+    overflow: hidden;
+    border: 1px solid lighten(@gray, 20%);
+    #home-map {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    @media (max-width: 480px) {
+        display: none;
     }
 }
 
@@ -568,16 +579,37 @@ body#search #content {
     }
 }
 
-body#project-detail #content{
-    .project-header{
-        margin-bottom: 30px;
-        .description{
+body#project-detail {
+    #main-content {
+        p.description{
             font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 25px;
         }
-    }
-    h3.underline{
-        border-bottom: 2px solid @midnight-blue;
-
+        img.project-logo {
+            max-height: 100px;
+        }
+        .project-stats {
+            margin-top: 25px;
+            width: 100%;
+            ul {
+                li {
+                    margin: 15px 0;
+                }
+            }
+        }
+        .specifics {
+            margin: 25px 0;
+            .item {
+                background-color: @clouds;
+                padding: 14px;
+                text-align: center;
+                min-height: 200px;
+                i {
+                    font-size: 48px;
+                }
+            }
+        }
     }
 }
 
