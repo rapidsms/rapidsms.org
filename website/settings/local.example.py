@@ -8,3 +8,5 @@ GITHUB_SECRET = ''
 
 # User for aggregator
 SUPERFEEDR_CREDS = ('username', 'password')
+
+CELERY_ALWAYS_EAGER = True
