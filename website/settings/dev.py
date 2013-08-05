@@ -28,8 +28,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 SOUTH_TESTS_MIGRATE = True
 
-CELERY_ALWAYS_EAGER = True
-
 COMPRESS_ENABLED = False
 
 # Special test settings
