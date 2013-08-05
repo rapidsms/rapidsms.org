@@ -329,10 +329,53 @@ footer {
 ==================== */
 
 body#home {
-    // Map popup style
-    .datamaps-hoverover{
-      max-width: 250px;
+
+    .about-rapidsms { text-align: center; }
+
+    .whats-next {
+        text-align: center;
+        margin: 25px 0;
+        .tile {
+            background-color: @clouds;
+            padding: 14px;
+            margin: 0 25px 0 15px;
+            @media (max-width: 767px) {
+                margin-bottom: 20px;
+            }
+            i { font-size: 36px; }
+            min-height: 100px;
+        }
     }
+
+    .featured-project {
+        padding: 20px 0;
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        h4 { font-weight: bold; }
+        p {
+            font-size: 16px;
+            line-height: 2;
+            font-weight: 300;
+        }
+        a.btn {
+            margin: 15px 0;
+        }
+        @media (max-width: 767px) {
+            text-align: center;
+        }
+    }
+
+    .map-container {
+        padding-bottom: 350px;
+        @media (max-width: 767px) {
+            display: none;
+        }
+    }
+
+    // Map popup style
+    .datamaps-hoverover { max-width: 250px; }
 
     // Courtesy of http://codepo8.github.io/css-fork-on-github-ribbon/
     #fork {
