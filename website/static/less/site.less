@@ -320,6 +320,9 @@ footer {
         width: 100%;
         height: 100%;
     }
+    @media (max-width: 480px) {
+        display: none;
+    }
 }
 
 /* Individual pages
@@ -577,7 +580,6 @@ body#search #content {
 }
 
 body#project-detail {
-
     #main-content {
         p.description{
             font-size: 18px;
@@ -588,8 +590,25 @@ body#project-detail {
             max-height: 100px;
         }
         .project-stats {
-            background-color: @clouds;
-
+            margin-top: 25px;
+            width: 100%;
+            ul {
+                li {
+                    margin: 15px 0;
+                }
+            }
+        }
+        .specifics {
+            margin: 25px 0;
+            .item {
+                background-color: @clouds;
+                padding: 14px;
+                text-align: center;
+                min-height: 200px;
+                i {
+                    font-size: 48px;
+                }
+            }
         }
     }
 }

@@ -13,7 +13,8 @@
 {% endif %}
 
 <div class="page-header">
-    {# {% if user.is_authenticated and user == object.creator %} #}
+
+    {% if user.is_authenticated and user == object.creator %}
     <div class="header-buttons">
         {% if object.status = 'D' %}
         <a href="#request-review" role="button" data-toggle="modal"><i class="icon-white icon-pencil"></i> Request review</a>
@@ -21,146 +22,134 @@
         <a href="{{ object.get_edit_url }}" class="btn btn-info"><i class="icon-white icon-pencil"></i> Edit</a>
         <a href="#delete-modal" role="button" class="btn btn-danger" data-toggle="modal"><i class="icon-white icon-remove"></i> Delete</a>
     </div>
-    {# {% endif %} #}
+    {% endif %}
 
-    <h1><i class="icon-white icon-file-text"></i> {{ object }}</h1>
+    <h1> <i class="icon-white icon-file-text"></i> {{ object }}</h1>
+    {% if user.is_authenticated and user == object.creator %}
+        <h3>Status: {{ object.get_status_display }}</h3>
+    {% endif %}
     {% if object.countries %}<p class="locale">Located in {{ object.display_countries }}</p>{% endif %}
 </div>
 
 <div id="main-content">
     <div class="row-fluid">
-        <div class="span6">
+        <div class="span7">
             <p class="description">{{ object.description }}</p>
             <div class="map-container">
                 <div id="home-map" style="height: 100%; width: 100%"></div>
             </div>
         </div>
-        <div class="span4 offset2">
-
+        <div class="span4 offset1">
+            {% if object.image %}
             <img class="project-logo" src="{{ object.image.url }}" alt="{{ object }} logo">
-        </div>
+            {% endif %}
+            <div class="project-stats">
+                <ul class="unstyled">
+                    {% if object.started %}
+                    <li>
+                        <strong>Started: </strong>
+                        {{ object.started|date:"F Y" }}
+                    </li>
+                    {% endif %}
+                    {% if object.num_users %}
+                    <li>
+                        <strong>Number of Users: </strong>
+                        {{ object.get_num_users_display }} users
+                    </li>
+                    {% endif %}
+                    {% if object.repository_url %}
+                    <li>
+                        <strong>Code Repository: </strong>
+                        <a href="{{ object.repository_url }}">{{ object.repository_url }}</a>
+                    </li>
+                    {% endif %}
+                    {% if object.project_url %}
+                    <li>
+                        <strong>Project Website: </strong>
+                        <a href="{{ object.project_url }}">{{ object.project_url }}</a>
+                    </li>
+                    {% endif %}
+                    {% if object.files %}
+                    <li>
+                        <strong>Attached File: </strong>
+                        <a href="{{object.files.url}}"> Download File</a>
+                    </li>
+                    {% endif %}
+                    {% if object.collaborators.count %}
+                    <li>
+                        <strong>Collaborators: </strong>
+                        {% for collaborator in object.collaborators.all %}
+                            <a href="{{ collaborator.get_absolute_url }}">
+                                <i class="icon-user icon-white"></i>{{ collaborator }}
+                            </a>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </li>
+                    {% endif %}
+                    {% if object.packages.count %}
+                    <li>
+                        <strong>Related Packages: </strong>
+                        {% for package in object.packages.all %}
+                            <a href="{{ package.get_absolute_url }}">
+                                <i class="icon-archive icon-white"></i>{{ package }}
+                            </a>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </li>
+                    {% endif %}
+                    {% with tags=object.tags.all %}
+                        {% if tags %}
+                        <li>
+                            <strong>Taxonomy: </strong>
+                            {% for tag in tags %}
+                                <a href="{% url "project_list" %}?q=&selected_facets=taxonomy_exact:{{tag|urlencode}}">
+                                    {{ tag }}
+                                </a>{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </li>
+                        {% endif %}
+                    {% endwith %}
+                </ul>
 
-    </div>
-</div>
-
-{% comment %}
-<div class="row-fluid">
-    <div id="left-panel" class="span3">
-        {% if object.image %}
-            <p><img src="{{ object.image.url }}"/>
-        {% endif %}
-        {% if object.started %}
-        <p>
-            <strong>Started: </strong>
-            {{ object.started|date:"F Y" }}
-        </p>
-        {% endif %}
-        {% if object.num_users %}
-        <p>
-            <strong>Number of Users: </strong>
-            {{ object.get_num_users_display }} users
-        </p>
-        {% endif %}
-        {% if object.repository_url %}
-        <p>
-            <strong>Code Repository: </strong>
-            <a href="{{ object.repository_url }}">{{ object.repository_url }}</a>
-        </p>
-        {% endif %}
-        {% if object.project_url %}
-        <p>
-            <strong>Project Website: </strong>
-            <a href="{{ object.project_url }}">{{ object.project_url }}</a>
-        </p>
-        {% endif %}
-        {% if object.files %}
-        <p>
-            <strong>Attached File: </strong>
-            <a href="{{object.files.url}}"> Download File</a>
-        </p>
-        {% endif %}
-        {% if object.collaborators.count %}
-        <p>
-            <strong>Collaborators</strong><br />
-            {% for collaborator in object.collaborators.all %}
-            <a href="{{ collaborator.get_absolute_url }}" class="label label-link"><i class="icon-user icon-white"></i> {{ collaborator }}</a><br />
-            {% endfor %}
-        </p>
-        {% endif %}
-        {% if object.packages.count %}
-        <p>
-            <strong>Related Packages</strong><br />
-            {% for package in object.packages.all %}
-            <a href="{{ package.get_absolute_url }}" class="label label-link"><i class="icon-archive icon-white"></i> {{ package }}</a><br />
-            {% endfor %}
-        </p>
-        {% endif %}
-        {% with tags=object.tags.all %}
-        {% if tags %}
-        <p>
-            <strong>Taxonomy</strong><br />
-            {% for tag in tags %}
-            <span class="label {% cycle 'label-success' 'label-info' 'label-inverse'%}"><a href="{% url "project_list" %}?q=&selected_facets=taxonomy_exact:{{tag|urlencode}}">{{ tag }}</a></span>
-            {% endfor %}
-        </p>
-        {% endif %}
-        {% endwith %}
-
-    </div>
-    <div id="right-panel" class="span9">
-        <div class="project-header">
-           <h1>
-                {{ object.name }}
-                {% if user.is_authenticated and user == object.creator %}
-                   <br> <small>Status: {{ object.get_status_display }}</small>
-                {%endif%}
-            </h1>
-            <hr>
-            <div class="clearfix">
-                <div class="span6">
-                    <div class="description">{{ object.description|linebreaks }}</div>
-                </div>
-                <div class="span6">
-                    <section id="map-block">
-                        <div id="home-map" style="position: relative; height: 200px; width: 400px"></div>
-                    </section>
-                </div>
             </div>
         </div>
-        <ul class="unstyled">
-            <li class="span3">
-                <div class="">
-                    <h3 class="underline">Challenge(s)</h3>
-                    <p>{{ object.challenges }}</p>
-                </div>
-            </li>
-            <li class="span3">
-                <div class="">
-                    <h3 class="underline">Audience</h3>
-                    <p>{{ object.audience }}</p>
-                </div>
-            </li>
-            <li class="span3">
-                <div class="">
-                    <h3 class="underline">Key Technologies</h3>
-                    <p>{{ object.technologies }}</p>
-                </div>
-            </li>
-            <li class="span3">
-                <div class="">
-                    <h3 class="underline">Metrics/ Evidence</h3>
-                    <p>{{ object.metrics }}</p>
-                </div>
-            </li>
-        </ul>
-        {% if object.script %}
-        <div class="javacript-blob">
-            {{ object.script|safe }}
+    </div>
+    <div class="specifics row-fluid">
+        {% if object.challenges %}
+        <div class="item span3">
+            <i class="icon-trophy"></i>
+            <h3>Challenge(s)</h3>
+            <p>{{ object.challenges }}</p>
+        </div>
+        {% endif %}
+        {% if object.audience %}
+        <div class="item span3">
+            <i class="icon-group"></i>
+            <h3>Audience</h3>
+            <p>{{ object.audience }}</p>
+        </div>
+        {% endif %}
+        {% if object.technologies %}
+        <div class="item span3">
+            <i class="icon-code-fork"></i>
+            <h3>Key Technologies</h3>
+            <p>{{ object.technologies }}</p>
+        </div>
+        {% endif %}
+        {% if object.metrics %}
+        <div class="item span3">
+            <i class="icon-dashboard"></i>
+            <h3>Metrics/ Evidence</h3>
+            <p>{{ object.metrics }}</p>
         </div>
         {% endif %}
     </div>
 </div>
-{% endcomment %}
+
+{% if object.script %}
+<div class="javacript-blob">
+    {{ object.script|safe }}
+</div>
+{% endif %}
+
 {% endblock content %}
 
 
