@@ -26,6 +26,17 @@
 /* Sitewide
 ==================== */
 
+.related-projects {
+    margin: 40px 0;
+    i { font-size: 48px; }
+    .project {
+        padding: 22px;
+        @media (max-width: 767px) {
+            margin-bottom: 25px;
+        }
+    }
+}
+
 .row-fluid {
     // Apply flat-ui's form styles to select dropdowns.
     select {
@@ -502,29 +513,8 @@ body#package-form #content {
 }
 
 body#package-detail #content {
-    #left-panel {
-        #links {
-            text-align: center;
-            margin-bottom: 30px;
-            .btn.btn-block {
-                width: 175px;
-                margin: 5px auto 0 auto;
-            }
-        }
-    }
-    #right-panel {
-        h1 {
-            font-size: 24px;
-            line-height: 50px;
-        }
-        h2 {
-            font-size: 20px;
-            line-height: 40px;
-        }
-        h3 {
-            font-size: 18px;
-            line-height: 36px;
-        }
+    .page-header {
+        .actions { float: right; }
     }
 }
 
@@ -546,14 +536,6 @@ body#user-form #content {
 body#user-detail #content {
     .info {
         text-align: center;
-    }
-    .related-projects {
-        margin: 25px 0;
-    }
-    i { font-size:48px; }
-
-    .project {
-        padding: 22px;
     }
 }
 
