@@ -62,12 +62,12 @@ class UserTestCase(TestCase):
 
     def test_get_absolute_url(self):
         """Test get_absolute_url for user"""
-        expected = '/users/d/{pk}/'.format(pk=self.user.id)
+        expected = '/users/{pk}/'.format(pk=self.user.id)
         self.assertEqual(expected, self.user.get_absolute_url())
 
     def test_get_edit_url(self):
         """Test get_edit_url for user"""
-        expected = '/users/d/{pk}/edit/'.format(pk=self.user.id)
+        expected = '/users/{pk}/edit/'.format(pk=self.user.id)
         self.assertEqual(expected, self.user.get_edit_url())
 
     def test_get_short_name(self):
