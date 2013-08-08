@@ -57,6 +57,10 @@ class Help(TemplateView):
     template_name = 'website/help.html'
 
 
+class Ecosystem(TemplateView):
+    template_name = 'website/ecosystem.html'
+
+
 class FacetedSearchCustomView(FacetedSearchView):
     """Overrides various default methods to allow for additional context, smoother
        UX for faceting
