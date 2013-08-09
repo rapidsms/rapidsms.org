@@ -27,11 +27,11 @@ class ProjectAdmin(admin.ModelAdmin):
     list_filter = ['created', 'updated', ]
     search_fields = ['name', ]
     readonly_fields = ['created', 'updated', 'status', ]
-    filter_horizontal = ('countries',)
+    filter_horizontal = ('countries', 'collaborators')
     fieldsets = (
         (None,
-            {'fields': ('created', 'updated', 'creator', 'name', 'slug',
-                    'status', 'feature')},
+            {'fields': ('created', 'updated', 'creator', 'collaborators',
+                        'name', 'slug', 'status', 'feature')},
         ),
         ('Project Information',
             {'fields': ('started', 'countries', 'description', 'challenges',
