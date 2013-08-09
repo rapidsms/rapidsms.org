@@ -41,7 +41,10 @@ class Project(models.Model):
     status = models.CharField(default=DRAFT, max_length=1, choices=STATUS)
     feature = models.BooleanField('Featured on Homepage', default=False,
             help_text="Check box to make this project the featured project.")
-
+    status = models.CharField(default=DRAFT, max_length=1, choices=STATUS,
+            help_text="To change status go back to the listing page and select"
+                      " the appropriate admin action.")
+    feature = models.BooleanField('Feature on Homepage', default=False)
     collaborators = models.ManyToManyField(User, related_name='projects',
             help_text="Users who have permission to edit this project.")
 

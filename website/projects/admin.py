@@ -17,7 +17,7 @@ def deny_projects(modeladmin, request, queryset):
     for project in queryset:
         project.change_status(Project.DENIED)
         project.save()
-deny_projects.short_description = "Deny selected projects"
+deny_projects.short_description = "Deny publication of selected projects"
 
 
 class ProjectAdmin(admin.ModelAdmin):
@@ -25,7 +25,8 @@ class ProjectAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('name', 'updated', 'status', 'feature')
     list_filter = ['created', 'updated', ]
-    readonly_fields = ['created', 'updated', 'status']
+    search_fields = ['name', ]
+    readonly_fields = ['created', 'updated', 'status', ]
     filter_horizontal = ('countries',)
     fieldsets = (
         (None,
@@ -45,8 +46,8 @@ class ProjectAdmin(admin.ModelAdmin):
         """
         if obj:
             if obj.feature:
-                return ['created', 'updated', 'feature']
-        return ['created', 'updated', ]
+                return ['created', 'updated', 'status', 'feature']
+        return ['created', 'updated', 'status', ]
 
 
 admin.site.register(Project, ProjectAdmin)
