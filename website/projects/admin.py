@@ -44,8 +44,6 @@ class ProjectAdmin(admin.ModelAdmin):
         """
         Hook for specifying custom readonly fields.
         """
-        readonly_fields = self.readonly_fields
-        # import pdb; pdb.set_trace()
         if obj:
             if obj.feature:
                 return ['created', 'updated', 'status', 'feature']
