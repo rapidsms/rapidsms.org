@@ -22,6 +22,7 @@ deny_projects.short_description = "Deny publication of selected projects"
 
 class ProjectAdmin(admin.ModelAdmin):
     actions = [publish_projects, deny_projects, ]
+    raw_id_fields = ('creator', )
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('name', 'updated', 'status', 'feature')
     list_filter = ['created', 'updated', ]
