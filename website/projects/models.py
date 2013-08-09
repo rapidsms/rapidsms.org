@@ -38,7 +38,9 @@ class Project(models.Model):
             "author.")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    status = models.CharField(default=DRAFT, max_length=1, choices=STATUS)
+    status = models.CharField(default=DRAFT, max_length=1, choices=STATUS,
+            help_text="To change status go back to the listing page and select"
+                      " the appropriate admin action.")
     feature = models.BooleanField('Feature on Homepage', default=False)
 
     collaborators = models.ManyToManyField(User, related_name='projects',
