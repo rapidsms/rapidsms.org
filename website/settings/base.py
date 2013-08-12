@@ -238,3 +238,16 @@ PUSH_CREDENTIALS = 'website.aggregator.utils.push_credentials'
 
 # Maximum number of projects to show on the map
 # MAX_NUM_PROJECTS = 5
+
+ALLOWED_TAGS = ('a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i',
+                'li', 'ol', 'strong', 'ul', 'font', 'div', 'span', 'br',
+                'strike', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'table',
+                'tr', 'td', 'th', 'thead', 'tbody', 'dl', 'dd', )
+
+ALLOWED_ATTRIBUTES = {'*': ['class'], 'a': ['href', 'title'],
+                      'abbr': ['title'], 'acronym': ['title'],
+                      'font': ['face', 'size',], 'div': ['style', ],
+                      'span': ['style', ], 'ul': ['style', ], }
+
+ALLOWED_STYLES = ['font-size', 'color', 'text-align', 'text-decoration',
+                  'font-weight', ]

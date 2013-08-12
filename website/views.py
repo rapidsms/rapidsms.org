@@ -153,11 +153,11 @@ class FacetedSearchCustomView(FacetedSearchView):
         A helper function to deal with the fact that taxonomy gets is shared
         between two different models.
         """
-        taxonomy_facets = facets['fields'].get('taxonomy')
+        taxonomy_facets = facets.get('fields', {}).get('taxonomy')
         has_taxonomy = any([facet[1] for facet in taxonomy_facets])
         if has_taxonomy:
             return facets
-        facets['fields'].pop('taxonomy')
+        facets.get('fields', {}).pop('taxonomy')
         return facets
 
 
