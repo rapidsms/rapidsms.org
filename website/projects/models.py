@@ -229,10 +229,10 @@ class Project(models.Model):
 
     def save(self, *args, **kwargs):
         """Saves instance slug field"""
-        self.challenges = self._linkify(self.challenges)
-        self.audience = self._linkify(self.audience)
-        self.technologies = self._linkify(self.technologies)
-        self.metrics = self._linkify(self.metrics)
+        self.challenges = self._clean_html(self._linkify(self.challenges))
+        self.audience = self._clean_html(self._linkify(self.audience))
+        self.technologies = self._clean_html(self._linkify(self.technologies))
+        self.metrics = self._clean_html(self._linkify(self.metrics))
         if not self.id:
             # Newly created object, so set slug
             self.slug = slugify(self.name)
