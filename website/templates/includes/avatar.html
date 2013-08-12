@@ -1,15 +1,17 @@
 {% load user_tags thumbnail %}
 <div class="avatar">
 {% if user.avatar %}
+
+    {% if user.user_type = 'I' %}
     {% with size|add:'x'|add:size as thumbnail_size %}
     {% thumbnail user.avatar thumbnail_size crop="center" as im %}
-        {% if user.user_type = 'I' %}
         <img class="img-circle" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ user.get_full_name}}"/>
-        {% else %}
-        <img class="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ user.get_full_name}}"/>
-        {% endif %}
     {% endthumbnail %}
     {% endwith %}
+    {% else %}
+        <img class="organization" src="{{ user.avatar.url }}" alt="{{ user.get_full_name}}"/>
+    {% endif %}
+
 {% elif user.gravatar_email %}
     {% if user.user_type = 'I' %}
     <img class="img-circle" src="{% gravatar_url user.gravatar_email size %}" alt="{{ user.get_full_name }}" />
