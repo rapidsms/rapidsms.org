@@ -17,7 +17,7 @@
     {% if user.is_authenticated and user == object.creator %}
     <div class="header-buttons">
         {% if object.status = 'D' %}
-        <a href="#request-review" role="button" data-toggle="modal"><i class="icon-white icon-pencil"></i> Request review</a>
+        <a href="#request-review" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-white icon-code-fork"></i> Request review</a>
         {% endif %}
         <a href="{{ object.get_edit_url }}" class="btn btn-info"><i class="icon-white icon-pencil"></i> Edit</a>
         <a href="#delete-modal" role="button" class="btn btn-danger" data-toggle="modal"><i class="icon-white icon-remove"></i> Delete</a>
