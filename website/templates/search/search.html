@@ -2,7 +2,7 @@
 {% load widget_tweaks scribbler_tags facet_tags %}
 
 {% block title %}{{ model_type|default:"search result"|add:"s"|title }}{% endblock title %}
-{% block body_id %}search{% endblock body_id %}
+{% block body_class %}search{% endblock body_class %}
 
 {% block content %}
 {% load drafts %}
