@@ -229,6 +229,7 @@ class Project(models.Model):
 
     def save(self, *args, **kwargs):
         """Saves instance slug field"""
+        self.description = self._clean_html(self._linkify(self.description))
         self.challenges = self._clean_html(self._linkify(self.challenges))
         self.audience = self._clean_html(self._linkify(self.audience))
         self.technologies = self._clean_html(self._linkify(self.technologies))
