@@ -14,7 +14,7 @@
 
 <div class="page-header">
 
-    {% if user.is_authenticated and user == object.creator %}
+    {% if user.is_authenticated and user == object.creator or user in object.collaborators.all %}
     <div class="header-buttons">
         {% if object.status = 'D' %}
         <a href="#request-review" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-white icon-code-fork"></i> Request review</a>
