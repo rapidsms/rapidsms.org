@@ -34,7 +34,7 @@
 <div id="main-content">
     <div class="row-fluid">
         <div class="span7">
-            <p class="description">{{ object.description }}</p>
+            <p class="description">{{ object.description|safe }}</p>
             <div class="map-container">
                 <div id="home-map" style="height: 100%; width: 100%"></div>
             </div>
