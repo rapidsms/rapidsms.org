@@ -30,6 +30,11 @@ SOUTH_TESTS_MIGRATE = True
 
 COMPRESS_ENABLED = False
 
+import djcelery
+djcelery.setup_loader()
+
+CELERY_ALWAYS_EAGER = True
+
 # Special test settings
 if 'test' in sys.argv:
     CELERY_ALWAYS_EAGER = True
