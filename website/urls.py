@@ -8,7 +8,7 @@ from haystack.query import SearchQuerySet
 
 from .aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 
-from .views import About, Community, FacetedSearchCustomView, Help, Home
+from .views import About, Community, FacetedSearchCustomView, Help, Home, Ecosystem
 
 
 admin.autodiscover()
@@ -29,6 +29,7 @@ urlpatterns += patterns('',
     url(r'^about/$', About.as_view(), name='about'),
     url(r'^community/$', Community.as_view(), name='community'),
     url(r'^help/$', Help.as_view(), name='help'),
+    url(r'^ecosystem/$', Ecosystem.as_view(), name='ecosystem'),
 
     url(r'^projects/', include('website.projects.urls')),
     url(r'^packages/', include('website.packages.urls')),

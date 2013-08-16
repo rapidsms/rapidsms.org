@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load scribbler_tags %}
+
+{% block title %}Ecosystem{% endblock title %}
+{% block body_id %}ecosystem{% endblock body_id %}
+{% block body_class %}search{% endblock body_class %}
+
+{% block content %}
+<div class="page-header">
+    {% scribble "ecosystem-header" %}
+    <h1>Ecosystem</h1>
+    {% endscribble %}
+</div>
+
+{% scribble "ecosystem" %}
+<p>Ecosystem</p>
+{% endscribble %}
+
+{% endblock content %}

@@ -57,6 +57,10 @@ class Help(TemplateView):
     template_name = 'website/help.html'
 
 
+class Ecosystem(TemplateView):
+    template_name = 'website/ecosystem.html'
+
+
 class FacetedSearchCustomView(FacetedSearchView):
     """Overrides various default methods to allow for additional context, smoother
        UX for faceting
@@ -140,8 +144,21 @@ class FacetedSearchCustomView(FacetedSearchView):
         extra['model_type'] = model_type
 
         if model_type in ['package', 'project']:
+            extra['facets'] = self.clean_facets(extra['facets'])
             extra['model_create'] = '%s_create' % model_type
         return extra
+
+    def clean_facets(self, facets):
+        """
+        A helper function to deal with the fact that taxonomy gets is shared
+        between two different models.
+        """
+        taxonomy_facets = facets.get('fields', {}).get('taxonomy')
+        has_taxonomy = any([facet[1] for facet in taxonomy_facets])
+        if has_taxonomy:
+            return facets
+        facets.get('fields', {}).pop('taxonomy')
+        return facets
 
 
 def search_listing(request, model_type):

@@ -451,7 +451,11 @@ body#home {
         background-size: cover;
         padding-top: 50px;
         padding-bottom: 50px;
-         @media (min-width: 1300px) {
+        @media (min-width: 1500px) {
+            padding-top: 150px;
+            padding-bottom: 150px;
+        }
+        @media (max-width: 1500px) {
             padding-top: 100px;
             padding-bottom: 100px;
         }
@@ -537,9 +541,14 @@ body#user-detail #content {
     .info {
         text-align: center;
     }
+    .avatar {
+        img {
+            max-width: 90%;
+        }
+    }
 }
 
-body#search #content {
+body.search #content {
     .result {
         .results-header {
             font-size: 20px;
@@ -611,7 +620,7 @@ body#search #content {
 
 body#project-detail {
     #main-content {
-        p.description{
+        div.description{
             font-size: 18px;
             line-height: 1.5;
             margin-bottom: 25px;
@@ -637,6 +646,9 @@ body#project-detail {
                 min-height: 200px;
                 i {
                     font-size: 48px;
+                }
+                p {
+                    text-align: left;
                 }
             }
         }

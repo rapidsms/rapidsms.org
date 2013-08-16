@@ -17,20 +17,22 @@ def deny_projects(modeladmin, request, queryset):
     for project in queryset:
         project.change_status(Project.DENIED)
         project.save()
-deny_projects.short_description = "Deny selected projects"
+deny_projects.short_description = "Deny publication of selected projects"
 
 
 class ProjectAdmin(admin.ModelAdmin):
     actions = [publish_projects, deny_projects, ]
+    raw_id_fields = ('creator', )
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('name', 'updated', 'status', 'feature')
     list_filter = ['created', 'updated', ]
-    readonly_fields = ['created', 'updated', ]
-    filter_horizontal = ('countries',)
+    search_fields = ['name', ]
+    readonly_fields = ['created', 'updated', 'status', ]
+    filter_horizontal = ('countries', 'collaborators', 'packages', 'tags')
     fieldsets = (
         (None,
-            {'fields': ('created', 'updated', 'creator', 'name', 'slug',
-                    'status', 'feature')},
+            {'fields': ('created', 'updated', 'creator', 'collaborators',
+                        'name', 'slug', 'status', 'feature')},
         ),
         ('Project Information',
             {'fields': ('started', 'countries', 'description', 'challenges',
@@ -43,12 +45,10 @@ class ProjectAdmin(admin.ModelAdmin):
         """
         Hook for specifying custom readonly fields.
         """
-        readonly_fields = self.readonly_fields
-        # import pdb; pdb.set_trace()
         if obj:
             if obj.feature:
-                return ['created', 'updated', 'feature']
-        return ['created', 'updated', ]
+                return ['created', 'updated', 'status', 'feature']
+        return ['created', 'updated', 'status', ]
 
 
 admin.site.register(Project, ProjectAdmin)

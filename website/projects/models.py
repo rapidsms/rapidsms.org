@@ -1,5 +1,6 @@
 import random
 
+import bleach
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
@@ -39,8 +40,12 @@ class Project(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(default=DRAFT, max_length=1, choices=STATUS)
+    feature = models.BooleanField('Featured on Homepage', default=False,
+            help_text="Check box to make this project the featured project.")
+    status = models.CharField(default=DRAFT, max_length=1, choices=STATUS,
+            help_text="To change status go back to the listing page and select"
+                      " the appropriate admin action.")
     feature = models.BooleanField('Feature on Homepage', default=False)
-
     collaborators = models.ManyToManyField(User, related_name='projects',
             help_text="Users who have permission to edit this project.")
 
@@ -83,6 +88,15 @@ class Project(models.Model):
         "Check if a users has rights to edit this instance"
         if user == self.creator or user in self.collaborators.all():
             return True
+
+    def _clean_html(self, html):
+        """Returns sanitized html"""
+        tags = getattr(settings, 'ALLOWED_TAGS')
+        attributes = getattr(settings, 'ALLOWED_ATTRIBUTES')
+        styles = getattr(settings, 'ALLOWED_STYLES')
+        cleaned_html = bleach.clean(html, tags=tags,
+                                    attributes=attributes, styles=styles)
+        return cleaned_html
 
     def change_status(self, status):
         """Change current status of instance and determines whether or not
@@ -192,6 +206,11 @@ class Project(models.Model):
                 'country': country.name
                 }
 
+    def _linkify(self, text):
+        """Returns a string with marked up <a> tags"""
+        parsed_text = bleach.linkify(text)
+        return parsed_text
+
     def notify(self, to, status):
         """Sends email notification to users or admins.
 
@@ -210,6 +229,11 @@ class Project(models.Model):
 
     def save(self, *args, **kwargs):
         """Saves instance slug field"""
+        self.description = self._clean_html(self._linkify(self.description))
+        self.challenges = self._clean_html(self._linkify(self.challenges))
+        self.audience = self._clean_html(self._linkify(self.audience))
+        self.technologies = self._clean_html(self._linkify(self.technologies))
+        self.metrics = self._clean_html(self._linkify(self.metrics))
         if not self.id:
             # Newly created object, so set slug
             self.slug = slugify(self.name)

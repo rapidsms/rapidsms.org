@@ -12,10 +12,16 @@
     {% block js-variables %}{% endblock js-variables %}
     <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico">
     {% block css %}
+
+    {% compress css %}
     <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui/bootstrap/css/bootstrap-responsive.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui/css/flat-ui.css">
+    {% endcompress %}
+
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
+
+
     {% if debug %}
     <link rel="stylesheet/less" type="text/css" media="all"
             href="{{ STATIC_URL }}less/site.less">

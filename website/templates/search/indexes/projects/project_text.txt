@@ -6,5 +6,5 @@
     located in {{ object.display_countries }}
 </div>
 <div class="results-description">
-    {{ object.description|truncatewords:"100" }}
+    {{ object.description|striptags|truncatewords:"100" }}
 </div>

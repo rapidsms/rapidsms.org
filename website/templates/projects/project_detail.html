@@ -14,10 +14,10 @@
 
 <div class="page-header">
 
-    {% if user.is_authenticated and user == object.creator %}
+    {% if user.is_authenticated and user == object.creator or user in object.collaborators.all %}
     <div class="header-buttons">
         {% if object.status = 'D' %}
-        <a href="#request-review" role="button" data-toggle="modal"><i class="icon-white icon-pencil"></i> Request review</a>
+        <a href="#request-review" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-white icon-code-fork"></i> Request review</a>
         {% endif %}
         <a href="{{ object.get_edit_url }}" class="btn btn-info"><i class="icon-white icon-pencil"></i> Edit</a>
         <a href="#delete-modal" role="button" class="btn btn-danger" data-toggle="modal"><i class="icon-white icon-remove"></i> Delete</a>
@@ -34,7 +34,7 @@
 <div id="main-content">
     <div class="row-fluid">
         <div class="span7">
-            <p class="description">{{ object.description }}</p>
+            <div class="description">{{ object.description|safe }}</div>
             <div class="map-container">
                 <div id="home-map" style="height: 100%; width: 100%"></div>
             </div>
@@ -117,28 +117,28 @@
         <div class="item span3">
             <i class="icon-trophy"></i>
             <h3>Challenge(s)</h3>
-            <p>{{ object.challenges }}</p>
+            <p>{{ object.challenges|safe }}</p>
         </div>
         {% endif %}
         {% if object.audience %}
         <div class="item span3">
             <i class="icon-group"></i>
             <h3>Audience</h3>
-            <p>{{ object.audience }}</p>
+            <p>{{ object.audience|safe }}</p>
         </div>
         {% endif %}
         {% if object.technologies %}
         <div class="item span3">
             <i class="icon-code-fork"></i>
             <h3>Key Technologies</h3>
-            <p>{{ object.technologies }}</p>
+            <p>{{ object.technologies|safe }}</p>
         </div>
         {% endif %}
         {% if object.metrics %}
         <div class="item span3">
             <i class="icon-dashboard"></i>
             <h3>Metrics/ Evidence</h3>
-            <p>{{ object.metrics }}</p>
+            <p>{{ object.metrics|safe }}</p>
         </div>
         {% endif %}
     </div>
