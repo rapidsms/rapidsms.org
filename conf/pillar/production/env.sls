@@ -1,4 +1,4 @@
 environment: production
 
 # FIXME: Change to match production domain name
-domain: rapidsms.org
+domain: www.rapidsms.org
