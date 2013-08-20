@@ -34,3 +34,8 @@ users:
         groups: [admin, login]
         public_key:
             - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDjkgAo0SMUeX8rnm0DQ224WM7qEoKRgI64tzkxOdtXapTP0D5e41RAnY+lyG4quXK7ZViJAcoATc1Gr6kWkjKoVj/1YvGb2UBxOTUxMOEL+PlSEwwpnceiPJHrwHnVc4CQ390FN92E7U8nhRO5bVBo7EDjcF2iwaSJ+2hGKO6APVfZsqN9Wqsx9YMBEtzsz8SsTp3+33/KSnq9WGQUaSynl5WeojMGFkoQ8kXUO+rUrKhmJ2JnT5BH5b0NzY5qGqwbzFoTWjUCzP/V9eZjBURLOT3bxO6EcM/9ulc0CbVpHYql9la1Z1AgNeftzuhLnOpo/kdWWFbQqYnuWKYwmyxD victor@RochApps
+
+    ewheeler:
+        groups: [admin, login]
+        public_key:
+            - ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEArjyoWH2fjexrrU0+P3NbEYBFWGF/NjqZmAGz5geYbVTST3JZd0btrnwjIRngN2bmLYCAefBmC6+q33HJcBivVui5/HSMqgcQVWtdH8B8+FPXjrsx9/MWaIHriLOlQofb1wtg+7G7Pd7VHlOoQ4+phm+9ZwLhTXMMCBsUzLZxMJGaD8xzopIgDPqJwiYNnBY+hmPthillJ8XXjYCP+sH2f5vaEyJn/+86L3OjrwDUI9Ous9rVnpDAZnaC2rdCQhGK34xlABWivXDU52qMO6sAidUSQM0H2H0saWbIZDlfrer5jrO8I8xR28/SFXN2s7Vw8xUx4+Vcz3IRmIVFfpLXxw== evanmwheeler@gmail.com
