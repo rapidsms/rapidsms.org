@@ -37,7 +37,7 @@ def staging():
 @task
 def production():
     env.environment = 'production'
-    env.hosts = ["rapidsms-prod.caktusgroup.com"]
+    env.hosts = ["rapidsms.org"]
     env.branch = 'master'
     setup_path()
 
