@@ -7,13 +7,18 @@ import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-FLAG_EMAIL_ALERTS = []
-PROJECT_EMAIL_ALERTS = []
 
 ADMINS = (
-        ('RapidSMS.org Team', 'rapidsms-team@caktusgroup.com'),
-    )
+    ('Evan Wheeler', 'evanmwheeler@gmail.com'),
+    ('Colin Copeland', 'copelco@caktusgroup.com'),
+    ('RapidSMS.org Caktus Team', 'rapidsms-team@caktusgroup.com'),
+)
 MANAGERS = ADMINS
+
+FLAG_EMAIL_ALERTS = ['evanmwheeler@gmail.com',
+                     'copelco@caktusgroup.com',
+                     'rapidsms-team@caktusgroup.com']
+PROJECT_EMAIL_ALERTS = FLAG_EMAIL_ALERTS
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = os.environ['SECRET_KEY']
@@ -47,8 +52,6 @@ GITHUB_KEY = os.environ['GITHUB_KEY']
 GITHUB_SECRET = os.environ['GITHUB_SECRET']
 SUPERFEEDR_CREDS = (os.environ['SUPERFEEDR_USER'], os.environ['SUPERFEEDR_PWD'])
 PUSH_SSL_CALLBACK = True
-
-FLAG_EMAIL_ALERTS = ['rapidsms-team@caktusgroup.com']
 
 #celery settings
 import djcelery

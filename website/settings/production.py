@@ -2,9 +2,6 @@ from website.settings.staging import *
 
 from datetime import timedelta
 
-FLAG_EMAIL_ALERTS = []
-PROJECT_EMAIL_ALERTS = []
-
 # There should be only minor differences from staging
 
 DATABASES['default']['NAME'] = 'website_production'
