@@ -141,7 +141,7 @@ class FacetedSearchCustomView(FacetedSearchView):
             extra['facets'] = self.results.facet_counts()
 
         model_type = self.request.path.split('/')[1].rstrip('s')
-        extra['model_type'] = model_type
+        extra['model_type'] = None if model_type == "search" else model_type
 
         if model_type in ['package', 'project']:
             extra['facets'] = self.clean_facets(extra['facets'])
