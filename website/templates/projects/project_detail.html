@@ -11,11 +11,18 @@
 {% url 'project_review_request' slug=object.slug as request_review %}
 {% include "includes/request_review_confirm.html" with action=request_review %}
 {% endif %}
+{% if user.is_staff %}
+{% url 'project_publish' slug=object.slug as publish_project %}
+{% include "includes/publish_project_confirm.html" with action=publish_project %}
+{% endif %}
 
 <div class="page-header">
 
-    {% if user.is_authenticated and user == object.creator or user in object.collaborators.all %}
+    {% if user.is_authenticated and user == object.creator or user in object.collaborators.all or user.is_staff%}
     <div class="header-buttons">
+        {% if user.is_staff and object.status = 'R' %}
+            <a href="#publish-project" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-white icon-code-fork"></i> Publish project</a>
+        {% endif %}
         {% if object.status = 'D' %}
         <a href="#request-review" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-white icon-code-fork"></i> Request review</a>
         {% endif %}
