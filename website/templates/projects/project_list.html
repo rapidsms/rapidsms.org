@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Review Projects{% endblock title %}
+{% block body_id %}ecosystem{% endblock body_id %}
+{% block body_class %}search{% endblock body_class %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Review Projects</h1>
+</div>
+
+{% for object in object_list %}
+<div class="result">
+    <div class="results-header">
+        <i class="icon-white icon-file-text"></i>
+        <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+    </div>
+    <div class="results-subheader">
+        located in {{ object.display_countries }}
+    </div>
+    <div class="results-description">
+        {{ object.description|striptags|truncatewords:"100" }}
+    </div>
+    <hr>
+</div>
+{% endfor %}
+
+{% endblock content %}

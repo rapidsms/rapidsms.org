@@ -3,11 +3,12 @@ import random
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import redirect
 from django.views.generic import CreateView, DeleteView, DetailView,\
-    UpdateView, RedirectView
+    UpdateView, RedirectView, ListView
 from django.views.generic.detail import SingleObjectMixin
 
-from ..mixins import LoginRequiredMixin, CanEditMixin
+from ..mixins import LoginRequiredMixin, CanEditMixin, StaffRequiredMixin
 from .forms import ProjectCreateEditForm
 from .models import Project
 
@@ -52,6 +53,24 @@ class ProjectDetail(DetailView):
             map_data = self.get_map_data(project, countries)
             context.update(map_data)
         return context
+
+
+class ProjectReviewList(StaffRequiredMixin, ListView):
+    model = Project
+
+    def get_queryset(self):
+        projects = super(ProjectReviewList, self).get_queryset()
+        return projects.filter(status=Project.NEEDS_REVIEW)
+
+
+class ProjectApprove(StaffRequiredMixin, UpdateView):
+    model = Project
+
+    def post(self, request, *args, **kwargs):
+        object = self.get_object()
+        object.change_status(status=Project.PUBLISHED)
+        messages.success(self.request, 'Project has been successfully published.')
+        return redirect(object)
 
 
 class ProjectEdit(LoginRequiredMixin, CanEditMixin, UpdateView):

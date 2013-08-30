@@ -1,0 +1,18 @@
+<div id="publish-project" class="modal hide fade"
+        tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Publish project</h3>
+    </div>
+    <div class="modal-body">
+        <p>You have reviewed this project and it is ready to be published.</p>
+    </div>
+    <div class="modal-footer">
+        <form id="delete-form" method="post"
+                action="{{ action }}" style="margin-bottom: 0;">
+            {% csrf_token %}
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <input type="submit" name="submit" class="btn btn-primary" value="Confirm" />
+        </form>
+    </div>
+</div>

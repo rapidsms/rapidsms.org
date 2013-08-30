@@ -58,3 +58,12 @@ class LoginRequiredMixin(object):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+
+
+class StaffRequiredMixin(object):
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        user = self.request.user
+        if not user.is_staff:
+            raise PermissionDenied
+        return super(StaffRequiredMixin, self).dispatch(*args, **kwargs)
