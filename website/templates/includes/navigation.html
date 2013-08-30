@@ -42,7 +42,8 @@
                                 <li><a href="{{ user.get_absolute_url }}">View Profile</a></li>
                                 <li><a href="{{ user.get_edit_url }}">Edit Profile</a></li>
                                 {% if user.is_staff %}
-                                    <li><a href="{% url 'projects_project_reviews' %}">Review</a></li>
+                                    <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                                    <li><a href="{% url 'projects_project_reviews' %}">Review Projects</a></li>
                                 {% endif %}
                                 <li><a href="{% url "logout" %}">Log Out</a></li>
                             </ul>
