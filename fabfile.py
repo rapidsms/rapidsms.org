@@ -53,7 +53,7 @@ def setup_path():
 
 
 @task
-def provision(common='master'):
+def provision(common='27167c765030770fe50e19a388af628b7cbc7c32'):
     """Provision server with masterless Salt minion."""
     require('environment')
     # Install salt minion
@@ -84,7 +84,7 @@ def provision(common='master'):
         sudo('apt-get install git-core -q -y')
     run('git clone git://github.com/caktus/margarita.git /tmp/common/')
     with cd('/tmp/common/'):
-        run('git checkout %s' % common)
+        run('git reset --hard %s' % common)
     sudo('mv /tmp/common/ /srv/common/')
     sudo('rm -rf /tmp/common/')
     sudo('chown root:root -R /srv/')
