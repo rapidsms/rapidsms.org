@@ -2,6 +2,7 @@
 {% set ssl_dir = vars.path_from_root('ssl') %}
 {% set public_dir = vars.path_from_root('public') %}
 {% set auth_file = vars.path_from_root(".htpasswd") %}
+{% set dhparams_file = vars.build_path(ssl_dir, 'dhparams.pem') %}
 
 include:
   - nginx
@@ -82,6 +83,7 @@ nginx_conf:
         public_root: "{{ public_dir }}"
         log_dir: "{{ vars.log_dir }}"
         ssl_dir: "{{ ssl_dir }}"
+        dhparams_file: "{{ dhparams_file }}"
         socket: "{{ vars.server_socket }}"
         {%- if 'http_auth' in pillar %}
         auth_file: "{{ auth_file }}"
@@ -101,3 +103,8 @@ extend:
       - running
       - watch:
         - file: nginx_conf
+
+{{ dhparams_file }}:
+  cmd.run:
+    - name: openssl dhparam -out {{ dhparams_file }} 2048
+    - unless: test -f {{ dhparams_file }}
