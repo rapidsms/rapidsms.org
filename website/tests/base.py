@@ -4,7 +4,7 @@ from urllib import urlencode
 
 from django.conf import settings
 from django.contrib.auth import login
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.http import HttpRequest
 from django.test import TestCase
 
@@ -27,7 +27,7 @@ class ModelFormTestMixin(FormTestMixin):
     def _get_form(self, *args, **kwargs):
         if 'instance' not in kwargs:
             kwargs['instance'] = self._get_form_instance()
-        return super(ModelFormTestMixin, self)._get_form(*args, **kwargs)
+        return super()._get_form(*args, **kwargs)
 
     def _get_form_instance(self):
         return None

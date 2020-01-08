@@ -1,4 +1,4 @@
-from datamaps.lookups import CountryLookup
+from website.datamaps.lookups import CountryLookup
 from django import forms
 from selectable.forms import AutoCompleteSelectMultipleField
 
@@ -29,3 +29,4 @@ class ProjectCreateEditForm(forms.ModelForm):
 class ProjectAdminForm(forms.ModelForm):
     class Meta:
         model = Project
+        fields = '__all__'

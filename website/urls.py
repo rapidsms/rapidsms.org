@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 
@@ -14,17 +14,17 @@ from .views import About, Community, FacetedSearchCustomView, Help, Home, Ecosys
 admin.autodiscover()
 
 
-urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
-) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
-urlpatterns += patterns('',
+urlpatterns += [
     url(r'^scribbler/', include('scribbler.urls')),
     url(r'^selectable/', include('selectable.urls')),
-)
+]
 
-urlpatterns += patterns('',
+urlpatterns += [
     url(r'^$', Home.as_view(), name='home'),
     url(r'^about/$', About.as_view(), name='about'),
     url(r'^community/$', Community.as_view(), name='community'),
@@ -40,7 +40,7 @@ urlpatterns += patterns('',
     url(r'^rss/community/blogs/(?P<slug>[\w-]+)/$', CommunityAggregatorFeed(), name='aggregator-feed'),
     # django-push
     url(r'^subscriber/', include('django_push.subscriber.urls')),
-)
+]
 
 
 # Haystack configure SQS for faceting
@@ -50,9 +50,9 @@ facet_list = ('countries', 'creator', 'pkg_type', 'model', 'user_type',
 for facet in facet_list:
     sqs = sqs.facet(facet)
 
-urlpatterns += patterns('haystack.views',
+urlpatterns += [
     url(r'^search/$',
         FacetedSearchCustomView(form_class=FacetedSearchForm, searchqueryset=sqs),
         name='haystack_search',
     ),
-)
+]

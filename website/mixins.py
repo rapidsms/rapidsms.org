@@ -10,7 +10,7 @@ class AuthorEditMixin(object):
     """
 
     def get_object(self, queryset=None):
-        obj = super(AuthorEditMixin, self).get_object(queryset)
+        obj = super().get_object(queryset)
         if obj.creator != self.request.user:
             raise PermissionDenied
         return obj
@@ -35,7 +35,7 @@ class CanEditMixin(object):
         PermissionDenied exception.
 
         """
-        obj = super(CanEditMixin, self).get_object(queryset)
+        obj = super().get_object(queryset)
         user_can_edit = obj.can_edit(self.request.user)
         if user_can_edit:
             return obj
@@ -49,7 +49,7 @@ class IsActiveObjectMixin(object):
     """
 
     def get_queryset(self):
-        queryset = super(IsActiveObjectMixin, self).get_queryset()
+        queryset = super().get_queryset()
         return queryset.filter(is_active=True)
 
 
@@ -57,7 +57,7 @@ class LoginRequiredMixin(object):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 
 class StaffRequiredMixin(object):
@@ -66,4 +66,4 @@ class StaffRequiredMixin(object):
         user = self.request.user
         if not user.is_staff:
             raise PermissionDenied
-        return super(StaffRequiredMixin, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)

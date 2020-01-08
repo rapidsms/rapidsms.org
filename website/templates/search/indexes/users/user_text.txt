@@ -1,6 +1,6 @@
 {% with user=object %}
 <div class="results-header">
-    {% if user.user_type = 'I' %}
+    {% if user.user_type == 'I' %}
     <i class="icon-white icon-user"></i>
     {% else %}
     <i class="icon-white icon-building"></i>

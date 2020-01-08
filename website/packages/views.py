@@ -1,7 +1,7 @@
 import datetime
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView,\
@@ -21,7 +21,7 @@ class PackageCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
-        return super(PackageCreate, self).form_valid(form)
+        return super().form_valid(form)
 
 
 class PackageDetail(IsActiveObjectMixin, DetailView):
@@ -49,7 +49,7 @@ class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin,
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
-        return super(PackageFlag, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return self.object.get_absolute_url()
@@ -93,7 +93,7 @@ class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin,
         messages.success(self.request, 'Thanks for flagging {0}. We have '
             'notified the administrators and they will review this '
             'package shortly.'.format(self.object))
-        return super(PackageFlag, self).form_valid(form)
+        return super().form_valid(form)
 
 
 class PackageRefresh(LoginRequiredMixin, IsActiveObjectMixin,

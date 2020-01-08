@@ -1,14 +1,13 @@
 """Django settings for website project."""
 import os
 
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 
 PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 PROJECT_ROOT = os.path.abspath(os.path.join(PROJECT_PATH, os.pardir))
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -86,25 +85,62 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+from pathlib import Path
+SETTINGS_DIR = Path(__file__).parent
+PACKAGE_DIR = SETTINGS_DIR.parent
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            str(PACKAGE_DIR / 'templates')
+        ],
+        'APP_DIRS': False,
+        'OPTIONS': {
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'libraries': {
+                'staticfiles': 'django.templatetags.static',
+                'i18n': 'django.templatetags.i18n',
+            },
+        },
+    },
+]
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
-)
+# # List of callables that know how to import templates from various sources.
+# TEMPLATE_LOADERS = (
+#     'django.template.loaders.filesystem.Loader',
+#     'django.template.loaders.app_directories.Loader',
+# #     'django.template.loaders.eggs.Loader',
+# )
+#
+# TEMPLATE_CONTEXT_PROCESSORS = (
+#     'django.contrib.auth.context_processors.auth',
+#     'django.contrib.messages.context_processors.messages',
+#     'django.core.context_processors.debug',
+#     'django.core.context_processors.media',
+#     'django.core.context_processors.request',
+#     'django.core.context_processors.i18n',
+#     'django.core.context_processors.static',
+# )
+#
+# TEMPLATE_DIRS = (
+#     os.path.join(PROJECT_PATH, 'templates'),
+# )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.contrib.messages.context_processors.messages',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.media',
-    'django.core.context_processors.request',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.static',
-)
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -118,9 +154,6 @@ ROOT_URLCONF = 'website.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'website.wsgi.application'
 
-TEMPLATE_DIRS = (
-    os.path.join(PROJECT_PATH, 'templates'),
-)
 
 FIXTURE_DIRS = (
     os.path.join(PROJECT_PATH, 'fixtures'),
@@ -138,8 +171,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
 
     # External apps that other apps depend on
-    'datamaps',
-
+    'website.datamaps',
     'website.taxonomy',
     'website.aggregator',
     'website.projects',
@@ -148,15 +180,14 @@ INSTALLED_APPS = (
     'website.website_tests',
 
     # External apps
-    'south',
+    # 'south',
     'compressor',
     'scribbler',
-    'allaccess',
     'widget_tweaks',
     'haystack',
     'sorl.thumbnail',
     'selectable',
-    'djcelery',
+    'celery',
     'taggit',
     'django_push.subscriber',
 )
@@ -191,24 +222,23 @@ LOGGING = {
 }
 
 # Application settings
-SKIP_SOUTH_TESTS = True
 
+# COMPRESS_URL =
+COMPRESS_URL = r'%s/public/static/' % os.path.abspath(os.path.dirname(__file__))
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
 
-SOUTH_MIGRATION_MODULES = {
-    'allaccess': 'ignore',
-}
-
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allaccess.backends.AuthorizedServiceBackend',
+    # 'allaccess.backends.AuthorizedServiceBackend',
 ]
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
+
+CELERY_TASK_ALWAYS_EAGER = False
 
 # Haystack Conf
 HAYSTACK_CONNECTIONS = {
@@ -220,13 +250,6 @@ HAYSTACK_CONNECTIONS = {
 HAYSTACK_SIGNAL_PROCESSOR = 'website.index_processors.M2MRealtimeSignalProcessor'
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 
-
-# Don't migrate allaccess. Its migrations depend on the Django user model,
-# which we don't use. If future versions of allaccess introduce migrations we
-# might have to do some manual work.
-SOUTH_MIGRATION_MODULES = {
-    'allaccess': 'ignore',
-}
 
 DEFAULT_FROM_EMAIL = 'no-reply@rapidsms.org'
 

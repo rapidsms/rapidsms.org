@@ -3,7 +3,7 @@ from docutils.core import publish_parts
 import json
 import requests
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils import timezone
@@ -33,7 +33,7 @@ class Package(models.Model):
     # Internal metadata, not displayed anywhere.
     creator = models.ForeignKey(User, related_name='created_packages',
             help_text="The creator of this content, who may or may not be its "
-            "author.")
+            "author.", on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     pypi_updated = models.DateTimeField('PyPI Updated', null=True, blank=True)
@@ -127,7 +127,7 @@ class Package(models.Model):
         # Set the slug on a newly-created package.
         if not self.id:
             self.slug = slugify(self.name)
-        super(Package, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def update_from_pypi(self, request=None):
         """

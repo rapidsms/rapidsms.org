@@ -22,7 +22,7 @@ class PackageViewTestBase(ViewTestMixin, WebsiteTestBase):
         status_code = kwargs.pop('mock_status_code', None)
         with mock.patch.object(Package, '_get_pypi_request') as mock_get:
             mock_get.return_value = MockPyPIRequest(status_code=status_code)
-            return super(PackageViewTestBase, self)._post(*args, **kwargs)
+            return super()._post(*args, **kwargs)
 
 
 class TestPackageCreateView(PackageViewTestBase):
@@ -72,7 +72,7 @@ class TestPackageDetailView(PackageViewTestBase):
     template_name = 'packages/package_detail.html'
 
     def setUp(self):
-        super(TestPackageDetailView, self).setUp()
+        super().setUp()
         self.package = PackageFactory.create()
         self.url_kwargs = {'slug': self.package.slug}
 
@@ -106,7 +106,7 @@ class TestPackageEditView(PackageViewTestBase):
     template_name = 'packages/package_form.html'
 
     def setUp(self):
-        super(TestPackageEditView, self).setUp()
+        super().setUp()
         self.user = UserFactory.create()
         self.login_user(self.user)
         self.package = PackageFactory.create()
@@ -166,7 +166,7 @@ class TestPackageFlagView(PackageViewTestBase):
     template_name = 'packages/package_flag.html'
 
     def setUp(self):
-        super(TestPackageFlagView, self).setUp()
+        super().setUp()
         self.user = UserFactory.create()
         self.login_user(self.user)
         self.package = PackageFactory.create()
@@ -217,7 +217,7 @@ class TestPackageRefreshView(PackageViewTestBase):
     url_name = 'package_refresh'
 
     def setUp(self):
-        super(TestPackageRefreshView, self).setUp()
+        super().setUp()
         self.user = UserFactory.create()
         self.login_user(self.user)
         self.package = PackageFactory.create()

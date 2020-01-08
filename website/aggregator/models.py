@@ -40,19 +40,19 @@ class Feed(models.Model):
     public_url = models.URLField(max_length=500)
     is_defunct = models.BooleanField()
     approval_status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=PENDING_FEED)
-    feed_type = models.ForeignKey(FeedType)
-    owner = models.ForeignKey(User, blank=True, null=True, related_name='owned_feeds')
+    feed_type = models.ForeignKey(FeedType, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, blank=True, null=True, related_name='owned_feeds', on_delete=models.SET_NULL)
 
     def __unicode__(self):
         return self.title
 
     def save(self, **kwargs):
-        super(Feed, self).save(**kwargs)
+        super().save(**kwargs)
         if settings.SUPERFEEDR_CREDS != None and self.approval_status == APPROVED_FEED:
             Subscription.objects.subscribe(self.feed_url, settings.PUSH_HUB)
 
     def delete(self, **kwargs):
-        super(Feed, self).delete(**kwargs)
+        super().delete(**kwargs)
         if settings.SUPERFEEDR_CREDS != None:
             Subscription.objects.unsubscribe(self.feed_url, settings.PUSH_HUB)
 
@@ -95,7 +95,7 @@ class FeedItemManager(models.Manager):
 
 
 class FeedItem(models.Model):
-    feed = models.ForeignKey(Feed)
+    feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
     title = models.CharField(max_length=500)
     link = models.URLField(max_length=500)
     summary = models.TextField(blank=True)

@@ -1,6 +1,6 @@
-from datamaps.models import Country
+from website.datamaps.models import Country
 from django.core import mail
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from website.packages.tests.factories import PackageFactory
 from website.tests.base import ViewTestMixin, WebsiteTestBase

@@ -7,7 +7,7 @@ from .models import User
 
 class UserAdmin(auth.UserAdmin):
     add_form = UserCreationForm
-    form = UserChangeForm
+    # form = UserChangeForm
     list_display = ('email', 'name', 'is_staff', 'user_type')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups', 'user_type')
     ordering = ('email',)

@@ -23,7 +23,7 @@ class FeedList(ListView):
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
-        context = super(FeedList, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         # Add in the feed_type
         context['feed_type'] = get_object_or_404(FeedType,
             slug=self.kwargs['feed_type_slug']

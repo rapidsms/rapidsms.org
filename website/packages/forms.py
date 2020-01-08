@@ -18,7 +18,7 @@ class PackageCreateEditForm(forms.ModelForm):
         fields = ('pkg_type', 'name', 'tags', 'tests_url', 'repo_url')
 
     def __init__(self, *args, **kwargs):
-        super(PackageCreateEditForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         # Package type and name are not editable once the project has been
         # created.

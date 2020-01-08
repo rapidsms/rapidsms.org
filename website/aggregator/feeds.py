@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from django.core import urlresolvers
+from django.urls import reverse
 from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404
 from .models import FeedType, FeedItem
@@ -54,7 +54,7 @@ class CommunityAggregatorFirehoseFeed(BaseCommunityAggregatorFeed):
     description = 'All activity from the RapidSMS community aggregator'
 
     def link(self):
-        return urlresolvers.reverse('aggregator-firehose-feed')
+        return reverse('aggregator-firehose-feed')
 
     def items(self):
         qs = FeedItem.objects.order_by('-date_modified').select_related('feed')

@@ -6,10 +6,10 @@ from ..models import Project
 register = template.Library()
 
 
-@register.assignment_tag
+@register.simple_tag
 def count_drafts(request):
     """Returns the number of drafts current user has."""
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         drafts = Project.objects.get_drafts_for_user(request.user)
         return drafts.count()
     return None
@@ -19,6 +19,6 @@ def count_drafts(request):
 def show_drafts(request):
     "Render template with context variable 'projects'"
     # drafts current user can edit.
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         drafts = Project.objects.get_drafts_for_user(request.user)
         return {"projects": drafts}

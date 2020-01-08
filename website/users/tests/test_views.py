@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.urls import reverse_lazy, reverse
 from mock import patch
 from mock import PropertyMock
 

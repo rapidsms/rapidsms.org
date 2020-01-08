@@ -3,7 +3,7 @@ import random
 import bleach
 from django.conf import settings
 from django.contrib.sites.models import Site
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
@@ -36,7 +36,7 @@ class Project(models.Model):
 
     creator = models.ForeignKey(User, related_name='created_projects',
             help_text="The creator of this content, who may or may not be its "
-            "author.")
+            "author.", on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(default=DRAFT, max_length=1, choices=STATUS)
@@ -57,7 +57,7 @@ class Project(models.Model):
     # Optional information.
     started = models.DateField('Project start date', null=True, blank=True,
         help_text='mm/dd/yyyy')
-    countries = models.ManyToManyField('datamaps.Country', blank=True, null=True)
+    countries = models.ManyToManyField('datamaps.Country', blank=True)
     challenges = models.TextField(blank=True, null=True)
     audience = models.TextField(blank=True, null=True)
     technologies = models.TextField('Key technologies', blank=True, null=True)
@@ -69,7 +69,7 @@ class Project(models.Model):
             'to the public code repository for this project.')
     tags = models.ManyToManyField(Taxonomy, related_name="projects",
         verbose_name="Taxonomy")
-    packages = models.ManyToManyField(Package, blank=True, null=True)
+    packages = models.ManyToManyField(Package, blank=True)
     script = models.TextField(help_text="JS/JSON blob", blank=True)
     project_url = models.URLField(blank=True, null=True)
     image = models.ImageField(upload_to='logos', blank=True, null=True,
@@ -239,7 +239,7 @@ class Project(models.Model):
             self.slug = slugify(self.name)
         if self.feature:
             self.__class__.objects.get_feature_projects().update(feature=False)
-        super(Project, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     @property
     def short_description(self):

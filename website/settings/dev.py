@@ -7,7 +7,6 @@ FLAG_EMAIL_ALERTS = ['info@example.com', ]
 PROJECT_EMAIL_ALERTS = ['info@example.com', ]
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 INTERNAL_IPS = ('127.0.0.1', )
 
 
@@ -30,8 +29,8 @@ SOUTH_TESTS_MIGRATE = True
 
 COMPRESS_ENABLED = False
 
-import djcelery
-djcelery.setup_loader()
+# import celery
+# djcelery.setup_loader()
 
 CELERY_ALWAYS_EAGER = True
 

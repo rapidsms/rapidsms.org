@@ -1,17 +1,14 @@
 import json
-import random
 
-from datamaps.models import Scope
-from django.core.paginator import Paginator, InvalidPage
+from django.core.paginator import InvalidPage, Paginator
 from django.http import Http404
 from django.shortcuts import redirect, render_to_response
 from django.views.generic import TemplateView
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView, search_view_factory
-
 from website.projects.models import Project
-from .forms import FacetedSearchListingForm
 
+from .forms import FacetedSearchListingForm
 
 MODEL_FACETS = {
     'package': ('pkg_type', 'license', 'taxonomy',),
@@ -35,7 +32,7 @@ class Home(TemplateView):
         return data
 
     def get_context_data(self, **kwargs):
-        context = super(Home, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         feature_project = Project.objects.get_feature_project()
         context.update({'feature_project': feature_project})
         if feature_project:
@@ -130,10 +127,10 @@ class FacetedSearchCustomView(FacetedSearchView):
             context['suggestion'] = self.form.get_suggestion()
 
         context.update(self.extra_context())
-        return render_to_response(self.template, context, context_instance=self.context_class(self.request))
+        return render_to_response(self.template, context)
 
     def extra_context(self):
-        extra = super(FacetedSearchCustomView, self).extra_context()
+        extra = super().extra_context()
         extra['filters'] = self.clean_filters()
         if self.results == []:
             extra['facets'] = self.form.search().facet_counts()

@@ -13,18 +13,18 @@ from website.tasks import update_object, remove_object
 class BaseSignal(BaseSignalProcessor):
     "BaseSignalProcessor had to be rewritten to account for m2m relationships"
 
-    def handle_save(self, sender, instance, **kwargs):
-        """
-        Given an individual model instance, determine which backends the
-        update should be sent to & update the object on those backends.
-        """
-        try:
-            # Rises an exception if the status field was not updated.
-            status = kwargs['update_fields']['status']
-            if not instance.status == instance.PUBLISHED:
-                self.remove_from_index(sender, instance, **kwargs)
-        except (TypeError, KeyError):
-            self.add_to_index(sender, instance, **kwargs)
+    # def handle_save(self, sender, instance, **kwargs):
+    #     """
+    #     Given an individual model instance, determine which backends the
+    #     update should be sent to & update the object on those backends.
+    #     """
+    #     try:
+    #         # Rises an exception if the status field was not updated.
+    #         status = kwargs['update_fields']['status']
+    #         if not instance.status == instance.PUBLISHED:
+    #             self.remove_from_index(sender, instance, **kwargs)
+    #     except (TypeError, KeyError):
+    #         self.add_to_index(sender, instance, **kwargs)
 
     def handle_delete(self, sender, instance, **kwargs):
         """

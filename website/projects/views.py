@@ -2,7 +2,7 @@ import json
 import random
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DeleteView, DetailView,\
     UpdateView, RedirectView, ListView
@@ -19,7 +19,7 @@ class ProjectCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
-        ret_val = super(ProjectCreate, self).form_valid(form)
+        ret_val = super().form_valid(form)
         self.object.collaborators.add(self.request.user)
         return ret_val
 
@@ -46,7 +46,7 @@ class ProjectDetail(DetailView):
         return data
 
     def get_context_data(self, **kwargs):
-        context = super(ProjectDetail, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         project = context['object']
         countries = project.countries.all()
         if countries:
@@ -59,7 +59,7 @@ class ProjectReviewList(StaffRequiredMixin, ListView):
     model = Project
 
     def get_queryset(self):
-        projects = super(ProjectReviewList, self).get_queryset()
+        projects = super().get_queryset()
         return projects.filter(status=Project.NEEDS_REVIEW)
 
 
@@ -95,5 +95,5 @@ class ProjectReviewRequest(LoginRequiredMixin, CanEditMixin, SingleObjectMixin,
         project.change_status('R')  # Project saved and status changed.
         messages.success(self.request, 'We have notified the administrators'
             ' and they will review this request shortly')
-        return super(ProjectReviewRequest, self).get(self, self.request, *args,
+        return super().get(self, self.request, *args,
                                                      **kwargs)

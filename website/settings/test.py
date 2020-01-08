@@ -11,8 +11,8 @@ GITHUB_KEY = 'key'
 GITHUB_SECRET = 'secret'
 
 # celery settings
-import djcelery
-djcelery.setup_loader()
+# import djcelery
+# djcelery.setup_loader()
 
 CELERY_ALWAYS_EAGER = True
 

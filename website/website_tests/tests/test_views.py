@@ -1,4 +1,4 @@
-from datamaps.models import Scope
+from website.datamaps.models import Scope
 
 from website.projects.tests.factories import ProjectFactory
 from website.tests.base import ViewTestMixin, WebsiteTestBase, BasicGetTest

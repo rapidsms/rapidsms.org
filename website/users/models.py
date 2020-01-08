@@ -1,7 +1,9 @@
 from django.contrib.auth import models as auth
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.utils import timezone
+
+from website.datamaps.models import Country
 
 
 class UserManager(auth.BaseUserManager):
@@ -42,7 +44,7 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255, null=True, blank=True)
     biography = models.TextField(blank=True, null=True)
-    country = models.ForeignKey('datamaps.Country', null=True, blank=True)
+    country = models.ForeignKey(Country, null=True, blank=True, on_delete=models.SET_NULL)
     website_url = models.URLField('Website URL', null=True, blank=True)
     github_url = models.URLField('Github URL', null=True, blank=True)
 

@@ -1,3 +1,5 @@
+import json
+
 from haystack import indexes
 from .models import User
 
@@ -22,3 +24,12 @@ class UserIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_user_type(self, obj):
         return obj.get_user_type_display()
+
+    # def toJson(self):
+    #     return json.dumps(self.__dict__)
+
+    def __repr__(self):
+        return self.toJson()
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

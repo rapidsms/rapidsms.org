@@ -1,11 +1,11 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from ..views import search_listing
 from .views import ProjectCreate, ProjectDelete, ProjectDetail, ProjectEdit
 from .views import ProjectReviewRequest, ProjectReviewList, ProjectApprove
 
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^$', search_listing, {'model_type': 'projects'},
         name='project_list'),
     url(r'^add/$', ProjectCreate.as_view(),
@@ -22,4 +22,4 @@ urlpatterns = patterns('',
         name='project_publish'),
     url(r'^(?P<slug>[-\w]+)/review-request/$', ProjectReviewRequest.as_view(),
         name='project_review_request'),
-)
+]

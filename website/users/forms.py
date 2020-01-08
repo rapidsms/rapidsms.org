@@ -1,8 +1,8 @@
-from datamaps.models import Country
-from datamaps.lookups import CountryLookup
+from website.datamaps.models import Country
+from website.datamaps.lookups import CountryLookup
 from django import forms
 from django.contrib.auth import forms as auth
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from selectable.forms import AutoCompleteSelectField
@@ -14,7 +14,7 @@ class UserCreationForm(auth.UserCreationForm):
     """Modified form that uses our custom User model."""
 
     def __init__(self, *args, **kwargs):
-        super(UserCreationForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         if 'username' in self.fields:
             self.fields.pop('username')
         if 'duplicate_username' in self.error_messages:
@@ -39,12 +39,13 @@ class UserChangeForm(auth.UserChangeForm):
     """Modified form that uses our custom User model."""
 
     def __init__(self, *args, **kwargs):
-        super(UserChangeForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         if 'username' in self.fields:
             self.fields.pop('username')
 
     class Meta:
         model = User
+        exclude = ('country', )
 
 
 class UserEditForm(UserChangeForm):
@@ -63,7 +64,7 @@ class UserEditForm(UserChangeForm):
                 'password2')
 
     def __init__(self, *args, **kwargs):
-        super(UserEditForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields.pop('password', None)
 
     def clean_country(self):
@@ -103,7 +104,7 @@ class UserRegistrationForm(UserCreationForm):
     country = AutoCompleteSelectField(lookup_class=CountryLookup, required=False)
 
     def __init__(self, *args, **kwargs):
-        super(UserRegistrationForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.error_messages['duplicate_email'] = mark_safe('There is already '
                 'an account associated with this email address.<br /> If this '
                 'is your email, you can try to <a href="{login}">log in with '

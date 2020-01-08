@@ -5,7 +5,6 @@ from datetime import timedelta
 import os
 
 DEBUG = False
-TEMPLATE_DEBUG = DEBUG
 
 
 ADMINS = (
@@ -54,8 +53,8 @@ SUPERFEEDR_CREDS = (os.environ['SUPERFEEDR_USER'], os.environ['SUPERFEEDR_PWD'])
 PUSH_SSL_CALLBACK = True
 
 #celery settings
-import djcelery
-djcelery.setup_loader()
+# import djcelery
+# djcelery.setup_loader()
 BROKER_URL = 'amqp://website:%s@127.0.0.1:5672/website_staging' % os.environ['BROKER_PASSWORD']
 CELERYBEAT_SCHEDULE = {
     'update-packages-every-hour': {

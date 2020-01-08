@@ -1,4 +1,4 @@
-from datamaps.models import Country
+from website.datamaps.models import Country
 
 from website.tests.base import WebsiteTestBase
 from .factories import ProjectFactory
