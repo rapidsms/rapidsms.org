@@ -3,7 +3,7 @@ psycopg2==2.5
 pysolr==3.0.6
 BeautifulSoup==3.2.1
 Django==1.5.9
-Pillow==2.0.0
+Pillow==6.2.0
 South==0.7.6
 docutils==0.10
 factory_boy==2.0.2
