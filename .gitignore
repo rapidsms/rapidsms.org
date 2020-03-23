@@ -21,3 +21,7 @@ website.json
 .venv/
 .env
 .envrc
+volumes/
+dist/
+build/
+src/rapidsms_org.egg-info/

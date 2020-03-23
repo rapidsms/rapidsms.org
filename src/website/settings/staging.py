@@ -4,8 +4,6 @@ from datetime import timedelta
 
 import os
 
-DEBUG = False
-
 
 ADMINS = (
     ('Evan Wheeler', 'evanmwheeler@gmail.com'),
@@ -19,10 +17,7 @@ FLAG_EMAIL_ALERTS = ['evanmwheeler@gmail.com',
                      'rapidsms-team@caktusgroup.com']
 PROJECT_EMAIL_ALERTS = FLAG_EMAIL_ALERTS
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = os.environ['SECRET_KEY']
-
-DATABASES['default']['NAME'] = 'website_staging'
+# DATABASES['default']['NAME'] = 'website_staging'
 
 PUBLIC_ROOT = '/var/www/website-staging/public/'
 
@@ -47,15 +42,15 @@ SESSION_COOKIE_HTTPONLY = True
 
 ALLOWED_HOSTS = ('*',)
 
-GITHUB_KEY = os.environ['GITHUB_KEY']
-GITHUB_SECRET = os.environ['GITHUB_SECRET']
-SUPERFEEDR_CREDS = (os.environ['SUPERFEEDR_USER'], os.environ['SUPERFEEDR_PWD'])
+GITHUB_KEY = os.environ.get('GITHUB_KEY', '')
+GITHUB_SECRET = os.environ.get('GITHUB_SECRET')
+SUPERFEEDR_CREDS = (os.environ.get('SUPERFEEDR_USER', ''), os.environ.get('SUPERFEEDR_PWD', ''))
 PUSH_SSL_CALLBACK = True
 
-#celery settings
+# celery settings
 # import djcelery
 # djcelery.setup_loader()
-BROKER_URL = 'amqp://website:%s@127.0.0.1:5672/website_staging' % os.environ['BROKER_PASSWORD']
+BROKER_URL = 'amqp://website:%s@127.0.0.1:5672/website_staging' % os.environ.get('BROKER_PASSWORD', '')
 CELERYBEAT_SCHEDULE = {
     'update-packages-every-hour': {
         'task': 'website.packages.update_packages',

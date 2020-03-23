@@ -1,13 +1,17 @@
 """Django settings for website project."""
 import os
+from pathlib import Path
 
+import environ
 from django.urls import reverse_lazy
 
+env = environ.Env()
+environ.Env.read_env()
 
 PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 PROJECT_ROOT = os.path.abspath(os.path.join(PROJECT_PATH, os.pardir))
 
-DEBUG = True
+DEBUG = env.bool('DEBUG', False)
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -15,17 +19,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'rapidsms_website',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    }
-}
+DATABASES = {'default': env.db()}
+SECRET_KEY = env.str('SECRET_KEY', '')
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -85,7 +80,6 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-from pathlib import Path
 SETTINGS_DIR = Path(__file__).parent
 PACKAGE_DIR = SETTINGS_DIR.parent
 TEMPLATES = [

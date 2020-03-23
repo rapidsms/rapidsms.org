@@ -6,12 +6,7 @@ from website.settings.base import *
 FLAG_EMAIL_ALERTS = ['info@example.com', ]
 PROJECT_EMAIL_ALERTS = ['info@example.com', ]
 
-DEBUG = True
 INTERNAL_IPS = ('127.0.0.1', )
-
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = os.environ['SECRET_KEY']
 
 
 INSTALLED_APPS += ('debug_toolbar',)
