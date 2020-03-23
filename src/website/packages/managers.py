@@ -1,5 +1,4 @@
 from django.db import models
-from .tasks import update_packages
 
 
 class PackageManager(models.Manager):

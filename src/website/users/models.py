@@ -1,8 +1,7 @@
 from django.contrib.auth import models as auth
-from django.urls import reverse
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
-
 from website.datamaps.models import Country
 
 
@@ -14,8 +13,8 @@ class UserManager(auth.BaseUserManager):
             raise ValueError('Email, password, and name must be given')
         email = self.normalize_email(email)
         user = self.model(email=email, name=name, is_staff=False,
-                is_active=True, is_superuser=False, last_login=now,
-                date_joined=now, **extra_fields)
+                          is_active=True, is_superuser=False, last_login=now,
+                          date_joined=now, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -36,8 +35,7 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
         INDIVIDUAL: 'Individual',
         ORGANIZATION: 'Organization',
     }
-    user_type = models.CharField('Account Type', max_length=1,
-            choices=USER_TYPES.items(), default=INDIVIDUAL)
+    user_type = models.CharField('Account Type', max_length=1, choices=USER_TYPES.items(), default=INDIVIDUAL)
 
     email = models.EmailField('Email Address', unique=True)
     display_email = models.BooleanField(default=False)
@@ -59,14 +57,13 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
         help_text="Upload a profile or company logo image if you do not have"
                   " or want to use your Gravatar.")
 
-    for_hire = models.BooleanField('Are you available for RapidSMS-related '
-            'hire or consulting?', default=False)
+    for_hire = models.BooleanField('Are you available for RapidSMS-related hire or consulting?', default=False)
 
     is_staff = models.BooleanField('Staff status', default=False,
-            help_text='Designates whether this user can log into the admin site.')
+                                   help_text='Designates whether this user can log into the admin site.')
     is_active = models.BooleanField('Active', default=True,
-            help_text='Designates whether this user should be treated as '
-                'active. Unselect this instead of deleting accounts.')
+                                    help_text='Designates whether this user should be treated as '
+                                              'active. Unselect this instead of deleting accounts.')
     date_joined = models.DateTimeField('Date joined', default=timezone.now)
 
     objects = UserManager()

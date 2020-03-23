@@ -1,15 +1,11 @@
-from website.datamaps.models import Country
 from django.test import TestCase
+from website.datamaps.models import Country
 
 from ..factories import UserFactory
-from ..forms import UserCreationForm
-from ..forms import UserChangeForm
-from ..forms import UserEditForm
-from ..forms import UserRegistrationForm
+from ..forms import UserChangeForm, UserCreationForm, UserEditForm, UserRegistrationForm
 from ..models import User
 
-__all__ = ["UserCreationFormTest", "UserChangeFormTest", "UserEditFormTest",
-    "UserRegistrationFormTest", ]
+__all__ = ["UserCreationFormTest", "UserChangeFormTest", "UserEditFormTest", "UserRegistrationFormTest", ]
 
 
 class UserCreationFormTest(TestCase):
@@ -151,10 +147,8 @@ class UserEditFormTest(TestCase):
         self.assertEqual(self.form._meta.model, User)
 
     def test_meta_fields(self):
-        expected = ('user_type', 'name', 'location', 'country', 'email',
-                'display_email', 'biography', 'website_url', 'github_url',
-                'gravatar_email', 'avatar', 'for_hire', 'password1',
-                'password2')
+        expected = ('user_type', 'name', 'location', 'country', 'email', 'display_email', 'biography', 'website_url',
+                    'github_url', 'gravatar_email', 'avatar', 'for_hire', 'password1', 'password2')
         self.assertEqual(expected, self.form._meta.fields)
 
     def test_init(self):
@@ -202,9 +196,9 @@ class UserRegistrationFormTest(TestCase):
         self.assertEqual(self.form._meta.model, User)
 
     def test_meta_fields(self):
-        expected = ('user_type', 'name', 'location', 'country', 'email',
-                'display_email', 'biography', 'website_url', 'github_url',
-                'gravatar_email', 'avatar', 'for_hire')
+        expected = (
+            'user_type', 'name', 'location', 'country', 'email', 'display_email', 'biography', 'website_url',
+            'github_url', 'gravatar_email', 'avatar', 'for_hire')
         self.assertEqual(expected, self.form._meta.fields)
 
     def test_country_validate_select(self):

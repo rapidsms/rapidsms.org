@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
 from django import template
+
 from ..models import Feed, FeedItem
 
 register = template.Library()
@@ -14,6 +15,7 @@ class FeedListNode(template.Node):
         context[self.varname] = Feed.objects.filter(is_defunct=False)
         return ''
 
+
 def do_get_feed_list(parser, token):
     """
     {% get_feed_list as feed_list %}
@@ -22,7 +24,7 @@ def do_get_feed_list(parser, token):
     if len(bits) != 3:
         raise template.TemplateSyntaxError  # "'%s' tag takes two arguments" % bits[0]
     if bits[1] != "as":
-        raise template.TemplateSyntaxError  #, "First argument to '%s' tag must be 'as'" % bits[0]
+        raise template.TemplateSyntaxError  # "First argument to '%s' tag must be 'as'" % bits[0]
     return FeedListNode(bits[2])
 
 
@@ -34,5 +36,6 @@ def get_latest_feeditems():
     if num_items > 10:
         return items[:10]
     return items
+
 
 register.tag('get_feed_list', do_get_feed_list)

@@ -1,9 +1,7 @@
-from website.settings.base import *
-
+import os
 from datetime import timedelta
 
-import os
-
+from website.settings.base import *
 
 ADMINS = (
     ('Evan Wheeler', 'evanmwheeler@gmail.com'),

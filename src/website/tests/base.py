@@ -1,13 +1,12 @@
 from importlib import import_module
-from urlparse import parse_qs, urlparse
 from urllib import urlencode
+from urlparse import parse_qs, urlparse
 
 from django.conf import settings
 from django.contrib.auth import login
-from django.urls import reverse, reverse_lazy
 from django.http import HttpRequest
 from django.test import TestCase
-
+from django.urls import reverse, reverse_lazy
 from website.users.factories import UserFactory
 
 
@@ -46,8 +45,7 @@ class ViewTestMixin(object):
 
     login_url = reverse_lazy('login')
 
-    def _url(self, url_name=None, url_args=None, url_kwargs=None,
-            get_kwargs=None):
+    def _url(self, url_name=None, url_args=None, url_kwargs=None, get_kwargs=None):
         """Builds a URL with reverse(), then adds GET parameters."""
         url_name = url_name or self.url_name
         url_args = self.url_args if url_args is None else url_args
@@ -59,8 +57,7 @@ class ViewTestMixin(object):
             url = '{0}?{1}'.format(url, urlencode(get_kwargs, doseq=True))
         return url
 
-    def _get(self, url_name=None, url_args=None, url_kwargs=None,
-            get_kwargs=None, url=None, *args, **kwargs):
+    def _get(self, url_name=None, url_args=None, url_kwargs=None, get_kwargs=None, url=None, *args, **kwargs):
         """Convenience wrapper for self.client.get.
 
         If url is not passed, it is built using url_name, url_args, url_kwargs.
@@ -69,8 +66,7 @@ class ViewTestMixin(object):
         url = url or self._url(url_name, url_args, url_kwargs, get_kwargs)
         return self.client.get(path=url, *args, **kwargs)
 
-    def _post(self, data=None, url_name=None, url_args=None,
-            url_kwargs=None, get_kwargs=None, url=None, *args, **kwargs):
+    def _post(self, data=None, url_name=None, url_args=None, url_kwargs=None, get_kwargs=None, url=None, *args, **kwargs):
         """Convenience wrapper for self.client.post.
 
         If url is not passed, it is built using url_name, url_args, url_kwargs.
@@ -80,8 +76,7 @@ class ViewTestMixin(object):
         data = self.post_data if data is None else data
         return self.client.post(path=url, data=data, *args, **kwargs)
 
-    def assertRedirectsNoFollow(self, response, url, use_params=True,
-            status_code=302):
+    def assertRedirectsNoFollow(self, response, url, use_params=True, status_code=302):
         """Checks response redirect without loading the destination page.
 
         Django's assertRedirects method loads the destination page, which
@@ -97,8 +92,7 @@ class ViewTestMixin(object):
             self.assertDictEqual(parse_qs(parsed1.query), parse_qs(parsed2.query))
 
     def assertRedirectsToLogin(self, response):
-        return self.assertRedirectsNoFollow(response, self.login_url,
-                use_params=False)
+        return self.assertRedirectsNoFollow(response, self.login_url, use_params=False)
 
 
 class WebsiteTestBase(TestCase):
@@ -135,6 +129,7 @@ class WebsiteTestBase(TestCase):
 
         # Save the session values.
         request.session.save()
+
 
 class BasicGetTest(ViewTestMixin, WebsiteTestBase):
     """Simple view that tests that a given view returns a 200 for authenticated

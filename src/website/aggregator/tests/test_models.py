@@ -4,21 +4,19 @@ from __future__ import absolute_import
 
 import datetime
 
-from mock import patch
-
 from django.conf import settings
-from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.core import mail
-from django.urls import reverse
 from django.test import TestCase
 from django.test.client import Client
-
+from django.urls import reverse
 from django_push.subscriber.models import SubscriptionManager
+from mock import patch
 
-from .base import MockResponse
-from ..management.commands import send_pending_approval_email
 from .. import models
+from ..management.commands import send_pending_approval_email
+from .base import MockResponse
 
 
 class AggregatorTests(TestCase):
@@ -26,16 +24,16 @@ class AggregatorTests(TestCase):
     def setUp(self):
         Group.objects.all().delete()
         settings.SUPERFEEDR_CREDS = True
-        with patch.object(SubscriptionManager, 'subscribe',
-                return_value=MockResponse('fake')):
+        with patch.object(SubscriptionManager, 'subscribe', return_value=MockResponse('fake')):
             # Set up users who will get emailed
             g = Group.objects.create(name=settings.FEED_APPROVERS_GROUP_NAME)
-            self.user = get_user_model().objects.create(name="Mr. Potato",
-                email="mr@potato.com")
+            self.user = get_user_model().objects.create(name="Mr. Potato", email="mr@potato.com")
             self.user.groups.add(g)
 
-            self.feed_type = models.FeedType(name="Test Feed Type",
-                slug="test-feed-type", can_self_add=True)
+            self.feed_type = models.FeedType(
+                name="Test Feed Type",
+                slug="test-feed-type",
+                can_self_add=True)
             self.feed_type.save()
 
             self.approved_feed = models.Feed(
@@ -77,7 +75,8 @@ class AggregatorTests(TestCase):
             ]
             for feed in feeds:
                 feed.save()
-                feed_item = models.FeedItem(feed=feed,
+                feed_item = models.FeedItem(
+                    feed=feed,
                     title="%s Item" % feed.title, link=feed.public_url,
                     date_modified=datetime.datetime.now(), guid=feed.title)
                 feed_item.save()
@@ -86,8 +85,7 @@ class AggregatorTests(TestCase):
             self.client = Client()
 
     def test_feed_list_only_approved_and_active(self):
-        response = self.client.get(reverse('community-feed-list',
-            kwargs={'feed_type_slug': self.feed_type.slug}))
+        response = self.client.get(reverse('community-feed-list', kwargs={'feed_type_slug': self.feed_type.slug}))
         for item in response.context['object_list']:
             self.assertEqual(models.APPROVED_FEED, item.feed.approval_status)
 

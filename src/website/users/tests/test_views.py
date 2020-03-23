@@ -1,11 +1,10 @@
 from django.conf import settings
-from django.urls import reverse_lazy, reverse
-from mock import patch
-from mock import PropertyMock
-
+from django.urls import reverse_lazy
+from mock import PropertyMock, patch
 from website.tests.base import ViewTestMixin, WebsiteTestBase
+
 from ..models import User
-from ..views import RapidSMSOAuthRedirect, RapidSMSOAuthCallback
+from ..views import RapidSMSOAuthCallback, RapidSMSOAuthRedirect
 from .base import MockClient
 
 __all__ = ['RapidSMSOAuthRedirectTest', 'RapidSMSOAuthCallbackTest',
@@ -36,54 +35,47 @@ class RapidSMSOAuthCallbackTest(ViewTestMixin, WebsiteTestBase):
 
     def test_new_user_verified_email(self):
         """A new user should be created and authenticated."""
-        client = MockClient(name='github', response=[{'verified': True,
-                'primary': True, 'email': 'info@example.com'}])
+        client = MockClient(name='github', response=[{'verified': True, 'primary': True, 'email': 'info@example.com'}])
         with patch.object(RapidSMSOAuthCallback, 'get_client') as github_client:
             github_client.return_value = client
-            with patch('allaccess.models.AccountAccess.api_client',
-                       new_callable=PropertyMock) as access_api:
-                    access_api.return_value = client
-                    # access_api.assert_called_once_with()
-                    response = self._get(url=self.url)
-                    # New user should have been created
-                    user = User.objects.get(email='info@example.com')
-                    self.failUnless(user.id)
-                    self.assertRedirectsNoFollow(response,
-                        settings.LOGIN_REDIRECT_URL.decode())
+            with patch('allaccess.models.AccountAccess.api_client', new_callable=PropertyMock) as access_api:
+                access_api.return_value = client
+                # access_api.assert_called_once_with()
+                response = self._get(url=self.url)
+                # New user should have been created
+                user = User.objects.get(email='info@example.com')
+                self.failUnless(user.id)
+                self.assertRedirectsNoFollow(response, settings.LOGIN_REDIRECT_URL.decode())
 
     def test_new_user_unverified_email(self):
         """If a github users has a unverified email address no user should be
         created.
         """
-        client = MockClient(name='github', response=[{'verified': False,
-                'primary': False, 'email': 'info@example.com'}])
+        client = MockClient(name='github',
+                            response=[{'verified': False, 'primary': False, 'email': 'info@example.com'}])
         with patch.object(RapidSMSOAuthCallback, 'get_client') as github_client:
             github_client.return_value = client
-            with patch('allaccess.models.AccountAccess.api_client',
-                       new_callable=PropertyMock) as access_api:
-                    access_api.return_value = client
-                    # access_api.assert_called_once_with()
-                    response = self._get(url=self.url)
-                    # New user should have been created
-                    self.assertRaises(User.DoesNotExist, User.objects.get,
-                                      email='info@example.com')
-                    self.assertRedirectsNoFollow(response,
-                        settings.LOGIN_URL.decode())
+            with patch('allaccess.models.AccountAccess.api_client', new_callable=PropertyMock) as access_api:
+                access_api.return_value = client
+                # access_api.assert_called_once_with()
+                response = self._get(url=self.url)
+                # New user should have been created
+                self.assertRaises(User.DoesNotExist, User.objects.get,
+                                  email='info@example.com')
+                self.assertRedirectsNoFollow(response, settings.LOGIN_URL.decode())
 
     def test_get_primary_email_raises_exception(self):
         client = MockClient(name='github', response_status=500)
         with patch.object(RapidSMSOAuthCallback, 'get_client') as github_client:
             github_client.return_value = client
-            with patch('allaccess.models.AccountAccess.api_client',
-                       new_callable=PropertyMock) as access_api:
-                    access_api.return_value = client
-                    # access_api.assert_called_once_with()
-                    response = self._get(url=self.url)
-                    # New user should have been created
-                    self.assertRaises(User.DoesNotExist, User.objects.get,
-                                      email='info@example.com')
-                    self.assertRedirectsNoFollow(response,
-                        settings.LOGIN_URL.decode())
+            with patch('allaccess.models.AccountAccess.api_client', new_callable=PropertyMock) as access_api:
+                access_api.return_value = client
+                # access_api.assert_called_once_with()
+                response = self._get(url=self.url)
+                # New user should have been created
+                self.assertRaises(User.DoesNotExist, User.objects.get,
+                                  email='info@example.com')
+                self.assertRedirectsNoFollow(response, settings.LOGIN_URL.decode())
 
 
 class RegistrationTest(ViewTestMixin, WebsiteTestBase):

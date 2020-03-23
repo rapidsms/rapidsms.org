@@ -1,8 +1,8 @@
 from django.test import TestCase
 
-from .factories import PackageFactory
 from ..models import Package
 from ..search_indexes import PackageIndex
+from .factories import PackageFactory
 
 __all__ = ['PackageIndexTest', ]
 

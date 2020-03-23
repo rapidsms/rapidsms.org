@@ -1,8 +1,6 @@
-from django.test import RequestFactory
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 
-from ..templatetags.facet_tags import faceted_next_prev_querystring
-from ..templatetags.facet_tags import remove_facet
+from ..templatetags.facet_tags import faceted_next_prev_querystring, remove_facet
 
 
 class FacetTagsTestCase(TestCase):

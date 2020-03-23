@@ -1,14 +1,12 @@
 import json
-import random
 
 from django.contrib import messages
-from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from django.views.generic import CreateView, DeleteView, DetailView,\
-    UpdateView, RedirectView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, RedirectView, UpdateView
 from django.views.generic.detail import SingleObjectMixin
 
-from ..mixins import LoginRequiredMixin, CanEditMixin, StaffRequiredMixin
+from ..mixins import CanEditMixin, LoginRequiredMixin, StaffRequiredMixin
 from .forms import ProjectCreateEditForm
 from .models import Project
 
@@ -24,8 +22,7 @@ class ProjectCreate(LoginRequiredMixin, CreateView):
         return ret_val
 
 
-class ProjectDelete(LoginRequiredMixin, CanEditMixin,
-        DeleteView):
+class ProjectDelete(LoginRequiredMixin, CanEditMixin, DeleteView):
     model = Project
     http_method_names = ('delete', 'post')
     success_url = reverse_lazy('project_list')
@@ -93,7 +90,5 @@ class ProjectReviewRequest(LoginRequiredMixin, CanEditMixin, SingleObjectMixin,
         """Updates project status to 'needs revision'"""
         project = self.get_object()
         project.change_status('R')  # Project saved and status changed.
-        messages.success(self.request, 'We have notified the administrators'
-            ' and they will review this request shortly')
-        return super().get(self, self.request, *args,
-                                                     **kwargs)
+        messages.success(self.request, 'We have notified the administrators and they will review this request shortly')
+        return super().get(self, self.request, *args, **kwargs)

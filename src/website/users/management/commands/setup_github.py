@@ -1,15 +1,15 @@
 from optparse import make_option
 
-from django.conf import settings
-from django.core.management import BaseCommand, call_command, CommandError
-
 from allaccess.models import Provider
+from django.conf import settings
+from django.core.management import BaseCommand, CommandError, call_command
 
 
 class Command(BaseCommand):
     help = 'Set up a Github provider object for django-allaccess.'
     option_list = BaseCommand.option_list + (
-        make_option('--clear',
+        make_option(
+            '--clear',
             action='store_true',
             dest='clear',
             default=False,
@@ -30,8 +30,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if not (hasattr(settings, 'GITHUB_KEY') and hasattr(settings, 'GITHUB_SECRET')):
-            raise CommandError('GITHUB_KEY and GITHUB_SECRET must be defined '
-                    'in your project settings.')
+            raise CommandError('GITHUB_KEY and GITHUB_SECRET must be defined in your project settings.')
 
         github = self.get_provider()
         if github:
@@ -45,8 +44,7 @@ class Command(BaseCommand):
             github = self.load_provider()
 
         if not github:
-            raise CommandError('Provider record was not successfully loaded '
-                    'from fixture.')
+            raise CommandError('Provider record was not successfully loaded from fixture.')
 
         self.stdout.write('Setting key and secret from project settings.')
         github.key = settings.GITHUB_KEY

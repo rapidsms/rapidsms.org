@@ -3,16 +3,16 @@ import random
 import bleach
 from django.conf import settings
 from django.contrib.sites.models import Site
-from django.urls import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
-
-from .managers import ProjectManager
-from website.tasks import send_email
+from django.urls import reverse
 from website.packages.models import Package
+from website.tasks import send_email
 from website.taxonomy.models import Taxonomy
 from website.users.models import User
+
+from .managers import ProjectManager
 
 
 class Project(models.Model):
@@ -34,20 +34,18 @@ class Project(models.Model):
         (5, '100,000+')
     )
 
-    creator = models.ForeignKey(User, related_name='created_projects',
-            help_text="The creator of this content, who may or may not be its "
-            "author.", on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, related_name='created_projects', on_delete=models.CASCADE,
+                                help_text="The creator of this content, who may or may not be its author.")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(default=DRAFT, max_length=1, choices=STATUS)
     feature = models.BooleanField('Featured on Homepage', default=False,
-            help_text="Check box to make this project the featured project.")
+                                  help_text="Check box to make this project the featured project.")
     status = models.CharField(default=DRAFT, max_length=1, choices=STATUS,
-            help_text="To change status go back to the listing page and select"
-                      " the appropriate admin action.")
+                              help_text="To change status go back to the listing page and select "
+                                        "the appropriate admin action.")
     feature = models.BooleanField('Feature on Homepage', default=False)
-    collaborators = models.ManyToManyField(User, related_name='projects',
-            help_text="Users who have permission to edit this project.")
+    collaborators = models.ManyToManyField(User, related_name='projects', help_text="Users who have permission to edit this project.")
 
     # Required data.
     name = models.CharField(max_length=255, unique=True)
@@ -55,27 +53,22 @@ class Project(models.Model):
     description = models.TextField()
 
     # Optional information.
-    started = models.DateField('Project start date', null=True, blank=True,
-        help_text='mm/dd/yyyy')
+    started = models.DateField('Project start date', null=True, blank=True, help_text='mm/dd/yyyy')
     countries = models.ManyToManyField('datamaps.Country', blank=True)
     challenges = models.TextField(blank=True, null=True)
     audience = models.TextField(blank=True, null=True)
     technologies = models.TextField('Key technologies', blank=True, null=True)
     metrics = models.TextField(blank=True, null=True)
-    num_users = models.IntegerField('Number of users', blank=True, null=True,
-            choices=NUM_USERS, help_text='Choose one of the options available.',
-            default=1)
-    repository_url = models.URLField(blank=True, null=True, help_text='Link '
-            'to the public code repository for this project.')
-    tags = models.ManyToManyField(Taxonomy, related_name="projects",
-        verbose_name="Taxonomy")
+    num_users = models.IntegerField('Number of users', blank=True, null=True, default=1,
+                                    choices=NUM_USERS, help_text='Choose one of the options available.')
+    repository_url = models.URLField(blank=True, null=True,
+                                     help_text='Link to the public code repository for this project.')
+    tags = models.ManyToManyField(Taxonomy, related_name="projects", verbose_name="Taxonomy")
     packages = models.ManyToManyField(Package, blank=True)
     script = models.TextField(help_text="JS/JSON blob", blank=True)
     project_url = models.URLField(blank=True, null=True)
-    image = models.ImageField(upload_to='logos', blank=True, null=True,
-        help_text="Project Logo")
-    files = models.FileField('Attach a file', upload_to='files', blank=True,
-        null=True)
+    image = models.ImageField(upload_to='logos', blank=True, null=True, help_text="Project Logo")
+    files = models.FileField('Attach a file', upload_to='files', blank=True, null=True)
     objects = ProjectManager()
 
     class Meta:
@@ -105,7 +98,7 @@ class Project(models.Model):
         recipients = 'admins' if status == self.NEEDS_REVIEW else 'users'
         if not self.status == status:
             self.notify(recipients, status)
-        #set new status and save changes
+        # set new status and save changes
         self.status = status
         self.save(update_fields=['status', ])
         return True

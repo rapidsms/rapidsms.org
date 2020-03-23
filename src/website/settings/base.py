@@ -178,7 +178,6 @@ INSTALLED_APPS = (
     'compressor',
     'scribbler',
     'widget_tweaks',
-    'haystack',
     'sorl.thumbnail',
     'selectable',
     'celery',
@@ -233,17 +232,6 @@ LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 
 CELERY_TASK_ALWAYS_EAGER = False
-
-# Haystack Conf
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        'URL': 'http://127.0.0.1:8983/solr'
-    },
-}
-HAYSTACK_SIGNAL_PROCESSOR = 'website.index_processors.M2MRealtimeSignalProcessor'
-HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
-
 
 DEFAULT_FROM_EMAIL = 'no-reply@rapidsms.org'
 

@@ -56,11 +56,11 @@ class Country(models.Model):
     def get_absolute_url(self):
         return reverse("datamaps_country_detail", kwargs={"slug": self.slug})
 
-    def json_serializable(self):
-        """Serializes current instance"""
-        data = {"code": self.code, "name": self.name, "lat": float(self.lat),
-                "lon": float(self.lon), "scale": float(self.scale),
-                "color": self.color}
+    # def json_serializable(self):
+    #     """Serializes current instance"""
+    #     data = {"code": self.code, "name": self.name, "lat": float(self.lat),
+    #             "lon": float(self.lon), "scale": float(self.scale),
+    #             "color": self.color}
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

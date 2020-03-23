@@ -1,18 +1,16 @@
 import datetime
 
 from django.contrib import messages
-from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.utils import timezone
-from django.views.generic import CreateView, DetailView, ListView, UpdateView,\
-        FormView, View
+from django.views.generic import CreateView, DetailView, FormView, UpdateView, View
 from django.views.generic.detail import SingleObjectMixin
+from website.tasks import send_email
 
-from ..mixins import AuthorEditMixin, IsActiveObjectMixin, LoginRequiredMixin
+from ..mixins import IsActiveObjectMixin, LoginRequiredMixin
 from .forms import PackageCreateEditForm, PackageFlagForm
 from .models import Package
 from .tasks import update_package
-from website.tasks import send_email
 
 
 class PackageCreate(LoginRequiredMixin, CreateView):
@@ -35,8 +33,7 @@ class PackageEdit(LoginRequiredMixin, IsActiveObjectMixin, UpdateView):
 
 # TODO: This probably doesn't need to require login. But in that case we may
 # want to integrate something like honeypot at least.
-class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin,
-        FormView):
+class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin, FormView):
     """
     Currently we allow users to freely upload RapidSMS packages to the site.
     In case something gets on there that shouldn't, a user can email an
@@ -62,11 +59,9 @@ class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin,
 
         context = Context({
             'user': self.request.user,
-            'user_url': self.request.build_absolute_uri(
-                    self.request.user.get_absolute_url()),
+            'user_url': self.request.build_absolute_uri(self.request.user.get_absolute_url()),
             'package': self.object,
-            'package_url': self.request.build_absolute_uri(
-                    self.object.get_absolute_url()),
+            'package_url': self.request.build_absolute_uri(self.object.get_absolute_url()),
             'reason': form.cleaned_data['reason'],
         })
 
@@ -76,7 +71,7 @@ class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin,
         subject = loader.render_to_string(subject_template, context)
         subject = ''.join(subject.splitlines())
         body_text = loader.render_to_string(body_text_template, context)
-        #sending email is delegated to celery
+        # sending email is delegated to celery
         send_email.delay(
             subject=subject,
             message=body_text,
@@ -90,14 +85,13 @@ class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin,
         self.object.save(update_fields=['is_flagged'])
         self.send_flag_email(form)
         # email is sent async, no time to wait for the response
-        messages.success(self.request, 'Thanks for flagging {0}. We have '
-            'notified the administrators and they will review this '
-            'package shortly.'.format(self.object))
+        messages.success(self.request,
+                         'Thanks for flagging {0}. We have notified the administrators and they '
+                         'will review this package shortly.'.format(self.object))
         return super().form_valid(form)
 
 
-class PackageRefresh(LoginRequiredMixin, IsActiveObjectMixin,
-        SingleObjectMixin, View):
+class PackageRefresh(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin, View):
     """
     User-triggered refresh of the cached PyPI data, especially for use while
     they are re-uploading their own package and want to see what changes
@@ -120,9 +114,7 @@ class PackageRefresh(LoginRequiredMixin, IsActiveObjectMixin,
         needs_update = (now - last_updated > datetime.timedelta(minutes=1))
         if needs_update:
             self.refresh_package(package)
-            messages.success(self.request, 'Your package will be '
-                'updated shortly.')
+            messages.success(self.request, 'Your package will be updated shortly.')
         else:
-            messages.error(request, 'Your package can only be updated once '
-                'every minute.')
+            messages.error(request, 'Your package can only be updated once every minute.')
         return redirect(package.get_edit_url())

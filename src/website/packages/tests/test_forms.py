@@ -1,18 +1,14 @@
 import mock
-
 from django.db import IntegrityError
-
-from website.tests.base import FormTestMixin, ModelFormTestMixin, WebsiteTestBase
 from website.packages.tests.factories import PackageFactory
+from website.tests.base import FormTestMixin, ModelFormTestMixin, WebsiteTestBase
 from website.users.factories import UserFactory
 
 from ..forms import PackageCreateEditForm, PackageFlagForm
 from ..models import Package
 from .base import MockPyPIRequest
 
-
-__all__ = ['PackageCreateFormTest', 'PackageEditFormTest',
-        'PackageFlagFormTest']
+__all__ = ['PackageCreateFormTest', 'PackageEditFormTest', 'PackageFlagFormTest']
 
 
 class PackageCreateFormTest(ModelFormTestMixin, WebsiteTestBase):

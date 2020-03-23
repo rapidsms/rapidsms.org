@@ -1,15 +1,15 @@
 import datetime
 
 from django.conf import settings
-from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.test import TestCase
-from mock import patch
 from django_push.subscriber.models import SubscriptionManager
+from mock import patch
 
-from .base import MockResponse
-from ..models import FeedItem
 from .. import models
+from ..models import FeedItem
+from .base import MockResponse
 
 __all__ = ['FeedItemManagerTest', ]
 
@@ -19,16 +19,13 @@ class FeedItemManagerTest(TestCase):
     def setUp(self):
         Group.objects.all().delete()
         settings.SUPERFEEDR_CREDS = True
-        with patch.object(SubscriptionManager, 'subscribe',
-                return_value=MockResponse('fake')):
+        with patch.object(SubscriptionManager, 'subscribe', return_value=MockResponse('fake')):
             # Set up users who will get emailed
             g = Group.objects.create(name=settings.FEED_APPROVERS_GROUP_NAME)
-            self.user = get_user_model().objects.create(name="Mr. Potato",
-                email="mr@potato.com")
+            self.user = get_user_model().objects.create(name="Mr. Potato", email="mr@potato.com")
             self.user.groups.add(g)
 
-            self.feed_type = models.FeedType(name="Test Feed Type",
-                slug="test-feed-type", can_self_add=True)
+            self.feed_type = models.FeedType(name="Test Feed Type", slug="test-feed-type", can_self_add=True)
             self.feed_type.save()
 
             self.approved_feed = models.Feed(
@@ -78,6 +75,6 @@ class FeedItemManagerTest(TestCase):
         }
         items = FeedItem.objects.all()
         self.failIf(items.count())
-        item = FeedItem.objects.create_or_update_by_guid("abc", **kwargs)
+        FeedItem.objects.create_or_update_by_guid("abc", **kwargs)
         items = FeedItem.objects.all()
         self.assertEqual(items.count(), 1)

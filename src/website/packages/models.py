@@ -1,17 +1,17 @@
 import datetime
-from docutils.core import publish_parts
 import json
+
 import requests
 
-from django.urls import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 from django.utils import timezone
-
+from docutils.core import publish_parts
 from website.taxonomy.models import Taxonomy
 from website.users.models import User
-from .managers import PackageManager
 
+from .managers import PackageManager
 
 PYPI_BADGE_URL = 'https://pypip.in/v/{0}/badge.png'
 PYPI_JSON_API = 'http://pypi.python.org/pypi/{0}/json'
@@ -31,9 +31,8 @@ class Package(models.Model):
     }
 
     # Internal metadata, not displayed anywhere.
-    creator = models.ForeignKey(User, related_name='created_packages',
-            help_text="The creator of this content, who may or may not be its "
-            "author.", on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, related_name='created_packages', on_delete=models.CASCADE,
+                                help_text="The creator of this content, who may or may not be its author.")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     pypi_updated = models.DateTimeField('PyPI Updated', null=True, blank=True)
@@ -42,23 +41,20 @@ class Package(models.Model):
 
     # Required data. Once this information has been entered, it cannot be
     # edited.
-    pkg_type = models.CharField('Package Type', max_length=1,
-            choices=PACKAGE_TYPES.items(), default=APPLICATION)
-    name = models.CharField(max_length=255, unique=True, help_text="The name "
-            "of the package on PyPI.")
+    pkg_type = models.CharField('Package Type', max_length=1, choices=PACKAGE_TYPES.items(), default=APPLICATION)
+    name = models.CharField(max_length=255, unique=True, help_text="The name of the package on PyPI.")
     slug = models.SlugField()  # Derived from name.
-    tags = models.ManyToManyField(Taxonomy, related_name="packages",
-        verbose_name="Taxonomy")
+    tags = models.ManyToManyField(Taxonomy, related_name="packages", verbose_name="Taxonomy")
 
     # Other reference URLs for the package are optional.
-    tests_url = models.URLField('CI/Tests', null=True, blank=True,
-            help_text="Link to the package's public CI server, e.g. "
-            "<a href='https://travis-ci.org/rapidsms/rapidsms'>"
-            "https://travis-ci.org/rapidsms/rapidsms</a>.")
-    repo_url = models.URLField('Source Code', null=True, blank=True,
-            help_text="The package's source code repository, e.g. "
-            "<a href='https://github.com/rapidsms/rapidsms'>"
-            "https://github.com/rapidsms/rapidsms</a>.")
+    tests_url = models.URLField(
+        'CI/Tests', null=True, blank=True,
+        help_text="Link to the package's public CI server, e.g. <a href='https://travis-ci.org/rapidsms/rapidsms'>"
+                  "https://travis-ci.org/rapidsms/rapidsms</a>.")
+    repo_url = models.URLField(
+        'Source Code', null=True, blank=True,
+        help_text="The package's source code repository, e.g. <a href='https://github.com/rapidsms/rapidsms'>"
+                  "https://github.com/rapidsms/rapidsms</a>.")
 
     # We'll retrieve the package data from PyPI, and cache it on the model.
     # Also storing a few fields on the model to make them easier to index by
@@ -72,13 +68,14 @@ class Package(models.Model):
     summary = models.TextField(null=True, blank=True)
     release_date = models.DateTimeField(null=True, blank=True)
     license = models.CharField(max_length=128, null=True, blank=True)
-    docs_url = models.URLField('Documentation', null=True, blank=True,
-            help_text="Where the package's documentation is hosted, e.g. "
-            "<a href='http://rapidsms.readthedocs.org/'>"
-            "http://rapidsms.readthedocs.org</a>.")
-    home_url = models.URLField('Home Page', null=True, blank=True,
-            help_text="The project's home page, e.g. "
-            "<a href='http://rapidsms.org'>http://rapidsms.org</a>.")
+    docs_url = models.URLField(
+        'Documentation', null=True, blank=True,
+        help_text="Where the package's documentation is hosted, e.g. "
+        "<a href='http://rapidsms.readthedocs.org/'>"
+        "http://rapidsms.readthedocs.org</a>.")
+    home_url = models.URLField(
+        'Home Page', null=True, blank=True,
+        help_text="The project's home page, e.g. <a href='http://rapidsms.org'>http://rapidsms.org</a>.")
     objects = PackageManager()
 
     class Meta:
@@ -156,8 +153,7 @@ class Package(models.Model):
             self.license = data['info']['license']
             d = data['urls'][0]['upload_time']
             if d:
-                self.release_date = datetime.datetime.strptime(d,
-                        PYPI_DATE_FORMAT)
+                self.release_date = datetime.datetime.strptime(d, PYPI_DATE_FORMAT)
         self.pypi_updated = timezone.now()
 
         return True

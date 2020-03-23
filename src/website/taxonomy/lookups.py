@@ -8,4 +8,5 @@ class TaxonomyLookup(ModelLookup):
     model = Taxonomy
     search_fields = ('name__icontains', )
 
+
 registry.register(TaxonomyLookup)

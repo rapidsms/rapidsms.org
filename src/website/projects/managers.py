@@ -4,9 +4,8 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
-
-from website.users.models import User
 from website.packages.models import Package
+from website.users.models import User
 
 
 class ProjectQueryset(QuerySet):
@@ -57,8 +56,7 @@ class ProjectManager(models.Manager):
             package = user_or_package
             projects = active.filter(packages__in=[package, ])
         else:
-            raise Exception("This method only accepts an user or a packages as"
-                " arguments.")
+            raise Exception("This method only accepts an user or a packages as arguments.")
         return projects
 
     def get_feature_projects(self):

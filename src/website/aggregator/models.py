@@ -1,11 +1,10 @@
-import logging
 import datetime
+import logging
 
-from django.db import models
 from django.conf import settings
+from django.db import models
 from django_push.subscriber import signals as push_signals
 from django_push.subscriber.models import Subscription
-
 from website.users.models import User
 
 log = logging.getLogger(__name__)
@@ -48,12 +47,12 @@ class Feed(models.Model):
 
     def save(self, **kwargs):
         super().save(**kwargs)
-        if settings.SUPERFEEDR_CREDS != None and self.approval_status == APPROVED_FEED:
+        if settings.SUPERFEEDR_CREDS and self.approval_status == APPROVED_FEED:
             Subscription.objects.subscribe(self.feed_url, settings.PUSH_HUB)
 
     def delete(self, **kwargs):
         super().delete(**kwargs)
-        if settings.SUPERFEEDR_CREDS != None:
+        if settings.SUPERFEEDR_CREDS:
             Subscription.objects.unsubscribe(self.feed_url, settings.PUSH_HUB)
 
 
@@ -151,12 +150,14 @@ def feed_updated(sender, notification, **kwargs):
         else:
             date_modified = datetime.datetime.now()
 
-        FeedItem.objects.create_or_update_by_guid(guid,
+        FeedItem.objects.create_or_update_by_guid(
+            guid,
             feed=feed,
             title=title,
             link=link,
             summary=content,
             date_modified=date_modified
         )
+
 
 push_signals.updated.connect(feed_updated)

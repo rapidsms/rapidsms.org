@@ -8,4 +8,5 @@ class UserLookup(ModelLookup):
     model = User
     search_fields = ('email__icontains', 'name__icontains')
 
+
 registry.register(UserLookup)

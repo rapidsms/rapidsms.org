@@ -1,7 +1,6 @@
 from website.datamaps.models import Scope
-
 from website.projects.tests.factories import ProjectFactory
-from website.tests.base import ViewTestMixin, WebsiteTestBase, BasicGetTest
+from website.tests.base import BasicGetTest, ViewTestMixin, WebsiteTestBase
 from website.users.factories import UserFactory
 from website.views import FacetedSearchCustomView
 
@@ -72,4 +71,3 @@ class FacetedSearchCustomViewTest(ViewTestMixin, WebsiteTestBase):
 
     def setUp(self):
         self.view = FacetedSearchCustomView
-

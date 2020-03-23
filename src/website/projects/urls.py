@@ -1,13 +1,16 @@
 from django.conf.urls import url
 
-from ..views import search_listing
-from .views import ProjectCreate, ProjectDelete, ProjectDetail, ProjectEdit
-from .views import ProjectReviewRequest, ProjectReviewList, ProjectApprove
-
+from .views import (
+    ProjectApprove,
+    ProjectCreate,
+    ProjectDelete,
+    ProjectDetail,
+    ProjectEdit,
+    ProjectReviewList,
+    ProjectReviewRequest
+)
 
 urlpatterns = [
-    url(r'^$', search_listing, {'model_type': 'projects'},
-        name='project_list'),
     url(r'^add/$', ProjectCreate.as_view(),
         name='project_create'),
     url(r'^need-review/$', ProjectReviewList.as_view(),

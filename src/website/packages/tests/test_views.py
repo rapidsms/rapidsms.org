@@ -1,19 +1,18 @@
 import datetime
+
 import mock
-
-from django.core import mail
 from django.conf import settings
+from django.core import mail
 from django.utils import timezone
-
 from website.tests.base import ViewTestMixin, WebsiteTestBase
 from website.users.factories import UserFactory
+
 from ..models import Package
 from .base import MockPyPIRequest
 from .factories import PackageFactory
 
-
 __all__ = ['TestPackageCreateView', 'TestPackageDetailView',
-        'TestPackageEditView', 'TestPackageFlagView', 'TestPackageRefreshView']
+           'TestPackageEditView', 'TestPackageFlagView', 'TestPackageRefreshView']
 
 
 class PackageViewTestBase(ViewTestMixin, WebsiteTestBase):
@@ -158,7 +157,6 @@ class TestPackageEditView(PackageViewTestBase):
         self.assertEquals(response.context['object'], self.package)
         self.assertNotEquals(response.context['object'].tests_url, new_url)
         self.assertFalse(response.context['form'].is_valid())
-
 
 
 class TestPackageFlagView(PackageViewTestBase):

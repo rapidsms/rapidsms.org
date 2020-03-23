@@ -1,11 +1,12 @@
 from __future__ import absolute_import
 
-from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.list import ListView
-from .models import FeedItem, Feed, FeedType, APPROVED_FEED
+
 from .forms import FeedModelForm
+from .models import APPROVED_FEED, Feed, FeedItem, FeedType
 
 
 class FeedList(ListView):
@@ -25,9 +26,7 @@ class FeedList(ListView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in the feed_type
-        context['feed_type'] = get_object_or_404(FeedType,
-            slug=self.kwargs['feed_type_slug']
-        )
+        context['feed_type'] = get_object_or_404(FeedType, slug=self.kwargs['feed_type_slug'])
         return context
 
 

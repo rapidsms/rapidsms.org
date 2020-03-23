@@ -1,9 +1,7 @@
 import factory
-
 from website.users.factories import UserFactory
 
 from ..models import Project
-
 
 __all__ = ['ProjectFactory']
 

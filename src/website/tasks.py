@@ -10,9 +10,11 @@ def send_email(subject, message, from_email, recipient_list):
     """
     send_mail(subject, message, from_email, recipient_list)
 
+
 @task
 def update_object(index, instance, using=None):
     index.update_object(instance, using=using)
+
 
 @task
 def remove_object(index, instance, using=None):

@@ -1,4 +1,4 @@
-from .test_forms import *
-from .test_models import *
-from .test_views import *
-from .test_search_indexes import *
+from .test_forms import *  # noqa
+from .test_models import *  # noqa
+from .test_search_indexes import *  # noqa
+from .test_views import *  # noqa

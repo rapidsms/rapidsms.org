@@ -30,9 +30,12 @@ class MockClient(object):
         return return_value
 
     def get_profile_info(self, token, return_value=None):
-        info = return_value or {'id': 1, 'name': 'github user',
+        info = return_value or {
+            'id': 1,
+            'name': 'github user',
             'location': 'Chapel Hill', 'website_url': 'http://www.example.com',
-            'github_url': 'http://www.github.com/rapidsms'}
+            'github_url': 'http://www.github.com/rapidsms'
+        }
         return info
 
     def request(self, method, email_url, headers=None):

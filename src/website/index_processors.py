@@ -3,11 +3,9 @@ Utility class that helps haystack index m2m relations after instance it is
 first save.
 """
 from django.db import models
-from haystack.signals import BaseSignalProcessor
 from haystack.exceptions import NotHandled
-
-from website.projects.models import Project
-from website.tasks import update_object, remove_object
+from haystack.signals import BaseSignalProcessor
+from website.tasks import remove_object, update_object
 
 
 class BaseSignal(BaseSignalProcessor):

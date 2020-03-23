@@ -1,6 +1,7 @@
 import json
 
 from haystack import indexes
+
 from .models import User
 
 

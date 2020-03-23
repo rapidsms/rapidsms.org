@@ -10,7 +10,8 @@ from django.contrib.sites.models import Site
 from django.core import mail
 from django.core.management.base import NoArgsCommand
 from django.template import Context, Template
-from ...models import Feed, PENDING_FEED
+
+from ...models import PENDING_FEED, Feed
 
 
 class Command(NoArgsCommand):
@@ -26,7 +27,7 @@ class Command(NoArgsCommand):
 
         if len(feeds) == 0:
             if verbosity >= 1:
-                print "There are no pending feeds. Skipping the email."
+                print("There are no pending feeds. Skipping the email.")
             return
         site = Site.objects.get(pk=1)
         email = """The following feeds are pending approval:
@@ -40,8 +41,8 @@ To approve them, visit: http://{{ site.domain }}{% url 'admin:aggregator_feed_ch
 
         message = Template(email).render(Context({'feeds': feeds, 'site': site}))
         if verbosity >= 2:
-            print "Pending approval email:\n"
-            print message
+            print("Pending approval email:\n")
+            print(message)
 
         mail.send_mail("django community feeds pending approval", message,
                        'nobody@%s' % site.domain,
@@ -49,4 +50,4 @@ To approve them, visit: http://{{ site.domain }}{% url 'admin:aggregator_feed_ch
                        fail_silently=False)
 
         if verbosity >= 1:
-            print "Sent pending approval email to: %s" % (', '.join(to_email))
+            print("Sent pending approval email to: %s" % (', '.join(to_email)))

@@ -8,4 +8,5 @@ class PackageLookup(ModelLookup):
     model = Package
     search_fields = ('name__icontains',)
 
+
 registry.register(PackageLookup)

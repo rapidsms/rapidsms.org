@@ -1,11 +1,10 @@
-from website.datamaps.models import Country
-from website.datamaps.lookups import CountryLookup
 from django import forms
 from django.contrib.auth import forms as auth
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-
 from selectable.forms import AutoCompleteSelectField
+from website.datamaps.lookups import CountryLookup
+from website.datamaps.models import Country
 
 from .models import User
 
@@ -19,8 +18,7 @@ class UserCreationForm(auth.UserCreationForm):
             self.fields.pop('username')
         if 'duplicate_username' in self.error_messages:
             self.error_messages.pop('duplicate_username')
-        self.error_messages['duplicate_email'] = 'A user with that email '\
-                'address already exists.'
+        self.error_messages['duplicate_email'] = 'A user with that email address already exists.'
 
     class Meta:
         model = User
@@ -49,19 +47,17 @@ class UserChangeForm(auth.UserChangeForm):
 
 
 class UserEditForm(UserChangeForm):
-    password1 = forms.CharField(label='New Password', required=False,
-            widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password Confirm', required=False,
-            widget=forms.PasswordInput, help_text='Enter the same password '
-            'as above, for verification.')
+    password1 = forms.CharField(label='New Password', required=False, widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Password Confirm', required=False, widget=forms.PasswordInput,
+                                help_text='Enter the same password as above, for verification.')
     country = AutoCompleteSelectField(lookup_class=CountryLookup, required=False)
 
     class Meta:
         model = User
         fields = ('user_type', 'name', 'location', 'country', 'email',
-                'display_email', 'biography', 'website_url', 'github_url',
-                'gravatar_email', 'avatar', 'for_hire', 'password1',
-                'password2')
+                  'display_email', 'biography', 'website_url', 'github_url',
+                  'gravatar_email', 'avatar', 'for_hire', 'password1',
+                  'password2')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -99,29 +95,27 @@ class UserEditForm(UserChangeForm):
 
 
 class UserRegistrationForm(UserCreationForm):
-    user_type = forms.ChoiceField(label='Account Type',
-            widget=forms.RadioSelect, choices=User.USER_TYPES.items())
+    user_type = forms.ChoiceField(label='Account Type', widget=forms.RadioSelect, choices=User.USER_TYPES.items())
     country = AutoCompleteSelectField(lookup_class=CountryLookup, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.error_messages['duplicate_email'] = mark_safe('There is already '
-                'an account associated with this email address.<br /> If this '
-                'is your email, you can try to <a href="{login}">log in with '
-                'your email address or GitHub account</a> or '
-                '<a href="{reset}">reset your password</a>.'.format(**{
-                            'login': reverse('login'),
-                    'reset': reverse('reset_password'),
-                    'github': reverse('github_login'),
-                }))
+        self.error_messages['duplicate_email'] = mark_safe(
+            'There is already an account associated with this email address.<br /> If this '
+            'is your email, you can try to <a href="{login}">log in with your email address or GitHub account</a> or '
+            '<a href="{reset}">reset your password</a>.'.format(**{'login': reverse('login'),
+                                                                   'reset': reverse('reset_password'),
+                                                                   'github': reverse('github_login'),
+                                                                   }
+                                                                )
+        )
         self.fields['password1'].label = 'Password'
         self.fields['password2'].label = 'Confirm Password'
 
     class Meta:
         model = User
-        fields = ('user_type', 'name', 'location', 'country', 'email',
-                'display_email', 'biography', 'website_url', 'github_url',
-                'gravatar_email', 'avatar', 'for_hire',)
+        fields = ('user_type', 'name', 'location', 'country', 'email', 'display_email', 'biography', 'website_url',
+                  'github_url', 'gravatar_email', 'avatar', 'for_hire',)
 
     def clean_country(self):
         """ Validate country selected

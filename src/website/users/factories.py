@@ -1,10 +1,9 @@
-import factory
 import os
 
+import factory
 from django.core.files import File
 
 from .models import User
-
 
 __all__ = ['TEST_IMAGE', 'UserFactory', 'UserWithAvatarFactory']
 

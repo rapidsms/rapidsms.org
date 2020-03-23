@@ -1,10 +1,10 @@
-from website.datamaps.models import Country
 from django.core import mail
 from django.urls import reverse
-
+from website.datamaps.models import Country
 from website.packages.tests.factories import PackageFactory
 from website.tests.base import ViewTestMixin, WebsiteTestBase
 from website.users.factories import UserFactory
+
 from ..models import Project
 from .factories import ProjectFactory
 
@@ -132,4 +132,3 @@ class ProjectReviewRequestTest(ViewTestMixin, WebsiteTestBase):
         updated_project = Project.objects.get(pk=self.project.id)
         self.assertEqual(updated_project.status, 'R')  # Status changed
         self.assertEqual(1, len(mail.outbox))
-

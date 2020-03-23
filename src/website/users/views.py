@@ -1,18 +1,18 @@
 import logging
 
-from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.core.exceptions import PermissionDenied
-from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect
-from django.views.generic import DetailView, UpdateView, FormView
-
-# from allaccess.models import AccountAccess
-# from allaccess.views import OAuthRedirect, OAuthCallback
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, FormView, UpdateView
 
 from ..mixins import IsActiveObjectMixin, LoginRequiredMixin
 from .forms import UserEditForm, UserRegistrationForm
 from .models import User
+
+# from allaccess.models import AccountAccess
+# from allaccess.views import OAuthRedirect, OAuthCallback
 
 
 logger = logging.getLogger(__name__)

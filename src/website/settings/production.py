@@ -1,6 +1,6 @@
-from website.settings.staging import *
-
 from datetime import timedelta
+
+from website.settings.staging import *
 
 # There should be only minor differences from staging
 

@@ -1,9 +1,7 @@
 import factory
-
 from website.users.factories import UserFactory
 
 from ..models import Package
-
 
 __all__ = ['PackageFactory']
 

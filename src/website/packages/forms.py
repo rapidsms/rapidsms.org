@@ -1,17 +1,15 @@
 from django import forms
 from selectable.forms import AutoCompleteSelectMultipleField
-
 from website.taxonomy.lookups import TaxonomyLookup
+
 from .models import Package
 
 
 class PackageCreateEditForm(forms.ModelForm):
     # Use a radio select field rather than the default.
-    pkg_type = forms.ChoiceField(label='Package Type',
-            widget=forms.RadioSelect, choices=Package.PACKAGE_TYPES.items(),
-            initial=Package.APPLICATION)
-    tags = AutoCompleteSelectMultipleField(lookup_class=TaxonomyLookup,
-        required=False, label='Taxonomy')
+    pkg_type = forms.ChoiceField(label='Package Type', widget=forms.RadioSelect, choices=Package.PACKAGE_TYPES.items(),
+                                 initial=Package.APPLICATION)
+    tags = AutoCompleteSelectMultipleField(lookup_class=TaxonomyLookup, required=False, label='Taxonomy')
 
     class Meta:
         model = Package
@@ -38,8 +36,7 @@ class PackageCreateEditForm(forms.ModelForm):
         self.instance.name = name
         req = self.instance._get_pypi_request()
         if req.status_code >= 500:
-            msg = 'PyPI appears to be down. We apologize for the '\
-                    'inconvenience. Please retry your upload later.'
+            msg = 'PyPI appears to be down. We apologize for the inconvenience. Please retry your upload later.'
             raise forms.ValidationError(msg)
         elif req.status_code > 400:
             msg = 'Could not find this package on PyPI.'
@@ -52,5 +49,4 @@ class PackageCreateEditForm(forms.ModelForm):
 
 
 class PackageFlagForm(forms.Form):
-    reason = forms.CharField(widget=forms.Textarea,
-            label='Reason for Flagging')
+    reason = forms.CharField(widget=forms.Textarea, label='Reason for Flagging')

@@ -3,13 +3,8 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 
-from haystack.forms import FacetedSearchForm
-from haystack.query import SearchQuerySet
-
 from .aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
-
-from .views import About, Community, FacetedSearchCustomView, Help, Home, Ecosystem
-
+from .views import About, Community, Ecosystem, Help, Home
 
 admin.autodiscover()
 
@@ -40,19 +35,4 @@ urlpatterns += [
     url(r'^rss/community/blogs/(?P<slug>[\w-]+)/$', CommunityAggregatorFeed(), name='aggregator-feed'),
     # django-push
     url(r'^subscriber/', include('django_push.subscriber.urls')),
-]
-
-
-# Haystack configure SQS for faceting
-sqs = SearchQuerySet()
-facet_list = ('countries', 'creator', 'pkg_type', 'model', 'user_type',
-    'taxonomy', 'num_users', 'collaborators', 'license')
-for facet in facet_list:
-    sqs = sqs.facet(facet)
-
-urlpatterns += [
-    url(r'^search/$',
-        FacetedSearchCustomView(form_class=FacetedSearchForm, searchqueryset=sqs),
-        name='haystack_search',
-    ),
 ]

@@ -8,4 +8,5 @@ class CountryLookup(ModelLookup):
     model = Country
     search_fields = ('name__icontains',)
 
+
 registry.register(CountryLookup)
