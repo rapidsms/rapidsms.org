@@ -7,7 +7,7 @@ from .views import (
     ProjectDetail,
     ProjectEdit,
     ProjectReviewList,
-    ProjectReviewRequest
+    ProjectReviewRequest,
 )
 
 urlpatterns = [

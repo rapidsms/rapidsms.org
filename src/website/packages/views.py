@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, FormView, UpdateView, View
 from django.views.generic.detail import SingleObjectMixin
+
 from website.tasks import send_email
 
 from ..mixins import IsActiveObjectMixin, LoginRequiredMixin

@@ -9,8 +9,8 @@
 .coverage
 .vagrant
 */settings/local.py
-public/static/
-public/media/
+src/public/static/
+src/public/media/
 secrets.sls
 apache-solr-*/
 output.json
@@ -24,4 +24,6 @@ website.json
 volumes/
 dist/
 build/
-src/rapidsms_org.egg-info/
+src/rapidsms_site.egg-info/
+.tox/
+~build/

@@ -3,8 +3,10 @@ import logging
 
 from django.conf import settings
 from django.db import models
+
 from django_push.subscriber import signals as push_signals
 from django_push.subscriber.models import Subscription
+
 from website.users.models import User
 
 log = logging.getLogger(__name__)

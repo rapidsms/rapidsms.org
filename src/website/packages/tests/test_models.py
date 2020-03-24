@@ -2,12 +2,12 @@ import datetime
 import json
 
 import requests
-
 from mock import patch
+
 from website.tests.base import WebsiteTestBase
 from website.users.factories import UserFactory
 
-from ..models import PYPI_DATE_FORMAT, Package
+from ..models import Package, PYPI_DATE_FORMAT
 from .base import MockPyPIRequest
 from .factories import PackageFactory
 

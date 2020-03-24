@@ -2,10 +2,8 @@ from website.datamaps.models import Scope
 from website.projects.tests.factories import ProjectFactory
 from website.tests.base import BasicGetTest, ViewTestMixin, WebsiteTestBase
 from website.users.factories import UserFactory
-from website.views import FacetedSearchCustomView
 
-__all__ = ["HomePageViewTest", "AboutTest", "CommunityTest", "HelpTest",
-           "FacetedSearchCustomViewTest", ]
+__all__ = ["HomePageViewTest", "AboutTest", "CommunityTest", "HelpTest"]
 
 
 class HomePageViewTest(ViewTestMixin, WebsiteTestBase):
@@ -65,9 +63,3 @@ class CommunityTest(BasicGetTest):
 class HelpTest(BasicGetTest):
     url_name = 'help'
     template_name = 'website/help.html'
-
-
-class FacetedSearchCustomViewTest(ViewTestMixin, WebsiteTestBase):
-
-    def setUp(self):
-        self.view = FacetedSearchCustomView

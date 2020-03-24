@@ -11,6 +11,7 @@ from django.core import mail
 from django.test import TestCase
 from django.test.client import Client
 from django.urls import reverse
+
 from django_push.subscriber.models import SubscriptionManager
 from mock import patch
 

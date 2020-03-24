@@ -1,9 +1,11 @@
 import datetime
 
-import mock
 from django.conf import settings
 from django.core import mail
 from django.utils import timezone
+
+import mock
+
 from website.tests.base import ViewTestMixin, WebsiteTestBase
 from website.users.factories import UserFactory
 

@@ -1,8 +1,9 @@
 import json
 
+from django.core.management.base import NoArgsCommand
+
 import requests
 
-from django.core.management.base import NoArgsCommand
 from website.projects.models import Country
 
 

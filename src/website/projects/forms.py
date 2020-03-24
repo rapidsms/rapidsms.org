@@ -1,5 +1,7 @@
 from django import forms
+
 from selectable.forms import AutoCompleteSelectMultipleField
+
 from website.datamaps.lookups import CountryLookup
 from website.taxonomy.lookups import TaxonomyLookup
 from website.users.lookups import UserLookup

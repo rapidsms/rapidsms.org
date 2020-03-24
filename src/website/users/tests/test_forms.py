@@ -1,4 +1,5 @@
 from django.test import TestCase
+
 from website.datamaps.models import Country
 
 from ..factories import UserFactory

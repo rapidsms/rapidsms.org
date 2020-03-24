@@ -2,22 +2,27 @@
 import os
 from pathlib import Path
 
-import environ
 from django.urls import reverse_lazy
+
+import environ
 
 env = environ.Env()
 environ.Env.read_env()
 
-PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(PROJECT_PATH, os.pardir))
 
 DEBUG = env.bool('DEBUG', False)
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Evan Wheeler', 'evanmwheeler@gmail.com'),
+    ('Domenico Di Nicola', 'ddinicola@unicef.org'),
 )
-
 MANAGERS = ADMINS
+
+FLAG_EMAIL_ALERTS = ['evanmwheeler@gmail.com', 'ddinicola@unicef.org']
+PROJECT_EMAIL_ALERTS = FLAG_EMAIL_ALERTS
+
 
 DATABASES = {'default': env.db()}
 SECRET_KEY = env.str('SECRET_KEY', '')
@@ -78,9 +83,8 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-SETTINGS_DIR = Path(__file__).parent
+SETTINGS_DIR = Path(__file__)
 PACKAGE_DIR = SETTINGS_DIR.parent
 TEMPLATES = [
     {
@@ -178,7 +182,6 @@ INSTALLED_APPS = (
     'compressor',
     'scribbler',
     'widget_tweaks',
-    'sorl.thumbnail',
     'selectable',
     'celery',
     'taggit',
@@ -214,10 +217,23 @@ LOGGING = {
     }
 }
 
-# Application settings
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
-# COMPRESS_URL =
-COMPRESS_URL = r'%s/public/static/' % os.path.abspath(os.path.dirname(__file__))
+ALLOWED_HOSTS = env.str('ALLOWED_HOSTS', 'localhost').split(';') + ['0.0.0.0']
+
+SESSION_COOKIE_SECURE = env.bool('SESSION_COOKIE_SECURE', True)
+SESSION_COOKIE_HTTPONLY = env.bool('SESSION_COOKIE_HTTPONLY', True)
+CSRF_COOKIE_SECURE = env.bool('CSRF_COOKIE_SECURE', True)
+SECURE_SSL_REDIRECT = env.bool('SECURE_SSL_REDIRECT', True)
+
+
+COMPRESS_ENABLED = env.bool('COMPRESS_ENABLED', True)
+# COMPRESS_URL = r'%s/public/static/' % os.path.abspath(os.path.dirname(__file__))
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
@@ -231,7 +247,7 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 
-CELERY_TASK_ALWAYS_EAGER = False
+CELERY_TASK_ALWAYS_EAGER = env.bool('CELERY_TASK_ALWAYS_EAGER', False)
 
 DEFAULT_FROM_EMAIL = 'no-reply@rapidsms.org'
 
@@ -249,10 +265,32 @@ ALLOWED_TAGS = ('a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i',
                 'strike', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'table',
                 'tr', 'td', 'th', 'thead', 'tbody', 'dl', 'dd', )
 
-ALLOWED_ATTRIBUTES = {'*': ['class'], 'a': ['href', 'title'],
-                      'abbr': ['title'], 'acronym': ['title'],
-                      'font': ['face', 'size',], 'div': ['style', ],
-                      'span': ['style', ], 'ul': ['style', ], }
+ALLOWED_ATTRIBUTES = {
+    '*': ['class'],
+    'a': ['href', 'title'],
+    'abbr': ['title'],
+    'acronym': ['title'],
+    'font': ['face', 'size'],
+    'div': ['style', ],
+    'span': ['style', ],
+    'ul': ['style', ]
+}
 
 ALLOWED_STYLES = ['font-size', 'color', 'text-align', 'text-decoration',
                   'font-weight', ]
+
+if DEBUG:  # pragma: no cover
+
+    INSTALLED_APPS += ('debug_toolbar', )
+    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware', )
+    DEBUG_TOOLBAR_CONFIG = {
+        'SHOW_TEMPLATE_CONTEXT': True,
+        'INTERCEPT_REDIRECTS': False
+    }
+
+EMAIL_BACKEND = env.str('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
+
+GITHUB_KEY = env.str('GITHUB_KEY', '')
+GITHUB_SECRET = env.str('GITHUB_SECRET', '')
+SUPERFEEDR_CREDS = (env.str('SUPERFEEDR_USER', ''), env.str('SUPERFEEDR_PWD', ''))
+PUSH_SSL_CALLBACK = True

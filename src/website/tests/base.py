@@ -1,12 +1,12 @@
 from importlib import import_module
-from urllib import urlencode
-from urlparse import parse_qs, urlparse
+from urllib.parse import parse_qs, urlencode, urlparse
 
 from django.conf import settings
 from django.contrib.auth import login
 from django.http import HttpRequest
 from django.test import TestCase
 from django.urls import reverse, reverse_lazy
+
 from website.users.factories import UserFactory
 
 
@@ -66,7 +66,8 @@ class ViewTestMixin(object):
         url = url or self._url(url_name, url_args, url_kwargs, get_kwargs)
         return self.client.get(path=url, *args, **kwargs)
 
-    def _post(self, data=None, url_name=None, url_args=None, url_kwargs=None, get_kwargs=None, url=None, *args, **kwargs):
+    def _post(self, data=None, url_name=None, url_args=None, url_kwargs=None, get_kwargs=None, url=None,
+              *args, **kwargs):
         """Convenience wrapper for self.client.post.
 
         If url is not passed, it is built using url_name, url_args, url_kwargs.

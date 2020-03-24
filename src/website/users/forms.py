@@ -2,7 +2,9 @@ from django import forms
 from django.contrib.auth import forms as auth
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+
 from selectable.forms import AutoCompleteSelectField
+
 from website.datamaps.lookups import CountryLookup
 from website.datamaps.models import Country
 

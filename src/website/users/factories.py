@@ -1,7 +1,8 @@
 import os
 
-import factory
 from django.core.files import File
+
+import factory
 
 from .models import User
 

@@ -6,7 +6,12 @@ python:
   - 3.8
 
 env:
-  - DJANGO=2.2
+  global:
+    - DATABASE_URL=psql://postgres:pass@127.0.0.1:5432/rapidsms_website
+    - SECRET_KEY=top-secret
+  jobs:
+    - DJANGO=2.2
+
 
 addons:
   postgresql: "10"
@@ -25,7 +30,7 @@ script:
   - tox -e "py${TRAVIS_PYTHON_VERSION//.}-d${DJANGO//.}" -- py.test tests -v
 
 before_script:
-  - psql -c "CREATE DATABASE rapidpro_community_portal;" -U postgres
+  - psql -c "CREATE DATABASE rapidsms_website;" -U postgres
 
 before_success:
   - coverage erase

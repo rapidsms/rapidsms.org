@@ -11,7 +11,7 @@ from django.core import mail
 from django.core.management.base import NoArgsCommand
 from django.template import Context, Template
 
-from ...models import PENDING_FEED, Feed
+from ...models import Feed, PENDING_FEED
 
 
 class Command(NoArgsCommand):

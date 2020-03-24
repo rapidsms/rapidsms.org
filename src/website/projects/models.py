@@ -1,12 +1,14 @@
 import random
 
-import bleach
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from django.urls import reverse
+
+import bleach
+
 from website.packages.models import Package
 from website.tasks import send_email
 from website.taxonomy.models import Taxonomy
@@ -45,7 +47,8 @@ class Project(models.Model):
                               help_text="To change status go back to the listing page and select "
                                         "the appropriate admin action.")
     feature = models.BooleanField('Feature on Homepage', default=False)
-    collaborators = models.ManyToManyField(User, related_name='projects', help_text="Users who have permission to edit this project.")
+    collaborators = models.ManyToManyField(User, related_name='projects',
+                                           help_text="Users who have permission to edit this project.")
 
     # Required data.
     name = models.CharField(max_length=255, unique=True)

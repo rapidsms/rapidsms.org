@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
+
 from website.packages.models import Package
 from website.users.models import User
 
@@ -25,8 +26,7 @@ class ProjectQueryset(QuerySet):
         sample_size = getattr(settings, 'DISPLAY_NUM_PROJECTS', length)
         if length < sample_size:
             sample_size = length
-        return [self[index] for index in random.sample(xrange(length),
-                                                       sample_size)]
+        return [self[index] for index in random.sample(range(length), sample_size)]
 
 
 class ProjectManager(models.Manager):

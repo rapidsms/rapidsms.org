@@ -1,6 +1,7 @@
 import json
 
 from django.views.generic import TemplateView
+
 from website.projects.models import Project
 
 MODEL_FACETS = {

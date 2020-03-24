@@ -1,5 +1,7 @@
 from django import forms
+
 from selectable.forms import AutoCompleteSelectMultipleField
+
 from website.taxonomy.lookups import TaxonomyLookup
 
 from .models import Package

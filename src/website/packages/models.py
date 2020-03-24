@@ -1,13 +1,14 @@
 import datetime
 import json
 
-import requests
-
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
+
+import requests
 from docutils.core import publish_parts
+
 from website.taxonomy.models import Taxonomy
 from website.users.models import User
 

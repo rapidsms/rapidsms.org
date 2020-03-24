@@ -1,5 +1,7 @@
-import mock
 from django.db import IntegrityError
+
+import mock
+
 from website.packages.tests.factories import PackageFactory
 from website.tests.base import FormTestMixin, ModelFormTestMixin, WebsiteTestBase
 from website.users.factories import UserFactory

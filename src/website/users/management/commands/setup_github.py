@@ -1,8 +1,9 @@
 from optparse import make_option
 
-from allaccess.models import Provider
 from django.conf import settings
-from django.core.management import BaseCommand, CommandError, call_command
+from django.core.management import BaseCommand, call_command, CommandError
+
+from allaccess.models import Provider
 
 
 class Command(BaseCommand):
