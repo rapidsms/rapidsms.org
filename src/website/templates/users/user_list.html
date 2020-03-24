@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}RapidSMS Users{% endblock title %}
+{% block body_id %}ecosystem{% endblock body_id %}
+{% block body_class %}search{% endblock body_class %}
+
+{% block content %}
+<div class="page-header">
+    <h1>RapidSMS Users</h1>
+    <p>Connect with individuals and organizations that use RapidSMS.</p>
+</div>
+
+{% for object in object_list %}
+<div class="result" style="float:left; width:33%">
+    <div class="results-header">
+        <i class="icon-white {% if object.user_type == 'I' %} icon-user {% else %} icon-building {% endif %}"></i>
+        <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+    </div>
+    <div class="results-subheader">
+        located in {{ object.location }}, {{ object.country|default_if_none:"" }}
+    </div>
+    <hr>
+</div>
+{% endfor %}
+
+<br clear="all" />
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1&{{ querystring }}">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}&{{ querystring }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&{{ querystring }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}&{{ querystring }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock content %}

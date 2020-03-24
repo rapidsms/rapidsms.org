@@ -20,10 +20,10 @@
 
     {% if user.is_authenticated and user == object.creator or user in object.collaborators.all or user.is_staff%}
     <div class="header-buttons">
-        {% if user.is_staff and object.status = 'R' %}
+        {% if user.is_staff and object.status == 'R' %}
             <a href="#publish-project" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-white icon-code-fork"></i> Publish project</a>
         {% endif %}
-        {% if object.status = 'D' %}
+        {% if object.status == 'D' %}
         <a href="#request-review" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-white icon-code-fork"></i> Request review</a>
         {% endif %}
         <a href="{{ object.get_edit_url }}" class="btn btn-info"><i class="icon-white icon-pencil"></i> Edit</a>
@@ -67,7 +67,7 @@
                     {% if object.repository_url %}
                     <li>
                         <strong>Code Repository: </strong>
-                        <a href="{{ object.repository_url }}">{{ object.repository_url }}</a>
+                        <a target="_blank" href="{{ object.repository_url }}">{{ object.repository_url }}</a>
                     </li>
                     {% endif %}
                     {% if object.project_url %}
@@ -107,7 +107,7 @@
                         <li>
                             <strong>Taxonomy: </strong>
                             {% for tag in tags %}
-                                <a href="{% url "project_list" %}?q=&selected_facets=taxonomy_exact:{{tag|urlencode}}">
+                                <a href="{% url "project_list" %}?tags__name={{tag|urlencode}}">
                                     {{ tag }}
                                 </a>{% if not forloop.last %}, {% endif %}
                             {% endfor %}

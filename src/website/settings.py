@@ -178,7 +178,7 @@ INSTALLED_APPS = (
     'website.website_tests',
 
     # External apps
-    # 'south',
+    'sorl.thumbnail',
     'compressor',
     'scribbler',
     'widget_tweaks',

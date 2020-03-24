@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}RapidSMS Packages{% endblock title %}
+{% block body_id %}ecosystem{% endblock body_id %}
+{% block body_class %}search{% endblock body_class %}
+
+{% block content %}
+<div class="page-header">
+    <h1>RapidSMS Packages</h1>
+    <p>Software libraries and applications built for RapidSMS.</p>
+</div>
+
+{% for object in object_list %}
+<div class="result">
+    <div class="results-header">
+        <i class="icon-white icon-archive"></i>
+        <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+        <p>version {{ object.version }}</p>
+    </div>
+    <div class="results-description">
+        {{ object.summary }}
+    </div>
+    <hr>
+</div>
+{% endfor %}
+
+
+{% endblock content %}

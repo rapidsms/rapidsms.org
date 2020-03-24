@@ -58,7 +58,7 @@ class UserTestCase(TestCase):
         """Test unicode representation for a user as an individual."""
         self.user.user_type = User.INDIVIDUAL
         self.user.save()
-        self.assertEqual(self.user.get_full_name(), self.user.__unicode__())
+        self.assertEqual(self.user.get_full_name(), self.user.__str__())
 
     def test_get_absolute_url(self):
         """Test get_absolute_url for user"""

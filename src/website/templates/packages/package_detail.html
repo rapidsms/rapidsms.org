@@ -28,7 +28,7 @@
     </h1>
     {% if object.home_url %}
     <p class="lead">
-        <a href="{{ object.home_url }}">
+        <a target="_blank" href="{{ object.home_url }}">
             {{ object.home_url }}
         </a>
     </p>
@@ -68,7 +68,7 @@
             {% if object.repo_url %}
             <li>
                 <strong>Source Code: </strong>
-                <a href="{{ object.repo_url }}">
+                <a target="_blank" href="{{ object.repo_url }}">
                   {{ object.repo_url }}
                 </a>
             </li>

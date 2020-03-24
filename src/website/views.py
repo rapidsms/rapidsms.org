@@ -1,6 +1,7 @@
 import json
+from urllib.parse import urlencode
 
-from django.views.generic import TemplateView
+from django.views.generic import ListView, TemplateView
 
 from website.projects.models import Project
 
@@ -50,3 +51,24 @@ class Help(TemplateView):
 
 class Ecosystem(TemplateView):
     template_name = 'website/ecosystem.html'
+
+
+class RapidSMSListView(ListView):
+    filterset_class = None
+    page_param = 'page'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if self.request.GET:
+            filter_dict = dict()
+            for key, value in self.request.GET.items():
+                if key != self.page_param:
+                    filter_dict[key] = value
+            qs = qs.filter(**filter_dict)
+        return qs
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super().get_context_data(object_list=object_list, **kwargs)
+        query_pairs = [(k, v) for k, v in self.request.GET.items() if k != self.page_param]
+        ctx['querystring'] = urlencode(query_pairs)
+        return ctx

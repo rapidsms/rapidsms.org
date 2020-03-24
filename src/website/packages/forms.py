@@ -52,3 +52,9 @@ class PackageCreateEditForm(forms.ModelForm):
 
 class PackageFlagForm(forms.Form):
     reason = forms.CharField(widget=forms.Textarea, label='Reason for Flagging')
+
+
+class PackageForm(forms.ModelForm):
+    class Meta:
+        model = Package
+        fields = ('pkg_type', 'tags')

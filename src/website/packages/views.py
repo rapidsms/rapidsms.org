@@ -7,6 +7,7 @@ from django.views.generic import CreateView, DetailView, FormView, UpdateView, V
 from django.views.generic.detail import SingleObjectMixin
 
 from website.tasks import send_email
+from website.views import RapidSMSListView
 
 from ..mixins import IsActiveObjectMixin, LoginRequiredMixin
 from .forms import PackageCreateEditForm, PackageFlagForm
@@ -119,3 +120,7 @@ class PackageRefresh(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin,
         else:
             messages.error(request, 'Your package can only be updated once every minute.')
         return redirect(package.get_edit_url())
+
+
+class PackageListView(RapidSMSListView):
+    queryset = Package.objects.order_by('name')
