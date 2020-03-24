@@ -1,0 +1,43 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+django-debug-toolbar = "*"
+coverage = "*"
+pylint = "*"
+factory-boy = "*"
+mock = "*"
+
+[packages]
+anyjson = "*"
+bleach = "*"
+celery = "*"
+django-all-access = "*"
+django-appconf = "*"
+django-compressor = "*"
+# django-datamaps = "*"
+django-debug-toolbar = "*"
+django-environ = "*"
+django-extensions = "*"
+django-push = "*"
+django-scribbler = "*"
+django-selectable = "*"
+django-taggit = "*"
+django-widget-tweaks = "*"
+docutils = "*"
+html5lib = "*"
+pycrypto = "*"
+pysolr = "*"
+python-dateutil = "*"
+python-memcached = "*"
+sorl-thumbnail = "*"
+beautifulsoup4 = "*"
+Django = "<3.0"
+Pillow = "*"
+psycopg2 = "*"
+uwsgi = "*"
+
+[requires]
+python_version = "3.8"
