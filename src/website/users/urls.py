@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.contrib.auth import views
 
-from .views import UserDetail, UserEdit, UserListView, Registration
+from .views import Registration, UserDetail, UserEdit, UserListView
 
 urlpatterns = [
     url(r'^(?P<pk>\d+)/$', UserDetail.as_view(), name='user_detail'),
