@@ -87,7 +87,7 @@ ENV UWSGI_PROTOCOL=http \
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONPATH=/code \
-    DJANGO_SETTINGS_MODULE=website.settings.production
+    DJANGO_SETTINGS_MODULE=website.settings
 
 RUN npm install -g less
 
