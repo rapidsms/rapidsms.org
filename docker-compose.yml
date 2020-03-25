@@ -4,7 +4,7 @@ services:
   backend:
     image: unicef/rapidsms-website:latest
     environment:
-      DJANGO_SETTINGS_MODULE: 'website.settings.production'
+      DJANGO_SETTINGS_MODULE: 'website.settings'
       DATABASE_URL: psql://postgres:pass@db:5432/postgres
       DEBUG: 'true'
       CSRF_COOKIE_SECURE: ''
@@ -55,95 +55,3 @@ services:
     container_name: rapidsms_website_redis
     hostname: redis
     command: ["redis-server", "--appendonly", "yes"]
-
-#  solr:
-#    image: solr:8.4
-#    container_name: rapidsms_website_solr
-#    ports:
-#     - "8983:8983"
-#    volumes:
-#      - "./volumes/solr/data:/opt/solr/server/solr/core2"
-#    command:
-#      - solr-precreate
-#      - gettingstarted
-#    labels:
-#      - traefik.backend=solr
-##      - traefik.frontend.rule=PathPrefix:/solr/
-#      - 'traefik.frontend.rule=Host:solr.${HOST_NAME}'
-#      - traefik.priority=4
-#      - traefik.enable=true
-#      - traefik.port=8983
-
-
-#  solr-old:
-#    image: actency/solr-3.6
-#    container_name: rapidsms_website_solr_356
-#    ports:
-#     - "8983:8983"
-#    volumes:
-#      - "./volumes/solr/data:/opt/solr/server/solr/core2"
-##    command:
-##      - solr-precreate
-##      - gettingstarted
-#    labels:
-#      - traefik.backend=solr-old
-#      - traefik.frontend.rule=PathPrefix:/solr/
-##      - 'traefik.frontend.rule=Host:solr.${HOST_NAME}'
-#      - traefik.priority=4
-#      - traefik.enable=true
-#      - traefik.port=8983
-
-#  solr-old:
-#    image: actency/solr-3.6
-#    container_name: rapidsms_website_solr_356
-#    ports:
-#     - "8983:8983"
-#    volumes:
-#      - "./volumes/solr/data:/opt/solr/server/solr/core2"
-##    command:
-##      - solr-precreate
-##      - gettingstarted
-#    labels:
-#      - traefik.backend=solr-old
-#      - traefik.frontend.rule=PathPrefix:/solr/
-##      - 'traefik.frontend.rule=Host:solr.${HOST_NAME}'
-#      - traefik.priority=4
-#      - traefik.enable=true
-#      - traefik.port=8983
-
-#  rabbitmq:
-#    image: rabbitmq:3.8-alpine
-#    container_name: rapidsms_website_rabbitmq
-#    environment:
-#      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
-#      RABBITMQ_DEFAULT_USER: "rabbitmq"
-#      RABBITMQ_DEFAULT_PASS: "rabbitmq"
-#      RABBITMQ_DEFAULT_VHOST: "/"
-#    ports:
-#      - "15672:15672"
-#      - "5672:5672"
-#    volumes:
-#      - ./volumes/rabbitmq/data/:/var/lib/rabbitmq/
-#      - ./volumes/rabbitmq/logs/:/var/log/rabbitmq/
-
-#services:
-#  rabbitmq:
-#    image: 'bitnami/rabbitmq:3.8'
-#    ports:
-#      - '4369:4369'
-#      - '5672:5672'
-#      - '25672:25672'
-#      - '15672:15672'
-#    volumes:
-#      - 'rabbitmq_data:/bitnami'
-#volumes:
-#  rabbitmq_data:
-#    driver: local
-
-#  labels:
-#  - traefik.backend=backend
-#  - traefik.frontend.rule=PathPrefix:/solr/
-#  - traefik.priority=4
-#  - traefik.enable=true
-#  - traefik.port=5672
-

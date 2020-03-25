@@ -1,4 +1,4 @@
-FROM python:3.8.1-alpine as builder
+FROM python:3.8.2-alpine as builder
 
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
@@ -36,7 +36,7 @@ ADD Pipfile.lock .
 RUN pipenv install --system  --ignore-pipfile --deploy
 
 
-FROM python:3.8.1-alpine
+FROM python:3.8.2-alpine
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
 RUN apk update
@@ -45,7 +45,8 @@ RUN apk add postgresql-client \
     openssl \
     ca-certificates \
     libxml2-dev \
-    jpeg
+    jpeg \
+    nodejs-npm
 
 ADD src /code/
 
@@ -87,6 +88,8 @@ ENV UWSGI_PROTOCOL=http \
 ENV PYTHONUNBUFFERED=1 \
     PYTHONPATH=/code \
     DJANGO_SETTINGS_MODULE=website.settings.production
+
+RUN npm install -g less
 
 # RUN SECRET_KEY=not-so-secret-key-just-for-collectstatic DISABLE_JWT_LOGIN=1 django-admin collectstatic --noinput
 EXPOSE 8000
