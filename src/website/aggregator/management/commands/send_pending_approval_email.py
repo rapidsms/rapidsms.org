@@ -8,13 +8,13 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 from django.core import mail
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import BaseCommand
 from django.template import Context, Template
 
 from ...models import Feed, PENDING_FEED
 
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
 
     def handle_noargs(self, **kwargs):
         try:
