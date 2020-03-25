@@ -1,13 +1,13 @@
 from django.conf.urls import url
 from django.contrib.auth import views
 
-from .views import Registration, UserDetail, UserEdit
+from .views import Registration, UserDetail, UserEdit, UserListView
 
 urlpatterns = [
     url(r'^(?P<pk>\d+)/$', UserDetail.as_view(), name='user_detail'),
     url(r'^(?P<pk>\d+)/edit/$', UserEdit.as_view(), name='user_edit'),
 
-    # Log in with email and password.
+    url(r'^$', UserListView.as_view(), name='user_list'),
     url(r'^login/$', views.auth_login, name='login'),
     url(r'^logout/$', views.LogoutView.as_view(), name='logout', ),
     url(r'^register/$', Registration.as_view(), name='register'),

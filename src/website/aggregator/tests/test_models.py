@@ -81,7 +81,7 @@ class AggregatorTests(TestCase):
                     title="%s Item" % feed.title, link=feed.public_url,
                     date_modified=datetime.datetime.now(), guid=feed.title)
                 feed_item.save()
-                self.assertEqual(feed.__unicode__(), feed.title)
+                self.assertEqual(feed.__str__(), feed.title)
 
             self.client = Client()
 

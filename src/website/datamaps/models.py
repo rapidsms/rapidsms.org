@@ -18,7 +18,7 @@ class Scope(models.Model):
     scale = models.FloatField(default=0)
     color = models.CharField(max_length=8, default='#EDDC4E')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_absolute_url(self):
@@ -50,7 +50,7 @@ class Country(models.Model):
     class Meta:
         ordering = ('name', )
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_absolute_url(self):

@@ -72,7 +72,7 @@ class User(auth.AbstractBaseUser, auth.PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ('name',)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.get_full_name()
 
     def get_absolute_url(self):

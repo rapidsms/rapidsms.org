@@ -77,7 +77,7 @@ class Project(models.Model):
     class Meta:
         ordering = ['-updated']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def can_edit(self, user):

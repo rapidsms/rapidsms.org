@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView, UpdateView
 
+from website.views import RapidSMSListView
 from ..mixins import IsActiveObjectMixin, LoginRequiredMixin
 from .forms import UserEditForm, UserRegistrationForm
 from .models import User
@@ -133,3 +134,8 @@ class UserEdit(LoginRequiredMixin, IsActiveObjectMixin, UpdateView):
         if obj != self.request.user:
             raise PermissionDenied
         return obj
+
+
+class UserListView(RapidSMSListView):
+    paginate_by = 99
+    queryset = User.objects.order_by('display_email')

@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, RedirectView, UpdateView
 from django.views.generic.detail import SingleObjectMixin
 
+from website.views import RapidSMSListView
 from ..mixins import CanEditMixin, LoginRequiredMixin, StaffRequiredMixin
 from .forms import ProjectCreateEditForm
 from .models import Project
@@ -92,3 +93,7 @@ class ProjectReviewRequest(LoginRequiredMixin, CanEditMixin, SingleObjectMixin,
         project.change_status('R')  # Project saved and status changed.
         messages.success(self.request, 'We have notified the administrators and they will review this request shortly')
         return super().get(self, self.request, *args, **kwargs)
+
+
+class ProjectListView(RapidSMSListView):
+    model = Project

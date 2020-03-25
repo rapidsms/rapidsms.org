@@ -6,11 +6,13 @@ from .views import (
     ProjectDelete,
     ProjectDetail,
     ProjectEdit,
+    ProjectListView,
     ProjectReviewList,
     ProjectReviewRequest,
 )
 
 urlpatterns = [
+    url(r'^$', ProjectListView.as_view(), name='project_list'),
     url(r'^add/$', ProjectCreate.as_view(),
         name='project_create'),
     url(r'^need-review/$', ProjectReviewList.as_view(),

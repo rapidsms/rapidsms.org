@@ -139,3 +139,9 @@ class UserRegistrationForm(UserCreationForm):
             except Country.DoesNotExist:
                 raise forms.ValidationError("Please select a valid country.")
         return country
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('user_type', 'for_hire', 'country')

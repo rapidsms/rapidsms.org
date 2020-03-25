@@ -11,7 +11,7 @@ class ProjectModelTest(WebsiteTestBase):
 
     def test_unicode(self):
         project = ProjectFactory.create(name="rapidsms")
-        self.assertEqual(project.name, project.__unicode__())
+        self.assertEqual(project.name, project.__str__())
 
     def test_change_status(self):
         project = ProjectFactory.create(name="rapidsms")

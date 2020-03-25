@@ -82,7 +82,7 @@ class Package(models.Model):
     class Meta:
         ordering = ['-release_date', '-updated']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def _get_pypi_request(self):
