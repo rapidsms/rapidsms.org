@@ -107,7 +107,7 @@ class UserRegistrationForm(UserCreationForm):
             'is your email, you can try to <a href="{login}">log in with your email address or GitHub account</a> or '
             '<a href="{reset}">reset your password</a>.'.format(**{'login': reverse('login'),
                                                                    'reset': reverse('reset_password'),
-                                                                   'github': reverse('github_login'),
+                                                                   # 'github': reverse('github_login'),
                                                                    }
                                                                 )
         )
@@ -117,7 +117,8 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('user_type', 'name', 'location', 'country', 'email', 'display_email', 'biography', 'website_url',
-                  'github_url', 'gravatar_email', 'avatar', 'for_hire',)
+                  # 'github_url',
+                  'gravatar_email', 'avatar', 'for_hire',)
 
     def clean_country(self):
         """ Validate country selected

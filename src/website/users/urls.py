@@ -1,15 +1,15 @@
 from django.conf.urls import url
 from django.contrib.auth import views
 
-from .views import Registration, UserDetail, UserEdit, UserListView
+from .views import UserDetail, UserEdit, UserListView, Registration
 
 urlpatterns = [
     url(r'^(?P<pk>\d+)/$', UserDetail.as_view(), name='user_detail'),
     url(r'^(?P<pk>\d+)/edit/$', UserEdit.as_view(), name='user_edit'),
 
     url(r'^$', UserListView.as_view(), name='user_list'),
-    url(r'^login/$', views.auth_login, name='login'),
-    url(r'^logout/$', views.LogoutView.as_view(), name='logout', ),
+    url(r'^login/', views.LoginView.as_view(template_name='users/login.html'), name='login'),
+    url(r'^logout/', views.LogoutView.as_view(), name='logout'),
     url(r'^register/$', Registration.as_view(), name='register'),
 
     url(r'^account/reset/$', views.PasswordResetView.as_view(), {'template_name': 'users/password/reset.html'},

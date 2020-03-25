@@ -79,7 +79,7 @@
                     {% if object.files %}
                     <li>
                         <strong>Attached File: </strong>
-                        <a href="{{object.files.url}}"> Download File</a>
+                        <a target="_blank" href="{{object.files.url}}"> Download File</a>
                     </li>
                     {% endif %}
                     {% if object.collaborators.count %}

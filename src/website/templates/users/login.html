@@ -4,21 +4,18 @@
 {% block title %}Log In{% endblock title %}
 {% block body_id %}login{% endblock body_id %}
 
-{% block messages %}
-    {{ block.super }}
+{% block content %}
+
     {% if form.errors %}
         {% include "includes/message.html" with msg="Your username and password didn't match our records. Please try again." alert_type="error" %}
     {% endif %}
-{% endblock messages %}
 
-{% block content %}
-<div id="github">
-    <a href="{% url "github_login" %}" class="btn btn-large btn-inverse">
-        <i class="icon-white icon-github"></i> Log In with GitHub
-    </a>
-</div>
+    {#<div id="github">#}
+{#    <a href="{% url "github_login" %}" class="btn btn-large btn-inverse">#}
+{#        <i class="icon-white icon-github"></i> Log In with GitHub#}
+{#    </a>#}
+{#</div>#}
 
-<div>-or-</div>
 
 <div id="login">
     <form method="post" action="{% url "login" %}">
