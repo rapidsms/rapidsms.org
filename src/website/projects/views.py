@@ -7,6 +7,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, R
 from django.views.generic.detail import SingleObjectMixin
 
 from website.views import RapidSMSListView
+
 from ..mixins import CanEditMixin, LoginRequiredMixin, StaffRequiredMixin
 from .forms import ProjectCreateEditForm
 from .models import Project

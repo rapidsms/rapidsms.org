@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView, UpdateView
 
 from website.views import RapidSMSListView
+
 from ..mixins import IsActiveObjectMixin, LoginRequiredMixin
 from .forms import UserEditForm, UserRegistrationForm
 from .models import User
