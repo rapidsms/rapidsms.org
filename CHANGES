@@ -1,0 +1,10 @@
+Release 1.0
+----------------
+* upgrade to django 2
+* code lint: flake8 isort
+* structure refactoring
+
+
+Release 0.1
+----------------
+* handover release
