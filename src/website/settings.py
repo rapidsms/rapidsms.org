@@ -1,10 +1,11 @@
-"""Django settings for website project."""
 import os
 from pathlib import Path
 
 from django.urls import reverse_lazy
 
 import environ
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 env = environ.Env()
 environ.Env.read_env()
@@ -178,6 +179,7 @@ INSTALLED_APPS = (
     'website.website_tests',
 
     # External apps
+    'storages',
     'sorl.thumbnail',
     'compressor',
     'scribbler',
@@ -231,6 +233,32 @@ SESSION_COOKIE_HTTPONLY = env.bool('SESSION_COOKIE_HTTPONLY', True)
 CSRF_COOKIE_SECURE = env.bool('CSRF_COOKIE_SECURE', True)
 SECURE_SSL_REDIRECT = env.bool('SECURE_SSL_REDIRECT', True)
 
+AZURE_ACCOUNT_NAME = env.str('AZURE_ACCOUNT_NAME', 'sauniwebsaksio')
+AZURE_ACCOUNT_KEY = env.str('AZURE_ACCOUNT_KEY', None)
+AZURE_CONTAINER = env.str('AZURE_CONTAINER', 'rapidsms-website')
+
+AZURE_LOCATION = "rapidsms-website"
+AZURE_CONTAINER = env.str('AZURE_CONTAINER', 'rapidsms-website')
+STATIC_LOCATION = "static"
+MEDIA_LOCATION = "media"
+
+if AZURE_ACCOUNT_KEY:
+    AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+    AZURE_SSL = True
+    AZURE_AUTO_SIGN = True
+    MEDIA_LOCATION = 'media'
+    STATIC_LOCATION = 'static'
+    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+    MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+    STATICFILES_STORAGE = 'website.storages.AzureStaticStorage'
+    DEFAULT_FILE_STORAGE = 'website.storages.AzureMediaStorage'
+    AZURE_CONNECTION_TIMEOUT_SECS = 120
+    AZURE_URL_EXPIRATION_SECS = 7200
+
+
+SENTRY_DSN = env.str('SENTRY_DSN', None)  # noqa: F405
+if SENTRY_DSN:
+    sentry_sdk.init(dsn=SENTRY_DSN, send_default_pii=True, integrations=[DjangoIntegration(), ])
 
 COMPRESS_ENABLED = env.bool('COMPRESS_ENABLED', True)
 # COMPRESS_URL = r'%s/public/static/' % os.path.abspath(os.path.dirname(__file__))
