@@ -1,0 +1,48 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+coverage = "*"
+flake8 = "*"
+pep8 = "*"
+factory_boy = "*"
+flake8-html = "*"
+isort = "*"
+mock = "*"
+pylint = "*"
+
+[packages]
+Django = "<3.0"
+Pillow = "*"
+anyjson = "*"
+beautifulsoup4 = "*"
+bleach = "*"
+celery = "*"
+django-all-access = "*"
+django-appconf = "*"
+django-compressor = "*"
+django-debug-toolbar = "*"
+django-environ = "*"
+django-extensions = "*"
+django-push = "*"
+django-scribbler = "*"
+django-selectable = "*"
+django-storages = {extras = ["azure"],version = "*"}
+django-taggit = "*"
+django-widget-tweaks = "*"
+dj-static = "*"
+docutils = "*"
+html5lib = "*"
+psycopg2 = "*"
+pycrypto = "*"
+pysolr = "*"
+python-dateutil = "*"
+python-memcached = "*"
+sentry-sdk = "*"
+sorl-thumbnail = "*"
+uwsgi = "*"
+
+[requires]
+python_version = "3.8"

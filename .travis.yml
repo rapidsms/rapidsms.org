@@ -1,20 +1,40 @@
+dist: bionic
 language: python
+sudo: false
 
 python:
- - "2.7"
+  - 3.8
 
-services: postgresql
+env:
+  global:
+    - DATABASE_URL=psql://postgres:pass@127.0.0.1:5432/rapidsms_website
+    - SECRET_KEY=top-secret
+  jobs:
+    - DJANGO=2.2
 
-before_install:
- - export DJANGO_SETTINGS_MODULE=website.settings.test
- - export PYTHONPATH=$HOME/builds/rapidsms/rapidsms.org
+
+addons:
+  postgresql: "10"
+  apt:
+    packages:
+    - postgresql-10
+    - postgresql-client-10
+
+services:
+  - redis-server
 
 install:
- - pip install -r requirements/base.txt --use-mirrors
-
-before_script:
- - psql -c "CREATE DATABASE test_rapidsms_website;" -U postgres
- - python manage.py syncdb --migrate --noinput
+  - pip install tox codecov
 
 script:
- - python manage.py test packages projects users aggregator taxonomy website_tests
+  - tox -e "py${TRAVIS_PYTHON_VERSION//.}-d${DJANGO//.}" -- py.test tests -v
+
+before_script:
+  - psql -c "CREATE DATABASE rapidsms_website;" -U postgres
+
+before_success:
+  - coverage erase
+
+after_success:
+  - coverage combine
+  - codecov

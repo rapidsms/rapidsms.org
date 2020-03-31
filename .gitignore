@@ -9,8 +9,8 @@
 .coverage
 .vagrant
 */settings/local.py
-public/static/
-public/media/
+src/public/static/
+src/public/media/
 secrets.sls
 apache-solr-*/
 output.json
@@ -18,3 +18,12 @@ output.json
 htmlcov
 coverage.sh
 website.json
+.venv/
+.env
+.envrc
+volumes/
+dist/
+build/
+src/rapidsms_site.egg-info/
+.tox/
+~build/

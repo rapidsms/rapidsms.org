@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}{{ object }}{% endblock title %}
+{% block body_id %}package-detail{% endblock body_id %}
+
+{% block content %}
+{% load related_projects %}
+<div class="page-header">
+    <h1>
+        <i class="icon-white icon-archive"></i>
+        {{ object }}
+        {% if object.version %}
+            <small>version {{ object.version }}</small>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <div class="actions">
+            <a href="{{ object.get_edit_url }}" class="btn btn-info">
+                <i class="icon-white icon-pencil"></i>
+                Edit
+            </a>
+            <a href="{{ object.get_flag_url }}" class="btn btn-danger">
+                <i class="icon-white icon-flag"></i>
+                Flag
+            </a>
+        </div>
+        {% endif %}
+    </h1>
+    {% if object.home_url %}
+    <p class="lead">
+        <a target="_blank" href="{{ object.home_url }}">
+            {{ object.home_url }}
+        </a>
+    </p>
+    {% endif %}
+</div>
+
+<div class="row-fluid">
+
+    <div class="span7">
+        {% if object.description %}
+        {{ object.description|safe }}
+        {% endif %}
+    </div>
+
+    <div class="span4 offset1">
+        <div class="links">
+            <ul class="unstyled">
+
+            {% if object.docs_url %}
+            <li>
+                <strong>Documentation: </strong>
+                <a href="{{ object.docs_url }}">
+                    {{ object.docs_url }}
+                </a>
+            </li>
+            {% endif %}
+
+            {% if object.tests_url %}
+            <li>
+                <strong>Tests: </strong>
+                <a href="{{ object.tests_url }}">
+                    {{ object.tests_url }}
+                </a>
+            </li>
+            {% endif %}
+
+            {% if object.repo_url %}
+            <li>
+                <strong>Source Code: </strong>
+                <a target="_blank" href="{{ object.repo_url }}">
+                  {{ object.repo_url }}
+                </a>
+            </li>
+            {% endif %}
+        </div>
+
+        {% if object.version or object.release_date %}
+            <h3>Current Release: </h3>
+            <p>{{ object.version }}</p>
+            {% if object.release_date %}released {{ object.release_date|date }}{% endif %}
+        {% endif %}
+
+        <h3>Package Type: </h3>
+        <p>RapidSMS {{ object.get_pkg_type_display }}</p>
+
+        {% if object.author_name or object.author_email %}
+        <h3>Author: </h3>
+        <p>
+            {% if object.author_name and object.author_email %}
+            {{ object.author_name }} (<a href="mailto:{{ object.author_email }}">{{ object.author_email }}</a>)
+            {% elif object.author_name %}
+            {{ object.author_name }}
+            {% else %}
+            <a href="mailto:{{ object.author_email }}">{{ object.author_email }}</a>
+            {% endif %}
+        </p>
+        {% endif %}
+
+        {% if object.maintainer_name or object.maintainer_email %}
+        <h3>Maintainer: </h3>
+        <p>
+            {% if object.maintainer_name and object.maintainer_email %}
+            {{ object.maintainer_name }} (<a href="mailto:{{ object.maintainer_email }}">{{ object.maintainer_email }}</a>)
+            {% elif object.maintainer_name %}
+            {{ object.maintainer_name }}
+            {% else %}
+            <a href="mailto:{{ object.maintainer_email }}">{{ object.maintainer_email }}</a>
+            {% endif %}
+        </p>
+        {% endif %}
+
+        {% if object.license %}
+        <h3>License: </h3>
+        <p>{{ object.license }}</p>
+        {% endif %}
+
+        <!-- TAXONOMY -->
+        {% with tags=object.tags.all %}
+        {% if tags %}
+        <h3>Taxonomy: </h3>
+        <p>
+        {% for tag in object.tags.all %}
+            <a href="{% url "package_list" %}?q=&selected_facets=taxonomy_exact:{{tag|urlencode}}">
+                {{ tag }}
+            </a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+        </p>
+        {% endif %}
+        {% endwith %}
+
+    </div>
+</div>
+
+
+{% show_related_projects object as related_projects %}
+
+{% if related_projects %}
+<div class="related-projects">
+    <h3>Related project(s)</h3>
+    <div class="row-fluid">
+        {% for related_project in related_projects %}
+            <a class="span3 btn project" href="{{ related_project.get_absolute_url }}">
+                <i class="icon icon-file-text"></i>
+                <h4>{{ related_project.name }}</h4>
+                <p>{{ related_project.description|truncatewords:"40" }}</p>
+          </a>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}
