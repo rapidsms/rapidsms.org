@@ -1,2 +1,2 @@
 NAME = 'rapidsms-site'
-VERSION = __version__ = '1.1'
+VERSION = __version__ = '1.2'
