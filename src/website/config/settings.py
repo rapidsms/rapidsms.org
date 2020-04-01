@@ -238,11 +238,6 @@ AZURE_ACCOUNT_NAME = env.str('AZURE_ACCOUNT_NAME', 'sauniwebsaksio')
 AZURE_ACCOUNT_KEY = env.str('AZURE_ACCOUNT_KEY', None)
 AZURE_CONTAINER = env.str('AZURE_CONTAINER', 'rapidsms-website')
 
-AZURE_LOCATION = "rapidsms-website"
-AZURE_CONTAINER = env.str('AZURE_CONTAINER', 'rapidsms-website')
-STATIC_LOCATION = "static"
-MEDIA_LOCATION = "media"
-
 if AZURE_ACCOUNT_KEY:
     AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
     AZURE_SSL = True
