@@ -10,8 +10,8 @@ from sentry_sdk.integrations.django import DjangoIntegration
 env = environ.Env()
 environ.Env.read_env()
 
-PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-PROJECT_ROOT = os.path.abspath(os.path.join(PROJECT_PATH, os.pardir))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+PROJECT_ROOT = env.str('PROJECT_ROOT', os.path.abspath(os.path.join(BASE_DIR, os.pardir)))
 
 DEBUG = env.bool('DEBUG', False)
 
@@ -75,7 +75,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_PATH, 'static'),
+    os.path.join(BASE_DIR, 'static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -155,7 +155,7 @@ WSGI_APPLICATION = 'website.config.wsgi.application'
 
 
 FIXTURE_DIRS = (
-    os.path.join(PROJECT_PATH, 'fixtures'),
+    os.path.join(BASE_DIR, 'fixtures'),
 )
 
 INSTALLED_APPS = (
@@ -244,8 +244,8 @@ if AZURE_ACCOUNT_KEY:
     AZURE_AUTO_SIGN = True
     MEDIA_LOCATION = 'media'
     STATIC_LOCATION = 'static'
-    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
-    MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/{STATIC_LOCATION}/'
+    MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/{MEDIA_LOCATION}/'
     STATICFILES_STORAGE = 'website.config.storages.AzureStaticStorage'
     DEFAULT_FILE_STORAGE = 'website.config.storages.AzureMediaStorage'
     AZURE_CONNECTION_TIMEOUT_SECS = 120
