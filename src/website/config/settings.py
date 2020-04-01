@@ -26,7 +26,7 @@ PROJECT_EMAIL_ALERTS = FLAG_EMAIL_ALERTS
 
 
 DATABASES = {'default': env.db()}
-SECRET_KEY = env.str('SECRET_KEY', '')
+SECRET_KEY = env.str('SECRET_KEY', 'change_me')
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
