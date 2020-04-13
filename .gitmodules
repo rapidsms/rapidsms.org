@@ -1,3 +1,3 @@
 [submodule "src/website/static/flat-ui"]
 	path = src/website/static/flat-ui
-	url = git://github.com/designmodo/Flat-UI.git
+	url = git@github.com:designmodo/Flat-UI.git
