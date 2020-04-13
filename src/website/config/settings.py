@@ -26,7 +26,7 @@ PROJECT_EMAIL_ALERTS = FLAG_EMAIL_ALERTS
 
 
 DATABASES = {'default': env.db()}
-SECRET_KEY = env.str('SECRET_KEY', '')
+SECRET_KEY = env.str('SECRET_KEY', 'change_me')
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -315,3 +315,6 @@ GITHUB_KEY = env.str('GITHUB_KEY', '')
 GITHUB_SECRET = env.str('GITHUB_SECRET', '')
 SUPERFEEDR_CREDS = (env.str('SUPERFEEDR_USER', ''), env.str('SUPERFEEDR_PWD', ''))
 PUSH_SSL_CALLBACK = True
+
+MATOMO_SITE_TRACKER = env.str('MATOMO_SITE_TRACKER', 'https://unisitetracker.unicef.io/')
+MATOMO_SITE_ID = env.str('MATOMO_SITE_ID', '')
