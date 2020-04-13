@@ -315,3 +315,6 @@ GITHUB_KEY = env.str('GITHUB_KEY', '')
 GITHUB_SECRET = env.str('GITHUB_SECRET', '')
 SUPERFEEDR_CREDS = (env.str('SUPERFEEDR_USER', ''), env.str('SUPERFEEDR_PWD', ''))
 PUSH_SSL_CALLBACK = True
+
+MATOMO_SITE_TRACKER = env.str('MATOMO_SITE_TRACKER', 'https://unisitetracker.unicef.io/')
+MATOMO_SITE_ID = env.str('MATOMO_SITE_ID', '')
