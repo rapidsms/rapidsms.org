@@ -32,6 +32,7 @@ script:
 
 before_script:
   - psql -c "CREATE DATABASE rapidsms_website;" -U postgres
+  - npm install -g less
 
 before_success:
   - coverage erase
