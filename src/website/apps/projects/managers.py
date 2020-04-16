@@ -31,7 +31,7 @@ class ProjectQueryset(QuerySet):
 
 class ProjectManager(models.Manager):
 
-    def get_query_set(self):
+    def get_queryset(self):
         return ProjectQueryset(self.model)
 
     def get_drafts_for_user(self, user):

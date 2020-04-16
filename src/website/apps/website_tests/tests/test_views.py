@@ -23,13 +23,13 @@ class HomePageViewTest(ViewTestMixin, WebsiteTestBase):
     def test_get_authenticated(self):
         """Logged in users can view the home page"""
         self.login_user(UserFactory.create())
-        response = self._get()
+        response = self._get(self.url_name)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, self.template_name)
 
     def test_get_unauthenticated(self):
         """Unregistered users can view the home page"""
-        response = self._get()
+        response = self._get(self.url_name)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, self.template_name)
 

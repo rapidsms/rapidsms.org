@@ -56,16 +56,16 @@ class PackageFlag(LoginRequiredMixin, IsActiveObjectMixin, SingleObjectMixin, Fo
     def send_flag_email(self, form):
         # TODO: Make it a Celery task.
 
-        from django.template import Context, loader
+        from django.template import loader
         from django.conf import settings
 
-        context = Context({
+        context = {
             'user': self.request.user,
             'user_url': self.request.build_absolute_uri(self.request.user.get_absolute_url()),
             'package': self.object,
             'package_url': self.request.build_absolute_uri(self.object.get_absolute_url()),
             'reason': form.cleaned_data['reason'],
-        })
+        }
 
         subject_template = 'packages/flag_email/subject.txt'
         body_text_template = 'packages/flag_email/body.txt'

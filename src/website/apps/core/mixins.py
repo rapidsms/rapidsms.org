@@ -3,7 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.utils.decorators import method_decorator
 
 
-class AuthorEditMixin(object):
+class AuthorEditMixin:
     """Requires that the requesting user be the object's author.
 
     For use with Packages and Projects.
@@ -16,7 +16,7 @@ class AuthorEditMixin(object):
         return obj
 
 
-class CanEditMixin(object):
+class CanEditMixin:
     """Check user permission for current object.
 
     Views using the mixin need to make sure that underlaying Model
@@ -42,7 +42,7 @@ class CanEditMixin(object):
         raise PermissionDenied
 
 
-class IsActiveObjectMixin(object):
+class IsActiveObjectMixin:
     """Requires that the object(s) displayed be active.
 
     For use with Packages, Projects, and Users.
@@ -53,14 +53,14 @@ class IsActiveObjectMixin(object):
         return queryset.filter(is_active=True)
 
 
-class LoginRequiredMixin(object):
+class LoginRequiredMixin:
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
 
-class StaffRequiredMixin(object):
+class StaffRequiredMixin:
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         user = self.request.user

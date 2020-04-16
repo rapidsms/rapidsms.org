@@ -199,7 +199,7 @@ class UserRegistrationFormTest(TestCase):
     def test_meta_fields(self):
         expected = (
             'user_type', 'name', 'location', 'country', 'email', 'display_email', 'biography', 'website_url',
-            'github_url', 'gravatar_email', 'avatar', 'for_hire')
+            'gravatar_email', 'avatar', 'for_hire')
         self.assertEqual(expected, self.form._meta.fields)
 
     def test_country_validate_select(self):

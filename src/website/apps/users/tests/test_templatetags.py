@@ -9,6 +9,6 @@ class TemplateTagsTestCase(TestCase):
 
     def test_gravatar_url(self):
         email = 'john@doe.com'
-        bits = md5(email.lower()).hexdigest()
+        bits = md5(email.lower().encode('utf-8')).hexdigest()
         url = gravatar_url(email)
         self.assertIn(bits, url)

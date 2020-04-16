@@ -1,11 +1,9 @@
 import datetime
 import logging
 
-from django.conf import settings
 from django.db import models
 
 from django_push.subscriber import signals as push_signals
-from django_push.subscriber.models import Subscription
 
 from website.apps.users.models import User
 
@@ -47,15 +45,15 @@ class Feed(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self, **kwargs):
-        super().save(**kwargs)
-        if settings.SUPERFEEDR_CREDS and self.approval_status == APPROVED_FEED:
-            Subscription.objects.subscribe(self.feed_url, settings.PUSH_HUB)
-
-    def delete(self, **kwargs):
-        super().delete(**kwargs)
-        if settings.SUPERFEEDR_CREDS:
-            Subscription.objects.unsubscribe(self.feed_url, settings.PUSH_HUB)
+    # def save(self, **kwargs):
+    #     super().save(**kwargs)
+    #     if settings.SUPERFEEDR_CREDS and self.approval_status == APPROVED_FEED:
+    #         Subscription.objects.subscribe(self.feed_url, settings.PUSH_HUB)
+    #
+    # def delete(self, **kwargs):
+    #     super().delete(**kwargs)
+    #     if settings.SUPERFEEDR_CREDS:
+    #         Subscription.objects.unsubscribe(self.feed_url, settings.PUSH_HUB)
 
 
 class FeedItemManager(models.Manager):

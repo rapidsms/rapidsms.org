@@ -3,7 +3,7 @@ Utility classes to test Github Login functionality.
 """
 
 
-class ProviderMockResponse(object):
+class ProviderMockResponse:
 
     def __init__(self, response, status):
         self.response = response
@@ -13,7 +13,7 @@ class ProviderMockResponse(object):
         return self.response
 
 
-class MockClient(object):
+class MockClient:
 
     def __init__(self, name, email="info@example.com", response=None,
                  response_status=200):

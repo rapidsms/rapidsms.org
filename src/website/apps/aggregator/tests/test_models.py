@@ -1,7 +1,5 @@
 # email test
 # https://docs.djangoproject.com/en/dev/topics/testing/#email-services
-from __future__ import absolute_import
-
 import datetime
 
 from django.conf import settings

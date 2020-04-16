@@ -5,9 +5,7 @@ from django.conf import settings
 from django.contrib.auth import login
 from django.http import HttpRequest
 from django.test import TestCase
-from django.urls import reverse, reverse_lazy
-
-from website.apps.users.factories import UserFactory
+from django.urls import reverse
 
 
 class FormTestMixin(object):
@@ -43,7 +41,7 @@ class ViewTestMixin(object):
     get_kwargs = {}
     post_data = {}
 
-    login_url = reverse_lazy('login')
+    login_url = reverse('login')
 
     def _url(self, url_name=None, url_args=None, url_kwargs=None, get_kwargs=None):
         """Builds a URL with reverse(), then adds GET parameters."""
@@ -140,16 +138,3 @@ class BasicGetTest(ViewTestMixin, WebsiteTestBase):
 
     def tearDown(self):
         self.client.logout()
-
-    def test_get_authenticated(self):
-        """Logged in users can view the home page"""
-        self.login_user(UserFactory.create())
-        response = self._get()
-        self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, self.template_name)
-
-    def test_get_unauthenticated(self):
-        """Unregistered users can view the home page"""
-        response = self._get()
-        self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, self.template_name)
