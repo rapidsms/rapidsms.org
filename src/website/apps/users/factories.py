@@ -13,10 +13,12 @@ TEST_IMAGE = os.path.join(os.path.dirname(__file__), 'test.png')
 
 
 class UserFactory(factory.DjangoModelFactory):
-    FACTORY_FOR = User
 
     name = factory.Sequence(lambda n: 'user%s' % n)
     email = factory.LazyAttribute(lambda obj: '%s@example.com' % obj.name)
+
+    class Meta:
+        model = User
 
 
 class UserWithAvatarFactory(UserFactory):

@@ -204,7 +204,7 @@ class Project(models.Model):
 
     def _linkify(self, text):
         """Returns a string with marked up <a> tags"""
-        parsed_text = bleach.linkify(text)
+        parsed_text = bleach.linkify(text or '')
         return parsed_text
 
     def notify(self, to, status):

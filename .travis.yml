@@ -9,6 +9,7 @@ env:
   global:
     - DATABASE_URL=psql://postgres:pass@127.0.0.1:5432/rapidsms_website
     - SECRET_KEY=top-secret
+    - COMPRESS_ENABLED=False
   jobs:
     - DJANGO=2.2
 
@@ -27,10 +28,11 @@ install:
   - pip install tox codecov
 
 script:
-  - tox -e "py${TRAVIS_PYTHON_VERSION//.}-d${DJANGO//.}" -- py.test tests -v
+  - tox -e "py${TRAVIS_PYTHON_VERSION//.}-d${DJANGO//.}"
 
 before_script:
   - psql -c "CREATE DATABASE rapidsms_website;" -U postgres
+  - npm install -g less
 
 before_success:
   - coverage erase
