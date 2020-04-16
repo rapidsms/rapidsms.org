@@ -1,6 +1,6 @@
 
 
-class MockPyPIRequest(object):
+class MockPyPIRequest:
     """
     Used to mock the data sent by PyPI, returned by Package.get_pypi_request.
     """

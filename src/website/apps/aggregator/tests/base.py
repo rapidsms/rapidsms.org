@@ -1,6 +1,6 @@
 
 
-class MockResponse(object):
+class MockResponse:
     """
         Use to mock response from server
     """

@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
@@ -31,6 +29,7 @@ class BaseCommunityAggregatorFeed(Feed):
 
 
 class CommunityAggregatorFeed(BaseCommunityAggregatorFeed):
+
     def get_object(self, request, slug=None):
         return get_object_or_404(FeedType, slug=slug)
 

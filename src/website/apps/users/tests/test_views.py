@@ -1,4 +1,4 @@
-from django.conf import settings
+from django.urls import reverse
 
 from website.apps.tests.base import ViewTestMixin, WebsiteTestBase
 
@@ -32,5 +32,4 @@ class RegistrationTest(ViewTestMixin, WebsiteTestBase):
         response = self._post(data=data)  # User is creatd
         user = User.objects.get(email=data['email'])
         self.failUnless(user.id)
-        self.assertRedirectsNoFollow(response,
-                                     settings.LOGIN_REDIRECT_URL.decode())
+        self.assertRedirectsNoFollow(response, reverse('home'))

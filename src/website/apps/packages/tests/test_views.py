@@ -200,7 +200,7 @@ class TestPackageFlagView(PackageViewTestBase):
         self.assertRedirectsNoFollow(response, self.package.get_absolute_url())
         pkg = Package.objects.get(pk=self.package.pk)
         self.assertTrue(pkg.is_flagged)
-        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(len(mail.outbox), 0)
 
     def test_flag_invalid(self):
         response = self._post(data={

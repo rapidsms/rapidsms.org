@@ -11,6 +11,8 @@
 */settings/local.py
 src/public/static/
 src/public/media/
+src/website/static/
+src/website/media/
 secrets.sls
 apache-solr-*/
 output.json

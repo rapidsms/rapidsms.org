@@ -8,9 +8,11 @@ __all__ = ['ProjectFactory']
 
 
 class ProjectFactory(factory.DjangoModelFactory):
-    FACTORY_FOR = Project
 
     creator = factory.SubFactory(UserFactory)
     name = factory.Sequence(lambda n: 'project-%s' % n)
     feature = False
     status = Project.PUBLISHED
+
+    class Meta:
+        model = Project

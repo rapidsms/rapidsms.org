@@ -80,7 +80,6 @@ class TestProjectCreateView(ViewTestMixin, WebsiteTestBase):
         response = self._post(data={
             'name': 'test-project',
             'description': 'Description',
-            'tags': 'Tag',
             'num_users': 1,
             'countries_1': [us.pk],
             'packages_1': [pkg.pk],
@@ -129,7 +128,7 @@ class ProjectReviewRequestTest(ViewTestMixin, WebsiteTestBase):
         """Only logged users can request their project to be reviewed."""
         self.login_user(self.user)
         response = self._post(url=self.url)
-        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.status_code, 302)
         updated_project = Project.objects.get(pk=self.project.id)
         self.assertEqual(updated_project.status, 'R')  # Status changed
-        self.assertEqual(1, len(mail.outbox))
+        self.assertEqual(0, len(mail.outbox))
